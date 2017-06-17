@@ -1,0 +1,43 @@
+<div>
+    
+    <!--<input id="idProducto" name="idProducto" type="text" ng-model="producto.idProducto" /><br>-->
+    <form editable-form name="editableForm" onaftersave="guardar()">
+    <legend>Datos del Coordinador</legend>
+    <div>
+      <!-- editable username (text with validation) -->
+      <span class="title">Ap. Paterno:  </span>
+      <span editable-text="coordinador.apePaterno" e-name="coordinador.apePaterno" e-required>{{ coordinador.apePaterno || 'empty' }}</span>
+    </div> 
+    
+    <div>
+      <!-- editable username (text with validation) -->
+      <span class="title">Ap. Materno: </span>
+      <span editable-text="coordinador.apeMaterno" e-name="coordinador.apeMaterno" e-required>{{ coordinador.apeMaterno || 'empty' }}</span>
+    </div> 
+        
+    <div>
+      <!-- editable username (text with validation) -->
+      <span class="title">Nombres:  </span>
+      <span editable-text="coordinador.nombres" e-name="coordinador.nombres" e-required>{{ coordinador.nombres || 'empty' }}</span>
+    </div> 
+    
+    <div class="buttons">
+      <!-- button to show form -->
+      <button type="button" class="btn btn-default" ng-click="editableForm.$show()" ng-show="!editableForm.$visible">
+        Editar
+      </button>
+      <!-- buttons to submit / cancel form -->
+      <span ng-show="editableForm.$visible">
+        <button type="submit" class="btn btn-primary" ng-disabled="editableForm.$waiting">
+          Guardar
+        </button>
+        <button type="button" class="btn btn-default" ng-disabled="editableForm.$waiting" ng-click="editableForm.$cancel()">
+          Cancelar
+        </button>
+      </span>
+    </div>
+    </form> 
+    <br>
+    <a ng-href="#/coordinadorList">Volver</a>
+
+</div>
