@@ -1,24 +1,70 @@
+<div style="padding-top: 50px">
+    <div class="container">
+        <h1 style='text-align: center'><b>Lista de Coordinadores</b></h1>
+    </div>
 
-<a href="#/coordinadorNew" >Crear coordinador</a>
+    <br>
+    <br>
+    <br>
+    <div class="container">
+        <input type="text" ng-model="txtFiltroCoordinador" class="form-control" placeholder="Buscar">
+        <a href="#/coordinadorNew" >Crear coordinador</a>
+    </div>
+    <br>
+    <div class="table col-lg-9 col-sm-9 col-md-9 col-xs-9">
+        <table class="table table-striped table-responsive">
+            <thead>
+                <tr>
+                    <th>Código</th>
+                    <th>Apellido Paterno</th>
+                    <th>Apellido Materno</th>
+                    <th>Nombre</th>
+                    <th>Acción</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="coordinador in coordinadors| empezarDe : currentPage * pageSize | limitTo:pageSize | filter: txtFiltroCoordinador">
+                    <td><button class="btn btn-default" ng-click="coordinadorEdit(coordinador.idCoordinador)">{{coordinador.idCoordinador}}</button></td>
+                    <td>{{coordinador.apePaterno}}</td>
+                    <td>{{coordinador.apeMaterno}}</td>
+                    <td>{{coordinador.nombres}}</td>
+                    <td>
+                        <div class="btn-group">  <button ng-click='' type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Seleccione <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a href="" ng-click="coordinadorEdit(coordinador.idCoordinador)">Editar</a></li>
+                                <li><a href="" ng-click="borrarCoordinador(coordinador)">Borrar</a></li>
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+            <tfoot align="center">
+                <tr>
+                    <td colspan="5">
+                        <div class="container ">
+                            <div class="center-block">
+                                <button ng-disabled="currentPage === 0" ng-click="currentPage = currentPage - 1" class="btn btn-default">
+                                    <span aria-hidden="true">&laquo;</span>
+                                </button>
+                                {{currentPage + 1}}/{{numberOfPages()}}
+                                <!--<button ng-disabled="paginacion.inicia >= productos.length/paginacion.max - 1" ng-click="paginacion.inicia=paginacion.inicia+1">-->
+                                <button ng-disabled="currentPage >= coordinadors.length / pageSize - 1" ng-click="setNextPagina()" class="btn btn-default">
+                                    <span aria-hidden="true">&raquo;</span>
+                                </button>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+    <!-- paginacion -->
+</div>
 
-<table>
-    <tr ng-repeat="coordinador in coordinadors | empezarDe : currentPage*pageSize | limitTo:pageSize">
-        <td><a ng-href="#/coordinadorEdit/{{coordinador.idCoordinador}}">{{coordinador.idCoordinador}}</button></td>
-        <td>{{coordinador.apePaterno}}</td>
-        <td>{{coordinador.apeMaterno}}</td>
-        <td>{{coordinador.nombres}}</td>
-        <td><button type="button" class="btn btn-danger" ng-click="delete(coordinador)">borrar</button></td>
-        
-    </tr>
-</table>
- <button ng-disabled="currentPage === 0" ng-click="currentPage=currentPage-1">
-    Ant.
-</button>
-{{currentPage+1}}/{{numberOfPages()}}
-<!--<button ng-disabled="paginacion.inicia >= productos.length/paginacion.max - 1" ng-click="paginacion.inicia=paginacion.inicia+1">-->
-<button ng-disabled="currentPage >= coordinadors.length/pageSize - 1" ng-click="setNextPagina()">
-    Sgte.
-</button><!--
+
+<!--
 <button ng-click="getNextPagina()">
     +20
 </button>-->
