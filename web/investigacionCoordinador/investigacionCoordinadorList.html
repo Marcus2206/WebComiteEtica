@@ -1,0 +1,18 @@
+
+<a href="#/investigacionCoordinadorNew" >Crear coordinador</a>
+
+<table>
+    <tr ng-repeat="investigacionCoordinador in investigacionCoordinadors | empezarDe : currentPage*pageSize | limitTo:pageSize">
+        <td><a ng-href="#/investigacionCoordinadorEdit/{{investigacionCoordinador.id.idInvestigacion}}/{{investigacionCoordinador.id.idCoordinador}}">{{coordinador.idCoordinador}}</a></td>
+        <td>{{investigacionCoordinador.observacion}}</td>
+        <td><button type="button" class="btn btn-danger" ng-click="delete(investigacionCoordinador)">borrar</button></td>
+    </tr>
+</table>
+ <button ng-disabled="currentPage === 0" ng-click="currentPage=currentPage-1">
+    Ant.
+</button>
+{{currentPage+1}}/{{numberOfPages()}}
+<!--<button ng-disabled="paginacion.inicia >= productos.length/paginacion.max - 1" ng-click="paginacion.inicia=paginacion.inicia+1">-->
+<button ng-disabled="currentPage >= coordinadors.length/pageSize - 1" ng-click="setNextPagina()">
+    Sgte.
+</button>

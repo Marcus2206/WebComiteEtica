@@ -1,6 +1,9 @@
 var app=angular.module("app");
 
 app.controller("NewCoordinadorController", ['$scope', 'coordinadorRemoteResource', '$location',"$log", function($scope, coordinadorRemoteResource, $location, $log) {
+        
+        $scope.nombreBoton="Nuevo";
+        
         /*Se construyer el json*/
         $scope.coordinador = {
             idCoordinador: "",
@@ -16,9 +19,11 @@ app.controller("NewCoordinadorController", ['$scope', 'coordinadorRemoteResource
         
         $scope.guardar = function() {
             //if ($scope.form.$valid) {
+                $scope.coordinador.usuarioIngresa="user1";
+                $scope.coordinador.fechaIngreso=new Date();
                 coordinadorRemoteResource.insert($scope.coordinador)
                 .then(function(coordinadorResult) {
-                    //$location.path("coordinadorEdit"+coordinadorResult.idProducto);
+                    $location.path("coordinadorEdit/"+coordinadorResult.idCoordinador);
                 }, function(bussinessMessages) {
                     $scope.bussinessMessages = bussinessMessages;
                 });
@@ -32,7 +37,7 @@ app.controller("NewCoordinadorController", ['$scope', 'coordinadorRemoteResource
 app.controller("ListCoordinadorController", ['$scope', "coordinadors", "coordinadorRemoteResource", '$location',"$log","$route", function($scope, coordinadors, coordinadorRemoteResource, $location, $log,$route) {
         /*Se obtiene lista de coordinadores*/
         $scope.coordinadors=coordinadors;
-        
+
         /*Se setea la cantidad filas por vista*/
         $scope.currentPage = 0;
         $scope.pageSize = 20;
@@ -48,46 +53,39 @@ app.controller("ListCoordinadorController", ['$scope', "coordinadors", "coordina
             return $scope.currentPage;
         };
         
-        /*Navegar*/
-        $scope.coordinadorEdit=function(idCoordinador){
-            /*var paramValue = $route.current.$$route.paramExample;
-            $log.log(paramValue); */
-            $route.current.$$route.paramExample=idCoordinador;
-            $log.log("dfsfsdf "+idCoordinador);
-            
-            var route={
-                controller :"EditCoordinadorController",
-                templateUrl: "coordinador/coordinadorEdit.html",
-                paramExample:idCoordinador
-                        
-            };
-            $location.path("/coordinadorEdit",route);
-            
+        $scope.delete=function(coordinador){
+            coordinadorRemoteResource.delete(coordinador)
+                .then(function(coordinadorResult) {
+                    $scope.coordinadors.splice($scope.coordinadors.indexOf(coordinador),1);
+                }, function(bussinessMessages) {
+                    //alert("aca");
+                    //$scope.bussinessMessages = bussinessMessages;
+                });
         };
+        /*Navegar*/
+        /*$scope.coordinadorEdit=function(idCoordinador){
+            $log.log("coordinadorEdit");
+            $location.path("/coordinadorEdit/"+idCoordinador);
+            
+        };*/
 }]);
 
-app.controller("EditCoordinadorController", ['$scope', 'coordinadorRemoteResource', '$location',"$log","$route", function($scope, coordinadorRemoteResource, $location, $log, $route) {
+app.controller("EditCoordinadorController", ['$scope',"coordinador", 'coordinadorRemoteResource', '$location',"$log","$route", function($scope,coordinador, coordinadorRemoteResource, $location, $log, $route) {
         $log.log("entrando EditCoordinadorController");
-        //$scope.coordinador = coordinador;
-        
-        var paramValue = $route.current.$$route.paramExample;
-            $log.log(paramValue);
-        /*
-        $scope.otroGato=function(){
-            $log.log("dio click");
-            
-            var invCoordinadorId={
-                idInvestigacion:"INV1700001",
-                idCoordinador: "COD1700002"
-            };
-            
-            coordinadorRemoteResource.get(invCoordinadorId)
-                .then(function(invCoordinadorRespond) {
-                    $log.log("get invCoordinadorId");
-                    $log.log(invCoordinadorRespond);
-
+        $scope.coordinador = coordinador;
+        $scope.nombreBoton="Editar";
+        $scope.guardar = function() {
+            //if ($scope.form.$valid) {
+                $scope.coordinador.usuarioModifica="user1";
+                $scope.coordinador.fechaModificacion=new Date();
+                coordinadorRemoteResource.update($scope.coordinador)
+                .then(function(coordinadorResult) {
+                    //$location.path("coordinadorEdit"+coordinadorResult.idProducto);
                 }, function(bussinessMessages) {
-                    $scope.bussinessMessages = bussinessMessages;
+                    //$scope.bussinessMessages = bussinessMessages;
                 });
-        };*/
+            /*} else {
+                alert("Hay datos inválidos");
+            }*/
+        };
 }]);

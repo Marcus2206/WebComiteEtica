@@ -14,15 +14,14 @@ app.config(['$routeProvider',"$locationProvider",function($routeProvider,$locati
        }
      });
 
-    $routeProvider.when('/coordinadorEdit', {
+    $routeProvider.when('/coordinadorEdit/:idCoordinador', {
         templateUrl: "coordinador/coordinadorEdit.html",
-        controller: "EditCoordinadorController"/*,
+        controller: "EditCoordinadorController",
         resolve: {
-            coordinador:['remoteResource','$scope',function(remoteResource,$scope) {
-                return remoteResource.get($scope.coordinador.idCoordinador);
+                coordinador:['coordinadorRemoteResource','$route',function(coordinadorRemoteResource,$route) {
+                return coordinadorRemoteResource.get($route.current.params.idCoordinador);
             }]
-        }*/
-        ,paramExample: '-'
+        }
     });
 
     $routeProvider.when('/coordinadorNew', {

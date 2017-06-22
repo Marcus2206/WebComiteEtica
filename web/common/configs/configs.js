@@ -17,3 +17,9 @@ app.config(['baseUrl', 'coordinadorRemoteResourceProvider',
     coordinadorRemoteResourceProvider.setBaseUrl(baseUrl);
   }
 ]);
+
+app.config(['baseUrl', 'investigacionCoordinadorRemoteResourceProvider',
+  function(baseUrl, investigacionCoordinadorRemoteResourceProvider) {
+    investigacionCoordinadorRemoteResourceProvider.setBaseUrl(baseUrl);
+  }
+]);

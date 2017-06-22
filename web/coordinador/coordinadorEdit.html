@@ -6,25 +6,25 @@
     <div>
       <!-- editable username (text with validation) -->
       <span class="title">Ap. Paterno:  </span>
-      <span editable-text="coordinador.apePaterno" e-name="coordinador.apePaterno" e-required>{{ coordinador.apePaterno || 'empty' }}</span>
+      <span editable-text="coordinador.apePaterno" e-name="coordinador.apePaterno" e-required>{{ coordinador.apePaterno || '' }}</span>
     </div> 
     
     <div>
       <!-- editable username (text with validation) -->
       <span class="title">Ap. Materno: </span>
-      <span editable-text="coordinador.apeMaterno" e-name="coordinador.apeMaterno" e-required>{{ coordinador.apeMaterno || 'empty' }}</span>
+      <span editable-text="coordinador.apeMaterno" e-name="coordinador.apeMaterno" e-required>{{ coordinador.apeMaterno || '' }}</span>
     </div> 
         
     <div>
       <!-- editable username (text with validation) -->
       <span class="title">Nombres:  </span>
-      <span editable-text="coordinador.nombres" e-name="coordinador.nombres" e-required>{{ coordinador.nombres || 'empty' }}</span>
+      <span editable-text="coordinador.nombres" e-name="coordinador.nombres" e-required>{{ coordinador.nombres || '' }}</span>
     </div> 
     
     <div class="buttons">
       <!-- button to show form -->
       <button type="button" class="btn btn-default" ng-click="editableForm.$show()" ng-show="!editableForm.$visible">
-        Editar
+        {{nombreBoton}}
       </button>
       <!-- buttons to submit / cancel form -->
       <span ng-show="editableForm.$visible">

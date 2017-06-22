@@ -1,0 +1,120 @@
+<div>
+    
+    <!--<input id="idProducto" name="idProducto" type="text" ng-model="producto.idProducto" /><br>-->
+    <form editable-form name="editableForm" onaftersave="guardar()">
+    <legend>Datos de la investigacion</legend>
+    <div>
+      <!-- editable username (text with validation) -->
+      <span class="title">idInvestigacion: rs </span>
+      <!--<span class="uneditable-input" class="form-control-static" editable-text="investigacion.idInvestigacion" e-name="investigacion.idInvestigacion" readonly></span>-->
+      <span e-name="investigacion.idInvestigacion" class="uneditable-input">{{ investigacion.idInvestigacion || '' }}</span>
+    </div> 
+    
+    <div>
+      <!-- editable username (text with validation) -->
+      <span class="title">protocolo: </span>
+      <span editable-text="investigacion.protocolo" e-name="investigacion.protocolo" e-required>{{ investigacion.protocolo || '' }}</span>
+    </div> 
+        
+    <div>
+      <!-- editable username (text with validation) -->
+      <span class="title">titulo  </span>
+      <span editable-text="investigacion.titulo" e-name="investigacion.titulo" e-required>{{ investigacion.titulo || '' }}</span>
+    </div> 
+    
+        <div>
+      <!-- editable username (text with validation) -->
+      <span class="title">paramEspecialidad  </span>
+      <span editable-text="investigacion.paramEspecialidad" e-name="investigacion.paramEspecialidad" e-required>{{ investigacion.paramEspecialidad || '' }}</span>
+    </div> 
+    
+    <div>
+      <!-- editable username (text with validation) -->
+      <span class="title">paramFase  </span>
+      <span editable-text="investigacion.paramFase" e-name="investigacion.paramFase" e-required>{{ investigacion.paramFase || '' }}</span>
+    </div> 
+    
+    <div>
+      <!-- editable username (text with validation) -->
+      <span class="title">paramTipoInvestigacion  </span>
+      <span editable-text="investigacion.paramTipoInvestigacion" e-name="investigacion.paramTipoInvestigacion" e-required>{{ investigacion.paramTipoInvestigacion || '' }}</span>
+    </div> 
+
+    <div class="buttons">
+      <!-- button to show form -->
+      <button type="button" class="btn btn-default" ng-click="editableForm.$show()" ng-show="!editableForm.$visible">
+        {{nombreBoton}}
+      </button>
+      <!-- buttons to submit / cancel form -->
+      <span ng-show="editableForm.$visible">
+        <button type="submit" class="btn btn-primary" ng-disabled="editableForm.$waiting">
+          Guardar
+        </button>
+        <button type="button" class="btn btn-default" ng-disabled="editableForm.$waiting" ng-click="editableForm.$cancel()">
+          Cancelar
+        </button>
+      </span>
+    </div>
+    </form> 
+    <br>
+    
+  <form data-editable-form name="uiSelectForm" onaftersave="agregarCoordinador()" >
+    <legend>Coordinadores</legend>
+    <div editable-ui-select="coordinadorSelect" data-e-form="uiSelectForm" data-e-name="coordinadorSelect" name="coordinadorSelect" theme="bootstrap" data-e-ng-model="coordinadorSelect" data-e-style="min-width:300px;">
+      <!--{{user.state}}-->
+      <editable-ui-select-match placeholder="Coordinador">
+         {{$select.selected.apePaterno}}
+      </editable-ui-select-match>
+      <editable-ui-select-choices repeat="coordinador in coordinadorsSelectList | filter: $select.search track by $index">
+        {{coordinador.apePaterno}}
+      </editable-ui-select-choices>
+    </div>
+    <br>
+    <div>
+        <span editable-text="coordinadorSelect.observacion" placeholder="Observaciones" e-name="coordinadorSelect.observacion" e-required>{{ coordinadorSelect.observacion || '' }}</span>
+    </div>
+    <br>
+    <div class="buttons">
+      <!-- button to show form -->
+      <button type="button" class="btn btn-default" ng-click="uiSelectForm.$show()" ng-show="!uiSelectForm.$visible">
+        Buscar
+      </button>
+      <!-- buttons to submit / cancel form -->
+      <span ng-show="uiSelectForm.$visible">
+        <br/>
+        <button type="submit" class="btn btn-primary" ng-disabled="uiSelectForm.$waiting">
+          Agregar
+        </button>
+        <button type="button" class="btn btn-default" ng-disabled="uiSelectForm.$waiting" ng-click="uiSelectForm.$cancel()">
+          Cancelar
+        </button>
+      </span>
+    </div>
+  </form>
+
+    <table>
+        <thead>
+            <th>id Investigacion</th>
+            <th>id Coordinador</th>
+            <th>Apellidos y Nombres</th>
+            <th>Observacion</th>
+        </thead>
+        <tbody>
+            <tr ng-repeat="coordinador in investigacionCoordinadors  | toArray | orderBy:'idCoordinador'">
+                <!--<td>{{coordinador.id.idInvestigacion}}</td>
+                <td>{{coordinador.id.idCoordinador}}</td>
+                <td>{{coordinador.observacion}} </td>-->
+                <td>{{coordinador[0].id.idInvestigacion}}</td>
+                <td>{{coordinador[0].id.idCoordinador}}</td>
+                <td>{{coordinador[1].apePaterno}} </td>
+                <td>{{coordinador[0].observacion}}</td>
+                
+                
+            </tr>
+        </tbody>
+    </table>
+    
+    <br>
+    <a ng-href="#/investigacionList">Volver</a>
+
+</div>

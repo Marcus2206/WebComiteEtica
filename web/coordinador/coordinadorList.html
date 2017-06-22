@@ -3,11 +3,12 @@
 
 <table>
     <tr ng-repeat="coordinador in coordinadors | empezarDe : currentPage*pageSize | limitTo:pageSize">
-        <td><button ng-click="coordinadorEdit(coordinador.idCoordinador)">{{coordinador.idCoordinador}}</button></td>
+        <td><a ng-href="#/coordinadorEdit/{{coordinador.idCoordinador}}">{{coordinador.idCoordinador}}</button></td>
         <td>{{coordinador.apePaterno}}</td>
         <td>{{coordinador.apeMaterno}}</td>
         <td>{{coordinador.nombres}}</td>
-        <td><button ng-click="borrarCoordinador(coordinador)">Borrar</button></td>
+        <td><button type="button" class="btn btn-danger" ng-click="delete(coordinador)">borrar</button></td>
+        
     </tr>
 </table>
  <button ng-disabled="currentPage === 0" ng-click="currentPage=currentPage-1">
