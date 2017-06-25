@@ -1,12 +1,53 @@
 var app=angular.module("app");
 
-app.controller("EditInvestigacionController", ['$scope', 'investigacion', 'investigacionRemoteResource','coordinadorRemoteResource', 'investigacionCoordinadorRemoteResource', '$location',"$log", function($scope, investigacion, investigacionRemoteResource,coordinadorRemoteResource,investigacionCoordinadorRemoteResource, $location, $log) {
-        $scope.investigacion = investigacion;
+app.controller("EditInvestigacionController", ['$scope', 'investigacion','parametros','investigacionRemoteResource','coordinadorRemoteResource', 'investigacionCoordinadorRemoteResource', '$location',"$log", '$filter', function($scope, investigacion, parametros, investigacionRemoteResource,coordinadorRemoteResource,investigacionCoordinadorRemoteResource, $location, $log, $filter) {
+        
+        $scope.parametros=parametros;
+        
         $scope.investigacionCoordinadors=[];
         $scope.nombreBoton="Editar";
+        $scope.deshabilitado=false;
         $scope.coordinadorsSelectList=[];
         $scope.coordinadorSelect={};
         
+        $scope.filtrar=function(obj,param){
+            function filterByParametro(obj) {
+            if (obj.idParametro===param) {
+                return obj;
+              } 
+            }
+            return obj.filter(filterByParametro);
+        };
+        
+        $scope.mostrarParam=function(obj,param){
+            function filterByParametroDetalle(obj) {
+            if (obj.id.idParametroDetalle===param) {
+                return obj;
+              } 
+            }
+            return obj.filter(filterByParametroDetalle);
+        };
+        
+        $scope.paramEspecialidad=$scope.filtrar($scope.parametros,'P003')[0].parametroDetalles;
+        $scope.paramFase=$scope.filtrar($scope.parametros,'P005')[0].parametroDetalles;
+        $scope.paramTipoInvestigacion=$scope.filtrar($scope.parametros,'P004')[0].parametroDetalles;
+
+        $scope.investigacion = investigacion;
+        //investigacion.paramEspecialidad
+//        $scope.showParam = function(parametro,detalle) {
+//            return $scope.filtrar(parametro)
+//        };
+
+        $scope.showParam = function(obj,param) {
+            var seleccionado=$scope.mostrarParam(obj,param);
+            if(seleccionado.length>0){
+                return seleccionado[0].descripcion;
+            }else{
+                return '';
+            }
+            
+        };
+  
         $scope.guardar=function(){
             $scope.investigacion.usuarioModifica="sa";
             $scope.investigacion.fechaModificacion=new Date();
@@ -29,29 +70,13 @@ app.controller("EditInvestigacionController", ['$scope', 'investigacion', 'inves
         
         investigacionCoordinadorRemoteResource.listCoordinadorByIdInvestigacion($scope.investigacion.idInvestigacion)
                 .then(function(coordinadorsRespond) {
-                    //$scope.coordinadors=coordinadorsRespond;
-//                    $log.log("coordinadorsRespond[0]");
-//                    $log.log(coordinadorsRespond[0]);
-//                    $log.log("coordinadorsRespond[0][0]");
-//                    $log.log(coordinadorsRespond[0][0]);
                     $scope.investigacionCoordinadors=coordinadorsRespond;
-//                    $log.log("coordinadorsRespond[1]");
-//                    $log.log(coordinadorsRespond[1]);
                 }, function(bussinessMessages) {
                     $scope.bussinessMessages = bussinessMessages;
                     //Mensaje de error
                 });
         
-        
-//        coordinadorRemoteResource.listCoordinadorSinIdInvestigacionFind($scope.investigacion.idInvestigacion)
-//        .then(function(coordinadorsRespond) {
-//            $scope.coordinadors=coordinadorsRespond;
-//        }, function(bussinessMessages) {
-//            $scope.bussinessMessages = bussinessMessages;
-//            //Mensaje de error
-//        });
         $scope.agregarCoordinador=function(){
-            //$log.log($scope.coordinador);
             $scope.investigacionCoordinador={id:{ idInvestigacion:"",
                                               idCoordinador:""},
                                         observacion:"",
@@ -64,7 +89,6 @@ app.controller("EditInvestigacionController", ['$scope', 'investigacion', 'inves
             $scope.investigacionCoordinador.usuarioIngresa="sa";
             $scope.investigacionCoordinador.fechaIngreso=new Date();
             
-            $log.log($scope.coordinadorSelect);
             investigacionCoordinadorRemoteResource.insert($scope.investigacionCoordinador)
               .then(function (invCoordRespond){
                     var ic=$scope.investigacionCoordinador;
@@ -73,13 +97,30 @@ app.controller("EditInvestigacionController", ['$scope', 'investigacion', 'inves
                                         ic,
                                         c
                                         ];
-                    
-                    $log.log($scope.investigacionCoordinadors[0]);
-                    $log.log(invCoordinador);                   
+                                     
                     $scope.investigacionCoordinadors.push(invCoordinador);
                     $scope.coordinadorsSelectList.splice($scope.coordinadorsSelectList.indexOf($scope.coordinadorSelect),1);
                     $scope.coordinadorSelect={}; 
                     $scope.coordinadorSelect.observacion="";
+            },function(bussinessMessages){
+
+            });
+        };
+        
+        $scope.eliminarInvCoordinador=function(invCoordinador){
+            investigacionCoordinadorRemoteResource.delete(invCoordinador[0])
+              .then(function (invCoordinadorRespond){  
+                    $scope.coordinadorsSelectList.push(invCoordinador[1]);
+                    $scope.investigacionCoordinadors.splice($scope.investigacionCoordinadors.indexOf(invCoordinador),1);
+            },function(bussinessMessages){
+
+            });
+        };
+        
+        $scope.actualizarInvCoordinador=function(invCoordinador){
+            investigacionCoordinadorRemoteResource.update(invCoordinador[0])
+              .then(function (invCoordinadorRespond){
+                  
             },function(bussinessMessages){
 
             });
@@ -119,10 +160,27 @@ app.controller("ListInvestigacionController", ['$scope', "investigacions", "inve
         
 }]);
 
-app.controller("NewInvestigacionController", ['$scope', 'investigacionRemoteResource', '$location',"$log", function($scope, investigacionRemoteResource, $location, $log) {
+app.controller("NewInvestigacionController", ['$scope', 'investigacionRemoteResource', 'parametros', '$location',"$log", function($scope, investigacionRemoteResource, parametros, $location, $log) {
+        $scope.filtrar=function(obj,param){
+            function filterByParametro(obj) {
+            if (obj.idParametro===param) {
+                return obj;
+              } 
+            }
+            return obj.filter(filterByParametro);
+        };
         
         $scope.nombreBoton="Nuevo";
+        $scope.deshabilitado=true;
+        $scope.parametros=parametros;
+        $scope.paramEspecialidad=$scope.filtrar($scope.parametros,'P003')[0].parametroDetalles;
+        $scope.paramFase=$scope.filtrar($scope.parametros,'P005')[0].parametroDetalles;
+        $scope.paramTipoInvestigacion=$scope.filtrar($scope.parametros,'P004')[0].parametroDetalles;
         
+//        
+//        $log.log("final ");
+//        $log.log($scope.paramTipoInvestigacion);
+//        $log.log($scope.paramTipoInvestigacion[0].id);
         /*Se construyer el json*/
         $scope.investigacion = {
             idInvestigacion: "" ,

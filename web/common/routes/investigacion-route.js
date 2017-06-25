@@ -6,16 +6,24 @@ app.config(['$routeProvider',"$locationProvider",function($routeProvider,$locati
   
     $routeProvider.when('/investigacionNew', {
         templateUrl: "investigacion/investigacionEdit.html",
-        controller: "NewInvestigacionController"
+        controller: "NewInvestigacionController",
+        resolve: {
+          parametros:['parametroRR',function(parametroRR) {
+            return parametroRR.list();
+          }]
+        }
     });
 
     $routeProvider.when('/investigacionEdit/:idInvestigacion', {
         templateUrl: "investigacion/investigacionEdit.html",
         controller: "EditInvestigacionController",
         resolve: {
-          investigacion:['investigacionRemoteResource','$route',function(investigacionRemoteResource,$route) {
-            return investigacionRemoteResource.get($route.current.params.idInvestigacion);
-          }]
+            investigacion:['investigacionRemoteResource','$route',function(investigacionRemoteResource,$route) {
+                return investigacionRemoteResource.get($route.current.params.idInvestigacion);
+            }],
+            parametros:['parametroRR',function(parametroRR) {
+                return parametroRR.list();
+            }]
         }
     });
     $routeProvider.when('/investigacionList', {

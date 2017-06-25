@@ -28,3 +28,12 @@ app.filter('toArray', function () {
   };
 });
 
+//app.filter('filtrarParametros',function(obj,param){
+//    function filterByParametro(obj) {
+//    if (obj.idParametro===param) {
+//        return obj;
+//      } 
+//    }
+//    return obj.filter(filterByParametro);
+//});
+
