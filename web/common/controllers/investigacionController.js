@@ -33,6 +33,7 @@ app.controller("EditInvestigacionController", ['$scope', 'investigacion','parame
         $scope.paramTipoInvestigacion=$scope.filtrar($scope.parametros,'P004')[0].parametroDetalles;
 
         $scope.investigacion = investigacion;
+
         //investigacion.paramEspecialidad
 //        $scope.showParam = function(parametro,detalle) {
 //            return $scope.filtrar(parametro)

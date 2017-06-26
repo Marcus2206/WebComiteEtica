@@ -46,17 +46,31 @@
         </span>
     </div>-->
     
+    <div class="input-group">
+        <span class="input-group-addon">Fase</span>
+        <select ng-disabled="!editableForm.$visible" class="form-control" ng-model="investigacion.paramFase">
+            <option ng-repeat="pd in paramFase" value="{{pd.id.idParametroDetalle}}">{{pd.descripcion}}</option>
+        </select>
+        <span class="input-group-addon"></span>
+    </div>
+    <!--
     <div>
-      <!-- editable username (text with validation) -->
       <span class="title">paramFase  </span>
       <span editable-select="investigacion.paramFase" e-ng-options="pd.id.idParametroDetalle as pd.descripcion for pd in paramFase ">
             {{showParam(paramFase,investigacion.paramFase)}}
       </span>
-    </div> 
+    </div> -->
+ <!--
+    <div class="input-group">
+        <span class="input-group-addon">Tipo de Investigación</span>
+        <select ng-disabled="!editableForm.$visible" class="form-control" ng-model="investigacion.paramTipoInvestigacion">
+            <option ng-repeat="pd in paramTipoInvestigacion" value="{{pd.id.idParametroDetalle}}">{{pd.descripcion}}</option>
+        </select>
+        <span class="input-group-addon"></span>
+    </div>-->
     
-    <div>
-      <!-- editable username (text with validation) -->
-      <span class="title">paramTipoInvestigacion  </span>
+    <div class="input-group">
+        <span class="title" style="vertical-align: middle">paramTipoInvestigacion  </span>
       <span editable-select="investigacion.paramTipoInvestigacion" e-ng-options="pd.id.idParametroDetalle as pd.descripcion for pd in paramTipoInvestigacion ">
            {{showParam(paramTipoInvestigacion,investigacion.paramTipoInvestigacion)}} 
       </span>
@@ -155,23 +169,7 @@
             </tr>
         </tbody>
     </table>
-    <br><br>
-    <!--
-    <div class="container-fluid" >
-        <div class="row">
-            <div class="col col-md-4">
-                1
-            </div>
-            <div class="col col-md-4">
-                2
-            </div>
-            <div class="col col-md-4">
-                3
-            </div>
-        </div>
-    </div>-->
-    
-    
+    <br><br>  
     
     <form editable-form name="editableFormCoordinadors" ng-repeat-start="invCoordinador in investigacionCoordinadors | orderBy:'idCoordinador'" onaftersave="guardar()">
         <div class="row">
@@ -210,11 +208,7 @@
         
     </form>
     <div ng-repeat-end class="h-divider"></div>
-    
-    
-    
-    
-    
+
     <br>
     <br>
     <br>
