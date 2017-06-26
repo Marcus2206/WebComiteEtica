@@ -1,0 +1,31 @@
+<div>
+    
+    <!--<input id="idProducto" name="idProducto" type="text" ng-model="producto.idProducto" /><br>-->
+    <form editable-form name="editableForm" onaftersave="guardar()">
+    <legend>Datos de la Investigacion Coordinador</legend>
+    <div>
+      <!-- editable username (text with validation) -->
+      <span class="title">Observacion:  </span>
+      <span editable-text="investigacionCoordinador.observacion" e-name="investigacionCoordinador.observacion" e-required>{{ investigacionCoordinador.observacion || '' }}</span>
+    </div> 
+    
+    <div class="buttons">
+      <!-- button to show form -->
+      <button type="button" class="btn btn-default" ng-click="editableForm.$show()" ng-show="!editableForm.$visible">
+        {{nombreBoton}}
+      </button>
+      <!-- buttons to submit / cancel form -->
+      <span ng-show="editableForm.$visible">
+        <button type="submit" class="btn btn-primary" ng-disabled="editableForm.$waiting">
+          Guardar
+        </button>
+        <button type="button" class="btn btn-default" ng-disabled="editableForm.$waiting" ng-click="editableForm.$cancel()">
+          Cancelar
+        </button>
+      </span>
+    </div>
+    </form> 
+    <br>
+    <a ng-href="#/investigacionCoordinadorList">Volver</a>
+
+</div>

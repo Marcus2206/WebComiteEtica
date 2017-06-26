@@ -4,20 +4,36 @@ app.config(['$routeProvider',"$locationProvider",function($routeProvider,$locati
     /*Ruta referente a Investigación*/
     $locationProvider.hashPrefix("");
   
-    $routeProvider.when('/investigacionCoordinadorRead', {
-        templateUrl: "investigacion/investigacionRead.html",
-        controller: "ReadInvestigacionCoordinadorController",
+    $routeProvider.when('/investigacionNew', {
+        templateUrl: "investigacion/investigacionEdit.html",
+        controller: "NewInvestigacionController",
         resolve: {
-          investigacionCoordinador:['investigacionRemoteResource',function(investigacionRemoteResource) {
-
-            var data=   {
-                            idInvestigacion:"INV1700001",
-                            idCoordinador: "COD1700001"
-                        };
-            return investigacionRemoteResource.get(data);
+          parametros:['parametroRR',function(parametroRR) {
+            return parametroRR.list();
           }]
         }
     });
 
+    $routeProvider.when('/investigacionEdit/:idInvestigacion', {
+        templateUrl: "investigacion/investigacionEdit.html",
+        controller: "EditInvestigacionController",
+        resolve: {
+            investigacion:['investigacionRemoteResource','$route',function(investigacionRemoteResource,$route) {
+                return investigacionRemoteResource.get($route.current.params.idInvestigacion);
+            }],
+            parametros:['parametroRR',function(parametroRR) {
+                return parametroRR.list();
+            }]
+        }
+    });
+    $routeProvider.when('/investigacionList', {
+       templateUrl: "investigacion/investigacionList.html",
+       controller: "ListInvestigacionController",
+       resolve:{
+            investigacions:['investigacionRemoteResource',function(investigacionRemoteResource) {
+                return investigacionRemoteResource.list();
+            }]
+       }
+     });
 }]);
 

@@ -1,11 +1,10 @@
 
-function CoordinadorRemoteResource($http,$q, baseUrl,$log) {
+function InvestigacionCoordinadorRemoteResource($http,$q, baseUrl,$log) {
 
-    this.insert = function(coordinador) {
+    this.insert = function(invCoordinador) {
         var defered=$q.defer();
         var promise=defered.promise;
-        $log.log("entró insert CoordinadorRemoteResource");
-        $http.post(baseUrl + '/api/CoordinadorInsert',coordinador)
+        $http.post(baseUrl + '/api/InvestigacionCoordinadorInsert',invCoordinador)
         .then(function onSuccess(response){
             defered.resolve(response.data);
         })
@@ -22,11 +21,10 @@ function CoordinadorRemoteResource($http,$q, baseUrl,$log) {
     };
   
     this.list = function() {
-        $log.log("entró listCoordinadorRemoteResource");
         var defered=$q.defer();
         var promise=defered.promise;
   
-        $http.get(baseUrl + '/api/CoordinadorFindAll')
+        $http.get(baseUrl + '/api/InvestigacionCoordinadorFindAll')
         .then(function onSuccess(response){
             defered.resolve(response.data);
         })
@@ -42,11 +40,10 @@ function CoordinadorRemoteResource($http,$q, baseUrl,$log) {
         return promise;
     };
   
-    this.get = function(idCoordinador) {
+    this.get = function(id) {
         var defered=$q.defer();
         var promise=defered.promise;
-        $log.log("entró get CoordinadorRemoteResource");
-        $http.get(baseUrl + '/api/CoordinadorRead/'+idCoordinador)
+        $http.get(baseUrl + '/api/InvestigacionCoordinadorRead/'+id.idInvestigacion+"/"+id.idCoordinador)
         .then(function onSuccess(response){
             defered.resolve(response.data);
         })
@@ -62,11 +59,10 @@ function CoordinadorRemoteResource($http,$q, baseUrl,$log) {
         return promise;
     };
   
-    this.update = function(coordinador) {
+    this.update = function(invCoordinador) {
         var defered=$q.defer();
         var promise=defered.promise;
-        $log.log("entró update CoordinadorRemoteResource");
-        $http.put(baseUrl + '/api/CoordinadorUpdate',coordinador)
+        $http.put(baseUrl + '/api/InvestigacionCoordinadorUpdate',invCoordinador)
         .then(function onSuccess(response){
             defered.resolve(response.data);
         })
@@ -82,11 +78,10 @@ function CoordinadorRemoteResource($http,$q, baseUrl,$log) {
         return promise;
     };
     
-    this.delete = function(coordinador) {
+    this.delete = function(invCoordinador) {
         var defered=$q.defer();
         var promise=defered.promise;
-        $log.log("entró update CoordinadorRemoteResource");
-        $http.put(baseUrl + '/api/CoordinadorDelete',coordinador)
+        $http.put(baseUrl + '/api/InvestigacionCoordinadorDelete',invCoordinador)
         .then(function onSuccess(response){
             defered.resolve(response.data);
         })
@@ -103,16 +98,17 @@ function CoordinadorRemoteResource($http,$q, baseUrl,$log) {
         return promise;
     };
     
-    this.listCoordinadorSinIdInvestigacionFind = function(idInvestigacion) {
+    this.listCoordinadorByIdInvestigacion = function(idInvestigacion) {
         var defered=$q.defer();
         var promise=defered.promise;
   
-        $http.get(baseUrl + '/api/CoordinadorSinIdInvestigacionFind/'+idInvestigacion)
+        $http.get(baseUrl + '/api/InvestigacionCoordinadorByIdInvestigacionFind/'+idInvestigacion)
         .then(function onSuccess(response){
             defered.resolve(response.data);
         })
         .catch(function onCatch(response){
             defered.reject(response.data);
+            
             /*if (response.status === 400) {
                     defered.reject(response.data);
             } else {

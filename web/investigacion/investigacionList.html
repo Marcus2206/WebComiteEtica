@@ -1,0 +1,23 @@
+
+<a href="#/investigacionNew" >Crear investigacion</a>
+
+<table>
+    <tr ng-repeat="investigacion in investigacions | empezarDe : currentPage*pageSize | limitTo:pageSize">
+        <td><a ng-href="#/investigacionEdit/{{investigacion.idInvestigacion}}">{{investigacion.idInvestigacion}}</button></td>
+        <td>{{investigacion.protocolo}}</td>
+        <td>{{investigacion.titulo}}</td>
+        <td>{{investigacion.paramEspecialidad}}</td>
+        <td>{{investigacion.paramFase}}</td>
+        <td>{{investigacion.paramTipoInvestigacion}}</td>
+        <td><button type="button" class="btn btn-danger" ng-click="delete(investigacion)">borrar</button></td>
+        
+    </tr>
+</table>
+ <button ng-disabled="currentPage === 0" ng-click="currentPage=currentPage-1">
+    Ant.
+</button>
+{{currentPage+1}}/{{numberOfPages()}}
+<!--<button ng-disabled="paginacion.inicia >= productos.length/paginacion.max - 1" ng-click="paginacion.inicia=paginacion.inicia+1">-->
+<button ng-disabled="currentPage >= investigacions.length/pageSize - 1" ng-click="setNextPagina()">
+    Sgte.
+</button>

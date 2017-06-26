@@ -7,5 +7,4 @@
 var app=angular.module("app");
 
 app.controller("MainController", ['$scope','$log',function($scope,$log) {
-        $log.log("Main controller");
 }]);
