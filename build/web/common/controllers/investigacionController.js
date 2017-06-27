@@ -18,15 +18,15 @@ app.controller("EditInvestigacionController", ['$scope', 'investigacion','parame
             }
             return obj.filter(filterByParametro);
         };
-        
-        $scope.mostrarParam=function(obj,param){
-            function filterByParametroDetalle(obj) {
-            if (obj.id.idParametroDetalle===param) {
-                return obj;
-              } 
-            }
-            return obj.filter(filterByParametroDetalle);
-        };
+//        
+//        $scope.mostrarParam=function(obj,param){
+//            function filterByParametroDetalle(obj) {
+//            if (obj.id.idParametroDetalle===param) {
+//                return obj;
+//              } 
+//            }
+//            return obj.filter(filterByParametroDetalle);
+//        };
         
         $scope.paramEspecialidad=$scope.filtrar($scope.parametros,'P003')[0].parametroDetalles;
         $scope.paramFase=$scope.filtrar($scope.parametros,'P005')[0].parametroDetalles;
@@ -39,15 +39,15 @@ app.controller("EditInvestigacionController", ['$scope', 'investigacion','parame
 //            return $scope.filtrar(parametro)
 //        };
 
-        $scope.showParam = function(obj,param) {
-            var seleccionado=$scope.mostrarParam(obj,param);
-            if(seleccionado.length>0){
-                return seleccionado[0].descripcion;
-            }else{
-                return '';
-            }
-            
-        };
+//        $scope.showParam = function(obj,param) {
+//            var seleccionado=$scope.mostrarParam(obj,param);
+//            if(seleccionado.length>0){
+//                return seleccionado[0].descripcion;
+//            }else{
+//                return '';
+//            }
+//            
+//        };
   
         $scope.guardar=function(){
             $scope.investigacion.usuarioModifica="sa";
@@ -69,6 +69,7 @@ app.controller("EditInvestigacionController", ['$scope', 'investigacion','parame
                     //Mensaje de error
                 });
         
+        /*Detalle de Investigación con Coordinador*/
         investigacionCoordinadorRemoteResource.listCoordinadorByIdInvestigacion($scope.investigacion.idInvestigacion)
                 .then(function(coordinadorsRespond) {
                     $scope.investigacionCoordinadors=coordinadorsRespond;
@@ -92,17 +93,15 @@ app.controller("EditInvestigacionController", ['$scope', 'investigacion','parame
             
             investigacionCoordinadorRemoteResource.insert($scope.investigacionCoordinador)
               .then(function (invCoordRespond){
-                    var ic=$scope.investigacionCoordinador;
-                    var c=$scope.coordinadorSelect;
-                    var invCoordinador=[
-                                        ic,
-                                        c
-                                        ];
-                                     
-                    $scope.investigacionCoordinadors.push(invCoordinador);
-                    $scope.coordinadorsSelectList.splice($scope.coordinadorsSelectList.indexOf($scope.coordinadorSelect),1);
-                    $scope.coordinadorSelect={}; 
-                    $scope.coordinadorSelect.observacion="";
+//                    var ic=$scope.investigacionCoordinador;
+//                    var c=$scope.coordinadorSelect;
+//                    var invCoordinador=[ic,c];
+                    
+                    $location.path("investigacionEdit/"+$scope.investigacion.idInvestigacion);                
+//                    $scope.investigacionCoordinadors.push(invCoordinador);
+//                    $scope.coordinadorsSelectList.splice($scope.coordinadorsSelectList.indexOf($scope.coordinadorSelect),1);
+//                    $scope.coordinadorSelect={}; 
+//                    $scope.coordinadorSelect.observacion="";
             },function(bussinessMessages){
 
             });

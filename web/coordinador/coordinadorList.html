@@ -32,7 +32,8 @@
                     <td>{{coordinador.apeMaterno}}</td>
                     <td>{{coordinador.nombres}}</td>
                     <td>
-                        <div class="btn-group"><button ng-click='' type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <div class="btn-group">
+                            <button ng-click='' type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 Seleccione <span class="caret"></span>
                             </button>
                             <ul class="dropdown-menu">
@@ -40,7 +41,7 @@
                                 <li><a href="" data-toggle="modal" data-target="#newMyModal{{coordinador.idCoordinador}}">Borrar</a></li>
                             </ul>
                         </div>
-                    <ng-include src="'coordinador/coordinadorEdit.html'" ></ng-include>
+                        <ng-include src="'coordinador/coordinadorEdit.html'" ></ng-include>
                     </td>
                 </tr>
             </tbody>
@@ -53,7 +54,6 @@
                                     <span aria-hidden="true">&laquo;</span>
                                 </button>
                                 {{currentPage + 1}}/{{numberOfPages()}}
-                                <!--<button ng-disabled="paginacion.inicia >= productos.length/paginacion.max - 1" ng-click="paginacion.inicia=paginacion.inicia+1">-->
                                 <button ng-disabled="currentPage >= coordinadors.length / pageSize - 1" ng-click="setNextPagina()" class="btn btn-default">
                                     <span aria-hidden="true">&raquo;</span>
                                 </button>

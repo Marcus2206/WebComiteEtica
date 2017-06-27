@@ -1,25 +1,77 @@
 <div>
     
-    <form editable-form name="editableForm" onaftersave="guardar()">
     <legend>Datos de la investigación</legend>
     
-    <div class="input-group">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="form-group">
+                <label for="idInvestigacion">Id. Investigación:  </label><br>
+                <input readonly type="text" class="form-control" id="idInvestigacion"  placeholder="Id. investigación" ng-model="investigacion.idInvestigacion" value="{{ investigacion.idInvestigacion || '' }}">
+            </div> 
+            
+            <div class="form-group">
+                <label for="protocolo">Protocolo:  </label><br>
+                <input type="text" class="form-control" id="protocolo"  placeholder="Ingresar protocolo" ng-model="investigacion.protocolo" value="{{ investigacion.protocolo || '' }}">
+            </div> 
+            
+            <div class="form-group">
+                <label for="titulo">Título:  </label><br>
+                <input type="text" class="form-control" id="titulo"  placeholder="Ingresar título" ng-model="investigacion.titulo" value="{{ investigacion.titulo || '' }}">
+            </div> 
+            
+            <div class="form-group">
+                <label for="paramEspecialidad">Especialidad:  </label><br>
+                <select class="form-control" id="paramEspecialidad" ng-model="investigacion.paramEspecialidad">
+                    <!--<option value="" selected disabled > Seleccionar </option>-->
+                    <option ng-repeat="pd in paramEspecialidad" value="{{pd.id.idParametroDetalle}}">{{pd.descripcion}}</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="paramFase">Fase:  </label><br>
+                <select id="paramFase" class="form-control" ng-model="investigacion.paramFase">
+                    <!--<option value="" selected disabled > Seleccionar </option>-->
+                    <option ng-repeat="pd in paramFase" value="{{pd.id.idParametroDetalle}}">{{pd.descripcion}}</option>
+                </select>
+            </div>
+                               
+            <div class="form-group">
+                <label for="paramTipoInvestigacion">Tipo de Investigación:  </label><br>
+                <select  id="paramTipoInvestigacion" class="form-control" ng-model="investigacion.paramTipoInvestigacion">
+                    <!--<option value="" selected disabled > Seleccionar </option>-->
+                    <option ng-repeat="pd in paramTipoInvestigacion" value="{{pd.id.idParametroDetalle}}">{{pd.descripcion}}</option>
+                </select>
+            </div>
+            
+            <button type="submit" class="btn btn-primary" ng-click="guardar()">
+                Guardar
+            </button>
+        </div>
+            
+    </div>
+    
+    
+    
+    
+        <!--<form editable-form name="editableForm" onaftersave="guardar()">-->
+   
+    <!--<div class="input-group">
         <span class="input-group-addon">Id. Investigación</span>
         <input readonly id="investigacion.idInvestigacion" type="text" placeholder="Id Investigación" class="form-control" name="investigacion.idInvestigacion" value="{{ investigacion.idInvestigacion || '' }}">
         <span class="input-group-addon"></span>
-    </div>
-    
+    </div>-->
+    <!--
     <div class="input-group">
         <span class="input-group-addon">Protocolo</span>
         <input readonly editable-text="investigacion.protocolo" placeholder="Ingresar Protocolo" e-name="investigacion.protocolo" id="investigacion.protocolo" type="text" class="form-control" value="{{ investigacion.protocolo || '' }}">
         <span class="input-group-addon"></span>
-    </div>
-
+    </div>-->
+<!--
     <div class="input-group">
         <span class="input-group-addon">Título</span>
         <input readonly editable-text="investigacion.titulo" placeholder="Ingresar Título" e-name="investigacion.titulo" id="investigacion.titulo" type="text" class="form-control" value="{{ investigacion.titulo || '' }}">
         <span class="input-group-addon"></span>
-    </div>
+    </div>-->
 
     <!--
     <div class="input-group">
@@ -30,13 +82,14 @@
         <span class="input-group-addon"></span>
     </div>
     -->
+    <!--
     <div class="input-group">
         <span class="input-group-addon">Especialidad</span>
         <select ng-disabled="!editableForm.$visible" class="form-control" ng-model="investigacion.paramEspecialidad">
             <option ng-repeat="pd in paramEspecialidad" value="{{pd.id.idParametroDetalle}}">{{pd.descripcion}}</option>
         </select>
         <span class="input-group-addon"></span>
-    </div>
+    </div>-->
     
     <!--
     <div>
@@ -45,14 +98,14 @@
         {{showParam(paramEspecialidad,investigacion.paramEspecialidad)}}
         </span>
     </div>-->
-    
+    <!--
     <div class="input-group">
         <span class="input-group-addon">Fase</span>
         <select ng-disabled="!editableForm.$visible" class="form-control" ng-model="investigacion.paramFase">
             <option ng-repeat="pd in paramFase" value="{{pd.id.idParametroDetalle}}">{{pd.descripcion}}</option>
         </select>
         <span class="input-group-addon"></span>
-    </div>
+    </div>-->
     <!--
     <div>
       <span class="title">paramFase  </span>
@@ -68,20 +121,18 @@
         </select>
         <span class="input-group-addon"></span>
     </div>-->
-    
+    <!--
     <div class="input-group">
         <span class="title" style="vertical-align: middle">paramTipoInvestigacion  </span>
       <span editable-select="investigacion.paramTipoInvestigacion" e-ng-options="pd.id.idParametroDetalle as pd.descripcion for pd in paramTipoInvestigacion ">
            {{showParam(paramTipoInvestigacion,investigacion.paramTipoInvestigacion)}} 
       </span>
-    </div> 
-
+    </div> -->
+<!--
     <div class="buttons">
-      <!-- button to show form -->
       <button type="button" class="btn btn-default" ng-click="editableForm.$show()" ng-show="!editableForm.$visible">
         {{nombreBoton}}
       </button>
-      <!-- buttons to submit / cancel form -->
       <span ng-show="editableForm.$visible">
         <button type="submit" class="btn btn-primary" ng-disabled="editableForm.$waiting">
           Guardar
@@ -90,8 +141,8 @@
           Cancelar
         </button>
       </span>
-    </div>
-    </form> 
+    </div>-->
+    <!--</form> -->
     <br>
     
   <form data-editable-form name="uiSelectForm" onaftersave="agregarCoordinador()" >
@@ -132,9 +183,11 @@
     <table class="table table-bordered table-hover table-condensed">
         <thead>
             <tr>
-                <th>id Investigacion</th>
+                <!--<th>id Investigacion</th>-->
                 <th>id Coordinador</th>
-                <th>Apellidos y Nombres</th>
+                <th>Apellido Paterno</th>
+                <th>Apellido Materno</th>
+                <th>Nombres</th>
                 <th>Observacion</th>
                 <th>Acciones</th>
             </tr>
@@ -144,15 +197,24 @@
                 <!--<td>{{coordinador.id.idInvestigacion}}</td>
                 <td>{{coordinador.id.idCoordinador}}</td>
                 <td>{{coordinador.observacion}} </td>-->
-                <td>{{invCoordinador[0].id.idInvestigacion}}</td>
+                <!--<td>{{invCoordinador[0].id.idInvestigacion}}</td>-->
                 <td>{{invCoordinador[0].id.idCoordinador}}</td>
                 <td>{{invCoordinador[1].apePaterno}} </td>
-                <td><span editable-text="invCoordinador[0].observacion" e-name="observacion" e-form="rowform">
-                  {{ invCoordinador[0].observacion|| '' }}
-                </span></td>
-                <td style="white-space: nowrap">
+                <td>{{invCoordinador[1].apeMaterno}} </td>
+                <td>{{invCoordinador[1].nombres}} </td>
+                <td>{{ invCoordinador[0].observacion|| '' }}</td>
+                <td>
+                    <!--Aquí deben ir los botones de acción-->
+                    <!--
+                    actualizarInvCoordinador(invCoordinador)-> captura el objeto invCoordinador, 
+                    que contiene dos objectos: [InvestigacionCoordinador:0 - Coordinador:1] y actualiza el campo observación.
+                    
+                    eliminarInvCoordinador(invCoordinador)-> captura el objeto invCoordinador, 
+                    que contiene dos objectos: [InvestigacionCoordinador:0 - Coordinador:1] y elimina La investigacionCoordinador
+                    
+                    -->
                     <!-- form -->
-                    <form editable-form name="rowform" onbeforesave="actualizarInvCoordinador(invCoordinador)" ng-show="rowform.$visible" class="form-buttons form-inline" >
+                    <!--<form editable-form name="rowform" onbeforesave="actualizarInvCoordinador(invCoordinador)" ng-show="rowform.$visible" class="form-buttons form-inline" >
                       <button type="submit" ng-disabled="rowform.$waiting" class="btn btn-primary">
                         guardarsh
                       </button>
@@ -163,14 +225,15 @@
                     <div class="buttons" ng-show="!rowform.$visible">
                       <button type="button" class="btn btn-primary" ng-click="rowform.$show()">editar</button>
                       <button type="button" class="btn btn-danger" ng-click="eliminarInvCoordinador(invCoordinador)">borrar</button>
-                    </div>  
+                    </div>  -->
+                    
                 </td>
                 
             </tr>
         </tbody>
     </table>
     <br><br>  
-    
+    <!--
     <form editable-form name="editableFormCoordinadors" ng-repeat-start="invCoordinador in investigacionCoordinadors | orderBy:'idCoordinador'" onaftersave="guardar()">
         <div class="row">
             <div class="col-xs-12 col-md-4">
@@ -187,7 +250,6 @@
                 </span>
             </div> 
             <div class="col-xs-12 col-md-4">
-                <!-- button to show form -->
                 <button type="button" class="btn btn-default" ng-click="editableFormCoordinadors.$show()" ng-show="!editableFormCoordinadors.$visible">
                   {{nombreBoton}}
                 </button>
@@ -208,7 +270,7 @@
         
     </form>
     <div ng-repeat-end class="h-divider"></div>
-
+-->
     <br>
     <br>
     <br>

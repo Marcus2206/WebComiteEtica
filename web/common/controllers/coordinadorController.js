@@ -71,9 +71,9 @@ app.controller("ListCoordinadorController", ['$scope', "coordinadors", "coordina
 }]);
 
 app.controller("EditCoordinadorController", ['$scope',"coordinador", 'coordinadorRemoteResource', '$location',"$log","$route", function($scope,coordinador, coordinadorRemoteResource, $location, $log, $route) {
-        $log.log("entrando EditCoordinadorController");
         $scope.coordinador = coordinador;
-        $scope.nombreBoton="Editar";
+//        $scope.nombreBoton="Editar";
+        $log.log(coordinador);
         $scope.guardar = function() {
             //if ($scope.form.$valid) {
                 $scope.coordinador.usuarioModifica="user1";

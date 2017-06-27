@@ -10,34 +10,37 @@
             <div class="modal-body">
                 <div class="container-fluid">
                     <div class="row">
-                        <div class="container">
-                            <!--<input id="idProducto" name="idProducto" type="text" ng-model="producto.idProducto" /><br>-->
-                            <form editable-form name="editableForm" onaftersave="guardar()" role="form">
-                                
+                        <!--<div class="container">-->
+                            <!--<form editable-form name="editableForm" onaftersave="guardar()" role="form">-->
                                 <div class="form-group">
-                                    <!-- editable username (text with validation) -->
-                                    <label for="apPaternoInput">Ap. Paterno:  </label><br>
-                                    <span id="apPaternoInput" editable-text="coordinador.apePaterno" e-name="coordinador.apePaterno" e-required>{{ coordinador.apePaterno || '' }}</span>
+                                    <label for="idCoordinador">Id. coordinador:</label><br>
+                                    <input readonly type="text" class="form-control" id="idCoordinador" ng-model="coordinador.idCoordinador" placeholder="Id. coordinador" value="{{ coordinador.idCoordinador || '' }}">
+                                    <!--<span id="apePaterno" editable-text="coordinador.apePaterno" e-name="coordinador.apePaterno" e-required>{{ coordinador.apePaterno || '' }}</span>-->
+                                </div>     
+                            
+                                <div class="form-group">
+                                    <label for="apePaterno">Ap. paterno:  </label><br>
+                                    <input type="text" class="form-control" id="apePaterno" ng-model="coordinador.apePaterno" placeholder="Apellido paterno" value="{{ coordinador.apePaterno || '' }}" e-required>
+                                    <!--<span id="apePaterno" editable-text="coordinador.apePaterno" e-name="coordinador.apePaterno" e-required>{{ coordinador.apePaterno || '' }}</span>-->
+                                </div> 
+
+                                <div class="form-group">
+                                    <label for="apeMaterno">Ap. Materno:  </label><br>
+                                    <input type="text" class="form-control" id="apeMaterno" ng-model="coordinador.apeMaterno" placeholder="Apellido materno" value="{{ coordinador.apeMaterno || '' }}" e-required>
+                                    <!--<span id="apMaternoInput" editable-text="coordinador.apeMaterno" e-name="coordinador.apeMaterno" e-required>{{ coordinador.apeMaterno || '' }}</span>-->
                                 </div> 
 
                                 <div class="form-group">
                                     <!-- editable username (text with validation) -->
-                                    <label for="apMaternoInput">Ap. Materno:  </label><br>
-                                    <span id="apMaternoInput" editable-text="coordinador.apeMaterno" e-name="coordinador.apeMaterno" e-required>{{ coordinador.apeMaterno || '' }}</span>
+                                    <label for="nombres">Nombres:  </label><br>
+                                    <input type="text" class="form-control" id="nombres" ng-model="coordinador.nombres" placeholder="Nombres" value="{{ coordinador.nombres || '' }}" e-required>
+                                    <!--<span id="nombresInput" editable-text="coordinador.nombres" e-name="coordinador.nombres" e-required>{{ coordinador.nombres || '' }}</span>-->
                                 </div> 
-
-                                <div class="form-group">
-                                    <!-- editable username (text with validation) -->
-                                    <label for="nombresInput">Nombres:  </label><br>
-                                    <span id="nombresInput" editable-text="coordinador.nombres" e-name="coordinador.nombres" e-required>{{ coordinador.nombres || '' }}</span>
-                                </div> 
-
+                            <!--
                                 <div class="buttons">
-                                    <!-- button to show form -->
                                     <button type="button" class="btn btn-default" ng-click="editableForm.$show()" ng-show="!editableForm.$visible">
                                         Editar
                                     </button>
-                                    <!-- buttons to submit / cancel form -->
                                     <span ng-show="editableForm.$visible">
                                         <button type="submit" class="btn btn-primary" ng-disabled="editableForm.$waiting">
                                             Guardar
@@ -46,14 +49,19 @@
                                             Cancelar
                                         </button>
                                     </span>
-                                </div>
-                            </form> 
-                        </div>
+                                </div>-->
+                            <!--</form> -->
+                        <!--</div>-->
                     </div>
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Volver</button>
+                <button type="submit" class="btn btn-primary" ng-click="guardar()">
+                    Guardar
+                </button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">
+                    Volver
+                </button>
             </div>
         </div>
 
