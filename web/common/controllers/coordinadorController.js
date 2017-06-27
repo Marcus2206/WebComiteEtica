@@ -23,7 +23,7 @@ app.controller("NewCoordinadorController", ['$scope', 'coordinadorRemoteResource
                 $scope.coordinador.fechaIngreso=new Date();
                 coordinadorRemoteResource.insert($scope.coordinador)
                 .then(function(coordinadorResult) {
-                    $location.path("coordinadorEdit/"+coordinadorResult.idCoordinador);
+                    //$location.path("coordinadorEdit/"+coordinadorResult.idCoordinador);
                 }, function(bussinessMessages) {
                     $scope.bussinessMessages = bussinessMessages;
                 });
