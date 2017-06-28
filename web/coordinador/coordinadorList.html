@@ -36,7 +36,7 @@
                     <td>{{coordinador.nombres}}</td>
                     <td>
                         <button class="btn btn-primary" ng-click="editarModal(coordinador)">Editar</button>
-                        <button class="btn btn-danger" ng-click="eliminar(coordinador)">Borrar</button>
+                        <button class="btn btn-danger" ng-click="eliminar(coordinador)" confirm-settings="{size: 'sm'}" confirm-title="Eliminar Coordinador" confirm="¿Estas seguro de eliminar este registro?" confirm-ok="Si" confirm-cancel="No">Eliminar</button>
                         <!--
                         <div class="btn-group">
                             <button ng-click='' type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

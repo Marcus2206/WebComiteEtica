@@ -39,7 +39,7 @@ app.controller("NewCoordinadorController", ['$scope', 'coordinadorRemoteResource
 
 }]);
 
-app.controller("ListCoordinadorController", ['$scope', "coordinadors", "coordinadorRemoteResource", '$location',"$log","$route","$uibModal",function($scope, coordinadors, coordinadorRemoteResource, $location, $log,$route,$uibModal) {
+app.controller("ListCoordinadorController", ['$scope', "coordinadors", "coordinadorRemoteResource", '$location',"$log","$route","$uibModal",'$confirm',function($scope, coordinadors, coordinadorRemoteResource, $location, $log,$route,$uibModal,$confirm) {
         /*Se obtiene lista de coordinadores*/
         $scope.coordinadors=coordinadors;
 
@@ -81,6 +81,7 @@ app.controller("ListCoordinadorController", ['$scope', "coordinadors", "coordina
                     templateUrl: 'coordinador/coordinadorEdit.html',
 //                    templateUrl: 'coordinador/coordinadorTest.html',
                     controller: "EditCoordinadorController",
+                    size: 'sm',
                     resolve: {
                         coordinador:function() {
                           return coordinadorRemoteResource.get(coordinadorObj.idCoordinador);
@@ -126,7 +127,8 @@ app.controller("ListCoordinadorController", ['$scope', "coordinadors", "coordina
                 var modalInstance = $uibModal.open({
                     templateUrl: 'coordinador/coordinadorEdit.html',
 //                    templateUrl: 'coordinador/coordinadorTest.html',
-                    controller: "NewCoordinadorController"
+                    controller: "NewCoordinadorController",
+                    size: 'sm'
                 });
                 
                 modalInstance.result.then(function(){   
