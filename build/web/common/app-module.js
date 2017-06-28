@@ -1,4 +1,4 @@
-var app=angular.module("app",["ngRoute","xeditable","ui.select"]);
+var app=angular.module("app",["ngRoute","xeditable","ui.select","ui.bootstrap"]);
 
 app.config(['$routeProvider',"$locationProvider",function($routeProvider,$locationProvider) {
  /*Sólo ruta por defecto*/

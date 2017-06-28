@@ -1,6 +1,6 @@
 var app=angular.module("app");
 
-app.controller("NewCoordinadorController", ['$scope', 'coordinadorRemoteResource', '$location',"$log", function($scope, coordinadorRemoteResource, $location, $log) {
+app.controller("NewCoordinadorController", ['$scope', 'coordinadorRemoteResource', '$location',"$log","$uibModalInstance", function($scope, coordinadorRemoteResource, $location, $log,$uibModalInstance) {
         
         $scope.nombreBoton="Nuevo";
         
@@ -24,6 +24,7 @@ app.controller("NewCoordinadorController", ['$scope', 'coordinadorRemoteResource
                 coordinadorRemoteResource.insert($scope.coordinador)
                 .then(function(coordinadorResult) {
                     //$location.path("coordinadorEdit/"+coordinadorResult.idCoordinador);
+                    $uibModalInstance.dismiss(coordinadorResult);
                 }, function(bussinessMessages) {
                     $scope.bussinessMessages = bussinessMessages;
                 });
@@ -31,10 +32,14 @@ app.controller("NewCoordinadorController", ['$scope', 'coordinadorRemoteResource
                 alert("Hay datos inválidos");
             }*/
         };
+        
+        $scope.cerrar = function() {
+            $uibModalInstance.dismiss('cancel');
+        };
 
 }]);
 
-app.controller("ListCoordinadorController", ['$scope', "coordinadors", "coordinadorRemoteResource", '$location',"$log","$route", function($scope, coordinadors, coordinadorRemoteResource, $location, $log,$route) {
+app.controller("ListCoordinadorController", ['$scope', "coordinadors", "coordinadorRemoteResource", '$location',"$log","$route","$uibModal",function($scope, coordinadors, coordinadorRemoteResource, $location, $log,$route,$uibModal) {
         /*Se obtiene lista de coordinadores*/
         $scope.coordinadors=coordinadors;
 
@@ -53,7 +58,7 @@ app.controller("ListCoordinadorController", ['$scope', "coordinadors", "coordina
             return $scope.currentPage;
         };
         
-        $scope.delete=function(coordinador){
+        $scope.eliminar=function(coordinador){
             coordinadorRemoteResource.delete(coordinador)
                 .then(function(coordinadorResult) {
                     $scope.coordinadors.splice($scope.coordinadors.indexOf(coordinador),1);
@@ -68,12 +73,103 @@ app.controller("ListCoordinadorController", ['$scope', "coordinadors", "coordina
             $location.path("/coordinadorEdit/"+idCoordinador);
             
         };*/
+        
+        /*Editar un registro*/
+        $scope.editarModal = function (coordinadorObj) {
+            //alert(idCoordinador);
+                var modalInstance = $uibModal.open({
+                    templateUrl: 'coordinador/coordinadorEdit.html',
+//                    templateUrl: 'coordinador/coordinadorTest.html',
+                    controller: "EditCoordinadorController",
+                    resolve: {
+                        coordinador:function() {
+                          return coordinadorRemoteResource.get(coordinadorObj.idCoordinador);
+                        }
+                    }
+                });
+                
+                modalInstance.result.then(function(){   
+                    //on ok button press 
+//                    $log.log("data 1");
+//                    $log.log(data);
+                },function(data){
+//                    $log.log("data 2");
+//                    console.log(1,data);
+                    //on cancel button press
+                    if(data !== "cancel"){
+                        //console.log("Modal Closed");
+                        $log.log("no es cancel");
+//                        $log.log(data);
+                        
+                        var index = $scope.coordinadors.indexOf(coordinadorObj);
+//                        $log.log(coordinadorObj);
+                        if (index !== -1) {
+                            $scope.coordinadors[index] = data;
+                        }
+                    }else{
+                        //$log.log(data);
+//                        var index = $scope.coordinadors.indexOf(coordinador);
+//                        if (index !== -1) {
+//                            $scope.coordinadors[index] = data;
+//                        }
+                        $log.log("es cancel");
+                        $log.log(data);
+                    }
+                });
+                
+
+        };
+        
+        /*Ingresar un registro*/
+        $scope.insertarModal = function () {
+            //alert(idCoordinador);
+                var modalInstance = $uibModal.open({
+                    templateUrl: 'coordinador/coordinadorEdit.html',
+//                    templateUrl: 'coordinador/coordinadorTest.html',
+                    controller: "NewCoordinadorController"
+                });
+                
+                modalInstance.result.then(function(){   
+                    //on ok button press 
+//                    $log.log("data 1");
+//                    $log.log(data);
+                },function(data){
+//                    $log.log("data 2");
+//                    console.log(1,data);
+                    //on cancel button press
+                    if(data !== "cancel"){
+                        //console.log("Modal Closed");
+//                        $log.log("no es cancel");
+//                        $log.log(data);
+                        /*añade a la lista sin recargar la página*/
+                        $scope.coordinadors.push(data);
+//                        var index = $scope.coordinadors.indexOf(coordinadorObj);
+////                        $log.log(coordinadorObj);
+//                        if (index !== -1) {
+//                            $scope.coordinadors[index] = data;
+//                        }
+                    }else{
+                        //$log.log(data);
+//                        var index = $scope.coordinadors.indexOf(coordinador);
+//                        if (index !== -1) {
+//                            $scope.coordinadors[index] = data;
+//                        }
+//                        $log.log("es cancel");
+//                        $log.log(data);
+                    }
+                });
+                
+
+        };
+  
+  
 }]);
 
-app.controller("EditCoordinadorController", ['$scope',"coordinador", 'coordinadorRemoteResource', '$location',"$log","$route", function($scope,coordinador, coordinadorRemoteResource, $location, $log, $route) {
+app.controller("EditCoordinadorController", ['$scope',"coordinador", 'coordinadorRemoteResource', '$location',"$log","$route","$uibModalInstance", function($scope,coordinador, coordinadorRemoteResource, $location, $log, $route,$uibModalInstance) {
         $scope.coordinador = coordinador;
 //        $scope.nombreBoton="Editar";
-        $log.log(coordinador);
+//        $log.log(coordinador);
+//        $log.log("entró EditCoordinadorController ");
         $scope.guardar = function() {
             //if ($scope.form.$valid) {
                 $scope.coordinador.usuarioModifica="user1";
@@ -81,11 +177,31 @@ app.controller("EditCoordinadorController", ['$scope',"coordinador", 'coordinado
                 coordinadorRemoteResource.update($scope.coordinador)
                 .then(function(coordinadorResult) {
                     //$location.path("coordinadorEdit"+coordinadorResult.idProducto);
+//                    $uibModalInstance.result.then(function(submitvar){
+//                        $log.log(submitvar);
+//                    });
+//                    $log.log(coordinadorResult);
+                    $uibModalInstance.dismiss(coordinadorResult);
+//                    $uibModalInstance.result.then(function(){
+//                        //on ok button press 
+//                        alert('si');
+//                    },function(data){
+//                        console.log(1,data);
+//                        //on cancel button press
+//                        if(data && data !== "cancel")
+////                        $scope.Catalogs = data;
+//                        console.log("Modal Closed");
+//                    });
+                    
                 }, function(bussinessMessages) {
                     //$scope.bussinessMessages = bussinessMessages;
                 });
             /*} else {
                 alert("Hay datos inválidos");
             }*/
+        };
+        
+        $scope.cerrar = function() {
+            $uibModalInstance.dismiss('cancel');
         };
 }]);

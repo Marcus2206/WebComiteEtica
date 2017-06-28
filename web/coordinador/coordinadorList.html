@@ -8,10 +8,13 @@
     <br>
     <div class="row">
         <input type="text" ng-model="txtFiltroCoordinador" class="form-control" placeholder="Buscar">
-        <ul class="nav nav-pills" >
+        <!--<ul class="nav nav-pills" >
             <li><a href="" data-toggle="modal" data-target="#newMyModal" >Crear coordinador</a></li>
             <ng-include src="'coordinador/coordinadorEdit.html'" ></ng-include>
-        </ul>
+        </ul>-->
+        <button ng-click="insertarModal()">
+            Nuevo Coordinador
+        </button>
     </div>
     <br>
     <div class="row">
@@ -32,6 +35,9 @@
                     <td>{{coordinador.apeMaterno}}</td>
                     <td>{{coordinador.nombres}}</td>
                     <td>
+                        <button class="btn" ng-click="editarModal(coordinador)">Editar</button>
+                        <button class="btn" ng-click="eliminar(coordinador)">Borrar</button>
+                        <!--
                         <div class="btn-group">
                             <button ng-click='' type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 Seleccione <span class="caret"></span>
@@ -42,6 +48,7 @@
                             </ul>
                         </div>
                         <ng-include src="'coordinador/coordinadorEdit.html'" ></ng-include>
+                        -->
                     </td>
                 </tr>
             </tbody>
