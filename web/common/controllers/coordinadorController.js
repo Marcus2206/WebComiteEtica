@@ -57,22 +57,32 @@ app.controller("ListCoordinadorController", ['$scope', "coordinadors", "coordina
             $scope.currentPage=$scope.currentPage+1;
             return $scope.currentPage;
         };
-        
+       
         $scope.eliminar=function(coordinador){
-            coordinadorRemoteResource.delete(coordinador)
+            //Se prepara confirm
+            $confirm({
+                text: '¿Está seguro de eliminar este registro?',
+                ok:"Sí",
+                cancel:"No",
+                title:"Eliminar Coordinador",
+                settings:"{size: 'sm'}"
+                })
+            .then(function() {
+                //Si se presiona Sí.
+                coordinadorRemoteResource.delete(coordinador)
                 .then(function(coordinadorResult) {
+                    //Se la elimenación es exitosa.
                     $scope.coordinadors.splice($scope.coordinadors.indexOf(coordinador),1);
                 }, function(bussinessMessages) {
-                    //alert("aca");
                     //$scope.bussinessMessages = bussinessMessages;
                 });
+            })
+            .catch(function(){
+                //Si se presiona no, se cancela.
+            });
+        
+
         };
-        /*Navegar*/
-        /*$scope.coordinadorEdit=function(idCoordinador){
-            $log.log("coordinadorEdit");
-            $location.path("/coordinadorEdit/"+idCoordinador);
-            
-        };*/
         
         /*Editar un registro*/
         $scope.editarModal = function (coordinadorObj) {
@@ -90,111 +100,54 @@ app.controller("ListCoordinadorController", ['$scope', "coordinadors", "coordina
                 });
                 
                 modalInstance.result.then(function(){   
-                    //on ok button press 
-//                    $log.log("data 1");
-//                    $log.log(data);
+                    //Si no se devuelve nada
                 },function(data){
-//                    $log.log("data 2");
-//                    console.log(1,data);
-                    //on cancel button press
+                    //Si devuelve un objeto
                     if(data !== "cancel"){
-                        //console.log("Modal Closed");
-                        $log.log("no es cancel");
-//                        $log.log(data);
-                        
+                        //Si no es cancel, se reemplaza el objeto que se mandó a actualizar
                         var index = $scope.coordinadors.indexOf(coordinadorObj);
-//                        $log.log(coordinadorObj);
                         if (index !== -1) {
                             $scope.coordinadors[index] = data;
                         }
                     }else{
-                        //$log.log(data);
-//                        var index = $scope.coordinadors.indexOf(coordinador);
-//                        if (index !== -1) {
-//                            $scope.coordinadors[index] = data;
-//                        }
-                        $log.log("es cancel");
-                        $log.log(data);
+                        //Si es cancel
                     }
                 });
-                
-
         };
         
         /*Ingresar un registro*/
         $scope.insertarModal = function () {
-            //alert(idCoordinador);
                 var modalInstance = $uibModal.open({
                     templateUrl: 'coordinador/coordinadorEdit.html',
-//                    templateUrl: 'coordinador/coordinadorTest.html',
                     controller: "NewCoordinadorController",
                     size: 'sm'
                 });
                 
                 modalInstance.result.then(function(){   
-                    //on ok button press 
-//                    $log.log("data 1");
-//                    $log.log(data);
+                    //Si no devuelve nada.
                 },function(data){
-//                    $log.log("data 2");
-//                    console.log(1,data);
-                    //on cancel button press
+                    //Si devuelve algo
                     if(data !== "cancel"){
-                        //console.log("Modal Closed");
-//                        $log.log("no es cancel");
-//                        $log.log(data);
                         /*añade a la lista sin recargar la página*/
                         $scope.coordinadors.push(data);
-//                        var index = $scope.coordinadors.indexOf(coordinadorObj);
-////                        $log.log(coordinadorObj);
-//                        if (index !== -1) {
-//                            $scope.coordinadors[index] = data;
-//                        }
                     }else{
-                        //$log.log(data);
-//                        var index = $scope.coordinadors.indexOf(coordinador);
-//                        if (index !== -1) {
-//                            $scope.coordinadors[index] = data;
-//                        }
-//                        $log.log("es cancel");
-//                        $log.log(data);
+                        //Si es cancel
                     }
                 });
-                
-
         };
-  
-  
 }]);
 
 app.controller("EditCoordinadorController", ['$scope',"coordinador", 'coordinadorRemoteResource', '$location',"$log","$route","$uibModalInstance", function($scope,coordinador, coordinadorRemoteResource, $location, $log, $route,$uibModalInstance) {
         $scope.coordinador = coordinador;
-//        $scope.nombreBoton="Editar";
-//        $log.log(coordinador);
-//        $log.log("entró EditCoordinadorController ");
+        
         $scope.guardar = function() {
             //if ($scope.form.$valid) {
                 $scope.coordinador.usuarioModifica="user1";
                 $scope.coordinador.fechaModificacion=new Date();
                 coordinadorRemoteResource.update($scope.coordinador)
                 .then(function(coordinadorResult) {
-                    //$location.path("coordinadorEdit"+coordinadorResult.idProducto);
-//                    $uibModalInstance.result.then(function(submitvar){
-//                        $log.log(submitvar);
-//                    });
-//                    $log.log(coordinadorResult);
-                    $uibModalInstance.dismiss(coordinadorResult);
-//                    $uibModalInstance.result.then(function(){
-//                        //on ok button press 
-//                        alert('si');
-//                    },function(data){
-//                        console.log(1,data);
-//                        //on cancel button press
-//                        if(data && data !== "cancel")
-////                        $scope.Catalogs = data;
-//                        console.log("Modal Closed");
-//                    });
-                    
+                    //Devuelve objeto actualizado y cierra modal
+                    $uibModalInstance.dismiss(coordinadorResult);                    
                 }, function(bussinessMessages) {
                     //$scope.bussinessMessages = bussinessMessages;
                 });
@@ -204,6 +157,7 @@ app.controller("EditCoordinadorController", ['$scope',"coordinador", 'coordinado
         };
         
         $scope.cerrar = function() {
+            //Se devuelve cancel
             $uibModalInstance.dismiss('cancel');
         };
 }]);
