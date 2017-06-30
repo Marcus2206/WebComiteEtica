@@ -1,279 +1,182 @@
-<div>
-    
-    <legend>Datos de la investigación</legend>
-    
-    <div class="container-fluid">
-        <div class="row">
-            <div class="form-group">
-                <label for="idInvestigacion">Id. Investigación:  </label><br>
-                <input readonly type="text" class="form-control" id="idInvestigacion"  placeholder="Id. investigación" ng-model="investigacion.idInvestigacion" value="{{ investigacion.idInvestigacion || '' }}">
-            </div> 
-            
-            <div class="form-group">
-                <label for="protocolo">Protocolo:  </label><br>
-                <input type="text" class="form-control" id="protocolo"  placeholder="Ingresar protocolo" ng-model="investigacion.protocolo" value="{{ investigacion.protocolo || '' }}">
-            </div> 
-            
-            <div class="form-group">
-                <label for="titulo">Título:  </label><br>
-                <input type="text" class="form-control" id="titulo"  placeholder="Ingresar título" ng-model="investigacion.titulo" value="{{ investigacion.titulo || '' }}">
-            </div> 
-            
-            <div class="form-group">
-                <label for="paramEspecialidad">Especialidad:  </label><br>
-                <select class="form-control" id="paramEspecialidad" ng-model="investigacion.paramEspecialidad">
-                    <!--<option value="" selected disabled > Seleccionar </option>-->
-                    <option ng-repeat="pd in paramEspecialidad" value="{{pd.id.idParametroDetalle}}">{{pd.descripcion}}</option>
-                </select>
+<div class="modal-content">
+    <div class="modal-header">
+        <button type="button" class="close" ng-click="cerrar()">&times;</button>
+        <h4 class="modal-title" id="myModalLabel">Datos de la investigación</h4>
+    </div>
+    <div class="modal-body">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col">
+                    <div class="form-group">
+                        <label for="idInvestigacion">Id. Investigación:  </label><br>
+                        <input readonly type="text" class="form-control" id="idInvestigacion"  placeholder="Id. investigación" ng-model="investigacion.idInvestigacion" value="{{ investigacion.idInvestigacion || '' }}">
+                    </div> 
+                </div>
+                <div class="col">
+                    <div class="form-group">
+                        <label for="protocolo">Protocolo:  </label><br>
+                        <input type="text" class="form-control" id="protocolo"  placeholder="Ingresar protocolo" ng-model="investigacion.protocolo" value="{{ investigacion.protocolo || '' }}">
+                    </div> 
+                </div>
+                <div class="col">
+                    <div class="form-group">
+                        <label for="titulo">Título:  </label><br>
+                        <input type="text" class="form-control" id="titulo"  placeholder="Ingresar título" ng-model="investigacion.titulo" value="{{ investigacion.titulo || '' }}">
+                    </div> 
+                </div>
+                <div class="col">
+                    <div class="form-group">
+                        <label for="paramEspecialidad">Especialidad:  </label><br>
+                        <select class="form-control" id="paramEspecialidad" ng-model="investigacion.paramEspecialidad">
+                            <option ng-repeat="pd in paramEspecialidad" value="{{pd.id.idParametroDetalle}}">{{pd.descripcion}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-group">
+                        <label for="paramFase">Fase:  </label><br>
+                        <select id="paramFase" class="form-control" ng-model="investigacion.paramFase">
+                            <option ng-repeat="pd in paramFase" value="{{pd.id.idParametroDetalle}}">{{pd.descripcion}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-group">
+                        <label for="paramTipoInvestigacion">Tipo de Investigación:  </label><br>
+                        <select  id="paramTipoInvestigacion" class="form-control" ng-model="investigacion.paramTipoInvestigacion">
+                            <option ng-repeat="pd in paramTipoInvestigacion" value="{{pd.id.idParametroDetalle}}">{{pd.descripcion}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col">     
+                    <uib-accordion close-others="cerrarOtras">
+                        <div uib-accordion-group class="panel-default" >
+                            <uib-accordion-heading>
+                                <div>Coordinadores</div>
+                            </uib-accordion-heading>                            
+                        </div>
+                        
+                        <div uib-accordion-group class="panel-default">
+                            <uib-accordion-heading>
+                                <div>Investigador</div>
+                            </uib-accordion-heading>
+                            contenido de otros
+                        </div>
+                        <div uib-accordion-group class="panel-default">
+                            <uib-accordion-heading>
+                                <div>Sede</div>
+                            </uib-accordion-heading>
+                            contenido de otros
+                        </div>
+                    </uib-accordion>
+                </div>
+                <div class="col">    
+                    <button type="button" style="width: 100%;" class="btn btn-default" ng-click="isCoordinador = !isCoordinador">Coordinador</button>
+                    <hr>
+                    <div uib-collapse="isCoordinador">
+                            <div>
+                            <form data-editable-form name="uiSelectForm" onaftersave="agregarCoordinador()" onbeforesave="antes()" >
+                                    <div editable-ui-select="coordinadorSelect" data-e-form="uiSelectForm" data-e-name="coordinadorSelect" name="coordinadorSelect" theme="bootstrap" data-e-ng-model="coordinadorSelect" data-e-style="min-width:300px;">
+                                        <editable-ui-select-match placeholder="Coordinador" style="width: 100%;" >
+                                            {{$select.selected.apePaterno}} {{$select.selected.apeMaterno}} {{$select.selected.nombres}}
+                                        </editable-ui-select-match>
+                                        <editable-ui-select-choices repeat="coordinador in coordinadorsSelectList | orderBy: 'apePaterno' | filter: $select.search track by $index ">
+                                          {{coordinador.apePaterno}} {{coordinador.apeMaterno}} {{coordinador.nombres}}
+                                        </editable-ui-select-choices>
+                                    </div> 
+                                    <div class="buttons">
+                                        <button type="button" class="btn btn-default" ng-click="uiSelectForm.$show()" ng-show="!uiSelectForm.$visible">
+                                        Agregar
+                                        </button>
+                                        <span ng-show="uiSelectForm.$visible">
+                                            <br/>
+                                            <button type="submit" class="btn btn-primary" ng-disabled="uiSelectForm.$waiting">
+                                              Confirmar
+                                            </button>
+                                            <button type="button" class="btn btn-default" ng-disabled="uiSelectForm.$waiting" ng-click="uiSelectForm.$cancel()">
+                                              Cancelar
+                                            </button>
+                                        </span>
+                                    </div>  
+                                </form>
+                                <br>
+                                <table class="table table-bordered table-hover table-condensed table-responsive">
+                                <thead>
+                                    <tr>
+                                        <th>Apellidos y Nombres</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="invCoordinador in investigacionCoordinadors | orderBy:'idCoordinador'">
+                                        <td>
+                                            <div>
+                                                <div>
+                                                    <button type="button" class="close" aria-label="Close" ng-click="eliminarInvCoordinador(invCoordinador)">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div>
+                                                    {{invCoordinador[1].apePaterno}} {{invCoordinador[1].apeMaterno}}, {{invCoordinador[1].nombres}} 
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            </div>
+                    </div>
+                </div>                
             </div>
-            
-            <div class="form-group">
-                <label for="paramFase">Fase:  </label><br>
-                <select id="paramFase" class="form-control" ng-model="investigacion.paramFase">
-                    <!--<option value="" selected disabled > Seleccionar </option>-->
-                    <option ng-repeat="pd in paramFase" value="{{pd.id.idParametroDetalle}}">{{pd.descripcion}}</option>
-                </select>
-            </div>
-                               
-            <div class="form-group">
-                <label for="paramTipoInvestigacion">Tipo de Investigación:  </label><br>
-                <select  id="paramTipoInvestigacion" class="form-control" ng-model="investigacion.paramTipoInvestigacion">
-                    <!--<option value="" selected disabled > Seleccionar </option>-->
-                    <option ng-repeat="pd in paramTipoInvestigacion" value="{{pd.id.idParametroDetalle}}">{{pd.descripcion}}</option>
-                </select>
-            </div>
-            
-            <button type="submit" class="btn btn-primary" ng-click="guardar()">
-                Guardar
-            </button>
         </div>
-            
-    </div>
-    
-    
-    
-    
-        <!--<form editable-form name="editableForm" onaftersave="guardar()">-->
-   
-    <!--<div class="input-group">
-        <span class="input-group-addon">Id. Investigación</span>
-        <input readonly id="investigacion.idInvestigacion" type="text" placeholder="Id Investigación" class="form-control" name="investigacion.idInvestigacion" value="{{ investigacion.idInvestigacion || '' }}">
-        <span class="input-group-addon"></span>
-    </div>-->
-    <!--
-    <div class="input-group">
-        <span class="input-group-addon">Protocolo</span>
-        <input readonly editable-text="investigacion.protocolo" placeholder="Ingresar Protocolo" e-name="investigacion.protocolo" id="investigacion.protocolo" type="text" class="form-control" value="{{ investigacion.protocolo || '' }}">
-        <span class="input-group-addon"></span>
-    </div>-->
-<!--
-    <div class="input-group">
-        <span class="input-group-addon">Título</span>
-        <input readonly editable-text="investigacion.titulo" placeholder="Ingresar Título" e-name="investigacion.titulo" id="investigacion.titulo" type="text" class="form-control" value="{{ investigacion.titulo || '' }}">
-        <span class="input-group-addon"></span>
-    </div>-->
-
-    <!--
-    <div class="input-group">
-        <span class="input-group-addon">Especialidad</span>
-        <span class="form-control" style="width: 100%;" editable-select="investigacion.paramEspecialidad" e-ng-options="pd.id.idParametroDetalle as pd.descripcion for pd in paramEspecialidad ">  
-        {{showParam(paramEspecialidad,investigacion.paramEspecialidad)}}
-        </span>
-        <span class="input-group-addon"></span>
-    </div>
-    -->
-    <!--
-    <div class="input-group">
-        <span class="input-group-addon">Especialidad</span>
-        <select ng-disabled="!editableForm.$visible" class="form-control" ng-model="investigacion.paramEspecialidad">
-            <option ng-repeat="pd in paramEspecialidad" value="{{pd.id.idParametroDetalle}}">{{pd.descripcion}}</option>
-        </select>
-        <span class="input-group-addon"></span>
-    </div>-->
-    
-    <!--
-    <div>
-        <span class="title">Especialidad</span>
-        <span editable-select="investigacion.paramEspecialidad" e-ng-options="pd.id.idParametroDetalle as pd.descripcion for pd in paramEspecialidad ">  
-        {{showParam(paramEspecialidad,investigacion.paramEspecialidad)}}
-        </span>
-    </div>-->
-    <!--
-    <div class="input-group">
-        <span class="input-group-addon">Fase</span>
-        <select ng-disabled="!editableForm.$visible" class="form-control" ng-model="investigacion.paramFase">
-            <option ng-repeat="pd in paramFase" value="{{pd.id.idParametroDetalle}}">{{pd.descripcion}}</option>
-        </select>
-        <span class="input-group-addon"></span>
-    </div>-->
-    <!--
-    <div>
-      <span class="title">paramFase  </span>
-      <span editable-select="investigacion.paramFase" e-ng-options="pd.id.idParametroDetalle as pd.descripcion for pd in paramFase ">
-            {{showParam(paramFase,investigacion.paramFase)}}
-      </span>
-    </div> -->
- <!--
-    <div class="input-group">
-        <span class="input-group-addon">Tipo de Investigación</span>
-        <select ng-disabled="!editableForm.$visible" class="form-control" ng-model="investigacion.paramTipoInvestigacion">
-            <option ng-repeat="pd in paramTipoInvestigacion" value="{{pd.id.idParametroDetalle}}">{{pd.descripcion}}</option>
-        </select>
-        <span class="input-group-addon"></span>
-    </div>-->
-    <!--
-    <div class="input-group">
-        <span class="title" style="vertical-align: middle">paramTipoInvestigacion  </span>
-      <span editable-select="investigacion.paramTipoInvestigacion" e-ng-options="pd.id.idParametroDetalle as pd.descripcion for pd in paramTipoInvestigacion ">
-           {{showParam(paramTipoInvestigacion,investigacion.paramTipoInvestigacion)}} 
-      </span>
-    </div> -->
-<!--
-    <div class="buttons">
-      <button type="button" class="btn btn-default" ng-click="editableForm.$show()" ng-show="!editableForm.$visible">
-        {{nombreBoton}}
-      </button>
-      <span ng-show="editableForm.$visible">
-        <button type="submit" class="btn btn-primary" ng-disabled="editableForm.$waiting">
-          Guardar
-        </button>
-        <button type="button" class="btn btn-default" ng-disabled="editableForm.$waiting" ng-click="editableForm.$cancel()">
-          Cancelar
-        </button>
-      </span>
-    </div>-->
-    <!--</form> -->
-    <br>
-    
-  <form data-editable-form name="uiSelectForm" onaftersave="agregarCoordinador()" >
-    <legend>Coordinadores</legend>
-    <div editable-ui-select="coordinadorSelect" data-e-form="uiSelectForm" data-e-name="coordinadorSelect" name="coordinadorSelect" theme="bootstrap" data-e-ng-model="coordinadorSelect" data-e-style="min-width:300px;">
-      <!--{{user.state}}-->
-      <editable-ui-select-match placeholder="Coordinador">
-         {{$select.selected.apePaterno}}
-      </editable-ui-select-match>
-      <editable-ui-select-choices repeat="coordinador in coordinadorsSelectList | filter: $select.search track by $index">
-        {{coordinador.apePaterno}}
-      </editable-ui-select-choices>
-    </div>
-    <br>
-    <div>
-        <span editable-text="coordinadorSelect.observacion" placeholder="Observaciones" e-name="coordinadorSelect.observacion" e-required>{{ coordinadorSelect.observacion || '' }}</span>
-    </div>
-    <br>
-    
-    <div class="buttons">
-      <!-- button to show form -->
-      <button ng-disabled="deshabilitado" type="button" class="btn btn-default" ng-click="uiSelectForm.$show()" ng-show="!uiSelectForm.$visible">
-        Buscar
-      </button>
-      <!-- buttons to submit / cancel form -->
-      <span ng-show="uiSelectForm.$visible">
-        <br/>
-        <button type="submit" class="btn btn-primary" ng-disabled="uiSelectForm.$waiting">
-          Agregar
-        </button>
-        <button type="button" class="btn btn-default" ng-disabled="uiSelectForm.$waiting" ng-click="uiSelectForm.$cancel()">
-          Cancelar
-        </button>
-      </span>
-    </div>
-  </form>
-
-    <table class="table table-bordered table-hover table-condensed">
-        <thead>
-            <tr>
-                <!--<th>id Investigacion</th>-->
-                <th>id Coordinador</th>
-                <th>Apellido Paterno</th>
-                <th>Apellido Materno</th>
-                <th>Nombres</th>
-                <th>Observacion</th>
-                <th>Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr ng-repeat="invCoordinador in investigacionCoordinadors | orderBy:'idCoordinador'">
-                <!--<td>{{coordinador.id.idInvestigacion}}</td>
-                <td>{{coordinador.id.idCoordinador}}</td>
-                <td>{{coordinador.observacion}} </td>-->
-                <!--<td>{{invCoordinador[0].id.idInvestigacion}}</td>-->
-                <td>{{invCoordinador[0].id.idCoordinador}}</td>
-                <td>{{invCoordinador[1].apePaterno}} </td>
-                <td>{{invCoordinador[1].apeMaterno}} </td>
-                <td>{{invCoordinador[1].nombres}} </td>
-                <td>{{ invCoordinador[0].observacion|| '' }}</td>
-                <td>
-                    <!--Aquí deben ir los botones de acción-->
-                    <!--
-                    actualizarInvCoordinador(invCoordinador)-> captura el objeto invCoordinador, 
-                    que contiene dos objectos: [InvestigacionCoordinador:0 - Coordinador:1] y actualiza el campo observación.
-                    
-                    eliminarInvCoordinador(invCoordinador)-> captura el objeto invCoordinador, 
-                    que contiene dos objectos: [InvestigacionCoordinador:0 - Coordinador:1] y elimina La investigacionCoordinador
-                    
-                    -->
-                    <!-- form -->
-                    <!--<form editable-form name="rowform" onbeforesave="actualizarInvCoordinador(invCoordinador)" ng-show="rowform.$visible" class="form-buttons form-inline" >
-                      <button type="submit" ng-disabled="rowform.$waiting" class="btn btn-primary">
-                        guardarsh
-                      </button>
-                      <button type="button" ng-disabled="rowform.$waiting" ng-click="rowform.$cancel()" class="btn btn-default">
-                        cancelar
-                      </button>
-                    </form>
-                    <div class="buttons" ng-show="!rowform.$visible">
-                      <button type="button" class="btn btn-primary" ng-click="rowform.$show()">editar</button>
-                      <button type="button" class="btn btn-danger" ng-click="eliminarInvCoordinador(invCoordinador)">borrar</button>
-                    </div>  -->
-                    
-                </td>
-                
-            </tr>
-        </tbody>
-    </table>
-    <br><br>  
-    <!--
-    <form editable-form name="editableFormCoordinadors" ng-repeat-start="invCoordinador in investigacionCoordinadors | orderBy:'idCoordinador'" onaftersave="guardar()">
-        <div class="row">
-            <div class="col-xs-12 col-md-4">
-              <span class="title">Apellidos y Nombres </span>
-              <span e-name="apePaterno" class="uneditable-input">
-                  {{invCoordinador[1].apePaterno}} {{invCoordinador[1].apeMaterno}}, {{invCoordinador[1].nombres}} 
-              </span>
-            </div> 
-            
-            <div class="col-xs-12 col-md-4">
-                <span class="title">Observación </span>
-                <span editable-text="invCoordinador[0].observacion" style="width: auto" e-name="observacion" e-required>
-                    {{ invCoordinador[0].observacion|| '' }}
-                </span>
-            </div> 
-            <div class="col-xs-12 col-md-4">
-                <button type="button" class="btn btn-default" ng-click="editableFormCoordinadors.$show()" ng-show="!editableFormCoordinadors.$visible">
-                  {{nombreBoton}}
-                </button>
-                <button type="button" class="btn btn-danger" ng-click="eliminarInvCoordinador(invCoordinador)" ng-show="!editableFormCoordinadors.$visible">
-                    borrar
-                </button>
-                <span ng-show="editableFormCoordinadors.$visible">
-                  <button type="submit" class="btn btn-primary" ng-disabled="editableFormCoordinadors.$waiting">
-                    Guardar
-                  </button>
-                  <button type="button" class="btn btn-default" ng-disabled="editableFormCoordinadors.$waiting" ng-click="editableFormCoordinadors.$cancel()">
-                    Cancelar
-                  </button>
-                </span>
-            </div>
-            
-        </div>
+        <br>
         
-    </form>
-    <div ng-repeat-end class="h-divider"></div>
+        
+<!--
+        
 -->
-    <br>
-    <br>
-    <br>
-    <a ng-href="#/investigacionList">Volver</a>
+        <!--
+        <table class="table table-bordered table-hover table-condensed">
+            <thead>
+                <tr>
+                    <th>id Coordinador</th>
+                    <th>Apellido Paterno</th>
+                    <th>Apellido Materno</th>
+                    <th>Nombres</th>
+                    <th>Observacion</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="invCoordinador in investigacionCoordinadors | orderBy:'idCoordinador'">
+                    <td>{{invCoordinador[0].id.idCoordinador}}</td>
+                    <td>{{invCoordinador[1].apePaterno}} </td>
+                    <td>{{invCoordinador[1].apeMaterno}} </td>
+                    <td>{{invCoordinador[1].nombres}} </td>
+                    <td>{{ invCoordinador[0].observacion|| '' }}</td>
+                    <td>-->
+                        <!--Aquí deben ir los botones de acción-->
+                        <!--
+                        actualizarInvCoordinador(invCoordinador)-> captura el objeto invCoordinador, 
+                        que contiene dos objectos: [InvestigacionCoordinador:0 - Coordinador:1] y actualiza el campo observación.
 
+                        eliminarInvCoordinador(invCoordinador)-> captura el objeto invCoordinador, 
+                        que contiene dos objectos: [InvestigacionCoordinador:0 - Coordinador:1] y elimina La investigacionCoordinador
+
+                        -->
+                    <!--</td>
+
+                </tr>
+            </tbody>
+        </table>-->
+        <br>
+    </div>
+    
+    <div class="modal-footer">
+        <button type="submit" class="btn btn-primary" ng-click="guardar()">
+            Guardar
+        </button>
+        <button type="button" class="btn btn-default" ng-click="cerrar()">
+            Volver
+        </button>
+    </div>
 </div>

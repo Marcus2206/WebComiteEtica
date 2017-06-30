@@ -1,6 +1,6 @@
 var app=angular.module("app");
 
-app.controller("ReadInvestigacionCoordinadorController", ['$scope', 'investigacionCoordinador', 'investigacionCoordinadorRemoteResource', '$location',"$log", function($scope, investigacionCoordinador, investigacionCoordinadorRemoteResource, $location, $log) {
+app.controller("EditInvestigacionCoordinadorController", ['$scope', 'investigacionCoordinador', 'investigacionCoordinadorRemoteResource', '$location',"$log", function($scope, investigacionCoordinador, investigacionCoordinadorRemoteResource, $location, $log) {
         $log.log("entrando ReadInvestigacionCoordinadorController");
         $scope.investigacionCoordinador = investigacionCoordinador;
         
@@ -77,7 +77,7 @@ app.controller("NewInvestigacionCoordinadorController", ['$scope', 'investigacio
                 $scope.investigacionCoordinador.fechaIngreso=new Date();
                 investigacionCoordinadorRemoteResource.insert($scope.investigacionCoordinador)
                 .then(function(investigacionCoordinadorResult) {
-                    $location.path("investigacionCoordinadorEdit/"+investigacionCoordinadorResult.id.idInvestigacion+"/"+investigacionCoordinadorResult.id.idCoordinador);
+//                    $location.path("investigacionCoordinadorEdit/"+investigacionCoordinadorResult.id.idInvestigacion+"/"+investigacionCoordinadorResult.id.idCoordinador);
                 }, function(bussinessMessages) {
                     $scope.bussinessMessages = bussinessMessages;
                 });

@@ -1,5 +1,5 @@
 
-<div class="container" style="padding-top: 50px">
+<div class="container">
     <div class="row">
         <h1 style='text-align: center'><b>Lista de Investigaciones</b></h1>
     </div>
@@ -36,15 +36,18 @@
                     <td>{{investigacion.paramFase}}</td>
                     <td>{{investigacion.paramTipoInvestigacion}}</td>
                     <td>
-                        <div class="btn-group"><button ng-click='' type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <!--<div class="btn-group"><button ng-click='' type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 Seleccione <span class="caret"></span>
                             </button>
                             <ul class="dropdown-menu">
                                 <li><a href="" data-toggle="modal" data-target="#newMyModal{{coordinador.idCoordinador}}">Editar</a></li>
                                 <li><a href="" data-toggle="modal" data-target="#newMyModal{{coordinador.idCoordinador}}">Borrar</a></li>
                             </ul>
-                        </div>
-            </td>
+                        </div>-->
+                        <button class="btn btn-primary" ng-click="editarModal(investigacion)">Editar</button>
+                        <button class="btn btn-danger" ng-click="eliminar(investigacion)" >Eliminar</button>
+                        
+                    </td>
             </tr>
             </tbody>
             <tfoot align="center">

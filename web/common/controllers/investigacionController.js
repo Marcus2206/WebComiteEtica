@@ -1,14 +1,14 @@
 var app=angular.module("app");
 
-app.controller("EditInvestigacionController", ['$scope', 'investigacion','parametros','investigacionRemoteResource','coordinadorRemoteResource', 'investigacionCoordinadorRemoteResource', '$location',"$log", '$filter', function($scope, investigacion, parametros, investigacionRemoteResource,coordinadorRemoteResource,investigacionCoordinadorRemoteResource, $location, $log, $filter) {
+app.controller("EditInvestigacionController", ['$scope', 'investigacion','parametros','investigacionRemoteResource','coordinadorRemoteResource', 'investigacionCoordinadorRemoteResource', '$location',"$log", '$filter',"$uibModalInstance","$confirm", function($scope, investigacion, parametros, investigacionRemoteResource,coordinadorRemoteResource,investigacionCoordinadorRemoteResource, $location, $log, $filter,$uibModalInstance,$confirm) {
         
         $scope.parametros=parametros;
         
         $scope.investigacionCoordinadors=[];
         $scope.nombreBoton="Editar";
-        $scope.deshabilitado=false;
         $scope.coordinadorsSelectList=[];
         $scope.coordinadorSelect={};
+        $scope.isCoordinador=true;
         
         $scope.filtrar=function(obj,param){
             function filterByParametro(obj) {
@@ -77,8 +77,13 @@ app.controller("EditInvestigacionController", ['$scope', 'investigacion','parame
                     $scope.bussinessMessages = bussinessMessages;
                     //Mensaje de error
                 });
-        
+        $scope.antes=function(){ 
+          $log.log('antes');
+          $log.log($scope.coordinadorSelect);
+        };
         $scope.agregarCoordinador=function(){
+            $log.log('después');
+            $log.log($scope.coordinadorSelect);
             $scope.investigacionCoordinador={id:{ idInvestigacion:"",
                                               idCoordinador:""},
                                         observacion:"",
@@ -90,31 +95,45 @@ app.controller("EditInvestigacionController", ['$scope', 'investigacion','parame
             $scope.investigacionCoordinador.observacion=$scope.coordinadorSelect.observacion;
             $scope.investigacionCoordinador.usuarioIngresa="sa";
             $scope.investigacionCoordinador.fechaIngreso=new Date();
-            
+            $log.log($scope.investigacionCoordinador);
             investigacionCoordinadorRemoteResource.insert($scope.investigacionCoordinador)
               .then(function (invCoordRespond){
-//                    var ic=$scope.investigacionCoordinador;
-//                    var c=$scope.coordinadorSelect;
-//                    var invCoordinador=[ic,c];
+                    var ic=$scope.investigacionCoordinador;
+                    var c=$scope.coordinadorSelect;
+                    var invCoordinador=[ic,c];
                     
-                    $location.path("investigacionEdit/"+$scope.investigacion.idInvestigacion);                
-//                    $scope.investigacionCoordinadors.push(invCoordinador);
-//                    $scope.coordinadorsSelectList.splice($scope.coordinadorsSelectList.indexOf($scope.coordinadorSelect),1);
-//                    $scope.coordinadorSelect={}; 
-//                    $scope.coordinadorSelect.observacion="";
+                    //$location.path("investigacionEdit/"+$scope.investigacion.idInvestigacion);                
+                    $scope.investigacionCoordinadors.push(invCoordinador);
+                    $scope.coordinadorsSelectList.splice($scope.coordinadorsSelectList.indexOf($scope.coordinadorSelect),1);
+                    $scope.coordinadorSelect={}; 
             },function(bussinessMessages){
 
             });
-        };
-        
+        };         
+                    
         $scope.eliminarInvCoordinador=function(invCoordinador){
-            investigacionCoordinadorRemoteResource.delete(invCoordinador[0])
-              .then(function (invCoordinadorRespond){  
-                    $scope.coordinadorsSelectList.push(invCoordinador[1]);
-                    $scope.investigacionCoordinadors.splice($scope.investigacionCoordinadors.indexOf(invCoordinador),1);
-            },function(bussinessMessages){
+            $confirm({
+                text: '¿Está seguro de eliminar este registro?',
+                ok:"Sí",
+                cancel:"No",
+                title:"Eliminar Coordinador",
+                settings:"{size: 'sm'}"
+                })
+            .then(function(){
+                investigacionCoordinadorRemoteResource.delete(invCoordinador[0])
+                .then(function (invCoordinadorRespond){
+                      $scope.coordinadorsSelectList.push(invCoordinador[1]);
+                      $scope.investigacionCoordinadors.splice($scope.investigacionCoordinadors.indexOf(invCoordinador),1);
+                },function(bussinessMessages){
 
+                });
+            })
+            .catch(function(){
+                
             });
+    
+            
+            
         };
         
         $scope.actualizarInvCoordinador=function(invCoordinador){
@@ -125,9 +144,19 @@ app.controller("EditInvestigacionController", ['$scope', 'investigacion','parame
 
             });
         };
+        
+        $scope.cerrar = function() {
+            $uibModalInstance.dismiss('cancel');
+        };
+
+        $scope.cerrarOtras = true;   
+        
+        $scope.prueba=function(){
+            alert('1515151');
+        };
 }]);
 
-app.controller("ListInvestigacionController", ['$scope', "investigacions", "investigacionRemoteResource", '$location',"$log","$route", function($scope, investigacions, investigacionRemoteResource, $location, $log,$route) {
+app.controller("ListInvestigacionController", ['$scope', "investigacions", "investigacionRemoteResource", '$location',"$log","$route","$uibModal","$confirm", function($scope, investigacions, investigacionRemoteResource, $location, $log,$route,$uibModal,$confirm) {
         /*Se obtiene lista de coordinadores*/
         $scope.investigacions=investigacions;
 
@@ -156,6 +185,66 @@ app.controller("ListInvestigacionController", ['$scope', "investigacions", "inve
                     $scope.bussinessMessages = bussinessMessages;
                     //Mensaje de error
                 });
+        };
+        
+        /*Editar un registro*/
+        $scope.editarModal = function (investigacionObj) {
+                var modalInstance = $uibModal.open({
+                    templateUrl: 'investigacion/investigacionEdit.html',
+//                    templateUrl: 'coordinador/coordinadorTest.html',
+                    controller: "EditInvestigacionController",
+                    size: 'sm',
+                    resolve: {
+                        investigacion:function() {
+                          return investigacionRemoteResource.get(investigacionObj.idInvestigacion);
+                        },
+                        parametros:['parametroRR',function(parametroRR) {
+                            return parametroRR.list();
+                        }]
+                    }
+                });
+                
+                modalInstance.result.then(function(){   
+                    //Si no se devuelve nada
+                },function(data){
+                    //Si devuelve un objeto
+                    if(data !== "cancel"){
+                        //Si no es cancel, se reemplaza el objeto que se mandó a actualizar
+                        var index = $scope.investigacions.indexOf(investigacionObj);
+                        if (index !== -1) {
+                            $scope.investigacions[index] = data;
+                        }
+                    }else{
+                        //Si es cancel
+                    }
+                });
+        };
+        
+        
+        $scope.eliminar=function(investigacion){
+            //Se prepara confirm
+            $confirm({
+                text: '¿Está seguro de eliminar este registro?',
+                ok:"Sí",
+                cancel:"No",
+                title:"Eliminar Investigación",
+                settings:"{size: 'sm'}"
+                })
+            .then(function() {
+                //Si se presiona Sí.
+                investigacionRemoteResource.delete(investigacion)
+                .then(function(investigacionResult) {
+                    //Se la elimenación es exitosa.
+                    $scope.investigacions.splice($scope.investigacions.indexOf(investigacion),1);
+                }, function(bussinessMessages) {
+                    //$scope.bussinessMessages = bussinessMessages;
+                });
+            })
+            .catch(function(){
+                //Si se presiona no, se cancela.
+            });
+        
+
         };
         
 }]);
