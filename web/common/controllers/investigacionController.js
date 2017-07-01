@@ -1,6 +1,12 @@
 var app=angular.module("app");
 
-app.controller("EditInvestigacionController", ['$scope', 'investigacion','parametros','investigacionRemoteResource','coordinadorRemoteResource', 'investigacionCoordinadorRemoteResource', '$location',"$log", '$filter',"$uibModalInstance","$confirm", function($scope, investigacion, parametros, investigacionRemoteResource,coordinadorRemoteResource,investigacionCoordinadorRemoteResource, $location, $log, $filter,$uibModalInstance,$confirm) {
+app.controller("EditInvestigacionController", 
+['$scope', 'investigacion','parametros','investigacionRemoteResource',
+ 'coordinadorRemoteResource', 'investigacionCoordinadorRemoteResource',
+ '$location',"$log", '$filter',"$uibModalInstance","$confirm", 
+ function($scope, investigacion, parametros, investigacionRemoteResource,
+           coordinadorRemoteResource,investigacionCoordinadorRemoteResource, 
+           $location, $log, $filter,$uibModalInstance,$confirm) {
         
         $scope.parametros=parametros;
         

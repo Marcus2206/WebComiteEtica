@@ -74,30 +74,30 @@
                     <button type="button" style="width: 100%;" class="btn btn-default" ng-click="isCoordinador = !isCoordinador">Coordinador</button>
                     <hr>
                     <div uib-collapse="isCoordinador">
-                            <div>
+                        <div>
                             <form data-editable-form name="uiSelectForm" onaftersave="agregarCoordinador()" onbeforesave="antes()" >
-                                    <div editable-ui-select="coordinadorSelect" data-e-form="uiSelectForm" data-e-name="coordinadorSelect" name="coordinadorSelect" theme="bootstrap" data-e-ng-model="coordinadorSelect" data-e-style="min-width:300px;">
-                                        <editable-ui-select-match placeholder="Coordinador" style="width: 100%;" >
-                                            {{$select.selected.apePaterno}} {{$select.selected.apeMaterno}} {{$select.selected.nombres}}
-                                        </editable-ui-select-match>
-                                        <editable-ui-select-choices repeat="coordinador in coordinadorsSelectList | orderBy: 'apePaterno' | filter: $select.search track by $index ">
-                                          {{coordinador.apePaterno}} {{coordinador.apeMaterno}} {{coordinador.nombres}}
-                                        </editable-ui-select-choices>
-                                    </div> 
-                                    <div class="buttons">
-                                        <button type="button" class="btn btn-default" ng-click="uiSelectForm.$show()" ng-show="!uiSelectForm.$visible">
-                                        Agregar
+                                <div editable-ui-select="coordinadorSelect" data-e-form="uiSelectForm" data-e-name="coordinadorSelect" name="coordinadorSelect" theme="bootstrap" data-e-ng-model="coordinadorSelect" data-e-style="min-width:300px;">
+                                    <editable-ui-select-match placeholder="Coordinador" style="width: 100%;" >
+                                        {{$select.selected.apePaterno}} {{$select.selected.apeMaterno}} {{$select.selected.nombres}}
+                                    </editable-ui-select-match>
+                                    <editable-ui-select-choices repeat="coordinador in coordinadorsSelectList | orderBy: 'apePaterno' | filter: $select.search track by $index ">
+                                      {{coordinador.apePaterno}} {{coordinador.apeMaterno}} {{coordinador.nombres}}
+                                    </editable-ui-select-choices>
+                                </div> 
+                                <div class="buttons">
+                                    <button type="button" class="btn btn-default" ng-click="uiSelectForm.$show()" ng-show="!uiSelectForm.$visible">
+                                    Agregar
+                                    </button>
+                                    <span ng-show="uiSelectForm.$visible">
+                                        <br/>
+                                        <button type="submit" class="btn btn-primary" ng-disabled="uiSelectForm.$waiting">
+                                          Confirmar
                                         </button>
-                                        <span ng-show="uiSelectForm.$visible">
-                                            <br/>
-                                            <button type="submit" class="btn btn-primary" ng-disabled="uiSelectForm.$waiting">
-                                              Confirmar
-                                            </button>
-                                            <button type="button" class="btn btn-default" ng-disabled="uiSelectForm.$waiting" ng-click="uiSelectForm.$cancel()">
-                                              Cancelar
-                                            </button>
-                                        </span>
-                                    </div>  
+                                        <button type="button" class="btn btn-default" ng-disabled="uiSelectForm.$waiting" ng-click="uiSelectForm.$cancel()">
+                                          Cancelar
+                                        </button>
+                                    </span>
+                                </div>  
                                 </form>
                                 <br>
                                 <table class="table table-bordered table-hover table-condensed table-responsive">
@@ -123,51 +123,11 @@
                                     </tr>
                                 </tbody>
                             </table>
-                            </div>
+                        </div>
                     </div>
                 </div>                
             </div>
         </div>
-        <br>
-        
-        
-<!--
-        
--->
-        <!--
-        <table class="table table-bordered table-hover table-condensed">
-            <thead>
-                <tr>
-                    <th>id Coordinador</th>
-                    <th>Apellido Paterno</th>
-                    <th>Apellido Materno</th>
-                    <th>Nombres</th>
-                    <th>Observacion</th>
-                    <th>Acciones</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr ng-repeat="invCoordinador in investigacionCoordinadors | orderBy:'idCoordinador'">
-                    <td>{{invCoordinador[0].id.idCoordinador}}</td>
-                    <td>{{invCoordinador[1].apePaterno}} </td>
-                    <td>{{invCoordinador[1].apeMaterno}} </td>
-                    <td>{{invCoordinador[1].nombres}} </td>
-                    <td>{{ invCoordinador[0].observacion|| '' }}</td>
-                    <td>-->
-                        <!--Aquí deben ir los botones de acción-->
-                        <!--
-                        actualizarInvCoordinador(invCoordinador)-> captura el objeto invCoordinador, 
-                        que contiene dos objectos: [InvestigacionCoordinador:0 - Coordinador:1] y actualiza el campo observación.
-
-                        eliminarInvCoordinador(invCoordinador)-> captura el objeto invCoordinador, 
-                        que contiene dos objectos: [InvestigacionCoordinador:0 - Coordinador:1] y elimina La investigacionCoordinador
-
-                        -->
-                    <!--</td>
-
-                </tr>
-            </tbody>
-        </table>-->
         <br>
     </div>
     

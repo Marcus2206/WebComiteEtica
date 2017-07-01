@@ -29,3 +29,9 @@ app.config(['baseUrl', 'parametroRRProvider',
     parametroRRProvider.setBaseUrl(baseUrl);
   }
 ]);
+
+app.config(['baseUrl', 'sedeRRProvider',
+  function(baseUrl, sedeRRProvider) {
+    sedeRRProvider.setBaseUrl(baseUrl);
+  }
+]);

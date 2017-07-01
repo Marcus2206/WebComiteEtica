@@ -1,0 +1,57 @@
+<div class="modal-content">
+    <div class="modal-header">
+        <button type="button" class="close" ng-click="cerrar()">&times;</button>
+        <h4 class="modal-title" id="myModalLabel">Datos de la sede</h4>
+    </div>
+    <div class="modal-body">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col">
+                    <div class="form-group">
+                        <label for="idSede">Id. Sede: </label><br>
+                        <input readonly type="text" class="form-control" id="idSede"  placeholder="Id. Sede" ng-model="sede.idSede" value="{{ sede.idSede || '' }}">
+                    </div> 
+                </div>
+                <div class="col">
+                    <div class="form-group">
+                        <label for="nombre">Nombre: </label><br>
+                        <input type="text" class="form-control" id="nombre"  placeholder="Nombre del Centro" ng-model="sede.nombre" value="{{ sede.nombre || '' }}">
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-group">
+                        <label for="direccion">Dirección: </label><br>
+                        <input type="text" class="form-control" id="direccion"  placeholder="Dirección del Centro" ng-model="sede.direccion" value="{{ sede.direccion || '' }}">
+                    </div>
+                </div>
+                <!--<div class="col">
+                    <div class="form-group">
+                        <label for="departamento">Departamento: </label><br>
+                        <input type="text" class="form-control" id="departamento"  placeholder="Departamento" ng-model="sede.departamento" value="{{ sede.departamento || '' }}">
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-group">
+                        <label for="provincia">Provincia: </label><br>
+                        <input type="text" class="form-control" id="provincia"  placeholder="Provincia" ng-model="sede.provincia" value="{{ sede.provincia || '' }}">
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-group">
+                        <label for="distrito">Distrito: </label><br>
+                        <input type="text" class="form-control" id="distrito"  placeholder="Distrito" ng-model="sede.distrito" value="{{ sede.distrito || '' }}">
+                    </div>
+                </div>-->
+            </div>
+            
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="submit" class="btn btn-primary" ng-click="guardar()">
+            Guardar
+        </button>
+        <button type="button" class="btn btn-default" ng-click="cerrar()">
+            Volver
+        </button>
+    </div>
+</div>
