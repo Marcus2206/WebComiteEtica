@@ -9,9 +9,9 @@
             <file>file:/C:/Users/Felix/Documents/NetBeansProjects/Comite%20de%20Etica/WebComiteEtica/web/coordinador/coordinadorList.html</file>
         </group>
         <group>
-            <file>file:/C:/Users/rasec/Documents/NetBeansProjects/ComiteGit/WebComiteEtica/web/sede/sedeList.html</file>
-            <file>file:/C:/Users/rasec/Documents/NetBeansProjects/ComiteGit/WebComiteEtica/web/common/controllers/sedeController.js</file>
-            <file>file:/C:/Users/rasec/Documents/NetBeansProjects/ComiteGit/WebComiteEtica/web/common/services/sedeServices.js</file>
+            <file>file:/C:/Users/rasec/Documents/NetBeansProjects/ComiteGit/WebComiteEtica/web/common/controllers/investigacionController.js</file>
+            <file>file:/C:/Users/rasec/Documents/NetBeansProjects/ComiteGit/WebComiteEtica/web/common/services/investigacionInvestigadorServices.js</file>
+            <file>file:/C:/Users/rasec/Documents/NetBeansProjects/ComiteGit/WebComiteEtica/web/investigacion/investigacionEdit.html</file>
         </group>
     </open-files>
 </project-private>

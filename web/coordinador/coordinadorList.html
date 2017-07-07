@@ -25,6 +25,7 @@
                     <th>Apellido Paterno</th>
                     <th>Apellido Materno</th>
                     <th>Nombre</th>
+                    <th>Correo</th>
                     <th>Acción</th>
                 </tr>
             </thead>
@@ -34,6 +35,7 @@
                     <td>{{coordinador.apePaterno}}</td>
                     <td>{{coordinador.apeMaterno}}</td>
                     <td>{{coordinador.nombres}}</td>
+                    <td>{{coordinador.correo}}</td>
                     <td>
                         <button class="btn btn-primary" ng-click="editarModal(coordinador)">Editar</button>
                         <button class="btn btn-danger" ng-click="eliminar(coordinador)" >Eliminar</button>

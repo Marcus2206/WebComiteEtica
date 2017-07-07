@@ -35,3 +35,21 @@ app.config(['baseUrl', 'sedeRRProvider',
     sedeRRProvider.setBaseUrl(baseUrl);
   }
 ]);
+
+app.config(['baseUrl', 'ubigeoRRProvider',
+  function(baseUrl, ubigeoRRProvider) {
+    ubigeoRRProvider.setBaseUrl(baseUrl);
+  }
+]);
+
+app.config(['baseUrl', 'investigadorRRProvider',
+  function(baseUrl, investigadorRRProvider) {
+    investigadorRRProvider.setBaseUrl(baseUrl);
+  }
+]);
+
+app.config(['baseUrl', 'investigacionInvestigadorRRProvider',
+  function(baseUrl, investigacionInvestigadorRRProvider) {
+    investigacionInvestigadorRRProvider.setBaseUrl(baseUrl);
+  }
+]);

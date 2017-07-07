@@ -24,26 +24,39 @@
                         <input type="text" class="form-control" id="direccion"  placeholder="Dirección del Centro" ng-model="sede.direccion" value="{{ sede.direccion || '' }}">
                     </div>
                 </div>
-                <!--<div class="col">
-                    <div class="form-group">
-                        <label for="departamento">Departamento: </label><br>
-                        <input type="text" class="form-control" id="departamento"  placeholder="Departamento" ng-model="sede.departamento" value="{{ sede.departamento || '' }}">
-                    </div>
-                </div>
+                
                 <div class="col">
                     <div class="form-group">
-                        <label for="provincia">Provincia: </label><br>
-                        <input type="text" class="form-control" id="provincia"  placeholder="Provincia" ng-model="sede.provincia" value="{{ sede.provincia || '' }}">
+                        <label for="idDepartamento">Departamento:  </label><br>
+                        <select ng-change="cargarProvincia()" id="idDepartamento" class="form-control" ng-model="sede.idDepartamento" >
+                            <option ng-repeat="d in departamentos" value="{{d.idDepartamento}}" >{{d.descripcion}}</option>
+                        </select>
+                        <!--<select ng-change="cargarProvincia()" id="departamento" ng-model="sede.idDepartamento" class="form-control" ng-value="depa.idDepartamento" ng-options="depa.descripcion for depa in departamentos track by depa.idDepartamento"/>-->
                     </div>
-                </div>
+                </div>                
+                
                 <div class="col">
                     <div class="form-group">
-                        <label for="distrito">Distrito: </label><br>
-                        <input type="text" class="form-control" id="distrito"  placeholder="Distrito" ng-model="sede.distrito" value="{{ sede.distrito || '' }}">
+                        <label for="idProvincia">Provincia: </label><br>
+                        <select ng-change="cargarDistrito()" id="idProvincia" class="form-control" ng-model="sede.idProvincia" >
+                            <option ng-repeat="d in provincias" value="{{d.id.idProvincia}}" >{{d.descripcion}}</option>
+                        </select>
+                        <!--<select ng-change="cargarDistrito()" id="provincia" ng-model="sede.idProvincia" class="form-control" ng-options="provi.descripcion for provi in provincias"/>-->
                     </div>
-                </div>-->
+                </div>
+                
+                
+                <div class="col">
+                    <div class="form-group">
+                        <label for="idDistrito">Distrito: </label><br>
+                        <!--<select id="distrito" ng-model="sede.distrito" class="form-control" ng-options="dist.descripcion for dist in distritos"/>-->
+                        <select id="idDistrito" class="form-control" ng-model="sede.idDistrito" >
+                            <option ng-repeat="d in distritos" value="{{d.id.idDistrito}}" >{{d.descripcion}}</option>
+                        </select>
+                    </div>
+                </div>
             </div>
-            
+          
         </div>
     </div>
     <div class="modal-footer">
