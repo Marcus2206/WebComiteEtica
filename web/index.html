@@ -9,45 +9,51 @@ and open the template in the editor.
         <title>TODO supply a title</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        
+
         <!--Inicio CSS-->
         <link href="lib/css/jquery-ui.min.css" rel="stylesheet" type="text/css"/>
         <link href="lib/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
         <link href="lib/css/bootstrap-theme.min.css" rel="stylesheet" type="text/css"/>
-        <link href="lib/css/xeditable.min.css" rel="stylesheet" type="text/css"/>
+        <link href="lib/css/jasny-bootstrap.css" rel="stylesheet" type="text/css"/>
+        <link href="lib/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
         <!--Fin CSS-->
-        
+
         <!--Inicio JS-->
         <!--Jquery-->
         <script src="lib/js/jquery-3.2.1.min.js" type="text/javascript"></script>
         <script src="lib/js/jquery-ui.js" type="text/javascript"></script>
+        <script src="lib/js/jasny-bootstrap.js" type="text/javascript"></script>
 
         <!--Angularjs-->
         <script src="lib/js/angular.min.js" type="text/javascript"></script>
         <script src="lib/js/angular-locale_es-pe.js" type="text/javascript"></script>
         <script src="lib/js/angular-route.min.js" type="text/javascript"></script>
         <script src="lib/js/angular-confirm.min.js" type="text/javascript"></script>
-        <script src="lib/js/xeditable.min.js" type="text/javascript"></script>
         <script src="lib/js/angular-animate.js" type="text/javascript"></script>
         <script src="lib/js/angular-sanitize.js" type="text/javascript"></script>
-        
+
+        <!--CSS personalizado-->
+        <link href="lib/css/custom.css" rel="stylesheet" type="text/css"/>
+        <!--Fin JS-->
+
         <!--Bootstrap-->
+
         <script src="lib/js/bootstrap.min.js" type="text/javascript"></script>
         <script src="lib/js/ui-bootstrap-tpls-2.5.0.js" type="text/javascript"></script>
-        
+
         <!--Module-->
         <script src="common/app-module.js" type="text/javascript"></script> 
-        
-        
+
+
         <!--Constants-->
         <script src="common/constants/constants.js" type="text/javascript"></script>
-        
+
         <!--Configs-->
         <script src="common/configs/configs.js" type="text/javascript"></script>
 
         <!--Runs-->
         <script src="common/runs/runs.js" type="text/javascript"></script>
-        
+
         <!--Filters-->
         <script src="common/filters/filters.js" type="text/javascript"></script>
 
@@ -60,7 +66,7 @@ and open the template in the editor.
         <script src="common/services/ubigeoServices.js" type="text/javascript"></script>
         <script src="common/services/investigadorServices.js" type="text/javascript"></script>
         <script src="common/services/investigacionInvestigadorServices.js" type="text/javascript"></script>
-        
+
         <!--Providers-->
         <script src="common/providers/investigacionProvider.js" type="text/javascript"></script>
         <script src="common/providers/coordinadorProvider.js" type="text/javascript"></script>
@@ -70,32 +76,28 @@ and open the template in the editor.
         <script src="common/providers/ubigeoProvider.js" type="text/javascript"></script>
         <script src="common/providers/investigadorProvider.js" type="text/javascript"></script>
         <script src="common/providers/investigacionInvestigadorProvider.js" type="text/javascript"></script>
-        
+
         <!--Controllers-->
         <script src="common/controllers/mainController.js" type="text/javascript"></script>
         <script src="common/controllers/coordinadorController.js" type="text/javascript"></script>
         <script src="common/controllers/investigacionController.js" type="text/javascript"></script>
         <script src="common/controllers/investigacionCoordinadorController.js" type="text/javascript"></script>
         <script src="common/controllers/sedeController.js" type="text/javascript"></script>
-        
+
         <!--Routes-->
         <script src="common/routes/investigacion-route.js" type="text/javascript"></script>
         <script src="common/routes/coordinador-route.js" type="text/javascript"></script>
         <script src="common/routes/investigacionCoordinador-route.js" type="text/javascript"></script>
         <script src="common/routes/sede-route.js" type="text/javascript"></script>
-        
-        
+
+
         <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-select/0.16.1/select.min.js"></script>
         <link href="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-select/0.16.1/select.min.css" rel="stylesheet" media="screen">
-        
-        <!--CSS personalizado-->
-        <link href="lib/css/custom.css" rel="stylesheet" type="text/css"/>
-        <!--Fin JS-->
-        
+
+
+
     </head>
-    
     <ng-include src="'general/menu-navegacion.html'" ></ng-include>
-    <body ng-controller="MainController">
         <div ng-view></div>
     </body>
     <ng-include src="'general/pie-pagina.html'" ></ng-include>
