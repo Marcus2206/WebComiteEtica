@@ -53,3 +53,9 @@ app.config(['baseUrl', 'investigacionInvestigadorRRProvider',
     investigacionInvestigadorRRProvider.setBaseUrl(baseUrl);
   }
 ]);
+
+app.config(['baseUrl', 'investigacionSedeRRProvider',
+  function(baseUrl, investigacionSedeRRProvider) {
+    investigacionSedeRRProvider.setBaseUrl(baseUrl);
+  }
+]);

@@ -4,10 +4,12 @@ app.controller("EditInvestigacionController",
 ['$scope', 'investigacion','parametros','investigacionRemoteResource',
  'coordinadorRemoteResource', 'investigacionCoordinadorRemoteResource',
  'investigadorRR','investigacionInvestigadorRR',
+ 'sedeRR','investigacionSedeRR',
  '$location',"$log", '$filter',"$uibModalInstance","$confirm", 
  function($scope, investigacion, parametros, investigacionRemoteResource,
            coordinadorRemoteResource,investigacionCoordinadorRemoteResource,
            investigadorRR,investigacionInvestigadorRR,
+           sedeRR,investigacionSedeRR,
            $location, $log, $filter,$uibModalInstance,$confirm) {
         
         $scope.parametros=parametros;
@@ -15,17 +17,21 @@ app.controller("EditInvestigacionController",
         
         $scope.investigacionCoordinadors=[];
         $scope.investigacionInvestigadors=[];
+        $scope.investigacionSedes=[];
         
         $scope.nombreBoton="Editar";
         
         $scope.coordinadorsSelectList=[];
         $scope.investigadorsSelectList=[];
+        $scope.sedesSelectList=[];
         
         $scope.coordinadorSelect={};
         $scope.investigadorSelect={};
+        $scope.sedeSelect={};
         
         $scope.isCoordinador=true;
         $scope.isInvestigador=true;
+        $scope.isSede=true;
         
         $scope.filtrar=function(obj,param){
             function filterByParametro(obj) {
@@ -85,6 +91,17 @@ app.controller("EditInvestigacionController",
                     //Mensaje de error
                 });
         
+        /*Sedes seleccionables*/
+        sedeRR.listSedeSinIdInvestigacionFind($scope.investigacion.idInvestigacion)
+                .then(function(sedeRespond) {
+                    $scope.sedesSelectList=sedeRespond;
+                }, function(bussinessMessages) {
+                    $scope.bussinessMessages = bussinessMessages;
+                    //Mensaje de error
+                });
+        
+        
+        
         /*Detalle de Investigación con Coordinador*/
         investigacionCoordinadorRemoteResource.listCoordinadorByIdInvestigacion($scope.investigacion.idInvestigacion)
                 .then(function(coordinadorsRespond) {
@@ -98,12 +115,23 @@ app.controller("EditInvestigacionController",
         investigacionInvestigadorRR.listInvestigadorByIdInvestigacion($scope.investigacion.idInvestigacion)
                 .then(function(investigadorsRespond) {
                     $scope.investigacionInvestigadors=investigadorsRespond;
-                    $log.log($scope.investigacionInvestigadors);
+                }, function(bussinessMessages) {
+                    $scope.bussinessMessages = bussinessMessages;
+                    //Mensaje de error
+                });
+
+        /*Detalle de Investigación Sede*/
+        investigacionSedeRR.listSedeByIdInvestigacion($scope.investigacion.idInvestigacion)
+                .then(function(sedesRespond) {
+                    $scope.investigacionSedes=sedesRespond;
+                    $log.log($scope.investigacionSedes);
                 }, function(bussinessMessages) {
                     $scope.bussinessMessages = bussinessMessages;
                     //Mensaje de error
                 });
         
+        /*Agregar detalles*/
+        /*Agregar Coordinador*/
         $scope.agregarCoordinador=function(){
             $scope.investigacionCoordinador={id:{ idInvestigacion:"",
                                               idCoordinador:""},
@@ -130,7 +158,8 @@ app.controller("EditInvestigacionController",
 
             });
         };         
-                    
+              
+        /*Eliminar Coordinador*/
         $scope.eliminarInvCoordinador=function(invCoordinador){
             $confirm({
                 text: '¿Está seguro de eliminar este registro?',
@@ -153,6 +182,7 @@ app.controller("EditInvestigacionController",
             });
         };
         
+        /*Agregar Investigador*/
         $scope.agregarInvestigador=function(){
             $scope.investigacionInvestigador={id:{ idInvestigacion:"",
                                               idInvestigador:""},
@@ -179,7 +209,8 @@ app.controller("EditInvestigacionController",
 
             });
         };         
-                    
+        
+        /*Eliminar Investigador*/
         $scope.eliminarInvInvestigador=function(invInvestigador){
             $confirm({
                 text: '¿Está seguro de eliminar este registro?',
@@ -201,7 +232,75 @@ app.controller("EditInvestigacionController",
                 
             });
         };
+             
+        /*Agregar Sede*/
+        $scope.agregarSede=function(){
+            $scope.investigacionSede={id:{ idInvestigacion:"",
+                                              idSede:""},
+                                        observacion:"",
+                                        usuarioIngresa:null,
+                                        fechaIngreso:null};
+                                    
+            $scope.investigacionSede.id.idInvestigacion=$scope.investigacion.idInvestigacion;
+            $scope.investigacionSede.id.idSede=$scope.sedeSelect.idSede;
+            $scope.investigacionSede.observacion=$scope.sedeSelect.observacion;
+            $scope.investigacionSede.usuarioIngresa="sa";
+            $scope.investigacionSede.fechaIngreso=new Date();
+            investigacionSedeRR.insert($scope.investigacionSede)
+              .then(function (invSedeRespond){
+                    var ii=$scope.investigacionSede;
+                    var i=$scope.sedeSelect;
+                    var invSede={idInvestigacion:$scope.investigacionSede.id.idInvestigacion,
+                                idSede:$scope.investigacionSede.id.idSede,
+                                nombre:$scope.sedeSelect.nombre,
+                                idDepartamento:$scope.sedeSelect.idDepartamento,
+                                idProvincia:$scope.sedeSelect.idProvincia,
+                                idDistrito:$scope.sedeSelect.idDistrito};
+                    
+                    //$location.path("investigacionEdit/"+$scope.investigacion.idInvestigacion);  
+                    
+                    //$log.log(invSede);
+                    $scope.investigacionSedes.push(invSede);
+                    $log.log($scope.investigacionSedes);
+                    $scope.sedesSelectList.splice($scope.sedesSelectList.indexOf($scope.sedeSelect),1);
+                    $scope.sedeSelect={}; 
+            },function(bussinessMessages){
+
+            });
+        };   
+        
+        /*Eliminar Sede*/
+        $scope.eliminarInvSede=function(invSede){
+            var idSede={ id:{idInvestigacion:invSede.idInvestigacion,
+                            idSede:invSede.idSede},
+                         observacion:""
+                        };
+            $confirm({
+                text: '¿Está seguro de eliminar este registro?',
+                ok:"Sí",
+                cancel:"No",
+                title:"Eliminar Sede",
+                settings:"{size: 'sm'}"
+                })
+            .then(function(){
+                investigacionSedeRR.delete(idSede)
+                .then(function (invInvestigadorRespond){
+                      var sedeSelect={  idSede:invSede.idSede,
+                                        nombre:invSede.nombre,
+                                        idDepartamento:invSede.idDepartamento,
+                                        idProvincia:invSede.idProvincia,
+                                        idDistrito:invSede.idDistrito};
+                      $scope.sedesSelectList.push(sedeSelect);
+                      $scope.investigacionSedes.splice($scope.investigacionSedes.indexOf(invSede),1);
+                },function(bussinessMessages){
+
+                });
+            })
+            .catch(function(){
                 
+            });
+        };
+        
         $scope.cerrar = function() {
             $uibModalInstance.dismiss('cancel');
         };
@@ -245,7 +344,7 @@ app.controller("ListInvestigacionController", ['$scope', "investigacions", "inve
                     templateUrl: 'investigacion/investigacionEdit.html',
 //                    templateUrl: 'coordinador/coordinadorTest.html',
                     controller: "EditInvestigacionController",
-                    size: 'sm',
+                    size: 'md',
                     backdrop  : 'static',
                     keyboard  : false,
                     resolve: {

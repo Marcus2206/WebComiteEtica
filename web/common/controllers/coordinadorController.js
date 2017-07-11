@@ -91,7 +91,7 @@ app.controller("ListCoordinadorController", ['$scope', "coordinadors", "coordina
                     templateUrl: 'coordinador/coordinadorEdit.html',
 //                    templateUrl: 'coordinador/coordinadorTest.html',
                     controller: "EditCoordinadorController",
-                    size: 'sm',
+                    size: 'md',
                     resolve: {
                         coordinador:function() {
                           return coordinadorRemoteResource.get(coordinadorObj.idCoordinador);

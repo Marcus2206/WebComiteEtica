@@ -55,7 +55,7 @@
                     <div uib-collapse="isCoordinador">
                         <div>
                             <form data-editable-form name="uiSelectFormCoordinador" onaftersave="agregarCoordinador()">
-                                <div editable-ui-select="coordinadorSelect" data-e-form="uiSelectForm" data-e-name="coordinadorSelect" name="coordinadorSelect" theme="bootstrap" data-e-ng-model="coordinadorSelect" data-e-style="min-width:300px;">
+                                <div editable-ui-select="coordinadorSelect" data-e-form="uiSelectFormCoordinador" data-e-name="coordinadorSelect" name="coordinadorSelect" theme="bootstrap" data-e-ng-model="coordinadorSelect" data-e-style="min-width:300px;">
                                     <editable-ui-select-match placeholder="Coordinador" style="width: 100%;" >
                                         {{$select.selected.apePaterno}} {{$select.selected.apeMaterno}} {{$select.selected.nombres}}
                                     </editable-ui-select-match>
@@ -112,7 +112,7 @@
                     <div uib-collapse="isInvestigador">
                         <div>
                             <form data-editable-form name="uiSelectFormInvestigador" onaftersave="agregarInvestigador()">
-                                <div editable-ui-select="investigadorSelect" data-e-form="uiSelectForm" data-e-name="investigadorSelect" name="investigadorSelect" theme="bootstrap" data-e-ng-model="investigadorSelect" data-e-style="min-width:300px;font-size: 11px;">
+                                <div editable-ui-select="investigadorSelect" data-e-form="uiSelectFormInvestigador" data-e-name="investigadorSelect" name="investigadorSelect" theme="bootstrap" data-e-ng-model="investigadorSelect" data-e-style="min-width:300px;font-size: 11px;">
                                     <editable-ui-select-match placeholder="Investigador" style="width: 100%;font-size: 11px;" >
                                         {{$select.selected.apePaterno}} {{$select.selected.apeMaterno}} {{$select.selected.nombres}}
                                     </editable-ui-select-match>
@@ -163,6 +163,62 @@
                     </div>
                 </div>   
                 
+                <!--Inicio de Sede-->
+                <div class="col">    
+                    <button ng-disabled="deshabilitado" type="button" style="width: 100%;" class="btn btn-default" ng-click="isSede = !isSede">Sede</button>
+                    <div uib-collapse="isSede">
+                        <div>
+                            <form data-editable-form name="uiSelectFormSede" onaftersave="agregarSede()">
+                                <div editable-ui-select="sedeSelect" data-e-form="uiSelectFormSede" data-e-name="sedeSelect" name="sedeSelect" theme="bootstrap" data-e-ng-model="sedeSelect" data-e-style="min-width:300px;font-size: 11px;">
+                                    <editable-ui-select-match placeholder="Sede" style="width: 100%;font-size: 11px;" >
+                                        {{$select.selected.nombre}}
+                                    </editable-ui-select-match>
+                                    <editable-ui-select-choices repeat="sede in sedesSelectList | orderBy: 'nombre' | filter: $select.search track by $index ">
+                                      {{sede.nombre}} - {{sede.idDepartamento}}, {{sede.idProvincia}}, {{sede.idDistrito}}
+                                    </editable-ui-select-choices>
+                                </div> 
+                                <div class="buttons">
+                                    <button type="button" class="btn btn-default" ng-click="uiSelectFormSede.$show()" ng-show="!uiSelectFormSede.$visible">
+                                    Agregar
+                                    </button>
+                                    <span ng-show="uiSelectFormSede.$visible">
+                                        <br/>
+                                        <button type="submit" class="btn btn-primary" ng-disabled="uiSelectFormSede.$waiting">
+                                          Confirmar
+                                        </button>
+                                        <button type="button" class="btn btn-default" ng-disabled="uiSelectFormSede.$waiting" ng-click="uiSelectFormSede.$cancel()">
+                                          Cancelar
+                                        </button>
+                                    </span>
+                                </div>  
+                                </form>
+                                <br>
+                                <table class="table table-bordered table-hover table-condensed table-responsive">
+                                <thead>
+                                    <tr>
+                                        <th>Sedes</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="invSede in investigacionSedes | orderBy:'idSede'">
+                                        <td>
+                                            <div>
+                                                <div>
+                                                    <button type="button" class="close" aria-label="Close" ng-click="eliminarInvSede(invSede)">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div>
+                                                    {{invSede.nombre}} - {{invSede.idDepartamento}}, {{invSede.idProvincia}}, {{invSede.idDistrito}}
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>   
                 
                 
             </div>

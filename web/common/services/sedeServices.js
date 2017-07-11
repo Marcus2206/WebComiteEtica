@@ -70,4 +70,18 @@ function SedeRR($http,$q, baseUrl,$log) {
 
         return promise;
     };
+    
+    this.listSedeSinIdInvestigacionFind = function(idInvestigacion) {
+        var defered=$q.defer();
+        var promise=defered.promise;
+        $http.get(baseUrl + '/api/SedeSinIdInvestigacionFind/'+idInvestigacion)
+        .then(function onSuccess(response){
+            defered.resolve(response.data);
+        })
+        .catch(function onCatch(response){
+            defered.reject(response.data);
+        });
+
+        return promise;
+    };
 }
