@@ -87,11 +87,11 @@ function CoordinadorRemoteResource($http,$q, baseUrl,$log) {
         })
         .catch(function onCatch(response){
             defered.reject(response);
-            /*if (response.status === 400) {
+            if (response.status === 400) {
                      defered.reject(response.data);
-            } else {
-                throw new Error("Fallo obtener los datos:" + response.status + "\n" + response.data);
-            }*/
+//            } else if(response.status === 1554822){
+//                     defered.reject(response.data);
+            }
             
         });
 
@@ -108,11 +108,11 @@ function CoordinadorRemoteResource($http,$q, baseUrl,$log) {
         })
         .catch(function onCatch(response){
             defered.reject(response.data);
-            /*if (response.status === 400) {
+            if (response.status === 400) {
                     defered.reject(response.data);
             } else {
                 throw new Error("Fallo obtener los datos:" + response.status + "\n" + response.data);
-            }*/
+            }
         });
 
         return promise;

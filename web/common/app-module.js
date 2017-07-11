@@ -1,4 +1,4 @@
-var app=angular.module("app",["ngRoute","xeditable","ui.select","ui.bootstrap","angular-confirm","ngAnimate","ngSanitize"]);
+var app=angular.module("app",["ngRoute","ui.select","ui.bootstrap","angular-confirm","ngAnimate","ngSanitize"]);
 
 app.config(['$routeProvider',"$locationProvider",function($routeProvider,$locationProvider) {
  /*Sólo ruta por defecto*/

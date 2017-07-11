@@ -1,72 +1,72 @@
 
 <div class="container">
     <div class="row">
-        <h1 style='text-align: center'><b>Lista de Investigaciones</b></h1>
+        <div class="container-fluid">
+            <h1 style='text-align: center'><b>Lista de Investigaciones</b></h1>
+            <br>
+            <br>
+            <br>
+        </div>
+    </div>
+    <div class="row">
+        <div class="container-fluid">
+        <input type="text" ng-model="txtFiltroInvestigacion" class="form-control" placeholder="Buscar">
+        <button class="btn btn-primary" ng-click="nuevoModal()">Crear Investigación</button>
+        </div>
     </div>
 
-    <br>
-    <br>
-    <br>
     <div class="row">
-        <input type="text" ng-model="txtFiltroInvestigacion" class="form-control" placeholder="Buscar">
-        <button ng-click="nuevoModal()">Crear Investigación</button>
-    </div>
-    <br>
-    <div class="row">
-        <table class="table table-responsive">
-            <thead>
-                <tr>
-                    <th>Código</th>
-                    <th>Protocolo</th>
-                    <th>Titulo</th>
-                    <th>Especialidad</th>
-                    <th>Fase</th>
-                    <th>Tipo de Investigación</th>
-                    <th>Acción</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr ng-repeat="investigacion in investigacions| empezarDe : currentPage * pageSize | limitTo:pageSize | filter:txtFiltroInvestigacion ">
-                    <td>{{investigacion.idInvestigacion}}</td>
-                    <td>{{investigacion.protocolo}}</td>
-                    <td>{{investigacion.titulo}}</td>
-                    <td>{{investigacion.paramEspecialidad}}</td>
-                    <td>{{investigacion.paramFase}}</td>
-                    <td>{{investigacion.paramTipoInvestigacion}}</td>
-                    <td>
-                        <!--<div class="btn-group"><button ng-click='' type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Seleccione <span class="caret"></span>
-                            </button>
-                            <ul class="dropdown-menu">
-                                <li><a href="" data-toggle="modal" data-target="#newMyModal{{coordinador.idCoordinador}}">Editar</a></li>
-                                <li><a href="" data-toggle="modal" data-target="#newMyModal{{coordinador.idCoordinador}}">Borrar</a></li>
-                            </ul>
-                        </div>-->
-                        <button class="btn btn-primary" ng-click="editarModal(investigacion)">Editar</button>
-                        <button class="btn btn-danger" ng-click="eliminar(investigacion)" >Eliminar</button>
-                        
-                    </td>
-            </tr>
-            </tbody>
-            <tfoot align="center">
-                <tr>
-                    <td colspan="5">
-                        <div class="container ">
-                            <div class="center-block">
-                                <button ng-disabled="currentPage === 0" ng-click="currentPage = currentPage - 1" class="btn btn-default">
-                                    <span aria-hidden="true">&laquo;</span>
+        <br>
+        <div id="no-more-tables">
+            <table class="col-md-12 table-bordered table-striped table-condensed cf" >
+                <thead class="cf">
+                    <tr>
+                        <th>Código</th>
+                        <th>Protocolo</th>
+                        <th>Titulo</th>
+                        <th>Especialidad</th>
+                        <th>Fase</th>
+                        <th>Tipo de Investigación</th>
+                        <th>Acción</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="investigacion in investigacions| empezarDe : currentPage * pageSize | limitTo:pageSize | filter:txtFiltroInvestigacion ">
+                        <td data-title="Código">{{investigacion.idInvestigacion}}</td>
+                        <td data-title="Protocolo">{{investigacion.protocolo}}</td>
+                        <td data-title="Titulo">{{investigacion.titulo}}</td>
+                        <td data-title="Especialidad">{{investigacion.paramEspecialidad}}</td>
+                        <td data-title="Fase">{{investigacion.paramFase}}</td>
+                        <td data-title="Tipo">{{investigacion.paramTipoInvestigacion}}</td>
+                        <td>
+                            <!--<div class="btn-group"><button ng-click='' type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Seleccione <span class="caret"></span>
                                 </button>
-                                {{currentPage + 1}}/{{numberOfPages()}}
-                                <!--<button ng-disabled="paginacion.inicia >= productos.length/paginacion.max - 1" ng-click="paginacion.inicia=paginacion.inicia+1">-->
-                                <button ng-disabled="currentPage >= coordinadors.length / pageSize - 1" ng-click="setNextPagina()" class="btn btn-default">
-                                    <span aria-hidden="true">&raquo;</span>
-                                </button>
-                            </div>
-                        </div>
-                    </td>
-                </tr>
-            </tfoot>
-        </table>
+                                <ul class="dropdown-menu">
+                                    <li><a href="" data-toggle="modal" data-target="#newMyModal{{coordinador.idCoordinador}}">Editar</a></li>
+                                    <li><a href="" data-toggle="modal" data-target="#newMyModal{{coordinador.idCoordinador}}">Borrar</a></li>
+                                </ul>
+                            </div>-->
+                            <button class="btn btn-primary" ng-click="editarModal(investigacion)"><i class="fa fa-pencil-square-o" aria-hidden="true"></i><span class="hidden-xs"> Editar</span></button>
+                            <button class="btn btn-danger" ng-click="eliminar(investigacion)" ><i class="fa fa-trash" aria-hidden="true"></i><span class="hidden-xs"> Eliminar</span></button>
+
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="container">
+            <div class="center-block" style="text-align: center">
+                <br>
+                <button ng-disabled="currentPage === 0" ng-click="currentPage = currentPage - 1" class="btn btn-default">
+                    <span aria-hidden="true">&laquo;</span>
+                </button>
+                {{currentPage + 1}}/{{numberOfPages()}}
+                <button ng-disabled="currentPage >= investigacions.length / pageSize - 1" ng-click="setNextPagina()" class="btn btn-default">
+                    <span aria-hidden="true">&raquo;</span>
+                </button>
+            </div>
+        </div>
     </div>
     <!-- paginacion -->
 </div>

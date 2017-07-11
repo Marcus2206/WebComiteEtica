@@ -74,7 +74,7 @@ app.controller("ListCoordinadorController", ['$scope', "coordinadors", "coordina
                     //Se la elimenación es exitosa.
                     $scope.coordinadors.splice($scope.coordinadors.indexOf(coordinador),1);
                 }, function(bussinessMessages) {
-                    //$scope.bussinessMessages = bussinessMessages;
+                    alert("El coordinador esta asociado a una investigación activa.");
                 });
             })
             .catch(function(){

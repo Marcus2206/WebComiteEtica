@@ -1,77 +1,96 @@
-<div class="container" style="padding-top: 50px">
-    <div class="row">
-        <h1 style='text-align: center'><b>Lista de Coordinadores</b></h1>
-    </div>
 
-    <br>
-    <br>
-    <br>
+<div class="container" >
     <div class="row">
-        <input type="text" ng-model="txtFiltroCoordinador" class="form-control" placeholder="Buscar">
-        <!--<ul class="nav nav-pills" >
-            <li><a href="" data-toggle="modal" data-target="#newMyModal" >Crear coordinador</a></li>
-            <ng-include src="'coordinador/coordinadorEdit.html'" ></ng-include>
-        </ul>-->
-        <button class="btn btn-primary" ng-click="insertarModal()">
-            Nuevo Coordinador
-        </button>
+        <div class="container-fluid">
+            <h1 style='text-align: center'><b>Lista de Coordinadores</b></h1>
+            <br>
+            <br>
+            <br>
+        </div>
+    </div>
+    <div class="row">
+        <div class="container-fluid">
+            <input type="text" ng-model="txtFiltroCoordinador" class="form-control" placeholder="Buscar">
+            <!--<ul class="nav nav-pills" >
+                <li><a href="" data-toggle="modal" data-target="#newMyModal" >Crear coordinador</a></li>
+                <ng-include src="'coordinador/coordinadorEdit.html'" ></ng-include>
+            </ul>-->
+            <br>
+            <button class="btn btn-primary" ng-click="insertarModal()">
+                Nuevo Coordinador
+            </button>
+        </div>
     </div>
     <br>
     <div class="row">
-        <table class="table table-responsive">
-            <thead>
-                <tr>
-                    <th>Código</th>
-                    <th>Apellido Paterno</th>
-                    <th>Apellido Materno</th>
-                    <th>Nombre</th>
-                    <th>Correo</th>
-                    <th>Acción</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr ng-repeat="coordinador in coordinadors| empezarDe : currentPage * pageSize | limitTo:pageSize | filter: txtFiltroCoordinador">
-                    <td>{{coordinador.idCoordinador}}</td>
-                    <td>{{coordinador.apePaterno}}</td>
-                    <td>{{coordinador.apeMaterno}}</td>
-                    <td>{{coordinador.nombres}}</td>
-                    <td>{{coordinador.correo}}</td>
-                    <td>
-                        <button class="btn btn-primary" ng-click="editarModal(coordinador)">Editar</button>
-                        <button class="btn btn-danger" ng-click="eliminar(coordinador)" >Eliminar</button>
-                        <!--
-                        <div class="btn-group">
-                            <button ng-click='' type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Seleccione <span class="caret"></span>
-                            </button>
-                            <ul class="dropdown-menu">
-                                <li><a href="" data-toggle="modal" data-target="#newMyModal{{coordinador.idCoordinador}}">Editar</a></li>
-                                <li><a href="" data-toggle="modal" data-target="#newMyModal{{coordinador.idCoordinador}}">Borrar</a></li>
-                            </ul>
-                        </div>
-                        <ng-include src="'coordinador/coordinadorEdit.html'" ></ng-include>
-                        -->
-                    </td>
-                </tr>
-            </tbody>
-            <tfoot align="center">
-                <tr>
-                    <td colspan="5">
-                        <div class="container ">
-                            <div class="center-block">
-                                <button ng-disabled="currentPage === 0" ng-click="currentPage = currentPage - 1" class="btn btn-default">
-                                    <span aria-hidden="true">&laquo;</span>
+        <div id="no-more-tables">
+            <table class="col-md-12 table-bordered table-striped table-condensed cf" >
+                <thead class="cf">
+                    <tr>
+                        <th >Código</th>
+                        <th >Apellido Paterno</th>
+                        <th >Apellido Materno</th>
+                        <th >Nombre</th>
+                        <th >Correo</th>
+                        <th >Acción</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="coordinador in coordinadors| empezarDe : currentPage * pageSize | limitTo:pageSize | filter: txtFiltroCoordinador">
+                        <td data-title="Código">{{coordinador.idCoordinador}}</td>
+                        <td data-title="Ape Pat">{{coordinador.apePaterno}}</td>
+                        <td data-title="Ape Mat">{{coordinador.apeMaterno}}</td>
+                        <td data-title="Nombres">{{coordinador.nombres}}</td>
+                        <td data-title="Correo">{{coordinador.correo}}</td>
+                        <td data-title="">
+                            <a class="btn btn-primary" ng-click="editarModal(coordinador)"><i class="fa fa-pencil-square-o" aria-hidden="true"></i><span class="hidden-xs"> Editar</span></a>
+                            <a class="btn btn-danger" ng-click="eliminar(coordinador)" ><i class="fa fa-trash" aria-hidden="true"></i><span class="hidden-xs"> Eliminar</span></a>
+                            <!--
+                            <div class="btn-group">
+                                <button ng-click='' type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Seleccione <span class="caret"></span>
                                 </button>
-                                {{currentPage + 1}}/{{numberOfPages()}}
-                                <button ng-disabled="currentPage >= coordinadors.length / pageSize - 1" ng-click="setNextPagina()" class="btn btn-default">
-                                    <span aria-hidden="true">&raquo;</span>
-                                </button>
+                                <ul class="dropdown-menu">
+                                    <li><a href="" data-toggle="modal" data-target="#newMyModal{{coordinador.idCoordinador}}">Editar</a></li>
+                                    <li><a href="" data-toggle="modal" data-target="#newMyModal{{coordinador.idCoordinador}}">Borrar</a></li>
+                                </ul>
                             </div>
-                        </div>
-                    </td>
-                </tr>
-            </tfoot>
-        </table>
+                            <ng-include src="'coordinador/coordinadorEdit.html'" ></ng-include>
+                            -->
+                        </td>
+                    </tr>
+                </tbody>
+                <!--                <tfoot align="center">
+                                    <tr>
+                                        <td colspan="5">
+                                            <div class="container ">
+                                                <div class="center-block">
+                                                    <button ng-disabled="currentPage === 0" ng-click="currentPage = currentPage - 1" class="btn btn-default">
+                                                        <span aria-hidden="true">&laquo;</span>
+                                                    </button>
+                                                    {{currentPage + 1}}/{{numberOfPages()}}
+                                                    <button ng-disabled="currentPage >= coordinadors.length / pageSize - 1" ng-click="setNextPagina()" class="btn btn-default">
+                                                        <span aria-hidden="true">&raquo;</span>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tfoot>-->
+            </table>
+        </div>
+        <div class="container">
+            <div class="center-block" style="text-align: center">
+                <br>
+                <button ng-disabled="currentPage === 0" ng-click="currentPage = currentPage - 1" class="btn btn-default">
+                    <span aria-hidden="true">&laquo;</span>
+                </button>
+                {{currentPage + 1}}/{{numberOfPages()}}
+                <button ng-disabled="currentPage >= coordinadors.length / pageSize - 1" ng-click="setNextPagina()" class="btn btn-default">
+                    <span aria-hidden="true">&raquo;</span>
+                </button>
+            </div>
+        </div>
     </div>
     <!-- paginacion -->
 </div>

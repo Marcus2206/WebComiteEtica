@@ -1,7 +1,6 @@
 var app=angular.module("app");
 
-app.run(["$rootScope", "editableOptions",function($rootScope, editableOptions) {
-    editableOptions.theme = 'bs3';
+app.run(["$rootScope",function($rootScope) {
 }]);
 
 /*Salir de modal con botón atrás en Android*/
