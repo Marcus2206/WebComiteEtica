@@ -124,7 +124,6 @@ app.controller("EditInvestigacionController",
         investigacionSedeRR.listSedeByIdInvestigacion($scope.investigacion.idInvestigacion)
                 .then(function(sedesRespond) {
                     $scope.investigacionSedes=sedesRespond;
-                    $log.log($scope.investigacionSedes);
                 }, function(bussinessMessages) {
                     $scope.bussinessMessages = bussinessMessages;
                     //Mensaje de error
@@ -149,8 +148,7 @@ app.controller("EditInvestigacionController",
                     var ic=$scope.investigacionCoordinador;
                     var c=$scope.coordinadorSelect;
                     var invCoordinador=[ic,c];
-                    
-                    //$location.path("investigacionEdit/"+$scope.investigacion.idInvestigacion);                
+               
                     $scope.investigacionCoordinadors.push(invCoordinador);
                     $scope.coordinadorsSelectList.splice($scope.coordinadorsSelectList.indexOf($scope.coordinadorSelect),1);
                     $scope.coordinadorSelect={}; 
@@ -200,8 +198,7 @@ app.controller("EditInvestigacionController",
                     var ii=$scope.investigacionInvestigador;
                     var i=$scope.investigadorSelect;
                     var invInvestigador=[ii,i];
-                    
-                    //$location.path("investigacionEdit/"+$scope.investigacion.idInvestigacion);                
+                                   
                     $scope.investigacionInvestigadors.push(invInvestigador);
                     $scope.investigadorsSelectList.splice($scope.investigadorsSelectList.indexOf($scope.investigadorSelect),1);
                     $scope.investigadorSelect={}; 
@@ -261,7 +258,6 @@ app.controller("EditInvestigacionController",
                     
                     //$log.log(invSede);
                     $scope.investigacionSedes.push(invSede);
-                    $log.log($scope.investigacionSedes);
                     $scope.sedesSelectList.splice($scope.sedesSelectList.indexOf($scope.sedeSelect),1);
                     $scope.sedeSelect={}; 
             },function(bussinessMessages){
