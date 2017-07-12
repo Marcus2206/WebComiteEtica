@@ -1,0 +1,31 @@
+<div class="modal-content">
+    <div class="modal-header">
+        <button type="button" class="close" ng-click="cerrar()">&times;</button>
+        <h4 class="modal-title" id="myModalLabel">Datos del Patrocinador</h4>
+    </div>
+    <div class="modal-body">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="form-group">
+                    <label for="idPatrocinador">Id. patrocinador:</label><br>
+                    <input readonly type="text" class="form-control" id="idPatrocinador" ng-model="patrocinador.idPatrocinador" placeholder="Id. patrocinador" value="{{ patrocinador.idPatrocinador || '' }}">
+                </div>     
+
+                <div class="form-group">
+                    <label for="nombre">Nombre:  </label><br>
+                    <input type="text" class="form-control" id="nombre" ng-model="patrocinador.nombre" placeholder="Nombres" value="{{ patrocinador.nombre || '' }}" e-required>
+                </div> 
+            </div>
+
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="submit" class="btn btn-primary" ng-click="guardar()">
+            Guardar
+        </button>
+        <button type="button" class="btn btn-default" ng-click="cerrar()">
+            Volver
+        </button>
+    </div>
+</div>
+

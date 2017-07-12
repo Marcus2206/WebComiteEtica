@@ -65,3 +65,9 @@ app.config(['baseUrl', 'monitorRRProvider',
     monitorRRProvider.setBaseUrl(baseUrl);
   }
 ]);
+
+app.config(['baseUrl', 'patrocinadorRRProvider',
+  function(baseUrl, patrocinadorRRProvider) {
+    patrocinadorRRProvider.setBaseUrl(baseUrl);
+  }
+]);

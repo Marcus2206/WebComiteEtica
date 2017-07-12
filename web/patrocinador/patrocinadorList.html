@@ -1,0 +1,57 @@
+
+<div class="container" >
+    <div class="row">
+        <div class="container-fluid">
+            <h1 style='text-align: center'><b>Lista de Patrocinadores</b></h1>
+            <br>
+            <br>
+            <br>
+        </div>
+    </div>
+    <div class="row">
+        <div class="container-fluid">
+            <input type="text" ng-model="txtFiltroPatrocinador" class="form-control" placeholder="Buscar">
+            <br>
+            <button class="btn btn-primary" ng-click="insertarModal()">
+                Nuevo Patrocinador
+            </button>
+        </div>
+    </div>
+    <br>
+    <div class="row">
+        <div id="no-more-tables">
+            <table class="col-md-12 table-bordered table-striped table-condensed cf" >
+                <thead class="cf">
+                    <tr>
+                        <th >Código</th>
+                        <th >Nombre</th>
+                        <th >Acción</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="patrocinador in patrocinadors| empezarDe : currentPage * pageSize | limitTo:pageSize | filter: txtFiltroPatrocinador">
+                        <td data-title="Código">{{patrocinador.idPatrocinador}}</td>
+                        <td data-title="Nombre">{{patrocinador.nombre}}</td>
+                        <td data-title="">
+                            <a class="btn btn-primary" ng-click="editarModal(patrocinador)"><i class="fa fa-pencil-square-o" aria-hidden="true"></i><span class="hidden-xs"> Editar</span></a>
+                            <a class="btn btn-danger" ng-click="eliminar(patrocinador)" ><i class="fa fa-trash" aria-hidden="true"></i><span class="hidden-xs"> Eliminar</span></a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="container">
+            <div class="center-block" style="text-align: center">
+                <br>
+                <button ng-disabled="currentPage === 0" ng-click="currentPage = currentPage - 1" class="btn btn-default">
+                    <span aria-hidden="true">&laquo;</span>
+                </button>
+                {{currentPage + 1}}/{{numberOfPages()}}
+                <button ng-disabled="currentPage >= patrocinadors.length / pageSize - 1" ng-click="setNextPagina()" class="btn btn-default">
+                    <span aria-hidden="true">&raquo;</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
