@@ -163,9 +163,11 @@ app.controller("EditInvestigacionController",
                 text: '¿Está seguro de eliminar este registro?',
                 ok:"Sí",
                 cancel:"No",
-                title:"Eliminar Coordinador",
-                settings:"{size: 'sm'}"
-                })
+                title:"Eliminar Coordinador"
+                },
+                {size:'sm',
+                 backdrop:'static'}
+                )
             .then(function(){
                 investigacionCoordinadorRemoteResource.delete(invCoordinador[0])
                 .then(function (invCoordinadorRespond){
@@ -213,9 +215,11 @@ app.controller("EditInvestigacionController",
                 text: '¿Está seguro de eliminar este registro?',
                 ok:"Sí",
                 cancel:"No",
-                title:"Eliminar Investigador",
-                settings:"{size: 'sm'}"
-                })
+                title:"Eliminar Investigador"
+                },
+                {size:'sm',
+                 backdrop:'static'}
+                )
             .then(function(){
                 investigacionInvestigadorRR.delete(invInvestigador[0])
                 .then(function (invInvestigadorRespond){
@@ -453,6 +457,9 @@ app.controller("NewInvestigacionController",
         };
         
         $scope.isCoordinador=true;
+        $scope.isInvestigador=true;
+        $scope.isSede=true;
+        
         $scope.nombreBoton="Nuevo";
         $scope.deshabilitado=true;
         $scope.parametros=parametros;

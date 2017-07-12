@@ -108,9 +108,11 @@ app.controller("ListSedeController", ['$scope', "sedes", "sedeRR", '$location',"
                 text: '¿Está seguro de eliminar este registro?',
                 ok:"Sí",
                 cancel:"No",
-                title:"Eliminar Sede",
-                settings:"{size: 'sm'}"
-                })
+                title:"Eliminar Sede"
+                },
+                {size:'sm',
+                 backdrop:'static'}
+                )
             .then(function() {
                 //Si se presiona Sí.
                 sedeRR.delete(sede)
