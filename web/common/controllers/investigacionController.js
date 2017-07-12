@@ -41,7 +41,6 @@ app.controller("EditInvestigacionController",
             }
             return obj.filter(filterByParametro);
         };
-        
         $scope.paramEspecialidad=$scope.filtrar($scope.parametros,'P003')[0].parametroDetalles;
         $scope.paramFase=$scope.filtrar($scope.parametros,'P005')[0].parametroDetalles;
         $scope.paramTipoInvestigacion=$scope.filtrar($scope.parametros,'P004')[0].parametroDetalles;
