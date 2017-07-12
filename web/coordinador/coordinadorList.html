@@ -16,8 +16,9 @@
                 <ng-include src="'coordinador/coordinadorEdit.html'" ></ng-include>
             </ul>-->
             <br>
-            <button class="btn btn-primary" ng-click="insertarModal()">
-                Nuevo Coordinador
+            <button class="btn btn-primary col-xs-12 col-sm-2" ng-click="insertarModal()">
+                <i class="fa fa-plus-circle" aria-hidden="true"></i>
+                Coordinador
             </button>
         </div>
     </div>
@@ -79,20 +80,20 @@
                                 </tfoot>-->
             </table>
         </div>
-        <div class="container">
-            <div class="center-block" style="text-align: center">
-                <br>
-                <button ng-disabled="currentPage === 0" ng-click="currentPage = currentPage - 1" class="btn btn-default">
-                    <span aria-hidden="true">&laquo;</span>
-                </button>
-                {{currentPage + 1}}/{{numberOfPages()}}
-                <button ng-disabled="currentPage >= coordinadors.length / pageSize - 1" ng-click="setNextPagina()" class="btn btn-default">
-                    <span aria-hidden="true">&raquo;</span>
-                </button>
-            </div>
-        </div>
     </div>
     <!-- paginacion -->
+    <div class="container">
+        <div class="center-block" style="text-align: center">
+            <br>
+            <button ng-disabled="currentPage === 0" ng-click="currentPage = currentPage - 1" class="btn btn-default">
+                <span aria-hidden="true">&laquo;</span>
+            </button>
+            {{currentPage + 1}}/{{numberOfPages()}}
+            <button ng-disabled="currentPage >= coordinadors.length / pageSize - 1" ng-click="setNextPagina()" class="btn btn-default">
+                <span aria-hidden="true">&raquo;</span>
+            </button>
+        </div>
+    </div>
 </div>
 
 
