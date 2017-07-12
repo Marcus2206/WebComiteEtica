@@ -6,6 +6,7 @@
     <div class="modal-body">
         <div class="container-fluid">
             <div class="row">
+                <form data-toggle="validator" role="form">
                 <div class="form-group">
                     <label for="idCoordinador">Id. coordinador:</label><br>
                     <input readonly type="text" class="form-control" id="idCoordinador" ng-model="coordinador.idCoordinador" placeholder="Id. coordinador" value="{{ coordinador.idCoordinador || '' }}">
@@ -13,29 +14,30 @@
 
                 <div class="form-group">
                     <label for="apePaterno">Ap. paterno:  </label><br>
-                    <input type="text" class="form-control text-uppercase" id="apePaterno" ng-model="coordinador.apePaterno" placeholder="Apellido paterno" value="{{ coordinador.apePaterno || '' }}" e-required>
+                    <input type="text" class="form-control text-uppercase" id="apePaterno" ng-model="coordinador.apePaterno" placeholder="Apellido paterno" value="{{ coordinador.apePaterno || '' }}" required>
                 </div> 
 
                 <div class="form-group">
                     <label for="apeMaterno">Ap. Materno:  </label><br>
-                    <input type="text" class="form-control" id="apeMaterno" ng-model="coordinador.apeMaterno" placeholder="Apellido materno" value="{{ coordinador.apeMaterno || '' }}" e-required>
+                    <input type="text" class="form-control" id="apeMaterno" ng-model="coordinador.apeMaterno" placeholder="Apellido materno" value="{{ coordinador.apeMaterno || '' }}" required>
                 </div> 
 
                 <div class="form-group">
                     <label for="nombres">Nombres:  </label><br>
-                    <input type="text" class="form-control" id="nombres" ng-model="coordinador.nombres" placeholder="Nombres" value="{{ coordinador.nombres || '' }}" e-required>
+                    <input type="text" class="form-control" id="nombres" ng-model="coordinador.nombres" placeholder="Nombres" value="{{ coordinador.nombres || '' }}" required>
                 </div> 
 
                 <div class="form-group">
-                    <label for="correo">Correo:  </label><br>
-                    <input type="email" class="form-control" id="correo" ng-model="coordinador.correo" placeholder="Correo" value="{{ coordinador.correo || '' }}" e-required>
+                    <label  class="control-label">Correo:  </label><br>
+                    <input type="email" class="form-control" id="correo" ng-model="coordinador.correo" placeholder="Correo" data-error="Correo no valido" value="{{ coordinador.correo || '' }}" required>
+                    <div class="help-block with-errors"></div>
                 </div>
-<!--                <div class="fileinput fileinput-new" data-provides="fileinput">
-                    <span class="btn btn-success btn-file"><span class="fileinput-filename"><span class="glyphicon glyphicon-upload" aria-hidden="true"></span> </span><span class="fileinput-new">Selecciona un documento</span><input type="file" /></span>
-                    glyphicon glyphicon-cloud-upload
-                </div>-->
+                <!--                <div class="fileinput fileinput-new" data-provides="fileinput">
+                                    <span class="btn btn-success btn-file"><span class="fileinput-filename"><span class="glyphicon glyphicon-upload" aria-hidden="true"></span> </span><span class="fileinput-new">Selecciona un documento</span><input type="file" /></span>
+                                    glyphicon glyphicon-cloud-upload
+                                </div>-->
+                </form>
             </div>
-
         </div>
     </div>
     <div class="modal-footer">

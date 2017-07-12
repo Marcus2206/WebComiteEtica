@@ -1,75 +1,76 @@
 
 <div class="container">
     <div class="row">
-        <h1 style='text-align: center'><b>Lista de Sedes</b></h1>
+        <div class="container-fluid">
+            <h1 style='text-align: center'><b>Lista de Sedes</b></h1>
+        </div>
+        <br>
+        <br>
+        <br>
     </div>
+    <div class="row">
+        <div class="container-fluid">
+            <input type="text" ng-model="txtFiltroSede" class="form-control" placeholder="Buscar">
+            <br>
+            <button class="btn btn-primary col-xs-12 col-sm-2" ng-click="insertarModal()">
+                <i class="fa fa-plus-circle" aria-hidden="true"></i>
+                 Sede
+            </button>
+        </div>
+    </div>
+    <br>
+    <div class="row">
+        <div id="no-more-tables">
+            <table class="col-md-12 col-sm-12 table-bordered table-striped table-condensed cf" >
+                <thead class="cf">
+                    <tr>
+                        <th>Código</th>
+                        <th>Nombre</th>
+                        <th>Direccion</th>
+                        <th>Departamento</th>
+                        <th>Provincia</th>
+                        <th>Distrito</th>
+                        <th>Acción</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="sede in sedes| empezarDe : currentPage * pageSize | limitTo:pageSize | filter:txtFiltroSede ">
+                        <td data-title="Código">{{sede.idSede}}</td>
+                        <td data-title="Nombre">{{sede.nombre}}</td>
+                        <td data-title="Dorección">{{sede.direccion}}</td>
+                        <td data-title="Departamento">{{sede.idDepartamento}}</td>
+                        <td data-title="Provincia">{{sede.idProvincia}}</td>
+                        <td data-title="Distrito">{{sede.idDistrito}}</td>
+                        <td>
+                            <!--<div class="btn-group"><button ng-click='' type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Seleccione <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li><a href="" data-toggle="modal" data-target="#newMyModal{{coordinador.idCoordinador}}">Editar</a></li>
+                                    <li><a href="" data-toggle="modal" data-target="#newMyModal{{coordinador.idCoordinador}}">Borrar</a></li>
+                                </ul>
+                            </div>-->
+                            <button class="btn btn-primary" ng-click="editarModal(sede)"><i class="fa fa-pencil-square-o" aria-hidden="true"></i><span class="hidden-xs"> Editar</span></button>
+                            <button class="btn btn-danger" ng-click="eliminar(sede)" ><i class="fa fa-trash" aria-hidden="true"></i><span class="hidden-xs"> Eliminar</span></button>
 
-    <br>
-    <br>
-    <br>
-    <div class="row">
-        <input type="text" ng-model="txtFiltroSede" class="form-control" placeholder="Buscar">
-        <button class="btn btn-primary" ng-click="insertarModal()">
-            Nueva Sede
-        </button>
-       
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
-    <br>
-    <div class="row">
-        <table class="table table-responsive">
-            <thead>
-                <tr>
-                    <th>IdSede</th>
-                    <th>Nombre</th>
-                    <th>Direccion</th>
-                    <th>Departamento</th>
-                    <th>Provincia</th>
-                    <th>Distrito</th>
-                    <th>Acción</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr ng-repeat="sede in sedes| empezarDe : currentPage * pageSize | limitTo:pageSize | filter:txtFiltroSede ">
-                    <td>{{sede.idSede}}</td>
-                    <td>{{sede.nombre}}</td>
-                    <td>{{sede.direccion}}</td>
-                    <td>{{sede.idDepartamento}}</td>
-                    <td>{{sede.idProvincia}}</td>
-                    <td>{{sede.idDistrito}}</td>
-                    <td>
-                        <!--<div class="btn-group"><button ng-click='' type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Seleccione <span class="caret"></span>
-                            </button>
-                            <ul class="dropdown-menu">
-                                <li><a href="" data-toggle="modal" data-target="#newMyModal{{coordinador.idCoordinador}}">Editar</a></li>
-                                <li><a href="" data-toggle="modal" data-target="#newMyModal{{coordinador.idCoordinador}}">Borrar</a></li>
-                            </ul>
-                        </div>-->
-                        <button class="btn btn-primary" ng-click="editarModal(sede)">Editar</button>
-                        <button class="btn btn-danger" ng-click="eliminar(sede)" >Eliminar</button>
-                        
-                    </td>
-            </tr>
-            </tbody>
-            <tfoot align="center">
-                <tr>
-                    <td colspan="5">
-                        <div class="container ">
-                            <div class="center-block">
-                                <button ng-disabled="currentPage === 0" ng-click="currentPage = currentPage - 1" class="btn btn-default">
-                                    <span aria-hidden="true">&laquo;</span>
-                                </button>
-                                {{currentPage + 1}}/{{numberOfPages()}}
-                                <!--<button ng-disabled="paginacion.inicia >= productos.length/paginacion.max - 1" ng-click="paginacion.inicia=paginacion.inicia+1">-->
-                                <button ng-disabled="currentPage >= sedes.length / pageSize - 1" ng-click="setNextPagina()" class="btn btn-default">
-                                    <span aria-hidden="true">&raquo;</span>
-                                </button>
-                            </div>
-                        </div>
-                    </td>
-                </tr>
-            </tfoot>
-        </table>
+    <!-- paginacion -->
+    <div class="container">
+        <div class="center-block" style="text-align: center">
+            <br>
+            <button ng-disabled="currentPage === 0" ng-click="currentPage = currentPage - 1" class="btn btn-default">
+                <span aria-hidden="true">&laquo;</span>
+            </button>
+            {{currentPage + 1}}/{{numberOfPages()}}
+            <button ng-disabled="currentPage >= sedes.length / pageSize - 1" ng-click="setNextPagina()" class="btn btn-default">
+                <span aria-hidden="true">&raquo;</span>
+            </button>
+        </div>
     </div>
     <!-- paginacion -->
 </div>
