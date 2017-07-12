@@ -1,30 +1,27 @@
 var app=angular.module("app");
 
-app.controller("NewCoordinadorController", ['$scope', 'coordinadorRemoteResource', '$location',"$log","$uibModalInstance", function($scope, coordinadorRemoteResource, $location, $log,$uibModalInstance) {
+app.controller("NewCroController", ['$scope', 'croRR', '$location',"$log","$uibModalInstance", function($scope, croRR, $location, $log,$uibModalInstance) {
         
         $scope.nombreBoton="Nuevo";
         
         /*Se construyer el json*/
-        $scope.coordinador = {
-            idCoordinador: "",
-            apePaterno:"",
-            apeMaterno:"",
-            nombres:"",
+        $scope.cro = {
+            idCro: "",
+            nombre:"",
             usuarioIngresa:"",
             fechaIngreso:"",
-            usuarioModifica:"",
-            fechaModificacion:"",
-            investigacionCoordinadors:[]
+            usuarioModifica:null,
+            fechaModificacion:null
         };
         
         $scope.guardar = function() {
             //if ($scope.form.$valid) {
-                $scope.coordinador.usuarioIngresa="user1";
-                $scope.coordinador.fechaIngreso=new Date();
-                coordinadorRemoteResource.insert($scope.coordinador)
-                .then(function(coordinadorResult) {
+                $scope.cro.usuarioIngresa="user1";
+                $scope.cro.fechaIngreso=new Date();
+                croRR.insert($scope.cro)
+                .then(function(croResult) {
                     //$location.path("coordinadorEdit/"+coordinadorResult.idCoordinador);
-                    $uibModalInstance.dismiss(coordinadorResult);
+                    $uibModalInstance.dismiss(croResult);
                 }, function(bussinessMessages) {
                     $scope.bussinessMessages = bussinessMessages;
                 });
@@ -39,9 +36,13 @@ app.controller("NewCoordinadorController", ['$scope', 'coordinadorRemoteResource
 
 }]);
 
-app.controller("ListCoordinadorController", ['$scope', "coordinadors", "coordinadorRemoteResource", '$location',"$log","$route","$uibModal",'$confirm',function($scope, coordinadors, coordinadorRemoteResource, $location, $log,$route,$uibModal,$confirm) {
+app.controller("ListCroController", 
+['$scope', "cros", "croRR", '$location',"$log","$route",
+ "$uibModal",'$confirm',
+ function($scope, cros, croRR, $location, $log,$route,
+ $uibModal,$confirm) {
         /*Se obtiene lista de coordinadores*/
-        $scope.coordinadors=coordinadors;
+        $scope.cros=cros;
 
         /*Se setea la cantidad filas por vista*/
         $scope.currentPage = 0;
@@ -49,7 +50,7 @@ app.controller("ListCoordinadorController", ['$scope', "coordinadors", "coordina
         
         /*Calculando número de páginas*/
         $scope.numberOfPages=function(){
-            return Math.ceil($scope.coordinadors.length/$scope.pageSize);                
+            return Math.ceil($scope.cros.length/$scope.pageSize);                
         };
         
         /*Ir a la sgte página*/
@@ -58,45 +59,42 @@ app.controller("ListCoordinadorController", ['$scope', "coordinadors", "coordina
             return $scope.currentPage;
         };
        
-        $scope.eliminar=function(coordinador){
+        $scope.eliminar=function(cro){
             //Se prepara confirm
             $confirm({
                 text: '¿Está seguro de eliminar este registro?',
                 ok:"Sí",
                 cancel:"No",
-                title:"Eliminar Coordinador"
+                title:"Eliminar Cro"
                 },
                 {size:'sm',
                  backdrop:'static'
                 })
             .then(function() {
                 //Si se presiona Sí.
-                coordinadorRemoteResource.delete(coordinador)
-                .then(function(coordinadorResult) {
+                croRR.delete(cro)
+                .then(function(croResult) {
                     //Se la elimenación es exitosa.
-                    $scope.coordinadors.splice($scope.coordinadors.indexOf(coordinador),1);
+                    $scope.cros.splice($scope.cros.indexOf(cro),1);
                 }, function(bussinessMessages) {
-                    alert("El coordinador esta asociado a una investigación activa.");
+                    alert("El cro esta asociado a una investigación activa.");
                 });
             })
             .catch(function(){
                 //Si se presiona no, se cancela.
             });
-        
-
         };
         
         /*Editar un registro*/
-        $scope.editarModal = function (coordinadorObj) {
+        $scope.editarModal = function (croObj) {
             //alert(idCoordinador);
                 var modalInstance = $uibModal.open({
-                    templateUrl: 'coordinador/coordinadorEdit.html',
-//                    templateUrl: 'coordinador/coordinadorTest.html',
-                    controller: "EditCoordinadorController",
+                    templateUrl: 'cro/croEdit.html',
+                    controller: "EditCroController",
                     size: 'md',
                     resolve: {
-                        coordinador:function() {
-                          return coordinadorRemoteResource.get(coordinadorObj.idCoordinador);
+                        cro:function() {
+                          return croRR.get(croObj.idCro);
                         }
                     }
                 });
@@ -109,9 +107,9 @@ app.controller("ListCoordinadorController", ['$scope', "coordinadors", "coordina
                         if(data !== "backdrop click"){
                             if(data!=="escape key press"){
                                 //Si no es cancel, se reemplaza el objeto que se mandó a actualizar
-                                var index = $scope.coordinadors.indexOf(coordinadorObj);
+                                var index = $scope.cros.indexOf(croObj);
                                 if (index !== -1) {
-                                    $scope.coordinadors[index] = data;
+                                $scope.cros[index] = data;
                                 }
                             }
                         }
@@ -124,9 +122,9 @@ app.controller("ListCoordinadorController", ['$scope', "coordinadors", "coordina
         /*Ingresar un registro*/
         $scope.insertarModal = function () {
                 var modalInstance = $uibModal.open({
-                    templateUrl: 'coordinador/coordinadorEdit.html',
-                    controller: "NewCoordinadorController",
-                    size: 'sm'
+                    templateUrl: 'cro/croEdit.html',
+                    controller: "NewCroController",
+                    size: 'md'
                 });
                 
                 modalInstance.result.then(function(){   
@@ -135,9 +133,9 @@ app.controller("ListCoordinadorController", ['$scope', "coordinadors", "coordina
                     //Si devuelve algo
                     if(data !== "cancel"){
                         if(data !== "backdrop click"){
-                            if(data!=="escape key press"){
+                                if(data!=="escape key press"){
                                 /*añade a la lista sin recargar la página*/
-                                $scope.coordinadors.push(data);
+                                $scope.cros.push(data);
                             }
                         }
                     }else{
@@ -147,17 +145,21 @@ app.controller("ListCoordinadorController", ['$scope', "coordinadors", "coordina
         };
 }]);
 
-app.controller("EditCoordinadorController", ['$scope',"coordinador", 'coordinadorRemoteResource', '$location',"$log","$route","$uibModalInstance", function($scope,coordinador, coordinadorRemoteResource, $location, $log, $route,$uibModalInstance) {
-        $scope.coordinador = coordinador;
+app.controller("EditCroController", 
+['$scope',"cro", 'croRR', '$location',"$log",
+ "$route","$uibModalInstance", 
+ function($scope, cro, croRR, $location, $log,
+ $route,$uibModalInstance) {
+        $scope.cro = cro;
         
         $scope.guardar = function() {
             //if ($scope.form.$valid) {
-                $scope.coordinador.usuarioModifica="user1";
-                $scope.coordinador.fechaModificacion=new Date();
-                coordinadorRemoteResource.update($scope.coordinador)
-                .then(function(coordinadorResult) {
+                $scope.cro.usuarioModifica="user1";
+                $scope.cro.fechaModificacion=new Date();
+                croRR.update($scope.cro)
+                .then(function(croResult) {
                     //Devuelve objeto actualizado y cierra modal
-                    $uibModalInstance.dismiss(coordinadorResult);                    
+                    $uibModalInstance.dismiss(croResult);                    
                 }, function(bussinessMessages) {
                     //$scope.bussinessMessages = bussinessMessages;
                 });

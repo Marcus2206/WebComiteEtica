@@ -71,3 +71,9 @@ app.config(['baseUrl', 'patrocinadorRRProvider',
     patrocinadorRRProvider.setBaseUrl(baseUrl);
   }
 ]);
+
+app.config(['baseUrl', 'croRRProvider',
+  function(baseUrl, croRRProvider) {
+    croRRProvider.setBaseUrl(baseUrl);
+  }
+]);
