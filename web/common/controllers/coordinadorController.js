@@ -1,5 +1,5 @@
 var app = angular.module("app");
-app.controller("NewCoordinadorController", ['$scope', 'coordinadorRemoteResource', '$location', "$log", "$uibModalInstance",'SweetAlert', function ($scope, coordinadorRemoteResource, $location, $log, $uibModalInstance,SweetAlert) {
+app.controller("NewCoordinadorController", ['$scope', 'coordinadorRemoteResource', '$location', "$log", "$uibModalInstance", 'SweetAlert', function ($scope, coordinadorRemoteResource, $location, $log, $uibModalInstance, SweetAlert) {
 
         $scope.nombreBoton = "Nuevo";
         /*Se construyer el json*/
@@ -35,6 +35,7 @@ app.controller("NewCoordinadorController", ['$scope', 'coordinadorRemoteResource
             $uibModalInstance.dismiss('cancel');
         };
     }]);
+
 app.controller("ListCoordinadorController", ['$scope', "coordinadors", "coordinadorRemoteResource", '$location', "$log", "$route", "$uibModal", '$confirm', 'SweetAlert', function ($scope, coordinadors, coordinadorRemoteResource, $location, $log, $route, $uibModal, $confirm, SweetAlert) {
         /*Se obtiene lista de coordinadores*/
         $scope.coordinadors = coordinadors;
@@ -75,7 +76,6 @@ app.controller("ListCoordinadorController", ['$scope', "coordinadors", "coordina
                 }
             });
         };
-        
         /*Editar un registro*/
         $scope.editarModal = function (coordinadorObj) {
             //alert(idCoordinador);
@@ -95,10 +95,14 @@ app.controller("ListCoordinadorController", ['$scope', "coordinadors", "coordina
             }, function (data) {
                 //Si devuelve un objeto
                 if (data !== "cancel") {
-                    //Si no es cancel, se reemplaza el objeto que se mandó a actualizar
-                    var index = $scope.coordinadors.indexOf(coordinadorObj);
-                    if (index !== -1) {
-                        $scope.coordinadors[index] = data;
+                    if (data !== "backdrop click") {
+                        if (data !== "escape key press") {
+                            //Si no es cancel, se reemplaza el objeto que se mandó a actualizar
+                            var index = $scope.coordinadors.indexOf(coordinadorObj);
+                            if (index !== -1) {
+                                $scope.coordinadors[index] = data;
+                            }
+                        }
                     }
                 } else {
                     //Si es cancel
@@ -117,8 +121,12 @@ app.controller("ListCoordinadorController", ['$scope', "coordinadors", "coordina
             }, function (data) {
                 //Si devuelve algo
                 if (data !== "cancel") {
-                    /*añade a la lista sin recargar la página*/
-                    $scope.coordinadors.push(data);
+                    if (data !== "backdrop click") {
+                        if (data !== "escape key press") {
+                            /*añade a la lista sin recargar la página*/
+                            $scope.coordinadors.push(data);
+                        }
+                    }
                 } else {
                     //Si es cancel
                 }

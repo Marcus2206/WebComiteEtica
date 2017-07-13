@@ -1,0 +1,53 @@
+<div class="modal-content">
+    <div class="modal-header">
+        <button type="button" class="close" ng-click="cerrar()">&times;</button>
+        <h4 class="modal-title" id="myModalLabel">Datos del Investigador</h4>
+    </div>
+    <div class="modal-body">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="form-group">
+                    <label for="idInvestigador">Id. investigador:</label><br>
+                    <input readonly type="text" class="form-control" id="idInvestigador" ng-model="investigador.idInvestigador" placeholder="Id. investigador" value="{{ investigador.idInvestigador || '' }}">
+                </div>     
+
+                <div class="form-group">
+                    <label for="apePaterno">Ap. paterno:  </label><br>
+                    <input type="text" class="form-control text-uppercase" id="apePaterno" ng-model="investigador.apePaterno" placeholder="Apellido paterno" value="{{ investigador.apePaterno || '' }}" e-required>
+                </div> 
+
+                <div class="form-group">
+                    <label for="apeMaterno">Ap. Materno:  </label><br>
+                    <input type="text" class="form-control" id="apeMaterno" ng-model="investigador.apeMaterno" placeholder="Apellido materno" value="{{ investigador.apeMaterno || '' }}" e-required>
+                </div> 
+
+                <div class="form-group">
+                    <label for="nombres">Nombres:  </label><br>
+                    <input type="text" class="form-control" id="nombres" ng-model="investigador.nombres" placeholder="Nombres" value="{{ investigador.nombres || '' }}" e-required>
+                </div> 
+
+                <div class="form-group">
+                    <label for="correo">Correo:  </label><br>
+                    <input type="email" class="form-control" id="correo" ng-model="investigador.correo" placeholder="Correo" value="{{ investigador.correo || '' }}" e-required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="paramEspecialidadInvestigador">Especialidad Investigador:  </label><br>
+                    <select  id="paramEspecialidadInvestigador" class="form-control" ng-model="investigador.paramEspecialidadInvestigador">
+                        <option ng-repeat="pd in paramEspecialidadInvestigador" value="{{pd.id.idParametroDetalle}}">{{pd.descripcion}}</option>
+                    </select>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="submit" class="btn btn-primary" ng-click="guardar()">
+            Guardar
+        </button>
+        <button type="button" class="btn btn-default" ng-click="cerrar()">
+            Volver
+        </button>
+    </div>
+</div>
+
