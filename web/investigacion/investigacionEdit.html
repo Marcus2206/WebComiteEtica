@@ -60,33 +60,33 @@
                                         {{$select.selected.apePaterno}} {{$select.selected.apeMaterno}} {{$select.selected.nombres}}
                                     </editable-ui-select-match>
                                     <editable-ui-select-choices repeat="coordinador in coordinadorsSelectList | orderBy: 'apePaterno' | filter: $select.search track by $index ">
-                                      {{coordinador.apePaterno}} {{coordinador.apeMaterno}} {{coordinador.nombres}}
+                                        {{coordinador.apePaterno}} {{coordinador.apeMaterno}} {{coordinador.nombres}}
                                     </editable-ui-select-choices>
                                 </div> 
                                 <div class="buttons">
                                     <button type="button" class="btn btn-default" ng-click="uiSelectFormCoordinador.$show()" ng-show="!uiSelectFormCoordinador.$visible">
-                                    Agregar
+                                        Agregar
                                     </button>
                                     <span ng-show="uiSelectFormCoordinador.$visible">
                                         <br/>
                                         <button type="submit" class="btn btn-primary" ng-disabled="uiSelectFormCoordinador.$waiting">
-                                          Confirmar
+                                            Confirmar
                                         </button>
                                         <button type="button" class="btn btn-default" ng-disabled="uiSelectFormCoordinador.$waiting" ng-click="uiSelectFormCoordinador.$cancel()">
-                                          Cancelar
+                                            Cancelar
                                         </button>
                                     </span>
                                 </div>  
-                                </form>
-                                <br>
-                                <table class="table table-bordered table-hover table-condensed table-responsive">
+                            </form>
+                            <br>
+                            <table class="table table-bordered table-hover table-condensed table-responsive">
                                 <thead>
                                     <tr>
                                         <th>Apellidos y Nombres</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr ng-repeat="invCoordinador in investigacionCoordinadors | orderBy:'idCoordinador'">
+                                    <tr ng-repeat="invCoordinador in investigacionCoordinadors| orderBy:'idCoordinador'">
                                         <td>
                                             <div>
                                                 <div>
@@ -117,33 +117,33 @@
                                         {{$select.selected.apePaterno}} {{$select.selected.apeMaterno}} {{$select.selected.nombres}}
                                     </editable-ui-select-match>
                                     <editable-ui-select-choices repeat="investigador in investigadorsSelectList | orderBy: 'apePaterno' | filter: $select.search track by $index ">
-                                      {{investigador.apePaterno}} {{investigador.apeMaterno}} {{investigador.nombres}}
+                                        {{investigador.apePaterno}} {{investigador.apeMaterno}} {{investigador.nombres}}
                                     </editable-ui-select-choices>
                                 </div> 
                                 <div class="buttons">
                                     <button type="button" class="btn btn-default" ng-click="uiSelectFormInvestigador.$show()" ng-show="!uiSelectFormInvestigador.$visible">
-                                    Agregar
+                                        Agregar
                                     </button>
                                     <span ng-show="uiSelectFormInvestigador.$visible">
                                         <br/>
                                         <button type="submit" class="btn btn-primary" ng-disabled="uiSelectFormInvestigador.$waiting">
-                                          Confirmar
+                                            Confirmar
                                         </button>
                                         <button type="button" class="btn btn-default" ng-disabled="uiSelectFormInvestigador.$waiting" ng-click="uiSelectFormInvestigador.$cancel()">
-                                          Cancelar
+                                            Cancelar
                                         </button>
                                     </span>
                                 </div>  
-                                </form>
-                                <br>
-                                <table class="table table-bordered table-hover table-condensed table-responsive">
+                            </form>
+                            <br>
+                            <table class="table table-bordered table-hover table-condensed table-responsive">
                                 <thead>
                                     <tr>
                                         <th>Apellidos y Nombres</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr ng-repeat="invInvestigador in investigacionInvestigadors | orderBy:'idInvestigador'">
+                                    <tr ng-repeat="invInvestigador in investigacionInvestigadors| orderBy:'idInvestigador'">
                                         <td>
                                             <div>
                                                 <div>
@@ -162,7 +162,7 @@
                         </div>
                     </div>
                 </div>   
-                
+
                 <!--Inicio de Sede-->
                 <div class="col">    
                     <button ng-disabled="deshabilitado" type="button" style="width: 100%;" class="btn btn-default" ng-click="isSede = !isSede">Sede</button>
@@ -174,33 +174,33 @@
                                         {{$select.selected.nombre}}
                                     </editable-ui-select-match>
                                     <editable-ui-select-choices repeat="sede in sedesSelectList | orderBy: 'nombre' | filter: $select.search track by $index ">
-                                      {{sede.nombre}} - {{sede.idDepartamento}}, {{sede.idProvincia}}, {{sede.idDistrito}}
+                                        {{sede.nombre}} - {{sede.idDepartamento}}, {{sede.idProvincia}}, {{sede.idDistrito}}
                                     </editable-ui-select-choices>
                                 </div> 
                                 <div class="buttons">
                                     <button type="button" class="btn btn-default" ng-click="uiSelectFormSede.$show()" ng-show="!uiSelectFormSede.$visible">
-                                    Agregar
+                                        Agregar
                                     </button>
                                     <span ng-show="uiSelectFormSede.$visible">
                                         <br/>
                                         <button type="submit" class="btn btn-primary" ng-disabled="uiSelectFormSede.$waiting">
-                                          Confirmar
+                                            Confirmar
                                         </button>
                                         <button type="button" class="btn btn-default" ng-disabled="uiSelectFormSede.$waiting" ng-click="uiSelectFormSede.$cancel()">
-                                          Cancelar
+                                            Cancelar
                                         </button>
                                     </span>
                                 </div>  
-                                </form>
-                                <br>
-                                <table class="table table-bordered table-hover table-condensed table-responsive">
+                            </form>
+                            <br>
+                            <table class="table table-bordered table-hover table-condensed table-responsive">
                                 <thead>
                                     <tr>
                                         <th>Sedes</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr ng-repeat="invSede in investigacionSedes | orderBy:'idSede'">
+                                    <tr ng-repeat="invSede in investigacionSedes| orderBy:'idSede'">
                                         <td>
                                             <div>
                                                 <div>
@@ -219,13 +219,13 @@
                         </div>
                     </div>
                 </div>   
-                
-                
+
+
             </div>
         </div>
         <br>
     </div>
-    
+
     <div class="modal-footer">
         <button type="submit" class="btn btn-primary" ng-click="guardar()">
             Guardar

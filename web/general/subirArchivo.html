@@ -24,13 +24,27 @@ and open the template in the editor.
 -->
 <!--
  Upload File Demo<br/><br/>
-	<form action="http://localhost:8080/RestComiteEtica/api/CargaArchivo" method="post" enctype="multipart/form-data">
- 		 File : <input type="file" name="upload" size="50" />
-	  <br/>
- 	   <input type="submit" value="Upload" />
-	</form>-->
-
+        <form action="http://localhost:8080/RestComiteEtica/api/CargaArchivo" method="post" enctype="multipart/form-data">
+                 File : <input type="file" name="upload" size="50" />
+          <br/>
+           <input type="submit" value="Upload" />
+        </form>-->
+<!--
 <form action="http://localhost:8080/RestComiteEtica/api/VerificaArchivo" method="post" enctype="multipart/form-data">
     <input type="file" name="file" class="file"/>
     <input type="submit" value="Upload"/>
 </form>
+-->
+<!--
+<form ng-submit="envia(modeloFile)">
+    <input type="file" name="file" class="file" ng-nodel="modeloFile"/>
+    <input type="submit" value="Upload"/>
+</form>-->
+
+
+
+         <input type = "file" file-model = "myFile"/>
+         <button ng-click = "uploadFile()">upload me</button>
+   
+      
+      
