@@ -43,8 +43,11 @@ and open the template in the editor.
 
 
 
-         <input type = "file" file-model = "myFile"/>
+    <input type = "file" file-model = "myFile" multiple />
          <button ng-click = "uploadFile()">upload me</button>
    
-      
+      <p ng-repeat="file in myFile">
+      {{file.name}}
+      {{file.url}}
+        </p>
       

@@ -5,26 +5,64 @@ app.controller('fechaController', function ($scope) {
 });
 
 app.directive('fileModel', ['$parse', function ($parse) {
+        
+        /*Código para que funcione sólo un archivo*/
+//        return {
+//            restrict: 'A',
+//            link: function (scope, element, attrs) {
+//                var model = $parse(attrs.fileModel);
+//                var modelSetter = model.assign;
+//
+//                element.bind('change', function () {
+//                    scope.$apply(function () {
+//                        modelSetter(scope, element[0].files[0]);
+//                    });
+//                });
+//            }
+//        };
+
+        /*Código para que funcione múltiples archivos*/
         return {
             restrict: 'A',
             link: function (scope, element, attrs) {
                 var model = $parse(attrs.fileModel);
+                var isMultiple = attrs.multiple;
                 var modelSetter = model.assign;
 
                 element.bind('change', function () {
+                    var values = [];
+                    angular.forEach(element[0].files, function (item) {
+                        var value = {
+                            // File Name 
+                            name: item.name,
+                            //File Size 
+                            size: item.size,
+                            //File URL to view 
+                            url: URL.createObjectURL(item),
+                            // File Input Value 
+                            _file: item
+                        };
+                        values.push(value);
+                    });
                     scope.$apply(function () {
-                        modelSetter(scope, element[0].files[0]);
+                        if (isMultiple) {
+                            modelSetter(scope, values);
+                        } else {
+                            modelSetter(scope, values[0]);
+                        }
                     });
                 });
             }
         };
+
+
     }]);
 
-app.service('fileUpload', ['$http','$log', function ($http, $log) {
+app.service('fileUpload', ['$http', '$log', function ($http, $log) {
+        
         this.uploadFileToUrl = function (file, uploadUrl) {
             var fd = new FormData();
             fd.append('file', file);
-
             $http.post(uploadUrl, fd, {
                 transformRequest: angular.identity,
                 headers: {'Content-Type': undefined}
@@ -41,60 +79,34 @@ app.service('fileUpload', ['$http','$log', function ($http, $log) {
     }]);
 
 app.controller("subirController", function ($scope, $http, $log, fileUpload) {
-//    $scope.archivoPS=null;
-//    $scope.subirArch = function () {
-//        var obj = document.getElementById("fichero").files;
-//        $log.log(obj);
-//        $http.post("http://localhost:8080/RestComiteEtica" + '/api/greet', obj)
-//                .then(function (data) {
-//                    alert("Exito");
-//                    $log.log(data);
-//                }).catch(function (data) {
-//                    alert("error");
-//                    $log.log(data);
-//        });
-//    };
 
-//    $scope.envia = function (file) {
-//        $scope.modeloFile;
-//        //action="http://localhost:8080/RestComiteEtica/api/VerificaArchivo" 
-//        //method="post" 
-//        //enctype="multipart/form-data"
-//        $log.log("modeloFile");
-//        $log.log(file);
-//        var formData = new FormData();
-//        formData.append('foo', 'bar');
-//
-//        this.$http.post('/api', formData)
-//        
-//        $http.post("http://localhost:8080/RestComiteEtica/api/VerificaArchivo", fd, {
-//            transformRequest: angular.identity,
-//            headers: {'Content-Type': undefined}
-//        })
-//                .then(function (data) {
-//                    alert("listo");
-//                })
-//                .error(function (data) {
-//                    alert("error");
-//                });
-//
-////        $http.post("http://localhost:8080/RestComiteEtica/api/VerificaArchivo", data, config)
-////                .then(function (data) {
-////                    alert("listo");
-////                })
-////                .catch(function (data) {
-////                    alert("error");
-////                });
-//    };
+    $scope.myFile = [];
 
     $scope.uploadFile = function () {
+        
+//        var file = $scope.myFile;
+//
+//        $log.log('file is ' + $scope.myFile.length);
+//        $log.log(file);
+//        
+//        $log.log('file._file is ');
+//        $log.log(file._file);
+//        
+//        var uploadUrl = "http://localhost:8080/RestComiteEtica/api/VerificaArchivo";
+//        fileUpload.uploadFileToUrl(file._file, uploadUrl);
+
+
+        /**/
         var file = $scope.myFile;
+        angular.forEach(file, function (item) {
+            var uploadUrl = "http://localhost:8080/RestComiteEtica/api/VerificaArchivo";
+            /*el objeto file, contiene un atributo: _file, que es el que contiene el archivo, 
+             * en un bucle foreach se cargan los archivos uno por uno por medio del método .uploadFileToURL
+             * creado en la directiva. */
+            fileUpload.uploadFileToUrl(item._file, uploadUrl);
 
-        $log.log('file is ');
-        $log.log(file);
-
-        var uploadUrl = "http://localhost:8080/RestComiteEtica/api/VerificaArchivo";
-        fileUpload.uploadFileToUrl(file, uploadUrl);
+        });
+        
     };
 
 
