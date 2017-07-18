@@ -1,53 +1,13 @@
-<!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
-<!--
-<div style="margin-top: 100px">
-    <form name="upload" ng-submit="subirArch()">
-    <table> 
-        <tr>
-           <td>Selecciona fichero: </td>
-           <td><input id="fichero" type="file" name="fichero" ng-model="archivoPS"></td>
-        </tr>
-        <tr>
-    
-        </tr>
-        <tr><td colspan="2" align="center">
-                <input type="submit" value="Subir fichero"></td>
-        </tr>
-     </table>
-</form>
-</div>
--->
-<!--
- Upload File Demo<br/><br/>
-        <form action="http://localhost:8080/RestComiteEtica/api/CargaArchivo" method="post" enctype="multipart/form-data">
-                 File : <input type="file" name="upload" size="50" />
-          <br/>
-           <input type="submit" value="Upload" />
-        </form>-->
-<!--
-<form action="http://localhost:8080/RestComiteEtica/api/VerificaArchivo" method="post" enctype="multipart/form-data">
-    <input type="file" name="file" class="file"/>
-    <input type="submit" value="Upload"/>
-</form>
--->
-<!--
-<form ng-submit="envia(modeloFile)">
-    <input type="file" name="file" class="file" ng-nodel="modeloFile"/>
-    <input type="submit" value="Upload"/>
-</form>-->
 
+<input type = "file" file-model = "myFile" multiple />
+<button ng-click = "uploadFile()">upload me</button>
 
+<p ng-repeat="file in myFile">
+    {{file.name}}
+    {{file.url}}
+</p>
 
-    <input type = "file" file-model = "myFile" multiple />
-         <button ng-click = "uploadFile()">upload me</button>
-   
-      <p ng-repeat="file in myFile">
-      {{file.name}}
-      {{file.url}}
-        </p>
-      
+<button ng-click="downloadFile('Sin título.png')">descargar</button>
+<button ng-click="downloadFile('imagen.png')">descargar</button>
+<button ng-click="downloadFile('prueba.pdf')">descargar</button>
+

@@ -6,11 +6,13 @@ app.controller("EditInvestigacionController",
             'investigadorRR', 'investigacionInvestigadorRR',
             'sedeRR', 'investigacionSedeRR',
             '$location', "$log", '$filter', "$uibModalInstance", "$confirm", 'SweetAlert',
+            'fileUpload',
             function ($scope, investigacion, parametros, investigacionRemoteResource,
                     coordinadorRemoteResource, investigacionCoordinadorRemoteResource,
                     investigadorRR, investigacionInvestigadorRR,
                     sedeRR, investigacionSedeRR,
-                    $location, $log, $filter, $uibModalInstance, $confirm, SweetAlert) {
+                    $location, $log, $filter, $uibModalInstance, $confirm, SweetAlert,
+                    fileUpload) {
 
                 $scope.parametros = parametros;
                 $scope.deshabilitado = false;
@@ -72,7 +74,7 @@ app.controller("EditInvestigacionController",
                                 $scope.bussinessMessages = bussinessMessages;
                                 $uibModalInstance.dismiss('cancel');
                                 SweetAlert.swal("Hubo un error!", "Intente nuevamente o comuniquese con el administrador.", "danger");
-                        
+
                             });
                 };
 
@@ -309,6 +311,14 @@ app.controller("EditInvestigacionController",
                 };
 
                 $scope.cerrarOtras = true;
+
+                $scope.uploadFile = function () {
+                    var file = $scope.myFile;
+                    angular.forEach(file, function (item) {
+
+                        fileUpload.uploadFileToUrl(item._file);
+                    });
+                };
             }]);
 
 app.controller("ListInvestigacionController", ['$scope', "investigacions", "investigacionRemoteResource", '$location', "$log", "$route", "$uibModal", "$confirm", 'SweetAlert', function ($scope, investigacions, investigacionRemoteResource, $location, $log, $route, $uibModal, $confirm, SweetAlert) {
