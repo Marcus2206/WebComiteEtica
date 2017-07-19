@@ -4,10 +4,27 @@ app.controller('fechaController', function ($scope) {
     $scope.fechaHoy = new Date();
 });
 
-app.controller("subirController", function ($scope, $http, $log, fileUpload) {
+app.controller("subirController", function ($scope, $http, $log, fileUpload, uiUploader) {
     $scope.myFile = [];
-    
-    
+    $scope.progressBar = 0;
+
+//    var element = document.getElementById('file1');
+//    element.addEventListener('change', function (e) {
+//        var files = e.target.files;
+//        uiUploader.addFiles(files);
+//        $scope.myFile = uiUploader.getFiles();
+//        $scope.$apply();
+//    });
+//
+//    $scope.btn_remove = function (file) {
+//        $log.info('deleting=' + file);
+//        uiUploader.removeFile(file);
+//    };
+//
+//    $scope.btn_clean = function () {
+//        uiUploader.removeAll();
+//    };
+
     $scope.downloadFile = function (name) {
         $http({
             method: 'GET',
@@ -41,10 +58,26 @@ app.controller("subirController", function ($scope, $http, $log, fileUpload) {
     $scope.uploadFile = function () {
         var file = $scope.myFile;
         angular.forEach(file, function (item) {
-            
-            fileUpload.uploadFileToUrl(item._file);
+
+            fileUpload.uploadFileToUrl(item, $scope);
         });
     };
+
+    $scope.eliminarFile = function (item) {
+        var i = $scope.myFile.indexOf(item);
+        $log.log("index=" + i);
+        
+        if (i !== -1) {
+            $scope.myFile.splice(i, 1);
+        }
+        //$scope.myFile.splice(item);
+
+    };
+    
+    $scope.eliminarTodo = function(){
+        $scope.myFile.splice(0,$scope.myFile.length);
+    };
+
 });
 
 

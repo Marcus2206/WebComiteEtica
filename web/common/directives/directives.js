@@ -1,6 +1,8 @@
 var app = angular.module("app");
 
 app.directive('fileModel', ['$parse', function ($parse) {
+        
+                
         /*Código para que funcione múltiples archivos*/
         return {
             restrict: 'A',
@@ -20,7 +22,10 @@ app.directive('fileModel', ['$parse', function ($parse) {
                             //File URL to view 
                             url: URL.createObjectURL(item),
                             // File Input Value 
-                            _file: item
+                            _file: item,
+                            _progress: 0,
+                            _progressType: 'info'
+                            
                         };
                         values.push(value);
                     });
