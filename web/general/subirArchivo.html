@@ -1,16 +1,77 @@
+<div class="container">
+    <label for="cargarArchivo" class="btn btn-file">Seleccione Archivos</label>
+    <input type = "file" id="cargarArchivo" style="display: none" file-model = "myFile" multiple />
 
-<input type = "file" file-model = "myFile" multiple />
-<button ng-click = "uploadFile()">upload me</button>
+    <div id="no-more-tables" ng-show="myFile.length > 0">
+        <table class="col-sm-12 table-bordered table-striped table-condensed cf">
+            <thead class="cf"> 
+                <tr>
+                    <td>Nombre de Archivo</td>
+                    <td>Estado</td>
+                    <td></td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="file in myFile">
+                    <td data-title="Nombre" style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">
+                        {{file.name}}
+                    </td>
+                    <td class="col-sm-3" data-title="Estado">
+            <uib-progressbar ng-show="file._progress < 99" class="progress-striped active" value="file._progress" type="{{file._progressType}}">
+                {{file._progress}}
+            </uib-progressbar>
+            <uib-progressbar ng-show="file._progress > 99" class="progress-striped" value="file._progress" type="{{file._progressType}}">
+                Completado
+            </uib-progressbar>
+            </td>
+            <td>
+                <a ng-show="file._progress == 100" class="btn btn-primary" ng-click="downloadFile(file.name)"><i class="fa fa-eye" aria-hidden="true"></i><span class="hidden-xs"> Ver</span></a>
+                <a class="btn btn-danger" ng-click="eliminarFile(file)"><i class="fa fa-times" aria-hidden="true"></i><span class="hidden-xs"> Remover</span></a>
+            </td>
+            </tr>
+            </tbody>
+        </table>
+        <div class="container">
+            <button class="btn btn-warning" ng-click = "uploadFile()">Subir Archivos</button>
+            <button class="btn btn-danger" ng-click = "eliminarTodo()">Eliminar Todo</button>
+        </div>
+    </div>
 
-<p ng-repeat="file in myFile">
-    {{file.name}}
-    {{file.url}}
-</p>
-
+</div>
 <button ng-click="downloadFile('Sin título.png')">descargar</button>
 <button ng-click="downloadFile('imagen.png')">descargar</button>
 <button ng-click="downloadFile('prueba.pdf')">descargar</button>
 
-        <h4>Standard date-picker</h4>
-        <md-datepicker ng-model="correspondencia.fechaCorrespondencia" md-placeholder="Enter date"></md-datepicker>
 
+<!--<div id="uploader" ng-controller="uploaderCtrl">
+    <div class="page-header">
+        <h1>Uploader</h1>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <h3>What?</h3>
+            <p>Upload multiple files at the same time.</p>
+
+            <div class="well">
+                <div>
+                    <div style="float:right;">
+                        <button ng-click="btn_upload()">Upload</button>
+                        <button ng-click="btn_clean()">Remove all</button>
+                    </div>
+                    <input type="file" id="file1" file-model = "myFile" multiple/>
+                </div>
+                <div ng-repeat="file in files" style="margin-top: 20px;border-bottom-color: antiquewhite;border-bottom-style: double;">
+                    <div><span>{{file.name}}</span><div style="float:right;"><span>{{file.humanSize}}</span><a ng-click="btn_remove(file)" title="Remove from list to be uploaded"><i class="icon-remove"></i></a></div>
+                    </div>
+                    <progress style="width:400px;" value="{{file.loaded ? file.loaded : 0}}" max="{{file.size}}"></progress>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <button ng-click="downloadFile('Sin título.png')">descargar</button>
+            <button ng-click="downloadFile('imagen.png')">descargar</button>
+            <button ng-click="downloadFile('prueba.pdf')">descargar</button>
+        </div>
+    </div>
+</div>-->
