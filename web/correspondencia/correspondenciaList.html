@@ -26,7 +26,7 @@
                 <thead class="cf">
                     <tr>
                         <th>Código</th>
-                        <th>Fecha Registro</th>
+                        <th>Fecha Correspondencia</th>
                         <th>Fecha Carta</th>
                         <th>Registro</th>
                         <th>Tipo de Servicio</th>
@@ -41,21 +41,21 @@
                 <tbody>
                     <tr ng-repeat="correspondencia in correspondencias| empezarDe : currentPage * pageSize | limitTo:pageSize | filter:txtFiltroCorrespondencia ">
                         <td data-title="Código">{{correspondencia.idCorrespondencia}}</td>
-                        <td data-title="Fecha Registro">{{correspondencia.fechaCorrespondencia}}</td>
-                        <td data-title="Fecha Carta">{{correspondencia.fechaCarta}}</td>
+                        <td data-title="Fecha Correspodencia">{{correspondencia.fechaCorrespondencia|date:'dd/MM/yyyy'}}</td>
+                        <td data-title="Fecha Carta">{{correspondencia.fechaCarta|date:'dd/MM/yyyy'}}</td>
                         <td data-title="Registro">{{correspondencia.registro}}</td>
                         <td data-title="Tipo de Servicio">{{correspondencia.paramTipoServicio}}</td>
                         <td data-title="Distribución">{{correspondencia.paramDistribucion}}</td>Distribución
                         <td data-title="Comentario">{{correspondencia.otro}}</td>
-                        <td data-title="Fecha Sesión">{{correspondencia.fechaSesion}}</td>
-                        <td data-title="Enviar Correo">{{correspondencia.enviarCorreo}}</td>
-                        <td data-title="Estado Envío">{{correspondencia.enviado}}</td>
-                        <td>
-                            <button class="btn btn-primary" ng-click="editarModal(correspondencia)"><i class="fa fa-pencil-square-o" aria-hidden="true"></i><span class="hidden-xs"> Editar</span></button>
-                            <button class="btn btn-danger" ng-click="eliminar(correspondencia)" ><i class="fa fa-trash" aria-hidden="true"></i><span class="hidden-xs"> Eliminar</span></button>
+                        <td data-title="Fecha Sesión">{{correspondencia.fechaSesion|date:'dd/MM/yyyy'}}</td>
+                        <td data-title="Enviar Correo"> {{correspondencia.enviarCorreo|booleanToText}}</td>
+                <td data-title="Estado Envío">{{correspondencia.enviado|booleanToText}}</td>
+                <td>
+                    <button class="btn btn-primary" ng-click="editarModal(correspondencia)"><i class="fa fa-pencil-square-o" aria-hidden="true"></i><span class="hidden-xs"> Editar</span></button>
+                    <button class="btn btn-danger" ng-click="eliminar(correspondencia)" ><i class="fa fa-trash" aria-hidden="true"></i><span class="hidden-xs"> Eliminar</span></button>
 
-                        </td>
-                    </tr>
+                </td>
+                </tr>
                 </tbody>
             </table>
         </div>

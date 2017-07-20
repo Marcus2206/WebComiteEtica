@@ -83,10 +83,11 @@ body {
 	#no-more-tables td:before { content: attr(data-title); }
 }
 
+/*
 .datetimepicker {
                          margin-top: 80px;
 }
+*/
 
-.cdk-overlay-container {
-z-index:1127;
-}
+.md-datepicker-calendar-pane{
+z-index: 1200}

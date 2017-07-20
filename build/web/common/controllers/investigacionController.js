@@ -492,12 +492,7 @@ app.controller("NewInvestigacionController",
                     usuarioIngresa: "",
                     fechaIngreso: "",
                     usuarioModifica: "",
-                    fechaModificacion: ""//,
-//            investigacionMonitors:[],
-//            investigacionCoordinadors:[],
-//            investigacionInvestigadors:[],
-//            registros:[],
-//            investigacionSedes:[]
+                    fechaModificacion: ""
                 };
 
                 $scope.guardar = function () {

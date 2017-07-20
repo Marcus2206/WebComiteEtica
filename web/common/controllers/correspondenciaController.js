@@ -47,6 +47,8 @@ app.controller("EditCorrespondenciaController",
                 $scope.paramTipoServicio = $scope.filtrar($scope.parametros, 'P001')[0].parametroDetalles;
                 $scope.paramDistribucion = $scope.filtrar($scope.parametros, 'P002')[0].parametroDetalles;
 
+                correspondencia.fechaCorrespondencia=new Date(correspondencia.fechaCorrespondencia);
+                correspondencia.fechaCarta=new Date(correspondencia.fechaCarta);
                 $scope.correspondencia = correspondencia;
 
                 $scope.guardar = function () {
@@ -64,6 +66,7 @@ app.controller("EditCorrespondenciaController",
                                 selText = listbox.options[selIndex].text;
                                 correspondenciaRespond.paramDistribucion = selText;
 
+                                $log.log(correspondenciaRespond);
                                 $uibModalInstance.dismiss(correspondenciaRespond);
                                 SweetAlert.swal("Hecho!", "Registro guardado exitosamente.", "success");
                             }, function (bussinessMessages) {
