@@ -77,3 +77,9 @@ app.config(['baseUrl', 'croRRProvider',
     croRRProvider.setBaseUrl(baseUrl);
   }
 ]);
+
+app.config(['baseUrl', 'correspondenciaRRProvider',
+  function(baseUrl, correspondenciaRRProvider) {
+    correspondenciaRRProvider.setBaseUrl(baseUrl);
+  }
+]);

@@ -1,231 +1,100 @@
-<div class="modal-content">
+<div class="modal-content" style="z-index: 1050">
     <div class="modal-header">
         <button type="button" class="close" ng-click="cerrar()">&times;</button>
-        <h4 class="modal-title" id="myModalLabel">Datos de la investigación</h4>
+        <h4 class="modal-title" id="myModalLabel">Datos de Correspondencia</h4>
     </div>
     <div class="modal-body">
         <div class="container-fluid">
             <div class="row">
                 <div class="col">
                     <div class="form-group">
-                        <label for="idInvestigacion">Id. Investigación:  </label><br>
-                        <input readonly type="text" class="form-control" id="idInvestigacion"  placeholder="Id. investigación" ng-model="investigacion.idInvestigacion" value="{{ investigacion.idInvestigacion || '' }}">
+                        <label for="idCorrespondencia">Id. Correspondencia:  </label><br>
+                        <input readonly type="text" class="form-control" id="idCorrespondencia"  placeholder="Id. correspondencia" ng-model="correspondencia.idCorrespondencia" value="{{ correspondencia.idCorrespondencia || '' }}">
+                    </div> 
+                </div>
+
+                <!--
+                <div class="col">
+                    <div class="form-group">
+                        <label for="fechaCorrespondencia">Fecha correspondencia:  </label><br>
+                        <input type="text" class="form-control" id="fechaCorrespondencia"  placeholder="" ng-model="correspondencia.fechaCorrespondencia" value="{{ correspondencia.fechaCorrespondencia | date:'small' }}">
+                        <span></span>
+                    </div> 
+                </div>
+                -->
+                <!--
+                <div class="col">
+                    <div class="form-group">
+                        <label for="fechaCorrespondenciaDiv" class="control-label">Fecha correspondencia: </label><br>
+                        <div id="fechaCorrespondenciaDiv" class="input-group date form_date" data-date="" data-date-format="dd/MM/yyyy" data-link-format="dd/MM/yyyy">
+                            <input id="fechaCorrespondencia" class="form-control" readonly>
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-remove"></span>
+                            </span>
+                        </div>
+                    </div>
+                </div>-->
+
+                <md-datepicker ng-model="correspondencia.fechaCorrespondencia" md-placeholder="Enter date"></md-datepicker>
+                <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+                <div class="col">
+                    <div class="form-group">
+                        <label for="fechaCarta">Fecha carta:  </label><br>
+                        <input type="text" class="form-control" id="fechaCarta"  placeholder="" ng-model="correspondencia.fechaCarta" value="{{ correspondencia.fechaCarta || '' }}">
                     </div> 
                 </div>
                 <div class="col">
                     <div class="form-group">
-                        <label for="protocolo">Protocolo:  </label><br>
-                        <input type="text" class="form-control" id="protocolo"  placeholder="Ingresar protocolo" ng-model="investigacion.protocolo" value="{{ investigacion.protocolo || '' }}">
+                        <label for="registro">Registro:  </label><br>
+                        <input type="text" class="form-control" id="registro"  placeholder="Seleccionar Registro" ng-model="correspondencia.registro" value="{{correspondencia.registro|| '' }}">
                     </div> 
                 </div>
                 <div class="col">
                     <div class="form-group">
-                        <label for="titulo">Título:  </label><br>
-                        <input type="text" class="form-control" id="titulo"  placeholder="Ingresar título" ng-model="investigacion.titulo" value="{{ investigacion.titulo || '' }}">
-                    </div> 
-                </div>
-                <div class="col">
-                    <div class="form-group">
-                        <label for="paramEspecialidad">Especialidad:  </label><br>
-                        <select class="form-control" id="paramEspecialidad" ng-model="investigacion.paramEspecialidad">
-                            <option ng-repeat="pd in paramEspecialidad" value="{{pd.id.idParametroDetalle}}">{{pd.descripcion}}</option>
+                        <label for="paramTipoServicio">Tipo de Servicio:  </label><br>
+                        <select class="form-control" id="paramTipoServicio" ng-model="correspondencia.paramTipoServicio">
+                            <option ng-repeat="pd in paramTipoServicio" value="{{pd.id.idParametroDetalle}}">{{pd.descripcion}}</option>
                         </select>
                     </div>
                 </div>
                 <div class="col">
                     <div class="form-group">
-                        <label for="paramFase">Fase:  </label><br>
-                        <select id="paramFase" class="form-control" ng-model="investigacion.paramFase">
-                            <option ng-repeat="pd in paramFase" value="{{pd.id.idParametroDetalle}}">{{pd.descripcion}}</option>
+                        <label for="paramDistribucion">Distribución:  </label><br>
+                        <select id="paramDistribucion" class="form-control" ng-model="correspondencia.paramDistribucion">
+                            <option ng-repeat="pd in paramDistribucion" value="{{pd.id.idParametroDetalle}}">{{pd.descripcion}}</option>
                         </select>
                     </div>
                 </div>
                 <div class="col">
                     <div class="form-group">
-                        <label for="paramTipoInvestigacion">Tipo de Investigación:  </label><br>
-                        <select  id="paramTipoInvestigacion" class="form-control" ng-model="investigacion.paramTipoInvestigacion">
-                            <option ng-repeat="pd in paramTipoInvestigacion" value="{{pd.id.idParametroDetalle}}">{{pd.descripcion}}</option>
-                        </select>
-                    </div>
+                        <label for="otro">Comentarios:  </label><br>
+                        <input type="text" class="form-control" id="otro"  placeholder="Comentarios" ng-model="correspondencia.otro" value="{{ correspondencia.otro || '' }}">
+                    </div> 
+                </div                                                                                                         >
+                <div class="col">
+                    <div class="form-group">
+                        <label for="fechaSesion">Fecha Sesión:  </label><br>
+                        <input type="text" class="form-control" id="fechaSesion"  placeholder="Fecha sesión" ng-model="correspondencia.fechaSesion" value="{{ correspondencia.fechaSesion || '' }}">
+                    </div> 
                 </div>
-                <!--Inicio de Coordinador-->
-                <div class="col">    
-                    <button ng-disabled="deshabilitado" type="button" style="width: 100%;" class="btn btn-default" ng-click="isCoordinador = !isCoordinador">Coordinador</button>
-                    <hr>
-                    <div uib-collapse="isCoordinador">
-                        <div>
-                            <form data-editable-form name="uiSelectFormCoordinador" onaftersave="agregarCoordinador()">
-                                <div editable-ui-select="coordinadorSelect" data-e-form="uiSelectFormCoordinador" data-e-name="coordinadorSelect" name="coordinadorSelect" theme="bootstrap" data-e-ng-model="coordinadorSelect" data-e-style="min-width:300px;">
-                                    <editable-ui-select-match placeholder="Coordinador" style="width: 100%;" >
-                                        {{$select.selected.apePaterno}} {{$select.selected.apeMaterno}} {{$select.selected.nombres}}
-                                    </editable-ui-select-match>
-                                    <editable-ui-select-choices repeat="coordinador in coordinadorsSelectList | orderBy: 'apePaterno' | filter: $select.search track by $index ">
-                                      {{coordinador.apePaterno}} {{coordinador.apeMaterno}} {{coordinador.nombres}}
-                                    </editable-ui-select-choices>
-                                </div> 
-                                <div class="buttons">
-                                    <button type="button" class="btn btn-default" ng-click="uiSelectFormCoordinador.$show()" ng-show="!uiSelectFormCoordinador.$visible">
-                                    Agregar
-                                    </button>
-                                    <span ng-show="uiSelectFormCoordinador.$visible">
-                                        <br/>
-                                        <button type="submit" class="btn btn-primary" ng-disabled="uiSelectFormCoordinador.$waiting">
-                                          Confirmar
-                                        </button>
-                                        <button type="button" class="btn btn-default" ng-disabled="uiSelectFormCoordinador.$waiting" ng-click="uiSelectFormCoordinador.$cancel()">
-                                          Cancelar
-                                        </button>
-                                    </span>
-                                </div>  
-                                </form>
-                                <br>
-                                <table class="table table-bordered table-hover table-condensed table-responsive">
-                                <thead>
-                                    <tr>
-                                        <th>Apellidos y Nombres</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr ng-repeat="invCoordinador in investigacionCoordinadors | orderBy:'idCoordinador'">
-                                        <td>
-                                            <div>
-                                                <div>
-                                                    <button type="button" class="close" aria-label="Close" ng-click="eliminarInvCoordinador(invCoordinador)">
-                                                        <span aria-hidden="true">&times;</span>
-                                                    </button>
-                                                </div>
-                                                <div>
-                                                    {{invCoordinador[1].apePaterno}} {{invCoordinador[1].apeMaterno}}, {{invCoordinador[1].nombres}} 
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>    
-                <!--Inicio de Investigador-->
-                <div class="col">    
-                    <button ng-disabled="deshabilitado" type="button" style="width: 100%;" class="btn btn-default" ng-click="isInvestigador = !isInvestigador">Investigador</button>
-                    <hr>
-                    <div uib-collapse="isInvestigador">
-                        <div>
-                            <form data-editable-form name="uiSelectFormInvestigador" onaftersave="agregarInvestigador()">
-                                <div editable-ui-select="investigadorSelect" data-e-form="uiSelectFormInvestigador" data-e-name="investigadorSelect" name="investigadorSelect" theme="bootstrap" data-e-ng-model="investigadorSelect" data-e-style="min-width:300px;font-size: 11px;">
-                                    <editable-ui-select-match placeholder="Investigador" style="width: 100%;font-size: 11px;" >
-                                        {{$select.selected.apePaterno}} {{$select.selected.apeMaterno}} {{$select.selected.nombres}}
-                                    </editable-ui-select-match>
-                                    <editable-ui-select-choices repeat="investigador in investigadorsSelectList | orderBy: 'apePaterno' | filter: $select.search track by $index ">
-                                      {{investigador.apePaterno}} {{investigador.apeMaterno}} {{investigador.nombres}}
-                                    </editable-ui-select-choices>
-                                </div> 
-                                <div class="buttons">
-                                    <button type="button" class="btn btn-default" ng-click="uiSelectFormInvestigador.$show()" ng-show="!uiSelectFormInvestigador.$visible">
-                                    Agregar
-                                    </button>
-                                    <span ng-show="uiSelectFormInvestigador.$visible">
-                                        <br/>
-                                        <button type="submit" class="btn btn-primary" ng-disabled="uiSelectFormInvestigador.$waiting">
-                                          Confirmar
-                                        </button>
-                                        <button type="button" class="btn btn-default" ng-disabled="uiSelectFormInvestigador.$waiting" ng-click="uiSelectFormInvestigador.$cancel()">
-                                          Cancelar
-                                        </button>
-                                    </span>
-                                </div>  
-                                </form>
-                                <br>
-                                <table class="table table-bordered table-hover table-condensed table-responsive">
-                                <thead>
-                                    <tr>
-                                        <th>Apellidos y Nombres</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr ng-repeat="invInvestigador in investigacionInvestigadors | orderBy:'idInvestigador'">
-                                        <td>
-                                            <div>
-                                                <div>
-                                                    <button type="button" class="close" aria-label="Close" ng-click="eliminarInvInvestigador(invInvestigador)">
-                                                        <span aria-hidden="true">&times;</span>
-                                                    </button>
-                                                </div>
-                                                <div>
-                                                    {{invInvestigador[1].apePaterno}} {{invCoordinador[1].apeMaterno}}, {{invCoordinador[1].nombres}}
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>   
-                
-                <!--Inicio de Sede-->
-                <div class="col">    
-                    <button ng-disabled="deshabilitado" type="button" style="width: 100%;" class="btn btn-default" ng-click="isSede = !isSede">Sede</button>
-                    <div uib-collapse="isSede">
-                        <div>
-                            <form data-editable-form name="uiSelectFormSede" onaftersave="agregarSede()">
-                                <div editable-ui-select="sedeSelect" data-e-form="uiSelectFormSede" data-e-name="sedeSelect" name="sedeSelect" theme="bootstrap" data-e-ng-model="sedeSelect" data-e-style="min-width:300px;font-size: 11px;">
-                                    <editable-ui-select-match placeholder="Sede" style="width: 100%;font-size: 11px;" >
-                                        {{$select.selected.nombre}}
-                                    </editable-ui-select-match>
-                                    <editable-ui-select-choices repeat="sede in sedesSelectList | orderBy: 'nombre' | filter: $select.search track by $index ">
-                                      {{sede.nombre}} - {{sede.idDepartamento}}, {{sede.idProvincia}}, {{sede.idDistrito}}
-                                    </editable-ui-select-choices>
-                                </div> 
-                                <div class="buttons">
-                                    <button type="button" class="btn btn-default" ng-click="uiSelectFormSede.$show()" ng-show="!uiSelectFormSede.$visible">
-                                    Agregar
-                                    </button>
-                                    <span ng-show="uiSelectFormSede.$visible">
-                                        <br/>
-                                        <button type="submit" class="btn btn-primary" ng-disabled="uiSelectFormSede.$waiting">
-                                          Confirmar
-                                        </button>
-                                        <button type="button" class="btn btn-default" ng-disabled="uiSelectFormSede.$waiting" ng-click="uiSelectFormSede.$cancel()">
-                                          Cancelar
-                                        </button>
-                                    </span>
-                                </div>  
-                                </form>
-                                <br>
-                                <table class="table table-bordered table-hover table-condensed table-responsive">
-                                <thead>
-                                    <tr>
-                                        <th>Sedes</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr ng-repeat="invSede in investigacionSedes | orderBy:'idSede'">
-                                        <td>
-                                            <div>
-                                                <div>
-                                                    <button type="button" class="close" aria-label="Close" ng-click="eliminarInvSede(invSede)">
-                                                        <span aria-hidden="true">&times;</span>
-                                                    </button>
-                                                </div>
-                                                <div>
-                                                    {{invSede.nombre}} - {{invSede.idDepartamento}}, {{invSede.idProvincia}}, {{invSede.idDistrito}}
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>   
-                
-                
+                <div class="col">
+                    <div class="form-group">
+                        <label for="enviarCorreo">Enviar correo:  </label><br>
+                        <input type="text" class="form-control" id="enviarCorreo"  placeholder="Enviar correo" ng-model="correspondencia.enviarCorreo" value="{{ correspondencia.enviarCorreo || '' }}">
+                    </div> 
+                </div>
+                <div class="col">
+                    <div class="form-group">
+                        <label for="enviado">Enviado:  </label><br>
+                        <input type="text" class="form-control" id="enviado"  placeholder="Enviado" ng-model="correspondencia.enviado" value="{{ correspondencia.enviado || '' }}">
+                    </div> 
+                </div>
             </div>
         </div>
-        <br>
     </div>
-    
+    <br>
+
+
     <div class="modal-footer">
         <button type="submit" class="btn btn-primary" ng-click="guardar()">
             Guardar
@@ -235,3 +104,38 @@
         </button>
     </div>
 </div>
+
+<script type="text/javascript">
+            $('.form_datetime').datetimepicker({
+                language: 'es',
+                weekStart: 1,
+                todayBtn: 1,
+                autoclose: 1,
+                todayHighlight: 1,
+                startView: 2,
+                forceParse: 0,
+                showMeridian: 1
+            });
+            $('.form_date').datetimepicker({
+                language: 'es',
+                setDate: new Date(),
+                weekStart: 1,
+                todayBtn: 1,
+                autoclose: 1,
+                todayHighlight: 1,
+                startView: 2,
+                minView: 2,
+                forceParse: 0
+            });
+            $('.form_time').datetimepicker({
+                language: 'es',
+                weekStart: 1,
+                todayBtn: 1,
+                autoclose: 1,
+                todayHighlight: 1,
+                startView: 1,
+                minView: 0,
+                maxView: 1,
+                forceParse: 0
+            });
+</script>

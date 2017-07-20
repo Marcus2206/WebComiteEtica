@@ -1,7 +1,9 @@
-var app=angular.module("app");
+var app = angular.module("app");
 
-app.run(["$rootScope",function($rootScope) {
-}]);
+app.run(["$rootScope", function ($rootScope) {
+
+        
+    }]);
 
 /*Salir de modal con botón atrás en Android*/
 //app.run([

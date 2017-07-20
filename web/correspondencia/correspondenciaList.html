@@ -30,8 +30,8 @@
                         <th>Fecha Carta</th>
                         <th>Registro</th>
                         <th>Tipo de Servicio</th>
-                        <th>Comentario</th>
                         <th>Distribución</th>
+                        <th>Comentario</th>
                         <th>Fecha Sesión</th>
                         <th>Enviar Correo</th>
                         <th>Estado Envío</th>
@@ -40,27 +40,19 @@
                 </thead>
                 <tbody>
                     <tr ng-repeat="correspondencia in correspondencias| empezarDe : currentPage * pageSize | limitTo:pageSize | filter:txtFiltroCorrespondencia ">
-                        <td data-title="Código">{{investigacion.idInvestigacion}}</td>
-                        <td data-title="Fecha Registro">{{investigacion.protocolo}}</td>
-                        <td data-title="Fecha Carta">{{investigacion.titulo}}</td>
-                        <td data-title="Registro">{{investigacion.paramEspecialidad}}</td>
-                        <td data-title="Tipo de Servicio">{{investigacion.paramFase}}</td>Distribución
-                        <td data-title="Comentario">{{investigacion.paramTipoInvestigacion}}</td>
-                        <td data-title="Distribución">{{investigacion.paramTipoInvestigacion}}</td>
-                        <td data-title="Fecha Sesión">{{investigacion.paramTipoInvestigacion}}</td>
-                        <td data-title="Fecha Sesión">{{investigacion.paramTipoInvestigacion}}</td>
-                        <td data-title="Comentario">{{investigacion.paramTipoInvestigacion}}</td>
+                        <td data-title="Código">{{correspondencia.idCorrespondencia}}</td>
+                        <td data-title="Fecha Registro">{{correspondencia.fechaCorrespondencia}}</td>
+                        <td data-title="Fecha Carta">{{correspondencia.fechaCarta}}</td>
+                        <td data-title="Registro">{{correspondencia.registro}}</td>
+                        <td data-title="Tipo de Servicio">{{correspondencia.paramTipoServicio}}</td>
+                        <td data-title="Distribución">{{correspondencia.paramDistribucion}}</td>Distribución
+                        <td data-title="Comentario">{{correspondencia.otro}}</td>
+                        <td data-title="Fecha Sesión">{{correspondencia.fechaSesion}}</td>
+                        <td data-title="Enviar Correo">{{correspondencia.enviarCorreo}}</td>
+                        <td data-title="Estado Envío">{{correspondencia.enviado}}</td>
                         <td>
-                            <!--<div class="btn-group"><button ng-click='' type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Seleccione <span class="caret"></span>
-                                </button>
-                                <ul class="dropdown-menu">
-                                    <li><a href="" data-toggle="modal" data-target="#newMyModal{{coordinador.idCoordinador}}">Editar</a></li>
-                                    <li><a href="" data-toggle="modal" data-target="#newMyModal{{coordinador.idCoordinador}}">Borrar</a></li>
-                                </ul>
-                            </div>-->
-                            <button class="btn btn-primary" ng-click="editarModal(investigacion)"><i class="fa fa-pencil-square-o" aria-hidden="true"></i><span class="hidden-xs"> Editar</span></button>
-                            <button class="btn btn-danger" ng-click="eliminar(investigacion)" ><i class="fa fa-trash" aria-hidden="true"></i><span class="hidden-xs"> Eliminar</span></button>
+                            <button class="btn btn-primary" ng-click="editarModal(correspondencia)"><i class="fa fa-pencil-square-o" aria-hidden="true"></i><span class="hidden-xs"> Editar</span></button>
+                            <button class="btn btn-danger" ng-click="eliminar(correspondencia)" ><i class="fa fa-trash" aria-hidden="true"></i><span class="hidden-xs"> Eliminar</span></button>
 
                         </td>
                     </tr>
@@ -76,7 +68,7 @@
                 <span aria-hidden="true">&laquo;</span>
             </button>
             {{currentPage + 1}}/{{numberOfPages()}}
-            <button ng-disabled="currentPage >= investigacions.length / pageSize - 1" ng-click="setNextPagina()" class="btn btn-default">
+            <button ng-disabled="currentPage >= correspondencias.length / pageSize - 1" ng-click="setNextPagina()" class="btn btn-default">
                 <span aria-hidden="true">&raquo;</span>
             </button>
         </div>
