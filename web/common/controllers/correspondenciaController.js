@@ -49,7 +49,10 @@ app.controller("EditCorrespondenciaController",
                 $scope.paramDistribucion = $scope.filtrar($scope.parametros, 'P002')[0].parametroDetalles;
 
                 correspondencia.fechaCorrespondencia = new Date(correspondencia.fechaCorrespondencia);
-                correspondencia.fechaCarta = new Date(correspondencia.fechaCarta);
+                if (correspondencia.fechaCarta !== null) {
+                    correspondencia.fechaCarta = new Date(correspondencia.fechaCarta);
+                }
+
                 $scope.correspondencia = correspondencia;
 
                 $scope.guardar = function () {
@@ -69,6 +72,7 @@ app.controller("EditCorrespondenciaController",
 
                                 correspondenciaRespond.enviarCorreo = ((correspondenciaRespond.enviarCorreo) ? 1 : 0);
                                 correspondenciaRespond.enviado = ((correspondenciaRespond.enviado) ? 1 : 0);
+
                                 $scope.correspondenciaRespondTemp = correspondenciaRespond;
                                 SweetAlert.swal("Hecho!", "Registro guardado exitosamente.", "success");
                             }, function (bussinessMessages) {
@@ -80,7 +84,7 @@ app.controller("EditCorrespondenciaController",
                 $scope.cerrar = function () {
                     if (typeof ($scope.correspondenciaRespondTemp) === 'undefined') {
                         $uibModalInstance.dismiss('cancel');
-                    }else{
+                    } else {
                         $uibModalInstance.dismiss($scope.correspondenciaRespondTemp);
                     }
                 };
@@ -196,7 +200,7 @@ app.controller("ListCorrespondenciaController",
                                 if (data !== "escape key press") {
                                     //Si no es cancel, se reemplaza el objeto que se mandó a actualizar
                                     $scope.correspondencias.push(data);
-
+                                     $scope.editarModal(data);
                                 }
                             }
                         } else {
@@ -218,6 +222,8 @@ app.controller("ListCorrespondenciaController",
                     }, function (isConfirm) {
                         if (isConfirm) {
                             //Si se presiona Sí.
+                            correspondencia.enviarCorreo = ((correspondencia.enviarCorreo === '1') ? 1 : 0);
+                            correspondencia.enviado = ((correspondencia.enviado === '1') ? 1 : 0);
                             correspondenciaRR.delete(correspondencia)
                                     .then(function (correspondenciaResult) {
                                         //Se la elimenación es exitosa.
@@ -251,15 +257,11 @@ app.controller("NewCorrespondenciaController",
                     return obj.filter(filterByParametro);
                 };
 
-                $scope.isCoordinador = true;
-                $scope.isInvestigador = true;
-                $scope.isSede = true;
-
-                $scope.deshabilitado = true;
                 $scope.parametros = parametros;
                 $scope.paramTipoServicio = $scope.filtrar($scope.parametros, 'P001')[0].parametroDetalles;
                 $scope.paramDistribucion = $scope.filtrar($scope.parametros, 'P002')[0].parametroDetalles;
 
+                $scope.correspondenciaRespondTemp;
                 /*Se construyer el json*/
                 $scope.correspondencia = {
                     idCorrespondencia: "",
@@ -268,15 +270,12 @@ app.controller("NewCorrespondenciaController",
                     registro: null,
                     paramTipoServicio: null,
                     paramDistribucion: null,
+                    enviarCorreo:0,
+                    enviado:0,
                     usuarioIngresa: null,
                     fechaIngreso: null,
                     usuarioModifica: null,
-                    fechaModificacion: null//,
-//            investigacionMonitors:[],
-//            investigacionCoordinadors:[],
-//            investigacionInvestigadors:[],
-//            registros:[],
-//            investigacionSedes:[]
+                    fechaModificacion: null
                 };
                 this.isOpen = false;
                 $scope.guardar = function () {
@@ -297,11 +296,22 @@ app.controller("NewCorrespondenciaController",
                                 selText = listbox.options[selIndex].text;
                                 correspondenciaRespond.paramDistribucion = selText;
 
+                                correspondenciaRespond.fechaCorrespondencia = new Date(correspondenciaRespond.fechaCorrespondencia);
+
+                                if (correspondenciaRespond.fechaCarta !== null) {
+                                    correspondenciaRespond.fechaCarta = new Date(correspondenciaRespond.fechaCarta);
+                                } else {
+
+                                }
+
+                                correspondenciaRespond.enviarCorreo = ((correspondenciaRespond.enviarCorreo) ? 1 : 0);
+                                correspondenciaRespond.enviado = ((correspondenciaRespond.enviado) ? 1 : 0);
+
+                                $scope.correspondenciaRespondTemp = correspondenciaRespond;
                                 $uibModalInstance.dismiss(correspondenciaRespond);
                                 SweetAlert.swal("Hecho!", "Registro guardado exitosamente.", "success");
                             }, function (bussinessMessages) {
                                 $scope.bussinessMessages = bussinessMessages;
-                                $uibModalInstance.dismiss('cancel');
                                 SweetAlert.swal("Hubo un error!", "Intente nuevamente o comuniquese con el administrador.", "danger");
                             });
                     /*} else {
@@ -310,7 +320,11 @@ app.controller("NewCorrespondenciaController",
                 };
 
                 $scope.cerrar = function () {
-                    $uibModalInstance.dismiss('cancel');
+                    if (typeof ($scope.correspondenciaRespondTemp) === 'undefined') {
+                        $uibModalInstance.dismiss('cancel');
+                    }else{
+                        $uibModalInstance.dismiss($scope.correspondenciaRespondTemp);
+                    }
                 };
 
             }]);

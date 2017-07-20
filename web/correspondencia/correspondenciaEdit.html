@@ -51,42 +51,24 @@
                         <label for="otro">Comentarios:  </label><br>
                         <input type="text" class="form-control" id="otro"  placeholder="Comentarios" ng-model="correspondencia.otro" value="{{ correspondencia.otro || '' }}">
                     </div> 
-                </div                                                                                                         >
+                </div>
                 <div class="col">
                     <div class="form-group">
                         <label for="fechaSesion">Fecha Sesión:  </label><br>
                         <input type="text" class="form-control" id="fechaSesion"  placeholder="Fecha sesión" ng-model="correspondencia.fechaSesion" value="{{ correspondencia.fechaSesion || '' }}">
                     </div> 
                 </div>
-                <!--
                 <div class="col">
                     <div class="form-group">
-                        <label for="enviarCorreo">Enviar correo:  </label><br>
-                        <input type="checkbox" class="form-control" id="enviarCorreo"  placeholder="Enviar correo" ng-model="correspondencia.enviarCorreo" value="{{ correspondencia.enviarCorreo || '' }}">
-                    </div> 
-                </div>
-                -->
-                <div class="col">
-                    <div class="form-group">
-                        <!--<label for="enviarCorreo">Enviado:  </label>-->
                         <md-checkbox ng-model="correspondencia.enviarCorreo" id="enviarCorreo" class="md-primary" >
                             Enviar correo
                         </md-checkbox>
                     </div>
                 </div>
-                <!--
                 <div class="col">
                     <div class="form-group">
-                        <label for="enviado">Enviado:  </label><br>
-                        <input type="checkbox" disabled class="form-control" id="enviado"  placeholder="Enviado" ng-model="correspondencia.enviado" value="{{ correspondencia.enviado }}" ng-true-value="'Sí'" ng-false-value="'No'">
-                    </div> 
-                </div>
-                -->
-                <div class="col">
-                    <div class="form-group">
-                        <!--<label for="enviado">Enviado:  </label>-->
                         <md-checkbox ng-model="correspondencia.enviado"  id="enviado" disabled class="md-primary">
-                           Correo enviado
+                            Correo enviado
                         </md-checkbox>
                     </div>
                 </div>
