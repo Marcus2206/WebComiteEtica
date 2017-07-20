@@ -16,7 +16,7 @@ app.filter("booleanToText", ['$log',function (l) {
         function booleanToTextFilter(valor) {
             var texto='No';
             if(typeof (valor)!=="undefined"){
-                if(valor==='0'){
+                if(parseInt(valor)===0){
                     texto='No';
                 }else{
                     texto='Sí';

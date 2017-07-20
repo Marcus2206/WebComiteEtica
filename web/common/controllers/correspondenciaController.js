@@ -14,6 +14,7 @@ app.controller("EditCorrespondenciaController",
                     $location, $log, $filter, $uibModalInstance, $confirm, SweetAlert,
                     fileUpload) {
 
+                $scope.correspondenciaRespondTemp;
                 $scope.parametros = parametros;
 //                $scope.deshabilitado = false;
 
@@ -47,8 +48,8 @@ app.controller("EditCorrespondenciaController",
                 $scope.paramTipoServicio = $scope.filtrar($scope.parametros, 'P001')[0].parametroDetalles;
                 $scope.paramDistribucion = $scope.filtrar($scope.parametros, 'P002')[0].parametroDetalles;
 
-                correspondencia.fechaCorrespondencia=new Date(correspondencia.fechaCorrespondencia);
-                correspondencia.fechaCarta=new Date(correspondencia.fechaCarta);
+                correspondencia.fechaCorrespondencia = new Date(correspondencia.fechaCorrespondencia);
+                correspondencia.fechaCarta = new Date(correspondencia.fechaCarta);
                 $scope.correspondencia = correspondencia;
 
                 $scope.guardar = function () {
@@ -60,25 +61,28 @@ app.controller("EditCorrespondenciaController",
                                 var selIndex = listbox.selectedIndex;
                                 var selText = listbox.options[selIndex].text;
                                 correspondenciaRespond.paramTipoServicio = selText;
-                                
+
                                 listbox = document.getElementById("paramDistribucion");
                                 selIndex = listbox.selectedIndex;
                                 selText = listbox.options[selIndex].text;
                                 correspondenciaRespond.paramDistribucion = selText;
 
-                                $log.log(correspondenciaRespond);
-                                $uibModalInstance.dismiss(correspondenciaRespond);
+                                correspondenciaRespond.enviarCorreo = ((correspondenciaRespond.enviarCorreo) ? 1 : 0);
+                                correspondenciaRespond.enviado = ((correspondenciaRespond.enviado) ? 1 : 0);
+                                $scope.correspondenciaRespondTemp = correspondenciaRespond;
                                 SweetAlert.swal("Hecho!", "Registro guardado exitosamente.", "success");
                             }, function (bussinessMessages) {
                                 $scope.bussinessMessages = bussinessMessages;
-                                $uibModalInstance.dismiss('cancel');
                                 SweetAlert.swal("Hubo un error!", "Intente nuevamente o comuniquese con el administrador.", "danger");
-
                             });
                 };
 
                 $scope.cerrar = function () {
-                    $uibModalInstance.dismiss('cancel');
+                    if (typeof ($scope.correspondenciaRespondTemp) === 'undefined') {
+                        $uibModalInstance.dismiss('cancel');
+                    }else{
+                        $uibModalInstance.dismiss($scope.correspondenciaRespondTemp);
+                    }
                 };
 
                 $scope.cerrarOtras = true;
@@ -97,7 +101,7 @@ app.controller("ListCorrespondenciaController",
             "$log", "$route", "$uibModal", "$confirm", 'SweetAlert',
             function ($scope, correspondencias, correspondenciaRR, $location,
                     $log, $route, $uibModal, $confirm, SweetAlert) {
-                        
+
                 /*Se obtiene lista de correspondencias*/
                 $scope.correspondencias = correspondencias;
 
@@ -274,7 +278,7 @@ app.controller("NewCorrespondenciaController",
 //            registros:[],
 //            investigacionSedes:[]
                 };
-this.isOpen = false;
+                this.isOpen = false;
                 $scope.guardar = function () {
                     //if ($scope.form.$valid) {
                     $scope.correspondencia.usuarioIngresa = "user1";
@@ -287,7 +291,7 @@ this.isOpen = false;
                                 var selIndex = listbox.selectedIndex;
                                 var selText = listbox.options[selIndex].text;
                                 correspondenciaRespond.paramTipoServicio = selText;
-                                
+
                                 listbox = document.getElementById("paramDistribucion");
                                 selIndex = listbox.selectedIndex;
                                 selText = listbox.options[selIndex].text;
