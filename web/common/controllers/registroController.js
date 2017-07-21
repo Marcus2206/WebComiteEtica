@@ -1,24 +1,40 @@
 var app = angular.module("app");
 
-app.controller("EditCorrespondenciaController",
-        ['$scope', 'correspondencia', 'parametros', 'correspondenciaRR',
+app.controller("EditRegistroController",
+        ['$scope', 'registro', 'parametros', 'registroRR',
 //            'coordinadorRemoteResource', 'investigacionCoordinadorRemoteResource',
 //            'investigadorRR', 'investigacionInvestigadorRR',
 //            'sedeRR', 'investigacionSedeRR',
             '$location', "$log", '$filter', "$uibModalInstance", "$confirm", 'SweetAlert',
-            'fileUpload', '$http',
-            function ($scope, correspondencia, parametros, correspondenciaRR,
+            'fileUpload',
+            function ($scope, registro, parametros, registroRR,
 //                    coordinadorRemoteResource, investigacionCoordinadorRemoteResource,
 //                    investigadorRR, investigacionInvestigadorRR,
 //                    sedeRR, investigacionSedeRR,
                     $location, $log, $filter, $uibModalInstance, $confirm, SweetAlert,
-                    fileUpload, $http) {
+                    fileUpload) {
 
-                $scope.correspondenciaRespondTemp;
-                $scope.deshabilitado = false;
-                $scope.isCorrespondenciaFile = true;
+                $scope.registroRespondTemp;
                 $scope.parametros = parametros;
-                $scope.correspondenciaFiles = [];
+//                $scope.deshabilitado = false;
+
+//                $scope.investigacionCoordinadors = [];
+//                $scope.investigacionInvestigadors = [];
+//                $scope.investigacionSedes = [];
+
+                $scope.nombreBoton = "Editar";
+
+//                $scope.coordinadorsSelectList = [];
+//                $scope.investigadorsSelectList = [];
+//                $scope.sedesSelectList = [];
+
+//                $scope.coordinadorSelect = {};
+//                $scope.investigadorSelect = {};
+//                $scope.sedeSelect = {};
+//
+//                $scope.isCoordinador = true;
+//                $scope.isInvestigador = true;
+//                $scope.isSede = true;
 
                 $scope.filtrar = function (obj, param) {
                     function filterByParametro(obj) {
@@ -32,28 +48,28 @@ app.controller("EditCorrespondenciaController",
                 $scope.paramTipoServicio = $scope.filtrar($scope.parametros, 'P001')[0].parametroDetalles;
                 $scope.paramDistribucion = $scope.filtrar($scope.parametros, 'P002')[0].parametroDetalles;
 
-                correspondencia.fechaCorrespondencia = new Date(correspondencia.fechaCorrespondencia);
-                if (correspondencia.fechaCarta !== null) {
-                    correspondencia.fechaCarta = new Date(correspondencia.fechaCarta);
-                }
+//                registro.fechaCorrespondencia = new Date(registro.fechaCorrespondencia);
+//                if (correspondencia.fechaCarta !== null) {
+//                    correspondencia.fechaCarta = new Date(correspondencia.fechaCarta);
+//                }
 
-                $scope.correspondencia = correspondencia;
+                $scope.registro = registro;
 
                 $scope.guardar = function () {
-                    $scope.correspondencia.usuarioModifica = "sa";
-                    $scope.correspondencia.fechaModificacion = new Date();
-                    correspondenciaRR.update($scope.correspondencia)
-                            .then(function (correspondenciaRespond) {
-                                var listbox = document.getElementById("paramTipoServicio");
-                                var selIndex = listbox.selectedIndex;
-                                var selText = listbox.options[selIndex].text;
-                                correspondenciaRespond.paramTipoServicio = selText;
-
-                                listbox = document.getElementById("paramDistribucion");
-                                selIndex = listbox.selectedIndex;
-                                selText = listbox.options[selIndex].text;
-                                correspondenciaRespond.paramDistribucion = selText;
-
+                    $scope.registro.usuarioModifica = "sa";
+                    $scope.registro.fechaModificacion = new Date();
+                    registroRR.update($scope.registro)
+                            .then(function (registroRespond) {
+//                                var listbox = document.getElementById("paramTipoServicio");
+//                                var selIndex = listbox.selectedIndex;
+//                                var selText = listbox.options[selIndex].text;
+//                                correspondenciaRespond.paramTipoServicio = selText;
+//
+//                                listbox = document.getElementById("paramDistribucion");
+//                                selIndex = listbox.selectedIndex;
+//                                selText = listbox.options[selIndex].text;
+//                                correspondenciaRespond.paramDistribucion = selText;
+//
 //                                correspondenciaRespond.enviarCorreo = ((correspondenciaRespond.enviarCorreo) ? 1 : 0);
 //                                correspondenciaRespond.enviado = ((correspondenciaRespond.enviado) ? 1 : 0);
 
@@ -75,69 +91,23 @@ app.controller("EditCorrespondenciaController",
 
                 $scope.cerrarOtras = true;
 
-                $scope.myFile = [];
-                $scope.progressBar = 0;
-
-                $scope.downloadFile = function (name) {
-                    $http({
-                        method: 'GET',
-                        url: 'http://localhost:8080/RestComiteEtica/api/BajarArchivo/' + name,
-                        params: {name: name},
-                        responseType: 'arraybuffer'
-                    }).then(function (response) {
-                        var filename = name;
-                        var contentType = "application/undefined";
-
-                        var linkElement = document.createElement('a');
-                        try {
-                            var blob = new Blob([response.data], {type: contentType});
-                            var url = window.URL.createObjectURL(blob);
-
-                            linkElement.setAttribute('href', url);
-                            linkElement.setAttribute("download", filename);
-
-                            var clickEvent = new MouseEvent("click", {
-                                "view": window,
-                                "bubbles": true,
-                                "cancelable": false
-                            });
-                            linkElement.dispatchEvent(clickEvent);
-                        } catch (ex) {
-                        }
-                    }).catch(function (data) {
-                    });
-                };
-
                 $scope.uploadFile = function () {
                     var file = $scope.myFile;
                     angular.forEach(file, function (item) {
 
-                        fileUpload.uploadFileToUrl(item, $scope.correspondencia.idCorrespondencia);
+                        fileUpload.uploadFileToUrl(item._file);
                     });
-                };
-
-                $scope.eliminarFile = function (item) {
-                    var i = $scope.myFile.indexOf(item);
-                    $log.log("index=" + i);
-
-                    if (i !== -1) {
-                        $scope.myFile.splice(i, 1);
-                    }
-                };
-
-                $scope.eliminarTodo = function () {
-                    $scope.myFile.splice(0, $scope.myFile.length);
                 };
             }]);
 
-app.controller("ListCorrespondenciaController",
-        ['$scope', "correspondencias", "correspondenciaRR", '$location',
+app.controller("ListRegistroController",
+        ['$scope', "registros", "registroRR", '$location',
             "$log", "$route", "$uibModal", "$confirm", 'SweetAlert',
-            function ($scope, correspondencias, correspondenciaRR, $location,
+            function ($scope, registros, registroRR, $location,
                     $log, $route, $uibModal, $confirm, SweetAlert) {
 
                 /*Se obtiene lista de correspondencias*/
-                $scope.correspondencias = correspondencias;
+                $scope.registros = registros;
 
                 /*Se setea la cantidad filas por vista*/
                 $scope.currentPage = 0;
@@ -145,7 +115,7 @@ app.controller("ListCorrespondenciaController",
 
                 /*Calculando número de páginas*/
                 $scope.numberOfPages = function () {
-                    return Math.ceil($scope.correspondencias.length / $scope.pageSize);
+                    return Math.ceil($scope.registros.length / $scope.pageSize);
                 };
 
                 /*Ir a la sgte página*/
@@ -167,17 +137,16 @@ app.controller("ListCorrespondenciaController",
 //        };
 
                 /*Editar un registro*/
-                $scope.editarModal = function (correspondenciaObj) {
+                $scope.editarModal = function (registroObj) {
                     var modalInstance = $uibModal.open({
-                        templateUrl: 'correspondencia/correspondenciaEdit.html',
-//                    templateUrl: 'coordinador/coordinadorTest.html',
-                        controller: "EditCorrespondenciaController",
+                        templateUrl: 'registro/registroEdit.html',
+                        controller: "EditRegistroController",
                         size: 'md',
                         backdrop: 'static',
                         keyboard: false,
                         resolve: {
-                            correspondencia: function () {
-                                return correspondenciaRR.get(correspondenciaObj.idCorrespondencia);
+                            registro: function () {
+                                return registroRR.get(registroObj.idRegistro);
                             },
                             parametros: ['parametroRR', function (parametroRR) {
                                     return parametroRR.list();
@@ -193,9 +162,9 @@ app.controller("ListCorrespondenciaController",
                             if (data !== "backdrop click") {
                                 if (data !== "escape key press") {
                                     //Si no es cancel, se reemplaza el objeto que se mandó a actualizar
-                                    var index = $scope.correspondencias.indexOf(correspondenciaObj);
+                                    var index = $scope.registros.indexOf(registroObj);
                                     if (index !== -1) {
-                                        $scope.correspondencias[index] = data;
+                                        $scope.registros[index] = data;
                                     }
                                 }
                             }
@@ -208,9 +177,8 @@ app.controller("ListCorrespondenciaController",
                 /*Crear un registro*/
                 $scope.nuevoModal = function () {
                     var modalInstance = $uibModal.open({
-                        templateUrl: 'correspondencia/correspondenciaEdit.html',
-//                    templateUrl: 'coordinador/coordinadorTest.html',
-                        controller: "NewCorrespondenciaController",
+                        templateUrl: 'registro/registroEdit.html',
+                        controller: "NewRegistroController",
                         size: 'md',
                         backdrop: 'static',
                         keyboard: false,
@@ -229,7 +197,7 @@ app.controller("ListCorrespondenciaController",
                             if (data !== "backdrop click") {
                                 if (data !== "escape key press") {
                                     //Si no es cancel, se reemplaza el objeto que se mandó a actualizar
-                                    $scope.correspondencias.push(data);
+                                    $scope.registros.push(data);
                                     $scope.editarModal(data);
                                 }
                             }
@@ -239,7 +207,7 @@ app.controller("ListCorrespondenciaController",
                     });
                 };
 
-                $scope.eliminar = function (correspondencia) {
+                $scope.eliminar = function (registro) {
                     //Se prepara confirm
                     SweetAlert.swal({
                         title: '¿Está seguro de eliminar este registro?',
@@ -252,13 +220,13 @@ app.controller("ListCorrespondenciaController",
                     }, function (isConfirm) {
                         if (isConfirm) {
                             //Si se presiona Sí.
-                            correspondencia.enviarCorreo = ((correspondencia.enviarCorreo === '1') ? 1 : 0);
-                            correspondencia.enviado = ((correspondencia.enviado === '1') ? 1 : 0);
-                            correspondenciaRR.delete(correspondencia)
-                                    .then(function (correspondenciaResult) {
+//                            correspondencia.enviarCorreo = ((correspondencia.enviarCorreo === '1') ? 1 : 0);
+//                            correspondencia.enviado = ((correspondencia.enviado === '1') ? 1 : 0);
+                            registroRR.delete(registro)
+                                    .then(function (registroResult) {
                                         //Se la elimenación es exitosa.
-                                        $scope.correspondencias.splice($scope.correspondencias.indexOf(correspondencia), 1);
-                                        SweetAlert.swal("Hecho!", "Registro eliminado exitosamente.", "success");
+                                        $scope.registros.splice($scope.registros.indexOf(registro), 1);
+                                        SweetAlert.swal("¡Hecho!", "Registro eliminado exitosamente.", "success");
                                     }, function (bussinessMessages) {
                                         SweetAlert.swal("Advertencia", "La investigación se encuentra activa.", "warning");
                                         //$scope.bussinessMessages = bussinessMessages;
@@ -272,18 +240,11 @@ app.controller("ListCorrespondenciaController",
 
             }]);
 
-app.controller("NewCorrespondenciaController",
-        ['$scope', 'correspondenciaRR',
+app.controller("NewRegistroController",
+        ['$scope', 'registroRR',
             'parametros', '$location', "$log", "$uibModalInstance", 'SweetAlert',
-            function ($scope, correspondenciaRR,
+            function ($scope, registroRR,
                     parametros, $location, $log, $uibModalInstance, SweetAlert) {
-
-
-
-                $scope.parametros = parametros;
-                $scope.correspondenciaRespondTemp;
-                $scope.deshabilitado = true;
-                $scope.isCorrespondenciaFile = true;
 
                 $scope.filtrar = function (obj, param) {
                     function filterByParametro(obj) {
@@ -294,12 +255,14 @@ app.controller("NewCorrespondenciaController",
                     return obj.filter(filterByParametro);
                 };
 
+                $scope.parametros = parametros;
                 $scope.paramTipoServicio = $scope.filtrar($scope.parametros, 'P001')[0].parametroDetalles;
                 $scope.paramDistribucion = $scope.filtrar($scope.parametros, 'P002')[0].parametroDetalles;
 
+                $scope.registroRespondTemp;
                 /*Se construyer el json*/
-                $scope.correspondencia = {
-                    idCorrespondencia: "",
+                $scope.registro = {
+                    idRegistro: "",
                     fechaCorrespondencia: new Date(),
                     fechaCarta: null,
                     registro: null,
@@ -315,44 +278,39 @@ app.controller("NewCorrespondenciaController",
 
                 $scope.guardar = function () {
                     //if ($scope.form.$valid) {
-                    $scope.correspondencia.usuarioIngresa = "user1";
-                    $scope.correspondencia.fechaIngreso = new Date();
+                    $scope.registro.usuarioIngresa = "user1";
+                    $scope.registro.fechaIngreso = new Date();
 //                    $scope.correspondencia.fechaCorrespondencia=new Date(document.getElementById("fechaCorrespondencia"));
 //                    $log.log($scope.correspondencia.fechaCorrespondencia);
+                    registroRR.insert($scope.registro)
+                            .then(function (registroRespond) {
+//                                var listbox = document.getElementById("paramTipoServicio");
+//                                var selIndex = listbox.selectedIndex;
+//                                var selText = listbox.options[selIndex].text;
+//                                correspondenciaRespond.paramTipoServicio = selText;
+//
+//                                listbox = document.getElementById("paramDistribucion");
+//                                selIndex = listbox.selectedIndex;
+//                                selText = listbox.options[selIndex].text;
+//                                correspondenciaRespond.paramDistribucion = selText;
+//
+//                                correspondenciaRespond.fechaCorrespondencia = new Date(correspondenciaRespond.fechaCorrespondencia);
+//
+//                                if (correspondenciaRespond.fechaCarta !== null) {
+//                                    correspondenciaRespond.fechaCarta = new Date(correspondenciaRespond.fechaCarta);
+//                                } else {
+//
+//                                }
 
-                    $log.log("antes");
-                    $log.log($scope.correspondencia.enviarCorreo + " tipo: " + typeof ($scope.correspondencia.enviarCorreo));
-                    correspondenciaRR.insert($scope.correspondencia)
-                            .then(function (correspondenciaRespond) {
-                                var listbox = document.getElementById("paramTipoServicio");
-                                var selIndex = listbox.selectedIndex;
-                                var selText = listbox.options[selIndex].text;
-                                correspondenciaRespond.paramTipoServicio = selText;
+//                                registroRespond.enviarCorreo = ((registroRespond.enviarCorreo) ? 1 : 0);
+//                                registroRespond.enviado = ((registroRespond.enviado) ? 1 : 0);
 
-                                listbox = document.getElementById("paramDistribucion");
-                                selIndex = listbox.selectedIndex;
-                                selText = listbox.options[selIndex].text;
-                                correspondenciaRespond.paramDistribucion = selText;
-
-                                correspondenciaRespond.fechaCorrespondencia = new Date(correspondenciaRespond.fechaCorrespondencia);
-
-                                if (correspondenciaRespond.fechaCarta !== null) {
-                                    correspondenciaRespond.fechaCarta = new Date(correspondenciaRespond.fechaCarta);
-                                } else {
-
-                                }
-
-                                $log.log("despues");
-                                $log.log(typeof (correspondenciaRespond.enviarCorreo));
-//                                correspondenciaRespond.enviarCorreo = ((correspondenciaRespond.enviarCorreo) ? 1 : 0);
-//                                correspondenciaRespond.enviado = ((correspondenciaRespond.enviado) ? 1 : 0);
-
-                                $scope.correspondenciaRespondTemp = correspondenciaRespond;
-                                $uibModalInstance.dismiss(correspondenciaRespond);
-                                SweetAlert.swal("Hecho!", "Registro guardado exitosamente.", "success");
+                                $scope.registroRespondTemp = registroRespond;
+                                $uibModalInstance.dismiss(registroRespond);
+                                SweetAlert.swal("Hecho", "Registro guardado exitosamente.", "success");
                             }, function (bussinessMessages) {
                                 $scope.bussinessMessages = bussinessMessages;
-                                SweetAlert.swal("Hubo un error!", "Intente nuevamente o comuniquese con el administrador.", "danger");
+                                SweetAlert.swal("Hubo un error", "Intente nuevamente o comuniquese con el administrador.", "danger");
                             });
                     /*} else {
                      alert("Hay datos inválidos");
@@ -360,10 +318,10 @@ app.controller("NewCorrespondenciaController",
                 };
 
                 $scope.cerrar = function () {
-                    if (typeof ($scope.correspondenciaRespondTemp) === 'undefined') {
+                    if (typeof ($scope.registroRespondTemp) === 'undefined') {
                         $uibModalInstance.dismiss('cancel');
                     } else {
-                        $uibModalInstance.dismiss($scope.correspondenciaRespondTemp);
+                        $uibModalInstance.dismiss($scope.registroRespondTemp);
                     }
                 };
 

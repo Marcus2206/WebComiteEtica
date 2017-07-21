@@ -4,7 +4,7 @@ app.controller('fechaController', function ($scope) {
     $scope.fechaHoy = new Date();
 });
 
-app.controller("subirController", function ($scope, $http, $log, fileUpload, uiUploader) {
+app.controller("subirController", function ($scope, $http, $log, fileUpload) {
     $scope.myFile = [];
     $scope.progressBar = 0;
 
@@ -70,8 +70,6 @@ app.controller("subirController", function ($scope, $http, $log, fileUpload, uiU
         if (i !== -1) {
             $scope.myFile.splice(i, 1);
         }
-        //$scope.myFile.splice(item);
-
     };
     
     $scope.eliminarTodo = function(){

@@ -12,15 +12,31 @@ app.filter('empezarDe', function () {
     };
 });
 
-app.filter("booleanToText", ['$log',function (l) {       
+app.filter("booleanToText", ['$log', function (l) {
         function booleanToTextFilter(valor) {
-            var texto='No';
-            if(typeof (valor)!=="undefined"){
-                if(parseInt(valor)===0){
-                    texto='No';
-                }else{
-                    texto='Sí';
+            var texto = 'No';
+            if (typeof (valor) !== "undefined") {
+                if (typeof (valor) === "string") {
+                    if ((parseInt(valor) === 0)) {
+                        texto = 'No';
+                    } else if (parseInt(valor) === 1) {
+                        texto = 'Sí';
+                    }
+                } else if (typeof (valor) === "boolean") {
+                    if (!valor) {
+                        texto = 'No';
+                    } else if (valor) {
+                        texto = 'Sí';
+                    }
+                } else if (typeof (valor) === "number") {
+                    if (valor === 0) {
+                        texto = 'No';
+                    } else if (valor === 1) {
+                        texto = 'Sí';
+                    }
                 }
+
+
             }
             return texto;
         }

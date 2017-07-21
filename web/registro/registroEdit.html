@@ -12,7 +12,6 @@
                         <input readonly type="text" class="form-control" id="idCorrespondencia"  placeholder="Id. correspondencia" ng-model="correspondencia.idCorrespondencia" value="{{ correspondencia.idCorrespondencia || '' }}">
                     </div> 
                 </div>
-                <!--
                 <div class="col">
                     <div class="form-group">
                         <label for="fechaCorrespondencia" class="control-label">Fecha correspondencia: </label><br>
@@ -25,20 +24,6 @@
                         <md-datepicker ng-model="correspondencia.fechaCarta" id="fechaCarta" md-placeholder="Fecha carta"></md-datepicker>
                     </div>
                 </div>
-                -->
-                <div class="col">
-                    <div class="form-group">
-                        <label for="fechaCorrespondencia" class="control-label">Fecha correspondencia: </label><br>
-                        <input ng-model="correspondencia.fechaCorrespondencia" id="fechaCorrespondencia" md-placeholder="Fecha correspondencia" disabled/>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="form-group">
-                        <label for="fechaCarta" class="control-label">Fecha carta: </label><br>
-                        <input ng-model="correspondencia.fechaCarta" id="fechaCarta" md-placeholder="Fecha carta"/>
-                    </div>
-                </div>
-
                 <div class="col">
                     <div class="form-group">
                         <label for="registro">Registro:  </label><br>
@@ -73,7 +58,6 @@
                         <input type="text" class="form-control" id="fechaSesion"  placeholder="Fecha sesión" ng-model="correspondencia.fechaSesion" value="{{ correspondencia.fechaSesion || '' }}">
                     </div> 
                 </div>
-                <!--
                 <div class="col">
                     <div class="form-group">
                         <md-checkbox ng-model="correspondencia.enviarCorreo" id="enviarCorreo" class="md-primary" >
@@ -88,60 +72,6 @@
                         </md-checkbox>
                     </div>
                 </div>
-                -->
-                <div class="form-group">
-                    <label for="enviarCorreo">Enviar correo:  </label>
-                    <checkbox id="enviarCorreo" ng-model="correspondencia.enviarCorreo"></checkbox>
-                </div>
-                <div class="form-group">
-                    <label for="fechaSesion">Fecha Sesión:  </label>
-                    <checkbox id="fechaSesion" ng-model="correspondencia.enviado" ng-disabled="true"></checkbox>
-                </div>
-                <!--Archivos adjuntos-->
-                <div class="col">    
-                    <button ng-disabled="deshabilitado" type="button" style="width: 100%;" class="btn btn-default" ng-click="isCorrespondenciaFile = !isCorrespondenciaFile">Archivos adjuntos</button>
-                    <hr>
-                    <div uib-collapse="isCorrespondenciaFile">
-
-                        <label for="cargarArchivo" class="btn btn-file">Seleccione Archivos</label>
-                        <input type = "file" id="cargarArchivo" style="display: none" file-model = "myFile" multiple />
-
-                        <div id="no-more-tables" ng-show="myFile.length > 0">
-                            <table class="table-bordered table-striped table-condensed cf">
-                                <thead class="cf"> 
-                                    <tr>
-                                        <td>Nombre de Archivo</td>
-                                        <td>Estado</td>
-                                        <td></td>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr ng-repeat="file in myFile">
-                                        <td data-title="Nombre" style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">
-                                            {{file.name}}
-                                        </td>
-                                        <td class="col-sm-3" data-title="Estado">
-                                <uib-progressbar ng-show="file._progress < 99" class="progress-striped active" value="file._progress" type="{{file._progressType}}">
-                                    {{file._progress}}
-                                </uib-progressbar>
-                                <uib-progressbar ng-show="file._progress > 99" class="progress-striped" value="file._progress" type="{{file._progressType}}">
-                                    Completado
-                                </uib-progressbar>
-                                </td>
-                                <td>
-                                    <a ng-show="file._progress === 100" class="btn btn-primary" ng-click="downloadFile(file.name)"><i class="fa fa-eye" aria-hidden="true"></i><span class="hidden-xs"></span></a>
-                                    <a class="btn btn-danger" ng-click="eliminarFile(file)"><i class="fa fa-times" aria-hidden="true"></i><span class="hidden-xs"></span></a>
-                                </td>
-                                </tr>
-                                </tbody>
-                            </table>
-                            <div class="container">
-                                <button class="btn btn-warning" ng-click = "uploadFile()">Subir Archivos</button>
-                                <button class="btn btn-danger" ng-click = "eliminarTodo()">Eliminar Todo</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>    
             </div>
         </div>
     </div>
@@ -157,3 +87,38 @@
         </button>
     </div>
 </div>
+
+<script type="text/javascript">
+            $('.form_datetime').datetimepicker({
+                language: 'es',
+                weekStart: 1,
+                todayBtn: 1,
+                autoclose: 1,
+                todayHighlight: 1,
+                startView: 2,
+                forceParse: 0,
+                showMeridian: 1
+            });
+            $('.form_date').datetimepicker({
+                language: 'es',
+                setDate: new Date(),
+                weekStart: 1,
+                todayBtn: 1,
+                autoclose: 1,
+                todayHighlight: 1,
+                startView: 2,
+                minView: 2,
+                forceParse: 0
+            });
+            $('.form_time').datetimepicker({
+                language: 'es',
+                weekStart: 1,
+                todayBtn: 1,
+                autoclose: 1,
+                todayHighlight: 1,
+                startView: 1,
+                minView: 0,
+                maxView: 1,
+                forceParse: 0
+            });
+</script>
