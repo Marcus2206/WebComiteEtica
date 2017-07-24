@@ -84,8 +84,20 @@ app.config(['baseUrl', 'correspondenciaRRProvider',
   }
 ]);
 
+app.config(['baseUrl', 'correspondenciaFileRRProvider',
+  function(baseUrl, correspondenciaFileRRProvider) {
+    correspondenciaFileRRProvider.setBaseUrl(baseUrl);
+  }
+]);
+
 app.config(['baseUrl', 'registroRRProvider',
   function(baseUrl, registroRRProvider) {
     registroRRProvider.setBaseUrl(baseUrl);
+  }
+]);
+
+app.config(['baseUrl', 'fileRRProvider',
+  function(baseUrl, fileRRProvider) {
+    fileRRProvider.setBaseUrl(baseUrl);
   }
 ]);

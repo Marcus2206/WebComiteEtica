@@ -60,11 +60,10 @@ function CorrespondenciaFileRR($http, $q, baseUrl, $log) {
         return promise;
     };
 
-    this.listFindAll = function () {
+    this.findAllByIdCorrepondencia = function (idCorrespondencia) {
         var defered = $q.defer();
         var promise = defered.promise;
-
-        $http.get(baseUrl + '/api/CorrespondenciaFile/CorrespondenciaFileListFindAll')
+        $http.get(baseUrl + '/api/CorrespondenciaFile/CorrespondenciaFileFindAllByIdCorrepondencia/'+idCorrespondencia)
                 .then(function onSuccess(response) {
                     defered.resolve(response.data);
                 })

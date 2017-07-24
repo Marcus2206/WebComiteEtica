@@ -12,9 +12,8 @@
         </group>
         <group>
             <file>file:/C:/Users/rasec/Documents/NetBeansProjects/ComiteGit/WebComiteEtica/web/correspondencia/correspondenciaEdit.html</file>
-            <file>file:/C:/Users/rasec/Documents/NetBeansProjects/ComiteGit/WebComiteEtica/web/common/app-module.js</file>
             <file>file:/C:/Users/rasec/Documents/NetBeansProjects/ComiteGit/WebComiteEtica/web/common/controllers/correspondenciaController.js</file>
-            <file>file:/C:/Users/rasec/Documents/NetBeansProjects/ComiteGit/WebComiteEtica/web/index.html</file>
+            <file>file:/C:/Users/rasec/Documents/NetBeansProjects/ComiteGit/WebComiteEtica/web/common/services/correspondenciaFileServices.js</file>
         </group>
     </open-files>
 </project-private>

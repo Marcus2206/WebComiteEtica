@@ -12,20 +12,6 @@
                         <input readonly type="text" class="form-control" id="idCorrespondencia"  placeholder="Id. correspondencia" ng-model="correspondencia.idCorrespondencia" value="{{ correspondencia.idCorrespondencia || '' }}">
                     </div> 
                 </div>
-                <!--
-                <div class="col">
-                    <div class="form-group">
-                        <label for="fechaCorrespondencia" class="control-label">Fecha correspondencia: </label><br>
-                        <md-datepicker ng-model="correspondencia.fechaCorrespondencia" id="fechaCorrespondencia" md-placeholder="Fecha correspondencia" disabled></md-datepicker>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="form-group">
-                        <label for="fechaCarta" class="control-label">Fecha carta: </label><br>
-                        <md-datepicker ng-model="correspondencia.fechaCarta" id="fechaCarta" md-placeholder="Fecha carta"></md-datepicker>
-                    </div>
-                </div>
-                -->
                 <div class="col">
                     <div class="form-group">
                         <label for="fechaCorrespondencia" class="control-label">Fecha correspondencia: </label><br>
@@ -38,11 +24,10 @@
                         <input ng-model="correspondencia.fechaCarta" id="fechaCarta" md-placeholder="Fecha carta"/>
                     </div>
                 </div>
-
                 <div class="col">
                     <div class="form-group">
                         <label for="registro">Registro:  </label><br>
-                        <input type="text" class="form-control" id="registro"  placeholder="Seleccionar Registro" ng-model="correspondencia.registro" value="{{correspondencia.registro|| '' }}">
+                        <input type="text" class="form-control" id="registro"  placeholder="Seleccionar Registro" ng-model="correspondencia.registro.idRegistro" value="{{correspondencia.registro.idRegistro|| '' }}">
                     </div> 
                 </div>
                 <div class="col">
@@ -73,22 +58,6 @@
                         <input type="text" class="form-control" id="fechaSesion"  placeholder="Fecha sesión" ng-model="correspondencia.fechaSesion" value="{{ correspondencia.fechaSesion || '' }}">
                     </div> 
                 </div>
-                <!--
-                <div class="col">
-                    <div class="form-group">
-                        <md-checkbox ng-model="correspondencia.enviarCorreo" id="enviarCorreo" class="md-primary" >
-                            Enviar correo
-                        </md-checkbox>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="form-group">
-                        <md-checkbox ng-model="correspondencia.enviado"  id="enviado" disabled class="md-primary">
-                            Correo enviado
-                        </md-checkbox>
-                    </div>
-                </div>
-                -->
                 <div class="form-group">
                     <label for="enviarCorreo">Enviar correo:  </label>
                     <checkbox id="enviarCorreo" ng-model="correspondencia.enviarCorreo"></checkbox>
@@ -121,17 +90,17 @@
                                             {{file.name}}
                                         </td>
                                         <td class="col-sm-3" data-title="Estado">
-                                <uib-progressbar ng-show="file._progress < 99" class="progress-striped active" value="file._progress" type="{{file._progressType}}">
-                                    {{file._progress}}
-                                </uib-progressbar>
-                                <uib-progressbar ng-show="file._progress > 99" class="progress-striped" value="file._progress" type="{{file._progressType}}">
-                                    Completado
-                                </uib-progressbar>
-                                </td>
-                                <td>
-                                    <a ng-show="file._progress === 100" class="btn btn-primary" ng-click="downloadFile(file.name)"><i class="fa fa-eye" aria-hidden="true"></i><span class="hidden-xs"></span></a>
-                                    <a class="btn btn-danger" ng-click="eliminarFile(file)"><i class="fa fa-times" aria-hidden="true"></i><span class="hidden-xs"></span></a>
-                                </td>
+                                            <uib-progressbar ng-show="file._progress < 99" class="progress-striped active" value="file._progress" type="{{file._progressType}}">
+                                                {{file._progress}}%
+                                            </uib-progressbar>
+                                            <uib-progressbar ng-show="file._progress > 99" class="progress-striped" value="file._progress" type="{{file._progressType}}">
+                                                Completado
+                                            </uib-progressbar>
+                                        </td>
+                                        <td>
+                                            <a ng-show="file._progress === 100" class="btn btn-primary" ng-click="downloadFile(file)"><i class="fa fa-eye" aria-hidden="true"></i><span class="hidden-xs"></span></a>
+                                            <a class="btn btn-danger" ng-click="eliminarFile(file)"><i class="fa fa-times" aria-hidden="true"></i><span class="hidden-xs"></span></a>
+                                        </td>
                                 </tr>
                                 </tbody>
                             </table>

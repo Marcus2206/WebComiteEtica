@@ -2,17 +2,15 @@ var app = angular.module("app");
 
 app.controller("EditCorrespondenciaController",
         ['$scope', 'correspondencia', 'parametros', 'correspondenciaRR',
-//            'coordinadorRemoteResource', 'investigacionCoordinadorRemoteResource',
+            'correspondenciaFileRR', 'fileRR', '$timeout',
 //            'investigadorRR', 'investigacionInvestigadorRR',
 //            'sedeRR', 'investigacionSedeRR',
-            '$location', "$log", '$filter', "$uibModalInstance", "$confirm", 'SweetAlert',
-            'fileUpload', '$http',
+            "$log", "$uibModalInstance", 'SweetAlert',
             function ($scope, correspondencia, parametros, correspondenciaRR,
-//                    coordinadorRemoteResource, investigacionCoordinadorRemoteResource,
+                    correspondenciaFileRR, fileRR, $timeout,
 //                    investigadorRR, investigacionInvestigadorRR,
 //                    sedeRR, investigacionSedeRR,
-                    $location, $log, $filter, $uibModalInstance, $confirm, SweetAlert,
-                    fileUpload, $http) {
+                    $log, $uibModalInstance, SweetAlert) {
 
                 $scope.correspondenciaRespondTemp;
                 $scope.deshabilitado = false;
@@ -39,6 +37,15 @@ app.controller("EditCorrespondenciaController",
 
                 $scope.correspondencia = correspondencia;
 
+                /*Cargando archivos de correspondencia*/
+                correspondenciaFileRR.findAllByIdCorrepondencia($scope.correspondencia.idCorrespondencia)
+                        .then(function (correspondenciaFileRespond) {
+//                            $scope.correspondenciaFiles = correspondenciaFileRespond;
+                            $scope.relacionarFile(correspondenciaFileRespond);
+                        }, function (bussinessMessages) {
+                            $scope.bussinessMessages = bussinessMessages;
+                        });
+
                 $scope.guardar = function () {
                     $scope.correspondencia.usuarioModifica = "sa";
                     $scope.correspondencia.fechaModificacion = new Date();
@@ -53,9 +60,6 @@ app.controller("EditCorrespondenciaController",
                                 selIndex = listbox.selectedIndex;
                                 selText = listbox.options[selIndex].text;
                                 correspondenciaRespond.paramDistribucion = selText;
-
-//                                correspondenciaRespond.enviarCorreo = ((correspondenciaRespond.enviarCorreo) ? 1 : 0);
-//                                correspondenciaRespond.enviado = ((correspondenciaRespond.enviado) ? 1 : 0);
 
                                 $scope.correspondenciaRespondTemp = correspondenciaRespond;
                                 SweetAlert.swal("Hecho!", "Registro guardado exitosamente.", "success");
@@ -78,51 +82,87 @@ app.controller("EditCorrespondenciaController",
                 $scope.myFile = [];
                 $scope.progressBar = 0;
 
-                $scope.downloadFile = function (name) {
-                    $http({
-                        method: 'GET',
-                        url: 'http://localhost:8080/RestComiteEtica/api/BajarArchivo/' + name,
-                        params: {name: name},
-                        responseType: 'arraybuffer'
-                    }).then(function (response) {
-                        var filename = name;
-                        var contentType = "application/undefined";
-
-                        var linkElement = document.createElement('a');
-                        try {
-                            var blob = new Blob([response.data], {type: contentType});
-                            var url = window.URL.createObjectURL(blob);
-
-                            linkElement.setAttribute('href', url);
-                            linkElement.setAttribute("download", filename);
-
-                            var clickEvent = new MouseEvent("click", {
-                                "view": window,
-                                "bubbles": true,
-                                "cancelable": false
-                            });
-                            linkElement.dispatchEvent(clickEvent);
-                        } catch (ex) {
-                        }
-                    }).catch(function (data) {
-                    });
+                $scope.downloadFile = function (file) {
+                    $log.log("downloadFile");
+                    $log.log(file);
+                    fileRR.downloadFileFromURL(file);
                 };
 
                 $scope.uploadFile = function () {
                     var file = $scope.myFile;
                     angular.forEach(file, function (item) {
+                        if (item._progress === 0) {
+                            //$timeout(function() { }, 2000);
 
-                        fileUpload.uploadFileToUrl(item, $scope.correspondencia.idCorrespondencia);
+                            fileRR.uploadFileToUrl(item, $scope.correspondencia.idCorrespondencia)
+                                    .then(function (response) {
+                                        var fileReturned = response.data;
+                                        var newCorrespondenciaFile = {
+                                            id: {
+                                                idCorrespondencia: $scope.correspondencia.idCorrespondencia,
+//                                            idRegistro: $scope.correspondencia.idRegistro,
+                                                fileDetalle: 0
+                                            },
+                                            nombreArchivo: fileReturned.nombreArchivo,
+                                            direccion: fileReturned.direccion,
+                                            usuarioIngresa: "sa",
+                                            fechaIngreso: new Date()
+                                        };
+
+                                        correspondenciaFileRR.insert(newCorrespondenciaFile)
+                                                .then(function (response) {
+//                                                    $scope.correspondenciaFiles.push(newCorrespondenciaFile);
+                                                    item._correspondenciaFile = newCorrespondenciaFile;
+                                                }, function (response) {
+                                                });
+                                    }, function (bussinessMessages) {
+                                        $scope.bussinessMessages = bussinessMessages;
+                                    });
+                        }
                     });
                 };
 
-                $scope.eliminarFile = function (item) {
-                    var i = $scope.myFile.indexOf(item);
-                    $log.log("index=" + i);
+                $scope.relacionarFile = function (correspondenciaFile) {
+                    var cFile = correspondenciaFile;
+                    angular.forEach(cFile, function (item) {
+                        var newMyFile = {
+                            name: item.nombreArchivo,
+//                            size: 0,
+//                            url: item.direccion,
+                            _file: undefined,
+                            _progress: 100,
+                            _progressType: 'success',
+                            _correspondenciaFile: item
+                        };
+                        $scope.myFile.push(newMyFile);
+                    });
+                };
 
-                    if (i !== -1) {
-                        $scope.myFile.splice(i, 1);
-                    }
+                $scope.eliminarFile = function (file) {
+//                    var i = $scope.myFile.indexOf(file);
+//                    $log.log("index=" + i);
+//
+//                    if (i !== -1) {
+//                        $scope.myFile.splice(i, 1);
+//                    }
+//
+//                    //fileUpload.deleteFileFromURL(url,name);
+
+                    fileRR.deleteFileFromURL(file)
+                            .then(function (response) {
+                                correspondenciaFileRR.delete(file._correspondenciaFile)
+                                        .then(function (response) {
+                                            $log.log("correspondenciaFileRR.delete");
+                                            
+                                        }
+                                        , function (response) {
+
+                                        });
+                                $scope.myFile.splice($scope.myFile.indexOf(file), 1);
+                            }, function (response) {
+
+                            });
+
                 };
 
                 $scope.eliminarTodo = function () {
@@ -278,8 +318,6 @@ app.controller("NewCorrespondenciaController",
             function ($scope, correspondenciaRR,
                     parametros, $location, $log, $uibModalInstance, SweetAlert) {
 
-
-
                 $scope.parametros = parametros;
                 $scope.correspondenciaRespondTemp;
                 $scope.deshabilitado = true;
@@ -314,14 +352,9 @@ app.controller("NewCorrespondenciaController",
                 };
 
                 $scope.guardar = function () {
-                    //if ($scope.form.$valid) {
                     $scope.correspondencia.usuarioIngresa = "user1";
                     $scope.correspondencia.fechaIngreso = new Date();
-//                    $scope.correspondencia.fechaCorrespondencia=new Date(document.getElementById("fechaCorrespondencia"));
-//                    $log.log($scope.correspondencia.fechaCorrespondencia);
 
-                    $log.log("antes");
-                    $log.log($scope.correspondencia.enviarCorreo + " tipo: " + typeof ($scope.correspondencia.enviarCorreo));
                     correspondenciaRR.insert($scope.correspondencia)
                             .then(function (correspondenciaRespond) {
                                 var listbox = document.getElementById("paramTipoServicio");
@@ -341,11 +374,6 @@ app.controller("NewCorrespondenciaController",
                                 } else {
 
                                 }
-
-                                $log.log("despues");
-                                $log.log(typeof (correspondenciaRespond.enviarCorreo));
-//                                correspondenciaRespond.enviarCorreo = ((correspondenciaRespond.enviarCorreo) ? 1 : 0);
-//                                correspondenciaRespond.enviado = ((correspondenciaRespond.enviado) ? 1 : 0);
 
                                 $scope.correspondenciaRespondTemp = correspondenciaRespond;
                                 $uibModalInstance.dismiss(correspondenciaRespond);
