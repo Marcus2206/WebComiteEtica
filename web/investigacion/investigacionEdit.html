@@ -25,9 +25,9 @@
                     </div> 
                 </div>
                 <div class="col">
-                    <div class="form-group">
+                    <div class="form-group" >
                         <label for="paramEspecialidad">Especialidad:  </label><br>
-                        <select class="form-control" id="paramEspecialidad" ng-model="investigacion.paramEspecialidad">
+                        <select class="form-control" id="paramEspecialidad" theme="bootstrap" ng-model="investigacion.paramEspecialidad">
                             <option ng-repeat="pd in paramEspecialidad" value="{{pd.id.idParametroDetalle}}">{{pd.descripcion}}</option>
                         </select>
                     </div>
@@ -35,7 +35,7 @@
                 <div class="col">
                     <div class="form-group">
                         <label for="paramFase">Fase:  </label><br>
-                        <select id="paramFase" class="form-control" ng-model="investigacion.paramFase">
+                        <select id="paramFase" class="form-control" theme="bootstrap" ng-model="investigacion.paramFase">
                             <option ng-repeat="pd in paramFase" value="{{pd.id.idParametroDetalle}}">{{pd.descripcion}}</option>
                         </select>
                     </div>
@@ -43,7 +43,7 @@
                 <div class="col">
                     <div class="form-group">
                         <label for="paramTipoInvestigacion">Tipo de Investigación:  </label><br>
-                        <select  id="paramTipoInvestigacion" class="form-control" ng-model="investigacion.paramTipoInvestigacion">
+                        <select  id="paramTipoInvestigacion" theme="bootstrap" class="form-control" ng-model="investigacion.paramTipoInvestigacion">
                             <option ng-repeat="pd in paramTipoInvestigacion" value="{{pd.id.idParametroDetalle}}">{{pd.descripcion}}</option>
                         </select>
                     </div>

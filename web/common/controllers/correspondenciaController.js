@@ -12,6 +12,48 @@ app.controller("EditCorrespondenciaController",
 //                    sedeRR, investigacionSedeRR,
                     $log, $uibModalInstance, SweetAlert) {
 
+                $scope.open1 = function () {
+                    $scope.popup1.opened = true;
+                };
+
+                $scope.popup1 = {
+                    opened: false
+                };
+                
+                $scope.open2 = function () {
+                    $scope.popup2.opened = true;
+                };
+
+                $scope.popup2 = {
+                    opened: false
+                };
+
+                $scope.events = [
+                    {
+                        date: tomorrow,
+                        status: 'full'
+                    },
+                    {
+                        date: afterTomorrow,
+                        status: 'partially'
+                    }
+                ];
+
+                var tomorrow = new Date();
+                tomorrow.setDate(tomorrow.getDate() + 1);
+                var afterTomorrow = new Date();
+                afterTomorrow.setDate(tomorrow.getDate() + 1);
+                $scope.events = [
+                    {
+                        date: tomorrow,
+                        status: 'full'
+                    },
+                    {
+                        date: afterTomorrow,
+                        status: 'partially'
+                    }
+                ];
+                
                 $scope.correspondenciaRespondTemp;
                 $scope.deshabilitado = false;
                 $scope.isCorrespondenciaFile = true;
@@ -350,8 +392,6 @@ app.controller("NewCorrespondenciaController",
                         status: 'partially'
                     }
                 ];
-
-                
 
                 $scope.parametros = parametros;
                 $scope.correspondenciaRespondTemp;

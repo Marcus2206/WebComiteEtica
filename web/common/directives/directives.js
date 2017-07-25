@@ -10,7 +10,7 @@ app.directive('fileModel', ['$parse', function ($parse) {
                 var modelSetter = model.assign;
 
                 element.bind('change', function () {
-                    var values = [];
+                    var values = scope.myFile;
                     angular.forEach(element[0].files, function (item) {
                         var value = {
                             // File Name 

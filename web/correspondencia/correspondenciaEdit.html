@@ -15,13 +15,23 @@
                 <div class="col">
                     <div class="form-group">
                         <label for="fechaCorrespondencia" class="control-label">Fecha correspondencia: </label><br>
-                        <input ng-model="correspondencia.fechaCorrespondencia" id="fechaCorrespondencia" md-placeholder="Fecha correspondencia" disabled/>
+                        <p class="input-group">
+                            <input type="text" class="form-control" uib-datepicker-popup="dd/MM/yyyy" ng-model="correspondencia.fechaCorrespondencia" is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true" readonly />
+                            <span class="input-group-btn">
+                                <button type="button" class="btn btn-default" ng-click="open1()"><i class="glyphicon glyphicon-calendar"></i></button>
+                            </span>
+                        </p>
                     </div>
                 </div>
                 <div class="col">
                     <div class="form-group">
                         <label for="fechaCarta" class="control-label">Fecha carta: </label><br>
-                        <input ng-model="correspondencia.fechaCarta" id="fechaCarta" md-placeholder="Fecha carta"/>
+                        <p class="input-group">
+                            <input type="text" class="form-control" uib-datepicker-popup="dd/MM/yyyy" ng-model="correspondencia.fechaCarta" is-open="popup2.opened" datepicker-options="dateOptions" ng-required="true" readonly />
+                            <span class="input-group-btn">
+                                <button type="button" class="btn btn-default" ng-click="open2()"><i class="glyphicon glyphicon-calendar"></i></button>
+                            </span>
+                        </p>
                     </div>
                 </div>
                 <div class="col">
@@ -90,17 +100,17 @@
                                             {{file.name}}
                                         </td>
                                         <td class="col-sm-3" data-title="Estado">
-                                            <uib-progressbar ng-show="file._progress < 99" class="progress-striped active" value="file._progress" type="{{file._progressType}}">
-                                                {{file._progress}}%
-                                            </uib-progressbar>
-                                            <uib-progressbar ng-show="file._progress > 99" class="progress-striped" value="file._progress" type="{{file._progressType}}">
-                                                Completado
-                                            </uib-progressbar>
-                                        </td>
-                                        <td>
-                                            <a ng-show="file._progress === 100" class="btn btn-primary" ng-click="downloadFile(file)"><i class="fa fa-eye" aria-hidden="true"></i><span class="hidden-xs"></span></a>
-                                            <a class="btn btn-danger" ng-click="eliminarFile(file)"><i class="fa fa-times" aria-hidden="true"></i><span class="hidden-xs"></span></a>
-                                        </td>
+                                <uib-progressbar ng-show="file._progress < 99" class="progress-striped active" value="file._progress" type="{{file._progressType}}">
+                                    {{file._progress}}%
+                                </uib-progressbar>
+                                <uib-progressbar ng-show="file._progress > 99" class="progress-striped" value="file._progress" type="{{file._progressType}}">
+                                    Completado
+                                </uib-progressbar>
+                                </td>
+                                <td>
+                                    <a ng-show="file._progress === 100" class="btn btn-primary" ng-click="downloadFile(file)"><i class="fa fa-eye" aria-hidden="true"></i><span class="hidden-xs"></span></a>
+                                    <a class="btn btn-danger" ng-click="eliminarFile(file)"><i class="fa fa-times" aria-hidden="true"></i><span class="hidden-xs"></span></a>
+                                </td>
                                 </tr>
                                 </tbody>
                             </table>

@@ -17,7 +17,7 @@ function CorrespondenciaFileRR($http, $q, baseUrl, $log) {
                      }*/
                 });
 
-        return promise;
+        return defered.promise;
     };
 
     this.list = function () {
