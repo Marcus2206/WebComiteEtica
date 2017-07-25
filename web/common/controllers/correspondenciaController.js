@@ -153,7 +153,7 @@ app.controller("EditCorrespondenciaController",
                                 correspondenciaFileRR.delete(file._correspondenciaFile)
                                         .then(function (response) {
                                             $log.log("correspondenciaFileRR.delete");
-                                            
+
                                         }
                                         , function (response) {
 
@@ -317,6 +317,50 @@ app.controller("NewCorrespondenciaController",
             'parametros', '$location', "$log", "$uibModalInstance", 'SweetAlert',
             function ($scope, correspondenciaRR,
                     parametros, $location, $log, $uibModalInstance, SweetAlert) {
+
+                $scope.open1 = function () {
+                    $scope.popup1.opened = true;
+                };
+
+                $scope.popup1 = {
+                    opened: false
+                };
+                
+                $scope.open2 = function () {
+                    $scope.popup2.opened = true;
+                };
+
+                $scope.popup2 = {
+                    opened: false
+                };
+
+                $scope.events = [
+                    {
+                        date: tomorrow,
+                        status: 'full'
+                    },
+                    {
+                        date: afterTomorrow,
+                        status: 'partially'
+                    }
+                ];
+
+                var tomorrow = new Date();
+                tomorrow.setDate(tomorrow.getDate() + 1);
+                var afterTomorrow = new Date();
+                afterTomorrow.setDate(tomorrow.getDate() + 1);
+                $scope.events = [
+                    {
+                        date: tomorrow,
+                        status: 'full'
+                    },
+                    {
+                        date: afterTomorrow,
+                        status: 'partially'
+                    }
+                ];
+
+                
 
                 $scope.parametros = parametros;
                 $scope.correspondenciaRespondTemp;
