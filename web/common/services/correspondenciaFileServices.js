@@ -63,7 +63,7 @@ function CorrespondenciaFileRR($http, $q, baseUrl, $log) {
     this.findAllByIdCorrepondencia = function (idCorrespondencia) {
         var defered = $q.defer();
         var promise = defered.promise;
-        $http.get(baseUrl + '/api/CorrespondenciaFile/CorrespondenciaFileFindAllByIdCorrepondencia/'+idCorrespondencia)
+        $http.get(baseUrl + '/api/CorrespondenciaFile/CorrespondenciaFileFindAllByIdCorrepondencia/' + idCorrespondencia)
                 .then(function onSuccess(response) {
                     defered.resolve(response.data);
                 })
@@ -136,6 +136,31 @@ function CorrespondenciaFileRR($http, $q, baseUrl, $log) {
                 });
 
         return promise;
+    };
+
+    this.deleteCarpeta = function (carpeta) {
+        var defered = $q.defer();
+
+//        $http.put(baseUrl + '/api/CorrespondenciaFile/CorrespondenciaFileDeleteAll')
+        $http({
+            method: 'PUT',
+            url: baseUrl + "/api/CorrespondenciaFile/CorrespondenciaFileDeleteAll",
+            params: {carpeta: carpeta}
+        })
+                .then(function onSuccess(response) {
+                    defered.resolve(response.data);
+                })
+                .catch(function onCatch(response) {
+                    defered.reject(response);
+                    if (response.status === 400) {
+                        defered.reject(response.data);
+//            } else if(response.status === 1554822){
+//                     defered.reject(response.data);
+                    }
+
+                });
+
+        return defered.promise;
     };
 
 }

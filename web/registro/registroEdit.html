@@ -1,76 +1,106 @@
 <div class="modal-content" style="z-index: 1050">
     <div class="modal-header">
         <button type="button" class="close" ng-click="cerrar()">&times;</button>
-        <h4 class="modal-title" id="myModalLabel">Datos de Correspondencia</h4>
+        <h4 class="modal-title" id="myModalLabel">Datos de Registro</h4>
     </div>
     <div class="modal-body">
         <div class="container-fluid">
             <div class="row">
                 <div class="col">
                     <div class="form-group">
-                        <label for="idCorrespondencia">Id. Correspondencia:  </label><br>
-                        <input readonly type="text" class="form-control" id="idCorrespondencia"  placeholder="Id. correspondencia" ng-model="correspondencia.idCorrespondencia" value="{{ correspondencia.idCorrespondencia || '' }}">
+                        <label for="idRegistro">Id. Registro:  </label><br>
+                        <input readonly type="text" class="form-control" id="idRegistro"  placeholder="Id. registro" ng-model="registro.idRegistro" value="{{ registro.idRegistro || '' }}">
                     </div> 
                 </div>
                 <div class="col">
                     <div class="form-group">
-                        <label for="fechaCorrespondencia" class="control-label">Fecha correspondencia: </label><br>
-                        <md-datepicker ng-model="correspondencia.fechaCorrespondencia" id="fechaCorrespondencia" md-placeholder="Fecha correspondencia" disabled></md-datepicker>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="form-group">
-                        <label for="fechaCarta" class="control-label">Fecha carta: </label><br>
-                        <md-datepicker ng-model="correspondencia.fechaCarta" id="fechaCarta" md-placeholder="Fecha carta"></md-datepicker>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="form-group">
-                        <label for="registro">Registro:  </label><br>
-                        <input type="text" class="form-control" id="registro"  placeholder="Seleccionar Registro" ng-model="correspondencia.registro" value="{{correspondencia.registro|| '' }}">
+                        <label for="investigacion">Investigación  </label><br>
+                        <input type="text" class="form-control" id="investigacion"  placeholder="Seleccionar Investigación" ng-model="registro.investigacion" value="{{registro.investigacion|| '' }}">
                     </div> 
                 </div>
                 <div class="col">
                     <div class="form-group">
-                        <label for="paramTipoServicio">Tipo de Servicio:  </label><br>
-                        <select class="form-control" id="paramTipoServicio" ng-model="correspondencia.paramTipoServicio">
-                            <option ng-repeat="pd in paramTipoServicio" value="{{pd.id.idParametroDetalle}}">{{pd.descripcion}}</option>
+                        <label for="investigacionInvestigador">Investigador:  </label><br>
+                        <input type="text" class="form-control" id="investigacionInvestigador"  placeholder="Seleccionar Investigador" ng-model="registro.investigacionInvestigador" value="{{registro.investigacionInvestigador|| '' }}">
+                    </div> 
+                </div>
+                <div class="col">
+                    <div class="form-group">
+                        <label for="investigacionSede">Sede:  </label><br>
+                        <input type="text" class="form-control" id="investigacionSede"  placeholder="Seleccionar Sede" ng-model="registro.investigacionSede" value="{{registro.investigacionSede|| '' }}">
+                    </div> 
+                </div>
+                <div class="col">
+                    <div class="form-group">
+                        <label for="fechaAprobacion">Fecha aprobación:  </label><br>
+                        <input type="text" class="form-control" id="fechaAprobacion"  placeholder="Seleccionar fecha" ng-model="registro.fechaAprobacion" value="{{registro.fechaAprobacion|| '' }}">
+                    </div> 
+                </div>
+                <div class="col">
+                    <div class="form-group">
+                        <label for="paramEstado">Estado:  </label><br>
+                        <select class="form-control" id="paramEstado" ng-model="registro.paramEstado">
+                            <option ng-repeat="pd in paramEstado" value="{{pd.id.idParametroDetalle}}">{{pd.descripcion}}</option>
                         </select>
                     </div>
                 </div>
                 <div class="col">
                     <div class="form-group">
-                        <label for="paramDistribucion">Distribución:  </label><br>
-                        <select id="paramDistribucion" class="form-control" ng-model="correspondencia.paramDistribucion">
-                            <option ng-repeat="pd in paramDistribucion" value="{{pd.id.idParametroDetalle}}">{{pd.descripcion}}</option>
+                        <label for="observacion">Observación:  </label><br>
+                        <input type="text" class="form-control" id="observacion"  placeholder="Observación" ng-model="registro.observacion" value="{{registro.observacion|| '' }}">
+                    </div> 
+                </div>
+                <div class="col">
+                    <div class="form-group">
+                        <label for="farmacoExperimental">Fármaco experimental  </label><br>
+                        <input type="text" class="form-control" id="farmacoExperimental"  placeholder="Seleccionar fármaco" ng-model="registro.farmacoExperimental" value="{{registro.farmacoExperimental|| '' }}">
+                    </div> 
+                </div>
+                <div class="form-group">
+                    <label for="placebo">Placebo:  </label>
+                    <checkbox id="placebo" ng-model="registro.placebo"></checkbox>
+                </div>
+                <div class="col">
+                    <div class="form-group">
+                        <label for="pacienteEas">Paciente EAS:  </label><br>
+                        <input type="text" class="form-control" id="pacienteEas"  placeholder="Paciente EAS" ng-model="registro.pacienteEas" value="{{registro.pacienteEas|| '' }}">
+                    </div> 
+                </div>
+                <div class="col">
+                    <div class="form-group">
+                        <label for="easLocal">EAS Local:  </label><br>
+                        <input type="text" class="form-control" id="easLocal"  placeholder="EAS Local" ng-model="registro.easLocal" value="{{registro.easLocal|| '' }}">
+                    </div> 
+                </div>
+                <div class="col">
+                    <div class="form-group">
+                        <label for="paramNotificacion">Notificación:  </label><br>
+                        <select class="form-control" id="paramNotificacion" ng-model="registro.paramNotificacion">
+                            <option ng-repeat="pd in paramNotificacion" value="{{pd.id.idParametroDetalle}}">{{pd.descripcion}}</option>
                         </select>
                     </div>
                 </div>
                 <div class="col">
                     <div class="form-group">
-                        <label for="otro">Comentarios:  </label><br>
-                        <input type="text" class="form-control" id="otro"  placeholder="Comentarios" ng-model="correspondencia.otro" value="{{ correspondencia.otro || '' }}">
+                        <label for="fechaEas">Fecha EAS:  </label><br>
+                        <input type="text" class="form-control" id="fechaEas"  placeholder="Seleccionar fecha EAS" ng-model="registro.fechaEas" value="{{registro.fechaEas|| '' }}">
                     </div> 
                 </div>
                 <div class="col">
                     <div class="form-group">
-                        <label for="fechaSesion">Fecha Sesión:  </label><br>
-                        <input type="text" class="form-control" id="fechaSesion"  placeholder="Fecha sesión" ng-model="correspondencia.fechaSesion" value="{{ correspondencia.fechaSesion || '' }}">
+                        <label for="visitaInspeccion">Visita Inspección:  </label><br>
+                        <input type="text" class="form-control" id="visitaInspeccion"  placeholder="Visita Inspección" ng-model="registro.visitaInspeccion" value="{{registro.visitaInspeccion|| '' }}">
                     </div> 
                 </div>
-                <div class="col">
-                    <div class="form-group">
-                        <md-checkbox ng-model="correspondencia.enviarCorreo" id="enviarCorreo" class="md-primary" >
-                            Enviar correo
-                        </md-checkbox>
-                    </div>
+                <div class="form-group">
+                    <label for="estudioNinos">Estudio Niños:  </label>
+                    <checkbox id="estudioNinos" ng-model="registro.estudioNinos"></checkbox>
                 </div>
                 <div class="col">
                     <div class="form-group">
-                        <md-checkbox ng-model="correspondencia.enviado"  id="enviado" disabled class="md-primary">
-                            Correo enviado
-                        </md-checkbox>
-                    </div>
+                        <label for="visitaInspeccionIns">Estudio Niños:  </label><br>
+                        <input type="text" class="form-control" id="visitaInspeccionIns"  placeholder="Estudio Niños" ng-model="registro.visitaInspeccionIns" value="{{ registro.visitaInspeccionIns || '' }}">
+                    </div> 
                 </div>
             </div>
         </div>
