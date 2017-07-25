@@ -12,6 +12,64 @@ app.controller("EditCorrespondenciaController",
 //                    sedeRR, investigacionSedeRR,
                     $log, $uibModalInstance, SweetAlert, $q) {
 
+                $scope.open1 = function () {
+                    $scope.popup1.opened = true;
+                };
+
+                $scope.dateOptions = {
+                    dateDisabled: disabled,
+                    formatYear: 'yy',
+                    maxDate: new Date(2020, 5, 22),
+                    minDate: new Date(),
+                    startingDay: 1,
+                    showWeeks: false
+                };
+
+                // Disable weekend selection
+                function disabled(data) {
+                    var date = data.date,
+                            mode = data.mode;
+                    return mode === 'day' && (date.getDay() === 0 || date.getDay() === 6);
+                }
+
+                $scope.popup1 = {
+                    opened: false
+                };
+
+                $scope.open2 = function () {
+                    $scope.popup2.opened = true;
+                };
+
+                $scope.popup2 = {
+                    opened: false
+                };
+
+                $scope.events = [
+                    {
+                        date: tomorrow,
+                        status: 'full'
+                    },
+                    {
+                        date: afterTomorrow,
+                        status: 'partially'
+                    }
+                ];
+
+                var tomorrow = new Date();
+                tomorrow.setDate(tomorrow.getDate() + 1);
+                var afterTomorrow = new Date();
+                afterTomorrow.setDate(tomorrow.getDate() + 1);
+                $scope.events = [
+                    {
+                        date: tomorrow,
+                        status: 'full'
+                    },
+                    {
+                        date: afterTomorrow,
+                        status: 'partially'
+                    }
+                ];
+
                 $scope.correspondenciaRespondTemp;
                 $scope.deshabilitado = false;
                 $scope.isCorrespondenciaFile = true;
@@ -299,6 +357,64 @@ app.controller("NewCorrespondenciaController",
             'parametros', '$location', "$log", "$uibModalInstance", 'SweetAlert',
             function ($scope, correspondenciaRR,
                     parametros, $location, $log, $uibModalInstance, SweetAlert) {
+
+                $scope.open1 = function () {
+                    $scope.popup1.opened = true;
+                };
+
+                $scope.dateOptions = {
+                    dateDisabled: disabled,
+                    formatYear: 'yy',
+                    maxDate: new Date(2020, 5, 22),
+                    minDate: new Date(),
+                    startingDay: 1,
+                    showWeeks: false
+                };
+
+                // Disable weekend selection
+                function disabled(data) {
+                    var date = data.date,
+                            mode = data.mode;
+                    return mode === 'day' && (date.getDay() === 0 || date.getDay() === 6);
+                }
+
+                $scope.popup1 = {
+                    opened: false
+                };
+
+                $scope.open2 = function () {
+                    $scope.popup2.opened = true;
+                };
+
+                $scope.popup2 = {
+                    opened: false
+                };
+
+                $scope.events = [
+                    {
+                        date: tomorrow,
+                        status: 'full'
+                    },
+                    {
+                        date: afterTomorrow,
+                        status: 'partially'
+                    }
+                ];
+
+                var tomorrow = new Date();
+                tomorrow.setDate(tomorrow.getDate() + 1);
+                var afterTomorrow = new Date();
+                afterTomorrow.setDate(tomorrow.getDate() + 1);
+                $scope.events = [
+                    {
+                        date: tomorrow,
+                        status: 'full'
+                    },
+                    {
+                        date: afterTomorrow,
+                        status: 'partially'
+                    }
+                ];
 
                 $scope.parametros = parametros;
                 $scope.correspondenciaRespondTemp;
