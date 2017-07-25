@@ -3,7 +3,7 @@ function CorrespondenciaFileRR($http, $q, baseUrl, $log) {
 
     this.insert = function (correspondenciaFile) {
         var defered = $q.defer();
-        var promise = defered.promise;
+//        var promise = defered.promise;
         $http.post(baseUrl + '/api/CorrespondenciaFile/CorrespondenciaFileInsert', correspondenciaFile)
                 .then(function onSuccess(response) {
                     defered.resolve(response.data);

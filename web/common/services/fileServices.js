@@ -2,7 +2,6 @@ function FileRR($http, $q, baseUrl, $log) {
 
     this.uploadFileToUrl = function (file, idCorrespondencia) {
         var defered = $q.defer();
-//        var promise = defered.promise;
         var uploadUrl = baseUrl + "/api/File/SubirArchivo/" + idCorrespondencia;
         var fd = new FormData();
         fd.append('file', file._file);
@@ -33,7 +32,6 @@ function FileRR($http, $q, baseUrl, $log) {
                 });
         return defered.promise;
     };
-
 
     this.downloadFileFromURL = function (file) {
         var defered = $q.defer();
@@ -73,7 +71,6 @@ function FileRR($http, $q, baseUrl, $log) {
 
     this.deleteFileFromURL = function (file) {
         var defered = $q.defer();
-//        var promise = defered.promise;
         $http({
             method: 'DELETE',
             url: baseUrl + "/api/File/BorrarArchivo",
@@ -95,7 +92,6 @@ function FileRR($http, $q, baseUrl, $log) {
 
     this.deleteAllFileFromURL = function (carpeta) {
         var defered = $q.defer();
-
         $http({
             method: 'DELETE',
             url: baseUrl + "/api/File/BorrarTodoArchivo",
@@ -103,9 +99,6 @@ function FileRR($http, $q, baseUrl, $log) {
             responseType: 'arraybuffer'
         })
                 .then(function onSuccess(response) {
-
-                    $log.log("deleteAllFileFromURL");
-                    $log.log(response);
                     defered.resolve(response.data);
                 })
                 .catch(function onCatch(response) {
@@ -113,5 +106,4 @@ function FileRR($http, $q, baseUrl, $log) {
                 });
         return defered.promise;
     };
-
 }
