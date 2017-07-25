@@ -73,6 +73,9 @@ app.controller("EditCorrespondenciaController",
                     if (typeof ($scope.correspondenciaRespondTemp) === 'undefined') {
                         $uibModalInstance.dismiss('cancel');
                     } else {
+
+                        $scope.correspondenciaRespondTemp.idRegistro = $scope.correspondenciaRespondTemp.registro.idRegistro;
+                        $log.log($scope.correspondenciaRespondTemp);
                         $uibModalInstance.dismiss($scope.correspondenciaRespondTemp);
                     }
                 };
@@ -83,8 +86,6 @@ app.controller("EditCorrespondenciaController",
                 $scope.progressBar = 0;
 
                 $scope.downloadFile = function (file) {
-                    $log.log("downloadFile");
-                    $log.log(file);
                     fileRR.downloadFileFromURL(file);
                 };
 
@@ -100,7 +101,6 @@ app.controller("EditCorrespondenciaController",
                                         var newCorrespondenciaFile = {
                                             id: {
                                                 idCorrespondencia: $scope.correspondencia.idCorrespondencia,
-//                                            idRegistro: $scope.correspondencia.idRegistro,
                                                 fileDetalle: 0
                                             },
                                             nombreArchivo: fileReturned.nombreArchivo,
@@ -111,7 +111,6 @@ app.controller("EditCorrespondenciaController",
 
                                         correspondenciaFileRR.insert(newCorrespondenciaFile)
                                                 .then(function (response) {
-//                                                    $scope.correspondenciaFiles.push(newCorrespondenciaFile);
                                                     item._correspondenciaFile = newCorrespondenciaFile;
                                                 }, function (response) {
                                                 });
@@ -139,15 +138,6 @@ app.controller("EditCorrespondenciaController",
                 };
 
                 $scope.eliminarFile = function (file) {
-//                    var i = $scope.myFile.indexOf(file);
-//                    $log.log("index=" + i);
-//
-//                    if (i !== -1) {
-//                        $scope.myFile.splice(i, 1);
-//                    }
-//
-//                    //fileUpload.deleteFileFromURL(url,name);
-
                     fileRR.deleteFileFromURL(file)
                             .then(function (response) {
                                 correspondenciaFileRR.delete(file._correspondenciaFile)
@@ -166,7 +156,20 @@ app.controller("EditCorrespondenciaController",
                 };
 
                 $scope.eliminarTodo = function () {
-                    $scope.myFile.splice(0, $scope.myFile.length);
+                    fileRR.deleteAllFileFromURL($scope.correspondencia.idCorrespondencia)
+                            .then(function (response) {
+                                correspondenciaFileRR.deleteAllFile($scope.correspondencia.idCorrespondencia)
+                                        .then(function (response) {
+                                            $log.log("correspondenciaFileRR.deleteAll");
+
+                                        }
+                                        , function (response) {
+
+                                        });
+                                $scope.myFile.splice(0, $scope.myFile.length);
+                            }, function (response) {
+
+                            });
                 };
             }]);
 
@@ -193,18 +196,6 @@ app.controller("ListCorrespondenciaController",
                     $scope.currentPage = $scope.currentPage + 1;
                     return $scope.currentPage;
                 };
-
-
-//        $scope.delete=function(investigacion){
-//            investigacionRemoteResource.delete(investigacion)
-//                .then(function(investigacionResult) {
-//                    $scope.investigacions.splice($scope.investigacions.indexOf(investigacion),1);
-//                    //Mensaje de éxito
-//                }, function(bussinessMessages) {
-//                    $scope.bussinessMessages = bussinessMessages;
-//                    //Mensaje de error
-//                });
-//        };
 
                 /*Editar un registro*/
                 $scope.editarModal = function (correspondenciaObj) {

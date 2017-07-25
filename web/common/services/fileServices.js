@@ -84,25 +84,28 @@ function FileRR($http, $q, baseUrl, $log) {
 
                     $log.log("deleteFileFromURL");
                     $log.log(response);
-//                    var filename = file._correspondenciaFile.nombreArchivo;
-//                    var contentType = "application/undefined";
-//
-//                    var linkElement = document.createElement('a');
-//                    try {
-//                        var blob = new Blob([response.data], {type: contentType});
-//                        var url = window.URL.createObjectURL(blob);
-//
-//                        linkElement.setAttribute('href', url);
-//                        linkElement.setAttribute("download", filename);
-//
-//                        var clickEvent = new MouseEvent("click", {
-//                            "view": window,
-//                            "bubbles": true,
-//                            "cancelable": false
-//                        });
-//                        linkElement.dispatchEvent(clickEvent);
-//                    } catch (ex) {
-//                    }
+                    defered.resolve(response.data);
+                })
+                .catch(function onCatch(response) {
+                    defered.reject(response.data);
+                });
+        return defered.promise;
+    };
+
+
+    this.deleteAllFileFromURL = function (carpeta) {
+        var defered = $q.defer();
+
+        $http({
+            method: 'DELETE',
+            url: baseUrl + "/api/File/BorrarTodoArchivo",
+            params: {carpeta: carpeta},
+            responseType: 'arraybuffer'
+        })
+                .then(function onSuccess(response) {
+
+                    $log.log("deleteAllFileFromURL");
+                    $log.log(response);
                     defered.resolve(response.data);
                 })
                 .catch(function onCatch(response) {
