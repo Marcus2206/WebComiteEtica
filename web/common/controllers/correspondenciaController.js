@@ -73,9 +73,7 @@ app.controller("EditCorrespondenciaController",
                     if (typeof ($scope.correspondenciaRespondTemp) === 'undefined') {
                         $uibModalInstance.dismiss('cancel');
                     } else {
-
                         $scope.correspondenciaRespondTemp.idRegistro = $scope.correspondenciaRespondTemp.registro.idRegistro;
-                        $log.log($scope.correspondenciaRespondTemp);
                         $uibModalInstance.dismiss($scope.correspondenciaRespondTemp);
                     }
                 };
@@ -90,8 +88,6 @@ app.controller("EditCorrespondenciaController",
                 };
 
                 $scope.uploadFile = function () {
-                    var file = $scope.myFile;
-
                     var sequence = $q.defer();
                     sequence.resolve();
                     sequence = sequence.promise;
@@ -125,39 +121,6 @@ app.controller("EditCorrespondenciaController",
                                     });
                         });
                     });
-                    
-
-//                    angular.forEach(file, function (item) {
-//                        if (item._progress === 0) {
-                    //$timeout(function() { }, 2000);
-
-
-//                            fileRR.uploadFileToUrl(item, $scope.correspondencia.idCorrespondencia)
-//                                .then(function (response) {
-//                                    var fileReturned = response.data;
-//                                    var newCorrespondenciaFile = {
-//                                        id: {
-//                                            idCorrespondencia: $scope.correspondencia.idCorrespondencia,
-//                                            fileDetalle: 0
-//                                        },
-//                                        nombreArchivo: fileReturned.nombreArchivo,
-//                                        direccion: fileReturned.direccion,
-//                                        usuarioIngresa: "sa",
-//                                        fechaIngreso: new Date()
-//                                    };
-//
-//                                    correspondenciaFileRR.insert(newCorrespondenciaFile)
-//                                            .then(function (response) {
-//                                                $log.log($scope.myFile);
-//                                                item._correspondenciaFile = newCorrespondenciaFile;
-//                                                $log.log($scope.myFile);
-//                                            }, function (response) {
-//                                            });
-//                                }, function (bussinessMessages) {
-//                                    $scope.bussinessMessages = bussinessMessages;
-//                                });
-//                        }
-//                    });
                 };
 
                 $scope.relacionarFile = function (correspondenciaFile) {
@@ -393,8 +356,7 @@ app.controller("NewCorrespondenciaController",
                                 } else {
 
                                 }
-
-                                $scope.correspondenciaRespondTemp = correspondenciaRespond;
+                                correspondenciaRespond.idRegistro = correspondenciaRespond.registro.idRegistro;
                                 $uibModalInstance.dismiss(correspondenciaRespond);
                                 SweetAlert.swal("Hecho!", "Registro guardado exitosamente.", "success");
                             }, function (bussinessMessages) {

@@ -78,9 +78,6 @@ function FileRR($http, $q, baseUrl, $log) {
             responseType: 'arraybuffer'
         })
                 .then(function onSuccess(response) {
-
-                    $log.log("deleteFileFromURL");
-                    $log.log(response);
                     defered.resolve(response.data);
                 })
                 .catch(function onCatch(response) {

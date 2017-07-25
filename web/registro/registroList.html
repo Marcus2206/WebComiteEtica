@@ -2,7 +2,7 @@
 <div class="container">
     <div class="row">
         <div class="container-fluid">
-            <h1 style='text-align: center'><b>Correspondencia</b></h1>
+            <h1 style='text-align: center'><b>Registro de Investigación</b></h1>
             <br>
             <br>
             <br>
@@ -10,11 +10,11 @@
     </div>
     <div class="row">
         <div class="container-fluid">
-            <input type="text" ng-model="txtFiltroCorrespondencia" class="form-control" placeholder="Buscar">
+            <input type="text" ng-model="txtFiltroRegistro" class="form-control" placeholder="Buscar">
             <br>
             <button class="btn btn-primary col-xs-12 col-sm-2" ng-click="nuevoModal()">
                 <i class="fa fa-plus-circle" aria-hidden="true"></i>
-                Correspondencia
+                Registro
             </button>
         </div>
     </div>
@@ -25,37 +25,48 @@
             <table class="col-md-12 table-bordered table-striped table-condensed cf" >
                 <thead class="cf">
                     <tr>
-                        <th>Código</th>
-                        <th>Fecha Correspondencia</th>
-                        <th>Fecha Carta</th>
-                        <th>Registro</th>
-                        <th>Tipo de Servicio</th>
-                        <th>Distribución</th>
-                        <th>Comentario</th>
-                        <th>Fecha Sesión</th>
-                        <th>Enviar Correo</th>
-                        <th>Estado Envío</th>
-                        <th>Acción</th>
+                        <th>Id. Registro</th>
+                        <th>Investigación</th>
+                        <th>Investigador</th>
+                        <th>Sede</th>
+                        <th>Fecha aprobación</th>
+                        <th>Estado</th>
+                        <th>Observación</th>
+                        <th>Fármaco experimental</th>
+                        <th>Placebo</th>
+                        <th>Paciente EAS</th>
+                        <th>EAS Local</th>
+                        <th>Notificación</th>
+                        <th>Fecha EAS</th>
+                        <th>Visita Inspección</th>
+                        <th>Estudio Niños</th>
+                        <th>Visita Inspección INS</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="correspondencia in correspondencias| empezarDe : currentPage * pageSize | limitTo:pageSize | filter:txtFiltroCorrespondencia ">
-                        <td data-title="Código">{{correspondencia.idCorrespondencia}}</td>
-                        <td data-title="Fecha Correspodencia">{{correspondencia.fechaCorrespondencia|date:'dd/MM/yyyy'}}</td>
-                        <td data-title="Fecha Carta">{{correspondencia.fechaCarta|date:'dd/MM/yyyy'}}</td>
-                        <td data-title="Registro">{{correspondencia.registro}}</td>
-                        <td data-title="Tipo de Servicio">{{correspondencia.paramTipoServicio}}</td>
-                        <td data-title="Distribución">{{correspondencia.paramDistribucion}}</td>
-                        <td data-title="Comentario">{{correspondencia.otro}}</td>
-                        <td data-title="Fecha Sesión">{{correspondencia.fechaSesion|date:'dd/MM/yyyy'}}</td>
-                        <td data-title="Enviar Correo"> {{correspondencia.enviarCorreo|booleanToText}}</td>
-                <td data-title="Estado Envío">{{correspondencia.enviado|booleanToText}}</td>
-                <td>
-                    <button class="btn btn-primary" ng-click="editarModal(correspondencia)"><i class="fa fa-pencil-square-o" aria-hidden="true"></i><span class="hidden-xs"> Editar</span></button>
-                    <button class="btn btn-danger" ng-click="eliminar(correspondencia)" ><i class="fa fa-trash" aria-hidden="true"></i><span class="hidden-xs"> Eliminar</span></button>
+                    <tr ng-repeat="registro in registros| empezarDe : currentPage * pageSize | limitTo:pageSize | filter:txtFiltroRegistro ">
+                        <td data-title="Código">{{registro.idRegistro}}</td>
+                        <td data-title="Fecha Correspodencia">{{registro.investigacion}}</td>
+                        <td data-title="Fecha Carta">{{registro.investigacionInvestigador}}</td>
+                        <td data-title="Registro">{{registro.investigacionSede}}</td>
+                        <td data-title="Tipo de Servicio">{{registro.fechaAprobacion}}</td>
+                        <td data-title="Distribución">{{registro.paramEstado}}</td>
+                        <td data-title="Comentario">{{registro.observacion}}</td>
+                        <td data-title="Fecha Sesión">{{registro.farmacoExperimental}}</td>
+                        <td data-title="Enviar Correo"> {{registro.pacienteEas}}</td>
+                        <td data-title="Estado Envío">{{registro.easLocal}}</td>
+                        <td data-title="Estado Envío">{{registro.paramNotificacion}}</td>
+                        <td data-title="Estado Envío">{{registro.easLocal}}</td>
+                        <td data-title="Estado Envío">{{registro.fechaEas}}</td>
+                        <td data-title="Estado Envío">{{registro.visitaInspeccion}}</td>
+                        <td data-title="Estado Envío">{{registro.estudioNinos}}</td>
+                        <td data-title="Estado Envío">{{registro.visitaInspeccionIns}}</td>
+                        <td>
+                            <button class="btn btn-primary" ng-click="editarModal(registro)"><i class="fa fa-pencil-square-o" aria-hidden="true"></i><span class="hidden-xs"> Editar</span></button>
+                            <button class="btn btn-danger" ng-click="eliminar(registro)" ><i class="fa fa-trash" aria-hidden="true"></i><span class="hidden-xs"> Eliminar</span></button>
 
-                </td>
-                </tr>
+                        </td>
+                    </tr>
                 </tbody>
             </table>
         </div>
@@ -68,7 +79,7 @@
                 <span aria-hidden="true">&laquo;</span>
             </button>
             {{currentPage + 1}}/{{numberOfPages()}}
-            <button ng-disabled="currentPage >= correspondencias.length / pageSize - 1" ng-click="setNextPagina()" class="btn btn-default">
+            <button ng-disabled="currentPage >= registros.length / pageSize - 1" ng-click="setNextPagina()" class="btn btn-default">
                 <span aria-hidden="true">&raquo;</span>
             </button>
         </div>

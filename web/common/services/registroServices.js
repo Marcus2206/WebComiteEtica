@@ -44,7 +44,7 @@ function RegistroRR($http,$q, baseUrl,$log) {
         var defered=$q.defer();
         var promise=defered.promise;
   
-        $http.get(baseUrl + '/api/Correspondencia/CorrespondenciaListFindAll')
+        $http.get(baseUrl + '/api/Registro/RegistroListFindAll')
         .then(function onSuccess(response){
             defered.resolve(response.data);
         })

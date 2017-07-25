@@ -104,9 +104,9 @@ app.controller("ListRegistroController",
         ['$scope', "registros", "registroRR", '$location',
             "$log", "$route", "$uibModal", "$confirm", 'SweetAlert',
             function ($scope, registros, registroRR, $location,
-                    $log, $route, $uibModal, $confirm, SweetAlert) {
+                    $log, $route, $uibModal, SweetAlert) {
 
-                /*Se obtiene lista de correspondencias*/
+                /*Se obtiene lista de registros*/
                 $scope.registros = registros;
 
                 /*Se setea la cantidad filas por vista*/
@@ -123,18 +123,6 @@ app.controller("ListRegistroController",
                     $scope.currentPage = $scope.currentPage + 1;
                     return $scope.currentPage;
                 };
-
-
-//        $scope.delete=function(investigacion){
-//            investigacionRemoteResource.delete(investigacion)
-//                .then(function(investigacionResult) {
-//                    $scope.investigacions.splice($scope.investigacions.indexOf(investigacion),1);
-//                    //Mensaje de éxito
-//                }, function(bussinessMessages) {
-//                    $scope.bussinessMessages = bussinessMessages;
-//                    //Mensaje de error
-//                });
-//        };
 
                 /*Editar un registro*/
                 $scope.editarModal = function (registroObj) {
@@ -229,7 +217,7 @@ app.controller("ListRegistroController",
                                         SweetAlert.swal("¡Hecho!", "Registro eliminado exitosamente.", "success");
                                     }, function (bussinessMessages) {
                                         SweetAlert.swal("Advertencia", "La investigación se encuentra activa.", "warning");
-                                        //$scope.bussinessMessages = bussinessMessages;
+                                        $scope.bussinessMessages = bussinessMessages;
                                     });
                         } else {
 
