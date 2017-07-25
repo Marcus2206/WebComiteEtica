@@ -16,10 +16,26 @@ app.controller("EditCorrespondenciaController",
                     $scope.popup1.opened = true;
                 };
 
+                $scope.dateOptions = {
+                    dateDisabled: disabled,
+                    formatYear: 'yy',
+                    maxDate: new Date(2020, 5, 22),
+                    minDate: new Date(),
+                    startingDay: 1,
+                    showWeeks: false
+                };
+
+                // Disable weekend selection
+                function disabled(data) {
+                    var date = data.date,
+                            mode = data.mode;
+                    return mode === 'day' && (date.getDay() === 0 || date.getDay() === 6);
+                }
+
                 $scope.popup1 = {
                     opened: false
                 };
-                
+
                 $scope.open2 = function () {
                     $scope.popup2.opened = true;
                 };
@@ -53,7 +69,7 @@ app.controller("EditCorrespondenciaController",
                         status: 'partially'
                     }
                 ];
-                
+
                 $scope.correspondenciaRespondTemp;
                 $scope.deshabilitado = false;
                 $scope.isCorrespondenciaFile = true;
@@ -167,7 +183,7 @@ app.controller("EditCorrespondenciaController",
                                     });
                         });
                     });
-                    
+
 
 //                    angular.forEach(file, function (item) {
 //                        if (item._progress === 0) {
@@ -383,10 +399,26 @@ app.controller("NewCorrespondenciaController",
                     $scope.popup1.opened = true;
                 };
 
+                $scope.dateOptions = {
+                    dateDisabled: disabled,
+                    formatYear: 'yy',
+                    maxDate: new Date(2020, 5, 22),
+                    minDate: new Date(),
+                    startingDay: 1,
+                    showWeeks: false
+                };
+
+                // Disable weekend selection
+                function disabled(data) {
+                    var date = data.date,
+                            mode = data.mode;
+                    return mode === 'day' && (date.getDay() === 0 || date.getDay() === 6);
+                }
+
                 $scope.popup1 = {
                     opened: false
                 };
-                
+
                 $scope.open2 = function () {
                     $scope.popup2.opened = true;
                 };
