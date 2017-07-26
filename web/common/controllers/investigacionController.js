@@ -5,14 +5,14 @@ app.controller("EditInvestigacionController",
             'coordinadorRemoteResource', 'investigacionCoordinadorRemoteResource',
             'investigadorRR', 'investigacionInvestigadorRR',
             'sedeRR', 'investigacionSedeRR',
-            '$location', "$log", '$filter', "$uibModalInstance", "$confirm", 'SweetAlert',
-            'fileUpload',
+            "$log", "$uibModalInstance", 'SweetAlert',
+            'fileUpload', '$confirm',
             function ($scope, investigacion, parametros, investigacionRemoteResource,
                     coordinadorRemoteResource, investigacionCoordinadorRemoteResource,
                     investigadorRR, investigacionInvestigadorRR,
                     sedeRR, investigacionSedeRR,
-                    $location, $log, $filter, $uibModalInstance, $confirm, SweetAlert,
-                    fileUpload) {
+                    $log, $uibModalInstance, SweetAlert,
+                    fileUpload, $confirm) {
 
                 $scope.parametros = parametros;
                 $scope.deshabilitado = false;
@@ -339,18 +339,6 @@ app.controller("ListInvestigacionController", ['$scope', "investigacions", "inve
             return $scope.currentPage;
         };
 
-
-//        $scope.delete=function(investigacion){
-//            investigacionRemoteResource.delete(investigacion)
-//                .then(function(investigacionResult) {
-//                    $scope.investigacions.splice($scope.investigacions.indexOf(investigacion),1);
-//                    //Mensaje de éxito
-//                }, function(bussinessMessages) {
-//                    $scope.bussinessMessages = bussinessMessages;
-//                    //Mensaje de error
-//                });
-//        };
-
         /*Editar un registro*/
         $scope.editarModal = function (investigacionObj) {
             var modalInstance = $uibModal.open({
@@ -529,5 +517,49 @@ app.controller("NewInvestigacionController",
                 $scope.cerrar = function () {
                     $uibModalInstance.dismiss('cancel');
                 };
+
+            }]);
+
+app.controller("SearchInvestigacionController",
+        ['$scope', 'investigacionRemoteResource',
+            "$log", "$uibModalInstance", 'investigacions',
+            function ($scope, investigacionRemoteResource,
+                    $log, $uibModalInstance, investigacions) {
+
+                $scope.investigacions = investigacions;
+//                var vm = this;
+                $scope.investigacion = {};
+
+                $scope.enviar = function () {
+                    $log.log($scope.investigacion);
+//                    $uibModalInstance.dismiss(investigacionRespond);
+                };
+
+                $scope.cerrar = function () {
+                    $uibModalInstance.dismiss('cancel');
+                };
+
+
+
+
+
+//                var vm = this;
+//                vm.people = [
+//                    {name: 'Adam', email: 'adam@email.com', age: 12, country: 'United States'},
+//                    {name: 'Amalie', email: 'amalie@email.com', age: 12, country: 'Argentina'},
+//                    {name: 'Estefanía', email: 'estefania@email.com', age: 21, country: 'Argentina'},
+//                    {name: 'Adrian', email: 'adrian@email.com', age: 21, country: 'Ecuador'},
+//                    {name: 'Wladimir', email: 'wladimir@email.com', age: 30, country: 'Ecuador'},
+//                    {name: 'Samantha', email: 'samantha@email.com', age: 30, country: 'United States'},
+//                    {name: 'Nicole', email: 'nicole@email.com', age: 43, country: 'Colombia'},
+//                    {name: 'Natasha', email: 'natasha@email.com', age: 54, country: 'Ecuador'},
+//                    {name: 'Michael', email: 'michael@email.com', age: 15, country: 'Colombia'},
+//                    {name: 'Nicolás', email: 'nicolas@email.com', age: 43, country: 'Colombia'}
+//                ];
+//                
+//                $log.log(vm.people);
+//                vm.person = {};
+
+
 
             }]);

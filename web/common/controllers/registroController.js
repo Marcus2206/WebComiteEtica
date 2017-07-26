@@ -60,20 +60,7 @@ app.controller("EditRegistroController",
                     $scope.registro.fechaModificacion = new Date();
                     registroRR.update($scope.registro)
                             .then(function (registroRespond) {
-//                                var listbox = document.getElementById("paramTipoServicio");
-//                                var selIndex = listbox.selectedIndex;
-//                                var selText = listbox.options[selIndex].text;
-//                                correspondenciaRespond.paramTipoServicio = selText;
-//
-//                                listbox = document.getElementById("paramDistribucion");
-//                                selIndex = listbox.selectedIndex;
-//                                selText = listbox.options[selIndex].text;
-//                                correspondenciaRespond.paramDistribucion = selText;
-//
-//                                correspondenciaRespond.enviarCorreo = ((correspondenciaRespond.enviarCorreo) ? 1 : 0);
-//                                correspondenciaRespond.enviado = ((correspondenciaRespond.enviado) ? 1 : 0);
-
-                                $scope.correspondenciaRespondTemp = correspondenciaRespond;
+                                $scope.correspondenciaRespondTemp = registroRespond;
                                 SweetAlert.swal("Hecho!", "Registro guardado exitosamente.", "success");
                             }, function (bussinessMessages) {
                                 $scope.bussinessMessages = bussinessMessages;
@@ -180,6 +167,7 @@ app.controller("ListRegistroController",
                     modalInstance.result.then(function () {
                         //Si no se devuelve nada
                     }, function (data) {
+
                         //Si devuelve un objeto
                         if (data !== "cancel") {
                             if (data !== "backdrop click") {
@@ -191,6 +179,7 @@ app.controller("ListRegistroController",
                             }
                         } else {
                             //Si es cancel
+
                         }
                     });
                 };
@@ -230,9 +219,11 @@ app.controller("ListRegistroController",
 
 app.controller("NewRegistroController",
         ['$scope', 'registroRR',
-            'parametros', '$location', "$log", "$uibModalInstance", 'SweetAlert',
+            'parametros', "$log", "$uibModalInstance", 'SweetAlert',
+            '$uibModal',
             function ($scope, registroRR,
-                    parametros, $location, $log, $uibModalInstance, SweetAlert) {
+                    parametros, $log, $uibModalInstance, SweetAlert,
+                    $uibModal) {
 
                 $scope.filtrar = function (obj, param) {
                     function filterByParametro(obj) {
@@ -244,25 +235,12 @@ app.controller("NewRegistroController",
                 };
 
                 $scope.parametros = parametros;
-                $scope.paramTipoServicio = $scope.filtrar($scope.parametros, 'P001')[0].parametroDetalles;
-                $scope.paramDistribucion = $scope.filtrar($scope.parametros, 'P002')[0].parametroDetalles;
+                $scope.paramEstado = $scope.filtrar($scope.parametros, 'P006')[0].parametroDetalles;
+                $scope.paramNotificacion = $scope.filtrar($scope.parametros, 'P007')[0].parametroDetalles;
 
                 $scope.registroRespondTemp;
                 /*Se construyer el json*/
-                $scope.registro = {
-                    idRegistro: "",
-                    fechaCorrespondencia: new Date(),
-                    fechaCarta: null,
-                    registro: null,
-                    paramTipoServicio: null,
-                    paramDistribucion: null,
-                    enviarCorreo: 0,
-                    enviado: 0,
-                    usuarioIngresa: null,
-                    fechaIngreso: null,
-                    usuarioModifica: null,
-                    fechaModificacion: null
-                };
+                $scope.registro = {};
 
                 $scope.guardar = function () {
                     //if ($scope.form.$valid) {
@@ -272,16 +250,16 @@ app.controller("NewRegistroController",
 //                    $log.log($scope.correspondencia.fechaCorrespondencia);
                     registroRR.insert($scope.registro)
                             .then(function (registroRespond) {
-//                                var listbox = document.getElementById("paramTipoServicio");
-//                                var selIndex = listbox.selectedIndex;
-//                                var selText = listbox.options[selIndex].text;
-//                                correspondenciaRespond.paramTipoServicio = selText;
-//
-//                                listbox = document.getElementById("paramDistribucion");
-//                                selIndex = listbox.selectedIndex;
-//                                selText = listbox.options[selIndex].text;
-//                                correspondenciaRespond.paramDistribucion = selText;
-//
+                                var listbox = document.getElementById("paramEstado");
+                                var selIndex = listbox.selectedIndex;
+                                var selText = listbox.options[selIndex].text;
+                                registroRespond.paramEstado = selText;
+
+                                listbox = document.getElementById("paramNotificacion");
+                                selIndex = listbox.selectedIndex;
+                                selText = listbox.options[selIndex].text;
+                                registroRespond.paramNotificacion = selText;
+
 //                                correspondenciaRespond.fechaCorrespondencia = new Date(correspondenciaRespond.fechaCorrespondencia);
 //
 //                                if (correspondenciaRespond.fechaCarta !== null) {
@@ -289,9 +267,6 @@ app.controller("NewRegistroController",
 //                                } else {
 //
 //                                }
-
-//                                registroRespond.enviarCorreo = ((registroRespond.enviarCorreo) ? 1 : 0);
-//                                registroRespond.enviado = ((registroRespond.enviado) ? 1 : 0);
 
                                 $scope.registroRespondTemp = registroRespond;
                                 $uibModalInstance.dismiss(registroRespond);
@@ -304,13 +279,46 @@ app.controller("NewRegistroController",
                      alert("Hay datos inválidos");
                      }*/
                 };
-
                 $scope.cerrar = function () {
-                    if (typeof ($scope.registroRespondTemp) === 'undefined') {
-                        $uibModalInstance.dismiss('cancel');
-                    } else {
-                        $uibModalInstance.dismiss($scope.registroRespondTemp);
-                    }
+//                    if (typeof ($scope.registroRespondTemp) === 'undefined') {
+
+                    $uibModalInstance.dismiss('cancel');
+//                    } else {
+//                        $uibModalInstance.dismiss($scope.registroRespondTemp);
+//                    }
+                };
+
+                $scope.buscarInvestigacion = function () {
+
+                    var modalInstance = $uibModal.open({
+                        templateUrl: 'investigacion/investigacionSearch.html',
+                        controller: "SearchInvestigacionController",
+                        size: 'sm',
+                        backdrop: 'static',
+                        keyboard: false,
+                        resolve: {
+                            investigacions: ['investigacionRemoteResource', function (investigacionRemoteResource) {
+                                    return investigacionRemoteResource.list();
+                                }]
+                        }
+                    });
+
+                    modalInstance.result.then(function () {
+                        //Si no se devuelve nada
+                    }, function (data) {
+                        //Si devuelve un objeto
+                        if (data !== "cancel") {
+                            if (data !== "backdrop click") {
+                                if (data !== "escape key press") {
+                                    //Si no es cancel, se reemplaza el objeto que se mandó a actualizar
+//                                    $scope.registros.push(data);
+//                                    $scope.editarModal(data);
+                                }
+                            }
+                        } else {
+                            //Si es cancel
+                        }
+                    });
                 };
 
             }]);

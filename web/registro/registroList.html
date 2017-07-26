@@ -41,30 +41,30 @@
                         <th>Visita Inspección</th>
                         <th>Estudio Niños</th>
                         <th>Visita Inspección INS</th>
+                        <th>Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr ng-repeat="registro in registros| empezarDe : currentPage * pageSize | limitTo:pageSize | filter:txtFiltroRegistro ">
-                        <td data-title="Código">{{registro.idRegistro}}</td>
-                        <td data-title="Fecha Correspodencia">{{registro.investigacion}}</td>
-                        <td data-title="Fecha Carta">{{registro.investigacionInvestigador}}</td>
-                        <td data-title="Registro">{{registro.investigacionSede}}</td>
-                        <td data-title="Tipo de Servicio">{{registro.fechaAprobacion}}</td>
-                        <td data-title="Distribución">{{registro.paramEstado}}</td>
-                        <td data-title="Comentario">{{registro.observacion}}</td>
-                        <td data-title="Fecha Sesión">{{registro.farmacoExperimental}}</td>
-                        <td data-title="Enviar Correo"> {{registro.pacienteEas}}</td>
-                        <td data-title="Estado Envío">{{registro.easLocal}}</td>
-                        <td data-title="Estado Envío">{{registro.paramNotificacion}}</td>
-                        <td data-title="Estado Envío">{{registro.easLocal}}</td>
-                        <td data-title="Estado Envío">{{registro.fechaEas}}</td>
-                        <td data-title="Estado Envío">{{registro.visitaInspeccion}}</td>
-                        <td data-title="Estado Envío">{{registro.estudioNinos}}</td>
-                        <td data-title="Estado Envío">{{registro.visitaInspeccionIns}}</td>
+                        <td data-title="Id. Registro">{{registro.idRegistro}}</td>
+                        <td data-title="Investigación">{{registro.idInvestigacion}}</td>
+                        <td data-title="Investigador">{{registro.idInvestigador}}</td>
+                        <td data-title="Sede">{{registro.idSede}}</td>
+                        <td data-title="Fecha aprobación">{{registro.fechaAprobacion}}</td>
+                        <td data-title="Estado">{{registro.paramEstado}}</td>
+                        <td data-title="Observación">{{registro.observacion}}</td>
+                        <td data-title="Fármaco experimental">{{registro.farmacoExperimental}}</td>
+                        <td data-title="Placebo"> {{registro.placebo}}</td>
+                        <td data-title="Paciente EAS">{{registro.pacienteEas}}</td>
+                        <td data-title="EAS Local">{{registro.easLocal}}</td>
+                        <td data-title="Notificación">{{registro.paramNotificacion}}</td>
+                        <td data-title="Fecha EAS">{{registro.fechaEas}}</td>
+                        <td data-title="Visita Inspección">{{registro.visitaInspeccion}}</td>
+                        <td data-title="Estudio Niños">{{registro.estudioNinos}}</td>
+                        <td data-title="Visita Inspección INS">{{registro.visitaInspeccionIns}}</td>
                         <td>
                             <button class="btn btn-primary" ng-click="editarModal(registro)"><i class="fa fa-pencil-square-o" aria-hidden="true"></i><span class="hidden-xs"> Editar</span></button>
                             <button class="btn btn-danger" ng-click="eliminar(registro)" ><i class="fa fa-trash" aria-hidden="true"></i><span class="hidden-xs"> Eliminar</span></button>
-
                         </td>
                     </tr>
                 </tbody>

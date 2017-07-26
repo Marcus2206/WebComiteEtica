@@ -1,6 +1,6 @@
-var app = angular.module("app", 
-["ngRoute", "ui.select", "ui.bootstrap", "angular-confirm", "ngAnimate",
- "ngSanitize", "xeditable", "oitozero.ngSweetAlert", "flow",'ui.checkbox']);
+var app = angular.module("app",
+        ["ngRoute", "ui.select", "ui.bootstrap", "angular-confirm", "ngAnimate",
+            "ngSanitize", "xeditable", "oitozero.ngSweetAlert", "flow", 'ui.checkbox']);
 
 app.config(['$routeProvider', "$locationProvider", function ($routeProvider, $locationProvider) {
         /*Sólo ruta por defecto*/
@@ -16,7 +16,12 @@ app.config(['$routeProvider', "$locationProvider", function ($routeProvider, $lo
 
         $routeProvider.when('/subirArchivo', {
             templateUrl: 'general/subirArchivo.html',
-            controller: "subirController"
+            controller: "subirController",
+            resolve: {
+                investigacions: ['investigacionRemoteResource', function (investigacionRemoteResource) {
+                        return investigacionRemoteResource.list();
+                    }]
+            }
         });
     }]);
 

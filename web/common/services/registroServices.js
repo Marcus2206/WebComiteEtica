@@ -1,10 +1,10 @@
 
 function RegistroRR($http,$q, baseUrl,$log) {
 
-    this.insert = function(correspondencia) {
+    this.insert = function(registro) {
         var defered=$q.defer();
         var promise=defered.promise;
-        $http.post(baseUrl + '/api/Correspondencia/CorrespondenciaInsert',correspondencia)
+        $http.post(baseUrl + '/api/Registro/RegistroInsert',registro)
         .then(function onSuccess(response){
             defered.resolve(response.data);
         })

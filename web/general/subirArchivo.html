@@ -41,3 +41,17 @@
 <button ng-click="downloadFile('Sin título.png')">descargar</button>
 <button ng-click="downloadFile('imagen.png')">descargar</button>
 <button ng-click="downloadFile('prueba.pdf')">descargar</button>
+
+
+<div class="form-group">
+    <label for="investigacion" class="col-sm-3 control-label">Investigación:</label><br>
+    <div class="col-sm-6">
+        <ui-select ng-model="investigacion" theme="selectize" title="Seleccinar investigación" id="investigacion">
+            <ui-select-match placeholder="Select or search a person in the list...">{{$select.selected.protocolo}}</ui-select-match>
+            <ui-select-choices repeat="inv in investigacions | filter: $select.search">
+                <div ng-bind-html="inv.protocolo | highlight: $select.search"></div>
+                <small ng-bind-html="inv.titulo | highlight: $select.search"></small>
+            </ui-select-choices>
+        </ui-select>
+    </div>
+</div>

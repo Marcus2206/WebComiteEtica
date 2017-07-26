@@ -12,12 +12,21 @@
                         <input readonly type="text" class="form-control" id="idRegistro"  placeholder="Id. registro" ng-model="registro.idRegistro" value="{{ registro.idRegistro || '' }}">
                     </div> 
                 </div>
+
+                
                 <div class="col">
                     <div class="form-group">
                         <label for="investigacion">Investigación:  </label><br>
-                        <input type="text" class="form-control" id="investigacion"  placeholder="Seleccionar Investigación" ng-model="registro.investigacion" value="{{registro.investigacion|| '' }}">
+                        <p class="input-group">
+                            <input type="text" class="form-control" id="investigacion"  placeholder="Seleccionar Investigación" ng-model="registro.investigacion" value="{{registro.investigacion|| '' }}"/>
+                            <span class="input-group-btn">
+                                <button type="button" class="btn btn-default" ng-click="buscarInvestigacion()"><i class="glyphicon glyphicon-search"></i></button>
+                            </span>
+                        </p>
                     </div> 
                 </div>
+                
+                
                 <div class="col">
                     <div class="form-group">
                         <label for="investigacionInvestigador">Investigador:  </label><br>

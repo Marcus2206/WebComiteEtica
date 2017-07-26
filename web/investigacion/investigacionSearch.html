@@ -1,0 +1,51 @@
+<div class="modal-content">
+    <div class="modal-header">
+        <button type="button" class="close" ng-click="cerrar()">&times;</button>
+        <h4 class="modal-title" id="myModalLabel">Buscar investigación</h4>
+    </div>
+    <div class="modal-body">
+        <div class="container-fluid">
+            <div class="row">
+               <div class="col">
+                    <div class="form-group">
+                        <label>Investigación: {{investigacion}}</label><br>
+                        <ui-select ng-model="investigacion" theme="selectize" title="Seleccionar investigación">
+                            <ui-select-match placeholder="Seleccinar investigación">{{$select.selected.protocolo}}</ui-select-match>
+                            <ui-select-choices repeat="inv in investigacions | filter: $select.search">
+                                <div ng-bind-html="inv.protocolo | highlight: $select.search"></div>
+                                <small ng-bind-html="inv.titulo | highlight: $select.search"></small>
+                                <small ng-bind-html="inv.paramEspecialidad | highlight: $select.search"></small>
+                                <small ng-bind-html="inv.paramFase | highlight: $select.search"></small>
+                                <small ng-bind-html="inv.paramTipoInvestigacion | highlight: $select.search"></small>
+                            </ui-select-choices>
+                        </ui-select>
+                    </div>
+                </div>
+               
+               
+<!--                <div class="form-group">
+                    <label class="col">Default</label>
+                    <div class="col">
+                        <ui-select ng-model="person.selected" theme="selectize" title="Choose a person">
+                            <ui-select-match placeholder="Select or search a person in the list...">{{$select.selected.name}}</ui-select-match>
+                            <ui-select-choices repeat="item in people | filter: $select.search">
+                                <div ng-bind-html="item.name | highlight: $select.search"></div>
+                                <small ng-bind-html="item.email | highlight: $select.search"></small>
+                            </ui-select-choices>
+                        </ui-select>
+
+                    </div>
+                </div>-->
+            </div>
+        </div>
+        <br>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" ng-click="enviar()">
+            Enviar
+        </button>
+        <button type="button" class="btn btn-default" ng-click="cerrar()">
+            Cancelar
+        </button>
+    </div>
+</div>
