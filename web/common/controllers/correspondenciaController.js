@@ -120,6 +120,9 @@ app.controller("EditCorrespondenciaController",
                                 correspondenciaRespond.paramDistribucion = selText;
 
                                 $scope.correspondenciaRespondTemp = correspondenciaRespond;
+                                if (correspondenciaRespond.registro !== null) {
+                                    $scope.correspondenciaRespondTemp.idRegistro = correspondenciaRespond.registro.idRegistro;
+                                }
                                 SweetAlert.swal("Hecho!", "Registro guardado exitosamente.", "success");
                             }, function (bussinessMessages) {
                                 $scope.bussinessMessages = bussinessMessages;
@@ -131,7 +134,7 @@ app.controller("EditCorrespondenciaController",
                     if (typeof ($scope.correspondenciaRespondTemp) === 'undefined') {
                         $uibModalInstance.dismiss('cancel');
                     } else {
-                        $scope.correspondenciaRespondTemp.idRegistro = $scope.correspondenciaRespondTemp.registro.idRegistro;
+//                        $scope.correspondenciaRespondTemp.idRegistro = $scope.correspondenciaRespondTemp.registro.idRegistro;
                         $uibModalInstance.dismiss($scope.correspondenciaRespondTemp);
                     }
                 };
@@ -469,10 +472,9 @@ app.controller("NewCorrespondenciaController",
 
                                 if (correspondenciaRespond.fechaCarta !== null) {
                                     correspondenciaRespond.fechaCarta = new Date(correspondenciaRespond.fechaCarta);
-                                } else {
-
                                 }
-                                correspondenciaRespond.idRegistro = correspondenciaRespond.registro.idRegistro;
+//                                $scope.correspondenciaRespondTemp=correspondenciaRespond;
+//                                $scope.correspondenciaRespondTemp.idRegistro = correspondenciaRespond.registro.idRegistro;
                                 $uibModalInstance.dismiss(correspondenciaRespond);
                                 SweetAlert.swal("Hecho!", "Registro guardado exitosamente.", "success");
                             }, function (bussinessMessages) {
