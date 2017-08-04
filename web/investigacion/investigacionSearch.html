@@ -6,10 +6,10 @@
     <div class="modal-body">
         <div class="container-fluid">
             <div class="row">
-               <div class="col">
+                <div class="col">
                     <div class="form-group">
-                        <label>Investigación: {{investigacion}}</label><br>
-                        <ui-select ng-model="investigacion" theme="selectize" title="Seleccionar investigación">
+                        <label>Investigación: {{investigacion.selected.titulo}}</label><br>
+                        <ui-select ng-model="investigacion.selected" theme="selectize" title="Seleccionar investigación">
                             <ui-select-match placeholder="Seleccinar investigación">{{$select.selected.protocolo}}</ui-select-match>
                             <ui-select-choices repeat="inv in investigacions | filter: $select.search">
                                 <div ng-bind-html="inv.protocolo | highlight: $select.search"></div>
@@ -21,21 +21,6 @@
                         </ui-select>
                     </div>
                 </div>
-               
-               
-<!--                <div class="form-group">
-                    <label class="col">Default</label>
-                    <div class="col">
-                        <ui-select ng-model="person.selected" theme="selectize" title="Choose a person">
-                            <ui-select-match placeholder="Select or search a person in the list...">{{$select.selected.name}}</ui-select-match>
-                            <ui-select-choices repeat="item in people | filter: $select.search">
-                                <div ng-bind-html="item.name | highlight: $select.search"></div>
-                                <small ng-bind-html="item.email | highlight: $select.search"></small>
-                            </ui-select-choices>
-                        </ui-select>
-
-                    </div>
-                </div>-->
             </div>
         </div>
         <br>

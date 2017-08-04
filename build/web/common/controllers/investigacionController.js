@@ -6,13 +6,13 @@ app.controller("EditInvestigacionController",
             'investigadorRR', 'investigacionInvestigadorRR',
             'sedeRR', 'investigacionSedeRR',
             "$log", "$uibModalInstance", 'SweetAlert',
-            'fileUpload', '$confirm',
+            '$confirm', 'patrocinadorRR', 'croRR',
             function ($scope, investigacion, parametros, investigacionRemoteResource,
                     coordinadorRemoteResource, investigacionCoordinadorRemoteResource,
                     investigadorRR, investigacionInvestigadorRR,
                     sedeRR, investigacionSedeRR,
                     $log, $uibModalInstance, SweetAlert,
-                    fileUpload, $confirm) {
+                    $confirm, patrocinadorRR, croRR) {
 
                 $scope.parametros = parametros;
                 $scope.deshabilitado = false;
@@ -35,6 +35,12 @@ app.controller("EditInvestigacionController",
                 $scope.isInvestigador = true;
                 $scope.isSede = true;
 
+                $scope.patrocinadors;
+                $scope.patrocinadorSelected = {};
+
+                $scope.cros;
+                $scope.croSelected = {};
+
                 $scope.filtrar = function (obj, param) {
                     function filterByParametro(obj) {
                         if (obj.idParametro === param) {
@@ -48,27 +54,24 @@ app.controller("EditInvestigacionController",
                 $scope.paramFase = $scope.filtrar($scope.parametros, 'P005')[0].parametroDetalles;
                 $scope.paramTipoInvestigacion = $scope.filtrar($scope.parametros, 'P004')[0].parametroDetalles;
 
+                $scope.paramEspecialidadSelected = {};
+                $scope.paramFaseSelected = {};
+                $scope.paramTipoInvestigacionSelected = {};
+
                 $scope.investigacion = investigacion;
 
                 $scope.guardar = function () {
                     $scope.investigacion.usuarioModifica = "sa";
                     $scope.investigacion.fechaModificacion = new Date();
+                    validaSeleccionables($scope);
                     investigacionRemoteResource.update($scope.investigacion)
                             .then(function (investigacionRespond) {
-                                var listbox = document.getElementById("paramEspecialidad");
-                                var selIndex = listbox.selectedIndex;
-                                var selText = listbox.options[selIndex].text;
-                                investigacionRespond.paramEspecialidad = selText;
-                                listbox = document.getElementById("paramFase");
-                                selIndex = listbox.selectedIndex;
-                                selText = listbox.options[selIndex].text;
-                                investigacionRespond.paramFase = selText;
-                                listbox = document.getElementById("paramTipoInvestigacion");
-                                selIndex = listbox.selectedIndex;
-                                selText = listbox.options[selIndex].text;
-                                investigacionRespond.paramTipoInvestigacion = selText;
-
-                                $uibModalInstance.dismiss(investigacionRespond);
+                                cambioEtiquetas(investigacionRespond, $scope);
+                                var index = $scope.investigacions.indexOf($scope.investigacionObj);
+                                if (index !== -1) {
+                                    $scope.investigacions[index] = investigacionRespond;
+                                }
+                                $scope.investigacionObj = investigacionRespond;
                                 SweetAlert.swal("Hecho!", "Registro guardado exitosamente.", "success");
                             }, function (bussinessMessages) {
                                 $scope.bussinessMessages = bussinessMessages;
@@ -104,8 +107,6 @@ app.controller("EditInvestigacionController",
                             $scope.bussinessMessages = bussinessMessages;
                             //Mensaje de error
                         });
-
-
 
                 /*Detalle de Investigación con Coordinador*/
                 investigacionCoordinadorRemoteResource.listCoordinadorByIdInvestigacion($scope.investigacion.idInvestigacion)
@@ -263,9 +264,6 @@ app.controller("EditInvestigacionController",
                                     idProvincia: $scope.sedeSelect.idProvincia,
                                     idDistrito: $scope.sedeSelect.idDistrito};
 
-                                //$location.path("investigacionEdit/"+$scope.investigacion.idInvestigacion);  
-
-                                //$log.log(invSede);
                                 $scope.investigacionSedes.push(invSede);
                                 $scope.sedesSelectList.splice($scope.sedesSelectList.indexOf($scope.sedeSelect), 1);
                                 $scope.sedeSelect = {};
@@ -312,142 +310,168 @@ app.controller("EditInvestigacionController",
 
                 $scope.cerrarOtras = true;
 
-                $scope.uploadFile = function () {
-                    var file = $scope.myFile;
-                    angular.forEach(file, function (item) {
+                cargarPatrocinador(patrocinadorRR, $scope);
 
-                        fileUpload.uploadFileToUrl(item._file);
-                    });
+                $scope.cargarCro = function () {
+                    cargarCro(croRR, $scope);
+                    $scope.croSelected = {};
                 };
+
+                $scope.setearCro = function () {
+                    setearCro($scope);
+                };
+
+                $scope.filtrarDetalle = function (obj, param) {
+                    function filterByParametroDetalle(obj) {
+                        if (obj.id.idParametroDetalle === param) {
+                            return obj;
+                        }
+                    }
+                    return obj.filter(filterByParametroDetalle);
+                };
+
+                $scope.inicial = function () {
+                    if ($scope.investigacion.patrocinadorCro !== null) {
+                        $scope.patrocinadorSelected.selected = $scope.investigacion.patrocinadorCro.patrocinador;
+                        $scope.cargarCro();
+                        $scope.croSelected.selected = $scope.investigacion.patrocinadorCro.cro;
+                    }else{
+                        $scope.investigacion.patrocinadorCro={id:{}};
+                    }
+                    $scope.paramEspecialidadSelected.selected = $scope.filtrarDetalle($scope.paramEspecialidad, $scope.investigacion.paramEspecialidad)[0];
+                    $scope.paramTipoInvestigacionSelected.selected = $scope.filtrarDetalle($scope.paramTipoInvestigacion, $scope.investigacion.paramTipoInvestigacion)[0];
+                    $scope.paramFaseSelected.selected = $scope.filtrarDetalle($scope.paramFase, $scope.investigacion.paramFase)[0];
+                };
+                $scope.inicial();
             }]);
 
-app.controller("ListInvestigacionController", ['$scope', "investigacions", "investigacionRemoteResource", '$location', "$log", "$route", "$uibModal", "$confirm", 'SweetAlert', function ($scope, investigacions, investigacionRemoteResource, $location, $log, $route, $uibModal, $confirm, SweetAlert) {
-        /*Se obtiene lista de coordinadores*/
-        $scope.investigacions = investigacions;
-        /*Se setea la cantidad filas por vista*/
-        $scope.currentPage = 0;
-        $scope.pageSize = 20;
+app.controller("ListInvestigacionController",
+        ['$scope', "investigacions", "investigacionRemoteResource",
+            "$log", "$uibModal", 'SweetAlert',
+            function ($scope, investigacions, investigacionRemoteResource,
+                    $log, $uibModal, SweetAlert) {
+                /*Se obtiene lista de coordinadores*/
+                $scope.investigacions = investigacions;
+                /*Se setea la cantidad filas por vista*/
+                $scope.currentPage = 0;
+                $scope.pageSize = 20;
 
-        /*Calculando número de páginas*/
-        $scope.numberOfPages = function () {
-            return Math.ceil($scope.investigacions.length / $scope.pageSize);
-        };
+                /*Calculando número de páginas*/
+                $scope.numberOfPages = function () {
+                    return Math.ceil($scope.investigacions.length / $scope.pageSize);
+                };
 
-        /*Ir a la sgte página*/
-        $scope.setNextPagina = function () {
-            $scope.currentPage = $scope.currentPage + 1;
-            return $scope.currentPage;
-        };
+                /*Ir a la sgte página*/
+                $scope.setNextPagina = function () {
+                    $scope.currentPage = $scope.currentPage + 1;
+                    return $scope.currentPage;
+                };
 
-        /*Editar un registro*/
-        $scope.editarModal = function (investigacionObj) {
-            var modalInstance = $uibModal.open({
-                templateUrl: 'investigacion/investigacionEdit.html',
-//                    templateUrl: 'coordinador/coordinadorTest.html',
-                controller: "EditInvestigacionController",
-                size: 'md',
-                backdrop: 'static',
-                keyboard: false,
-                resolve: {
-                    investigacion: function () {
-                        return investigacionRemoteResource.get(investigacionObj.idInvestigacion);
-                    },
-                    parametros: ['parametroRR', function (parametroRR) {
-                            return parametroRR.list();
-                        }]
-                }
-            });
+                /*Editar un registro*/
+                $scope.editarModal = function (investigacionObj) {
+                    $scope.investigacionObj = investigacionObj;
+                    var modalInstance = $uibModal.open({
+                        templateUrl: 'investigacion/investigacionEdit.html',
+                        controller: "EditInvestigacionController",
+                        size: 'md',
+                        backdrop: 'static',
+                        keyboard: false,
+                        scope: $scope,
+                        resolve: {
+                            investigacion: function () {
+                                return investigacionRemoteResource.get(investigacionObj.idInvestigacion);
+                            },
+                            parametros: ['parametroRR', function (parametroRR) {
+                                    return parametroRR.list();
+                                }]
+                        }
+                    });
 
-            modalInstance.result.then(function () {
-                //Si no se devuelve nada
-            }, function (data) {
-                //Si devuelve un objeto
-                if (data !== "cancel") {
-                    if (data !== "backdrop click") {
-                        if (data !== "escape key press") {
-                            //Si no es cancel, se reemplaza el objeto que se mandó a actualizar
-                            var index = $scope.investigacions.indexOf(investigacionObj);
-                            if (index !== -1) {
-                                $scope.investigacions[index] = data;
+                    modalInstance.result.then(function () {
+                        //Si no se devuelve nada
+                    }, function (data) {
+                        //Si devuelve un objeto
+                        if (data !== "cancel") {
+                            if (data !== "backdrop click") {
+                                if (data !== "escape key press") {
+                                    //Si no es cancel, se reemplaza el objeto que se mandó a actualizar
+                                }
                             }
+                        } else {
+                            //Si es cancel
                         }
-                    }
-                } else {
-                    //Si es cancel
-                }
-            });
-        };
+                    });
+                };
 
-        /*Crear un registro*/
-        $scope.nuevoModal = function () {
-            var modalInstance = $uibModal.open({
-                templateUrl: 'investigacion/investigacionEdit.html',
-//                    templateUrl: 'coordinador/coordinadorTest.html',
-                controller: "NewInvestigacionController",
-                size: 'sm',
-                backdrop: 'static',
-                keyboard: false,
-                resolve: {
-                    parametros: ['parametroRR', function (parametroRR) {
-                            return parametroRR.list();
-                        }]
-                }
-            });
+                /*Crear un registro*/
+                $scope.nuevoModal = function () {
+                    var modalInstance = $uibModal.open({
+                        templateUrl: 'investigacion/investigacionEdit.html',
+                        controller: "NewInvestigacionController",
+                        size: 'md',
+                        backdrop: 'static',
+                        keyboard: false,
+                        resolve: {
+                            parametros: ['parametroRR', function (parametroRR) {
+                                    return parametroRR.list();
+                                }]
+                        }
+                    });
 
-            modalInstance.result.then(function () {
-                //Si no se devuelve nada
-            }, function (data) {
-                //Si devuelve un objeto
-                if (data !== "cancel") {
-                    if (data !== "backdrop click") {
-                        if (data !== "escape key press") {
-                            //Si no es cancel, se reemplaza el objeto que se mandó a actualizar
-                            $scope.investigacions.push(data);
+                    modalInstance.result.then(function () {
+                        //Si no se devuelve nada
+                    }, function (data) {
+                        //Si devuelve un objeto
+                        if (data !== "cancel") {
+                            if (data !== "backdrop click") {
+                                if (data !== "escape key press") {
+                                    //Si no es cancel, se reemplaza el objeto que se mandó a actualizar
+                                    $scope.investigacions.push(data);
+                                    $scope.editarModal(data);
+                                }
+                            }
+                        } else {
+                            //Si es cancel
+                        }
+                    });
+                };
+
+                $scope.eliminar = function (investigacion) {
+                    //Se prepara confirm
+                    SweetAlert.swal({
+                        title: '¿Está seguro de eliminar este registro?',
+                        type: 'warning',
+                        showCancelButton: true,
+                        confirmButtonText: "Si",
+                        cancelButtonText: "No",
+                        closeOnConfirm: false,
+                        closeOnCancel: true
+                    }, function (isConfirm) {
+                        if (isConfirm) {
+                            //Si se presiona Sí.
+                            investigacionRemoteResource.delete(investigacion)
+                                    .then(function (investigacionResult) {
+                                        //Se la elimenación es exitosa.
+                                        $scope.investigacions.splice($scope.investigacions.indexOf(investigacion), 1);
+                                        SweetAlert.swal("Hecho!", "Registro eliminado exitosamente.", "success");
+                                    }, function (bussinessMessages) {
+                                        SweetAlert.swal("Advertencia", "La investigación se encuentra activa.", "warning");
+                                        //$scope.bussinessMessages = bussinessMessages;
+                                    });
+                        } else {
 
                         }
-                    }
-                } else {
-                    //Si es cancel
-                }
-            });
-        };
+                    });
 
-        $scope.eliminar = function (investigacion) {
-            //Se prepara confirm
-            SweetAlert.swal({
-                title: '¿Está seguro de eliminar este registro?',
-                type: 'warning',
-                showCancelButton: true,
-                confirmButtonText: "Si",
-                cancelButtonText: "No",
-                closeOnConfirm: false,
-                closeOnCancel: true
-            }, function (isConfirm) {
-                if (isConfirm) {
-                    //Si se presiona Sí.
-                    investigacionRemoteResource.delete(investigacion)
-                            .then(function (investigacionResult) {
-                                //Se la elimenación es exitosa.
-                                $scope.investigacions.splice($scope.investigacions.indexOf(investigacion), 1);
-                                SweetAlert.swal("Hecho!", "Registro eliminado exitosamente.", "success");
-                            }, function (bussinessMessages) {
-                                SweetAlert.swal("Advertencia", "La investigación se encuentra activa.", "warning");
-                                //$scope.bussinessMessages = bussinessMessages;
-                            });
-                } else {
+                };
 
-                }
-            });
-
-        };
-
-    }]);
+            }]);
 
 app.controller("NewInvestigacionController",
         ['$scope', 'investigacionRemoteResource',
-            'parametros', '$location', "$log", "$uibModalInstance", 'SweetAlert',
+            'parametros', "$log", "$uibModalInstance", 'SweetAlert', 'patrocinadorRR', 'croRR',
             function ($scope, investigacionRemoteResource,
-                    parametros, $location, $log, $uibModalInstance, SweetAlert) {
+                    parametros, $log, $uibModalInstance, SweetAlert, patrocinadorRR, croRR) {
 
                 $scope.filtrar = function (obj, param) {
                     function filterByParametro(obj) {
@@ -462,46 +486,34 @@ app.controller("NewInvestigacionController",
                 $scope.isInvestigador = true;
                 $scope.isSede = true;
 
-                $scope.nombreBoton = "Nuevo";
                 $scope.deshabilitado = true;
+
                 $scope.parametros = parametros;
                 $scope.paramEspecialidad = $scope.filtrar($scope.parametros, 'P003')[0].parametroDetalles;
                 $scope.paramFase = $scope.filtrar($scope.parametros, 'P005')[0].parametroDetalles;
                 $scope.paramTipoInvestigacion = $scope.filtrar($scope.parametros, 'P004')[0].parametroDetalles;
 
+                $scope.patrocinadors;
+                $scope.patrocinadorSelected = {};
+
+                $scope.cros;
+                $scope.croSelected = {};
+
+                $scope.paramEspecialidadSelected = {};
+                $scope.paramFaseSelected = {};
+                $scope.paramTipoInvestigacionSelected = {};
+
                 /*Se construyer el json*/
-                $scope.investigacion = {
-                    idInvestigacion: "",
-                    protocolo: "",
-                    titulo: "",
-                    paramEspecialidad: "",
-                    paramFase: "",
-                    paramTipoInvestigacion: "",
-                    usuarioIngresa: "",
-                    fechaIngreso: "",
-                    usuarioModifica: "",
-                    fechaModificacion: ""
-                };
+                $scope.investigacion = {patrocinadorCro: {id: {}}};
 
                 $scope.guardar = function () {
                     //if ($scope.form.$valid) {
                     $scope.investigacion.usuarioIngresa = "user1";
                     $scope.investigacion.fechaIngreso = new Date();
+                    validaSeleccionables($scope, $log);
                     investigacionRemoteResource.insert($scope.investigacion)
                             .then(function (investigacionRespond) {
-                                var listbox = document.getElementById("paramEspecialidad");
-                                var selIndex = listbox.selectedIndex;
-                                var selText = listbox.options[selIndex].text;
-                                investigacionRespond.paramEspecialidad = selText;
-                                listbox = document.getElementById("paramFase");
-                                selIndex = listbox.selectedIndex;
-                                selText = listbox.options[selIndex].text;
-                                investigacionRespond.paramFase = selText;
-                                listbox = document.getElementById("paramTipoInvestigacion");
-                                selIndex = listbox.selectedIndex;
-                                selText = listbox.options[selIndex].text;
-                                investigacionRespond.paramTipoInvestigacion = selText;
-
+                                cambioEtiquetas(investigacionRespond, $scope);
                                 $uibModalInstance.dismiss(investigacionRespond);
                                 SweetAlert.swal("Hecho!", "Registro guardado exitosamente.", "success");
                             }, function (bussinessMessages) {
@@ -514,6 +526,17 @@ app.controller("NewInvestigacionController",
                      }*/
                 };
 
+                cargarPatrocinador(patrocinadorRR, $scope);
+
+                $scope.cargarCro = function () {
+                    cargarCro(croRR, $scope);
+                    $scope.croSelected = {};
+                };
+
+                $scope.setearCro = function () {
+                    setearCro($scope);
+                };
+
                 $scope.cerrar = function () {
                     $uibModalInstance.dismiss('cancel');
                 };
@@ -521,45 +544,68 @@ app.controller("NewInvestigacionController",
             }]);
 
 app.controller("SearchInvestigacionController",
-        ['$scope', 'investigacionRemoteResource',
+        ['$scope',
             "$log", "$uibModalInstance", 'investigacions',
-            function ($scope, investigacionRemoteResource,
+            function ($scope,
                     $log, $uibModalInstance, investigacions) {
-
                 $scope.investigacions = investigacions;
-//                var vm = this;
                 $scope.investigacion = {};
-
                 $scope.enviar = function () {
-                    $log.log($scope.investigacion);
-//                    $uibModalInstance.dismiss(investigacionRespond);
+                    $uibModalInstance.dismiss($scope.investigacion.selected);
                 };
-
                 $scope.cerrar = function () {
                     $uibModalInstance.dismiss('cancel');
                 };
-
-
-
-
-
-//                var vm = this;
-//                vm.people = [
-//                    {name: 'Adam', email: 'adam@email.com', age: 12, country: 'United States'},
-//                    {name: 'Amalie', email: 'amalie@email.com', age: 12, country: 'Argentina'},
-//                    {name: 'Estefanía', email: 'estefania@email.com', age: 21, country: 'Argentina'},
-//                    {name: 'Adrian', email: 'adrian@email.com', age: 21, country: 'Ecuador'},
-//                    {name: 'Wladimir', email: 'wladimir@email.com', age: 30, country: 'Ecuador'},
-//                    {name: 'Samantha', email: 'samantha@email.com', age: 30, country: 'United States'},
-//                    {name: 'Nicole', email: 'nicole@email.com', age: 43, country: 'Colombia'},
-//                    {name: 'Natasha', email: 'natasha@email.com', age: 54, country: 'Ecuador'},
-//                    {name: 'Michael', email: 'michael@email.com', age: 15, country: 'Colombia'},
-//                    {name: 'Nicolás', email: 'nicolas@email.com', age: 43, country: 'Colombia'}
-//                ];
-//                
-//                $log.log(vm.people);
-//                vm.person = {};
-
-
-
             }]);
+
+function cargarPatrocinador(patrocinadorRR, $scope) {
+    /*Patrocinador*/
+    patrocinadorRR.list()
+            .then(function (patrocinadorRespond) {
+                $scope.patrocinadors = patrocinadorRespond;
+            }, function (bussinessMessages) {
+                $scope.bussinessMessages = bussinessMessages;
+            });
+}
+
+function cargarCro(croRR, $scope) {
+    /*Cro*/
+    $scope.investigacion.patrocinadorCro.id.idPatrocinador = $scope.patrocinadorSelected.selected.idPatrocinador;
+    croRR.listCroByPatrocinador($scope.investigacion.patrocinadorCro.id.idPatrocinador)
+            .then(function (croRespond) {
+                $scope.cros = croRespond;
+            }, function (bussinessMessages) {
+                $scope.bussinessMessages = bussinessMessages;
+            });
+}
+
+function setearCro($scope) {
+    $scope.investigacion.patrocinadorCro.id.idCro = $scope.croSelected.selected.idCro;
+}
+
+function cambioEtiquetas(investigacionRespond, $scope) {
+    if (typeof ($scope.paramEspecialidadSelected.selected) !== 'undefined') {
+        investigacionRespond.paramEspecialidad = $scope.paramEspecialidadSelected.selected.descripcion;
+    }
+    if (typeof ($scope.paramTipoInvestigacionSelected.selected) !== 'undefined') {
+        investigacionRespond.paramTipoInvestigacion = $scope.paramTipoInvestigacionSelected.selected.descripcion;
+    }
+    if (typeof ($scope.paramFaseSelected.selected) !== 'undefined') {
+        investigacionRespond.paramFase = $scope.paramFaseSelected.selected.descripcion;
+    }
+}
+
+function validaSeleccionables($scope) {
+
+    if (typeof ($scope.paramEspecialidadSelected.selected) !== 'undefined') {
+        $scope.investigacion.paramEspecialidad = $scope.paramEspecialidadSelected.selected.id.idParametroDetalle;
+    }
+
+    if (typeof ($scope.paramTipoInvestigacionSelected.selected) !== 'undefined') {
+        $scope.investigacion.paramTipoInvestigacion = $scope.paramTipoInvestigacionSelected.selected.id.idParametroDetalle;
+    }
+
+    if (typeof ($scope.paramFaseSelected.selected) !== 'undefined') {
+        $scope.investigacion.paramFase = $scope.paramFaseSelected.selected.id.idParametroDetalle;
+    }
+}

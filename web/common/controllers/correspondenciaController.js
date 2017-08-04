@@ -2,15 +2,11 @@ var app = angular.module("app");
 
 app.controller("EditCorrespondenciaController",
         ['$scope', 'correspondencia', 'parametros', 'correspondenciaRR',
-            'correspondenciaFileRR', 'fileRR', '$timeout',
-//            'investigadorRR', 'investigacionInvestigadorRR',
-//            'sedeRR', 'investigacionSedeRR',
-            "$log", "$uibModalInstance", 'SweetAlert', "$q",
+            'correspondenciaFileRR', 'fileRR',
+            "$log", "$uibModalInstance", 'SweetAlert', "$q", '$uibModal',
             function ($scope, correspondencia, parametros, correspondenciaRR,
-                    correspondenciaFileRR, fileRR, $timeout,
-//                    investigadorRR, investigacionInvestigadorRR,
-//                    sedeRR, investigacionSedeRR,
-                    $log, $uibModalInstance, SweetAlert, $q) {
+                    correspondenciaFileRR, fileRR,
+                    $log, $uibModalInstance, SweetAlert, $q, $uibModal) {
 
                 $scope.open1 = function () {
                     $scope.popup1.opened = true;
@@ -70,7 +66,10 @@ app.controller("EditCorrespondenciaController",
                     }
                 ];
 
-                $scope.correspondenciaRespondTemp;
+                $scope.buscarRegistro = function () {
+                    buscarRegistro($scope, $uibModal);
+                };
+
                 $scope.deshabilitado = false;
                 $scope.isCorrespondenciaFile = true;
                 $scope.parametros = parametros;
@@ -119,10 +118,12 @@ app.controller("EditCorrespondenciaController",
                                 selText = listbox.options[selIndex].text;
                                 correspondenciaRespond.paramDistribucion = selText;
 
-                                $scope.correspondenciaRespondTemp = correspondenciaRespond;
-                                if (correspondenciaRespond.registro !== null) {
-                                    $scope.correspondenciaRespondTemp.idRegistro = correspondenciaRespond.registro.idRegistro;
+                                var index = $scope.correspondencias.indexOf($scope.correspondenciaObj);
+                                if (index !== -1) {
+                                    $scope.correspondencias[index] = correspondenciaRespond;
                                 }
+                                $scope.registroObj = correspondenciaRespond;
+
                                 SweetAlert.swal("Hecho!", "Registro guardado exitosamente.", "success");
                             }, function (bussinessMessages) {
                                 $scope.bussinessMessages = bussinessMessages;
@@ -131,15 +132,8 @@ app.controller("EditCorrespondenciaController",
                 };
 
                 $scope.cerrar = function () {
-                    if (typeof ($scope.correspondenciaRespondTemp) === 'undefined') {
-                        $uibModalInstance.dismiss('cancel');
-                    } else {
-//                        $scope.correspondenciaRespondTemp.idRegistro = $scope.correspondenciaRespondTemp.registro.idRegistro;
-                        $uibModalInstance.dismiss($scope.correspondenciaRespondTemp);
-                    }
+                    $uibModalInstance.dismiss('cancel');
                 };
-
-                $scope.cerrarOtras = true;
 
                 $scope.myFile = [];
                 $scope.progressBar = 0;
@@ -226,10 +220,10 @@ app.controller("EditCorrespondenciaController",
             }]);
 
 app.controller("ListCorrespondenciaController",
-        ['$scope', "correspondencias", "correspondenciaRR", '$location',
-            "$log", "$route", "$uibModal", "$confirm", 'SweetAlert',
-            function ($scope, correspondencias, correspondenciaRR, $location,
-                    $log, $route, $uibModal, $confirm, SweetAlert) {
+        ['$scope', "correspondencias", "correspondenciaRR",
+            "$log", "$uibModal", 'SweetAlert',
+            function ($scope, correspondencias, correspondenciaRR,
+                    $log, $uibModal, SweetAlert) {
 
                 /*Se obtiene lista de correspondencias*/
                 $scope.correspondencias = correspondencias;
@@ -253,11 +247,11 @@ app.controller("ListCorrespondenciaController",
                 $scope.editarModal = function (correspondenciaObj) {
                     var modalInstance = $uibModal.open({
                         templateUrl: 'correspondencia/correspondenciaEdit.html',
-//                    templateUrl: 'coordinador/coordinadorTest.html',
                         controller: "EditCorrespondenciaController",
                         size: 'md',
                         backdrop: 'static',
                         keyboard: false,
+                        scope: $scope,
                         resolve: {
                             correspondencia: function () {
                                 return correspondenciaRR.get(correspondenciaObj.idCorrespondencia);
@@ -276,10 +270,6 @@ app.controller("ListCorrespondenciaController",
                             if (data !== "backdrop click") {
                                 if (data !== "escape key press") {
                                     //Si no es cancel, se reemplaza el objeto que se mandó a actualizar
-                                    var index = $scope.correspondencias.indexOf(correspondenciaObj);
-                                    if (index !== -1) {
-                                        $scope.correspondencias[index] = data;
-                                    }
                                 }
                             }
                         } else {
@@ -357,9 +347,9 @@ app.controller("ListCorrespondenciaController",
 
 app.controller("NewCorrespondenciaController",
         ['$scope', 'correspondenciaRR',
-            'parametros', '$location', "$log", "$uibModalInstance", 'SweetAlert',
+            'parametros', "$log", "$uibModalInstance", 'SweetAlert', '$uibModal',
             function ($scope, correspondenciaRR,
-                    parametros, $location, $log, $uibModalInstance, SweetAlert) {
+                    parametros, $log, $uibModalInstance, SweetAlert, $uibModal) {
 
                 $scope.open1 = function () {
                     $scope.popup1.opened = true;
@@ -420,7 +410,6 @@ app.controller("NewCorrespondenciaController",
                 ];
 
                 $scope.parametros = parametros;
-                $scope.correspondenciaRespondTemp;
                 $scope.deshabilitado = true;
                 $scope.isCorrespondenciaFile = true;
 
@@ -438,20 +427,14 @@ app.controller("NewCorrespondenciaController",
 
                 /*Se construyer el json*/
                 $scope.correspondencia = {
-                    idCorrespondencia: "",
-                    fechaCorrespondencia: new Date(),
-                    fechaCarta: null,
-                    registro: null,
-                    paramTipoServicio: null,
-                    paramDistribucion: null,
-                    enviarCorreo: 0,
-                    enviado: 0,
-                    usuarioIngresa: null,
-                    fechaIngreso: null,
-                    usuarioModifica: null,
-                    fechaModificacion: null
+                    registro:{},
+                    fechaCorrespondencia:new Date()
                 };
 
+                $scope.buscarRegistro = function () {
+                    buscarRegistro($scope, $uibModal);
+                };
+                
                 $scope.guardar = function () {
                     $scope.correspondencia.usuarioIngresa = "user1";
                     $scope.correspondencia.fechaIngreso = new Date();
@@ -473,8 +456,9 @@ app.controller("NewCorrespondenciaController",
                                 if (correspondenciaRespond.fechaCarta !== null) {
                                     correspondenciaRespond.fechaCarta = new Date(correspondenciaRespond.fechaCarta);
                                 }
-//                                $scope.correspondenciaRespondTemp=correspondenciaRespond;
-//                                $scope.correspondenciaRespondTemp.idRegistro = correspondenciaRespond.registro.idRegistro;
+
+                                correspondenciaRespond.idRegistro = $scope.correspondencia.idRegistro;
+
                                 $uibModalInstance.dismiss(correspondenciaRespond);
                                 SweetAlert.swal("Hecho!", "Registro guardado exitosamente.", "success");
                             }, function (bussinessMessages) {
@@ -487,11 +471,40 @@ app.controller("NewCorrespondenciaController",
                 };
 
                 $scope.cerrar = function () {
-                    if (typeof ($scope.correspondenciaRespondTemp) === 'undefined') {
-                        $uibModalInstance.dismiss('cancel');
-                    } else {
-                        $uibModalInstance.dismiss($scope.correspondenciaRespondTemp);
-                    }
+                    $uibModalInstance.dismiss('cancel');
                 };
 
             }]);
+
+
+function buscarRegistro($scope, $uibModal) {
+    var modalInstance = $uibModal.open({
+        templateUrl: 'registro/registroSearch.html',
+        controller: "SearchRegistroController",
+        size: 'sm',
+        backdrop: 'static',
+        keyboard: false,
+        resolve: {
+            registros: ['registroRR', function (registroRR) {
+                    return registroRR.listFindAll();
+                }]
+        }
+    });
+
+    modalInstance.result.then(function () {
+        //Si no se devuelve nada
+    }, function (data) {
+        //Si devuelve un objeto
+        if (data !== "cancel") {
+            if (data !== "backdrop click") {
+                if (data !== "escape key press") {
+                    $scope.correspondencia.registro.idRegistro = data.idRegistro;
+                    $scope.correspondencia.idRegistro = data.idRegistro;
+                }
+            }
+        } else {
+            //Si es cancel
+        }
+    });
+}
+;

@@ -1,0 +1,35 @@
+<div class="modal-content">
+    <div class="modal-header">
+        <button type="button" class="close" ng-click="cerrar()">&times;</button>
+        <h4 class="modal-title" id="myModalLabel">Buscar Sede por Investigación</h4>
+    </div>
+    <div class="modal-body">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col">
+                    <div class="form-group">
+                        <label>Sede: {{investigacionSede.selected.nombre}}</label><br>
+                        <ui-select ng-model="investigacionSede.selected" theme="selectize" title="Seleccionar investigación">
+                            <ui-select-match placeholder="Seleccinar sede">{{$select.selected.nombre}}</ui-select-match>
+                            <ui-select-choices repeat="inv in investigacionSedes | filter: $select.search">
+                                <div ng-bind-html="inv.nombre | highlight: $select.search"></div>
+                                <small ng-bind-html="inv.idDepartamento | highlight: $select.search"></small>
+                                <small ng-bind-html="inv.idProvincia | highlight: $select.search"></small>
+                                <small ng-bind-html="inv.idDistrito | highlight: $select.search"></small>
+                            </ui-select-choices>
+                        </ui-select>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" ng-click="enviar()">
+            Enviar
+        </button>
+        <button type="button" class="btn btn-default" ng-click="cerrar()">
+            Cancelar
+        </button>
+    </div>
+</div>

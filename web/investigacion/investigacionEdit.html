@@ -24,11 +24,12 @@
                         <input type="text" class="form-control" id="titulo"  placeholder="Ingresar título" ng-model="investigacion.titulo" value="{{ investigacion.titulo || '' }}">
                     </div> 
                 </div>
+                <!--
                 <div class="col">
                     <div class="form-group" >
                         <label for="paramEspecialidad">Especialidad:  </label><br>
                         <select class="form-control" id="paramEspecialidad" theme="bootstrap" ng-model="investigacion.paramEspecialidad">
-                            <option ng-repeat="pd in paramEspecialidad" value="{{pd.id.idParametroDetalle}}">{{pd.descripcion}}</option>
+                            <option ng-repeat="pd in paramEspecialidad | orderBy : 'descripcion'" value="{{pd.id.idParametroDetalle}}">{{pd.descripcion}}</option>
                         </select>
                     </div>
                 </div>
@@ -36,7 +37,7 @@
                     <div class="form-group">
                         <label for="paramFase">Fase:  </label><br>
                         <select id="paramFase" class="form-control" theme="bootstrap" ng-model="investigacion.paramFase">
-                            <option ng-repeat="pd in paramFase" value="{{pd.id.idParametroDetalle}}">{{pd.descripcion}}</option>
+                            <option ng-repeat="pd in paramFase | orderBy : 'descripcion'" value="{{pd.id.idParametroDetalle}}">{{pd.descripcion}}</option>
                         </select>
                     </div>
                 </div>
@@ -44,10 +45,75 @@
                     <div class="form-group">
                         <label for="paramTipoInvestigacion">Tipo de Investigación:  </label><br>
                         <select  id="paramTipoInvestigacion" theme="bootstrap" class="form-control" ng-model="investigacion.paramTipoInvestigacion">
-                            <option ng-repeat="pd in paramTipoInvestigacion" value="{{pd.id.idParametroDetalle}}">{{pd.descripcion}}</option>
+                            <option ng-repeat="pd in paramTipoInvestigacion | orderBy : 'descripcion' " value="{{pd.id.idParametroDetalle}}">{{pd.descripcion}}</option>
                         </select>
                     </div>
                 </div>
+                -->
+
+                <div class="col">
+                    <div class="form-group">
+                        <label>Fase: </label><br>
+                        <ui-select ng-model="paramFaseSelected.selected" theme="selectize" title="Seleccionar fase">
+                            <ui-select-match placeholder="Seleccinar fase">{{$select.selected.descripcion}}</ui-select-match>
+                            <ui-select-choices repeat="p in paramFase | orderBy : 'descripcion' | filter: $select.search">
+                                <div ng-bind-html="p.descripcion | highlight: $select.search"></div> 
+                            </ui-select-choices>
+                        </ui-select>
+                    </div>
+                </div>
+                
+                <div class="col">
+                    <div class="form-group">
+                        <label>Tipo de Investigación: </label><br>
+                        <ui-select ng-model="paramTipoInvestigacionSelected.selected" theme="selectize" title="Seleccionar especialidad">
+                            <ui-select-match placeholder="Seleccinar especialidad">{{$select.selected.descripcion}}</ui-select-match>
+                            <ui-select-choices repeat="p in paramTipoInvestigacion | orderBy : 'descripcion' | filter: $select.search">
+                                <div ng-bind-html="p.descripcion | highlight: $select.search"></div> 
+                            </ui-select-choices>
+                        </ui-select>
+                    </div>
+                </div>
+                
+                
+                <div class="col">
+                    <div class="form-group">
+                        <label for="paramEspecialidad">Especialidad: </label><br>
+                        <ui-select ng-model="paramEspecialidadSelected.selected" theme="selectize" title="Seleccionar especialidad">
+                            <ui-select-match placeholder="Seleccinar especialidad">{{$select.selected.descripcion}}</ui-select-match>
+                            <ui-select-choices repeat="p in paramEspecialidad | orderBy : 'descripcion' | filter: $select.search">
+                                <div ng-bind-html="p.descripcion | highlight: $select.search"></div> 
+                            </ui-select-choices>
+                        </ui-select>
+                    </div>
+                </div>
+
+                <!--Patrocinador-->
+                <div class="col">
+                    <div class="form-group">
+                        <label>Patrocinador: </label><br>
+                        <ui-select ng-model="patrocinadorSelected.selected"  ng-change="cargarCro()" theme="selectize" title="Seleccionar patrocinador">
+                            <ui-select-match placeholder="Seleccinar patrocinador">{{$select.selected.nombre}}</ui-select-match>
+                            <ui-select-choices repeat="p in patrocinadors | orderBy : 'nombre' | filter: $select.search">
+                                <div ng-bind-html="p.nombre | highlight: $select.search"></div> 
+                            </ui-select-choices>
+                        </ui-select>
+                    </div>
+                </div>
+
+                <!--Cro por Patrocinador-->
+                <div class="col">
+                    <div class="form-group">
+                        <label>Cro </label><br>
+                        <ui-select ng-model="croSelected.selected"  ng-change="setearCro()" theme="selectize" title="Seleccionar cro">
+                            <ui-select-match placeholder="Seleccinar cro">{{$select.selected.nombre}}</ui-select-match>
+                            <ui-select-choices repeat="c in cros | orderBy : 'nombre' | filter: $select.search">
+                                <div ng-bind-html="c.nombre | highlight: $select.search"></div> 
+                            </ui-select-choices>
+                        </ui-select>
+                    </div>
+                </div>
+
                 <!--Inicio de Coordinador-->
                 <div class="col">    
                     <button ng-disabled="deshabilitado" type="button" style="width: 100%;" class="btn btn-default" ng-click="isCoordinador = !isCoordinador">Coordinador</button>

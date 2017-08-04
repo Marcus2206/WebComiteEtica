@@ -18,7 +18,7 @@
                         <p class="input-group">
                             <input type="text" class="form-control" uib-datepicker-popup="dd/MM/yyyy" ng-model="correspondencia.fechaCorrespondencia" is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true" show-button-bar="false" readonly />
                             <span class="input-group-btn">
-                                <button type="button" class="btn btn-default" ng-click="open1()"><i class="glyphicon glyphicon-calendar"></i></button>
+                                <button ng-disabled="true" type="button" class="btn btn-default" ng-click="open1()"><i class="glyphicon glyphicon-calendar"></i></button>
                             </span>
                         </p>
                     </div>
@@ -34,12 +34,19 @@
                         </p>
                     </div>
                 </div>
+
                 <div class="col">
                     <div class="form-group">
                         <label for="registro">Registro:  </label><br>
-                        <input type="text" class="form-control" id="registro"  placeholder="Seleccionar Registro" ng-model="correspondencia.registro.idRegistro" value="{{correspondencia.registro.idRegistro|| '' }}">
+                        <p class="input-group">
+                            <input type="text" class="form-control" id="registro"  placeholder="Seleccionar Registro" ng-model="correspondencia.registro.idRegistro" value="{{correspondencia.registro.idRegistro|| '' }}">
+                            <span class="input-group-btn">
+                                <button type="button" class="btn btn-default" ng-click="buscarRegistro()"><i class="glyphicon glyphicon-search"></i></button>
+                            </span>
+                        </p>
                     </div> 
                 </div>
+
                 <div class="col">
                     <div class="form-group">
                         <label for="paramTipoServicio">Tipo de Servicio:  </label><br>

@@ -13,32 +13,42 @@
                     </div> 
                 </div>
 
-                
                 <div class="col">
                     <div class="form-group">
                         <label for="investigacion">Investigación:  </label><br>
                         <p class="input-group">
-                            <input type="text" class="form-control" id="investigacion"  placeholder="Seleccionar Investigación" ng-model="registro.investigacion" value="{{registro.investigacion|| '' }}"/>
+                            <input type="text" class="form-control" id="investigacion"  placeholder="Buscar Investigación" ng-model="registro.investigacion.idInvestigacion" readonly value="{{registro.investigacion.idInvestigacion|| '' }}"/>
                             <span class="input-group-btn">
                                 <button type="button" class="btn btn-default" ng-click="buscarInvestigacion()"><i class="glyphicon glyphicon-search"></i></button>
                             </span>
                         </p>
                     </div> 
                 </div>
-                
-                
+
                 <div class="col">
                     <div class="form-group">
-                        <label for="investigacionInvestigador">Investigador:  </label><br>
-                        <input type="text" class="form-control" id="investigacionInvestigador"  placeholder="Seleccionar Investigador" ng-model="registro.investigacionInvestigador" value="{{registro.investigacionInvestigador|| '' }}">
+                        <label for="idInvestigador">Investigador:  </label><br>
+                        <p class="input-group">
+                            <input type="text" class="form-control" id="idInvestigador"  placeholder="Buscar Investigador" ng-model="registro.idInvestigador" readonly value="{{registro.idInvestigador|| '' }}"/>
+                            <span class="input-group-btn">
+                                <button type="button" class="btn btn-default" ng-click="buscarInvestigador()"><i class="glyphicon glyphicon-search"></i></button>
+                            </span>
+                        </p>
                     </div> 
                 </div>
+
                 <div class="col">
                     <div class="form-group">
-                        <label for="investigacionSede">Sede:  </label><br>
-                        <input type="text" class="form-control" id="investigacionSede"  placeholder="Seleccionar Sede" ng-model="registro.investigacionSede" value="{{registro.investigacionSede|| '' }}">
+                        <label for="idSede">Sede:  </label><br>
+                        <p class="input-group">
+                            <input type="text" class="form-control" id="idSede"  placeholder="Buscar Sede" ng-model="registro.idSede" readonly value="{{registro.idSede|| '' }}"/>
+                            <span class="input-group-btn">
+                                <button type="button" class="btn btn-default" ng-click="buscarSede()"><i class="glyphicon glyphicon-search"></i></button>
+                            </span>
+                        </p>
                     </div> 
                 </div>
+
                 <div class="col">
                     <div class="form-group">
                         <label for="fechaAprobacion">Fecha aprobación:  </label><br>

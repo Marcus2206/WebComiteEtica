@@ -2,39 +2,11 @@ var app = angular.module("app");
 
 app.controller("EditRegistroController",
         ['$scope', 'registro', 'parametros', 'registroRR',
-//            'coordinadorRemoteResource', 'investigacionCoordinadorRemoteResource',
-//            'investigadorRR', 'investigacionInvestigadorRR',
-//            'sedeRR', 'investigacionSedeRR',
-            '$location', "$log", '$filter', "$uibModalInstance", "$confirm", 'SweetAlert',
-            'fileUpload',
+            "$log", "$uibModalInstance", 'SweetAlert',
+            '$uibModal', 'rObj',
             function ($scope, registro, parametros, registroRR,
-//                    coordinadorRemoteResource, investigacionCoordinadorRemoteResource,
-//                    investigadorRR, investigacionInvestigadorRR,
-//                    sedeRR, investigacionSedeRR,
-                    $location, $log, $filter, $uibModalInstance, $confirm, SweetAlert,
-                    fileUpload) {
-
-                $scope.registroRespondTemp;
-                $scope.parametros = parametros;
-//                $scope.deshabilitado = false;
-
-//                $scope.investigacionCoordinadors = [];
-//                $scope.investigacionInvestigadors = [];
-//                $scope.investigacionSedes = [];
-
-                $scope.nombreBoton = "Editar";
-
-//                $scope.coordinadorsSelectList = [];
-//                $scope.investigadorsSelectList = [];
-//                $scope.sedesSelectList = [];
-
-//                $scope.coordinadorSelect = {};
-//                $scope.investigadorSelect = {};
-//                $scope.sedeSelect = {};
-//
-//                $scope.isCoordinador = true;
-//                $scope.isInvestigador = true;
-//                $scope.isSede = true;
+                    $log, $uibModalInstance, SweetAlert,
+                    $uibModal, rObj) {
 
                 $scope.filtrar = function (obj, param) {
                     function filterByParametro(obj) {
@@ -45,22 +17,39 @@ app.controller("EditRegistroController",
                     return obj.filter(filterByParametro);
                 };
 
-                $scope.paramTipoServicio = $scope.filtrar($scope.parametros, 'P001')[0].parametroDetalles;
-                $scope.paramDistribucion = $scope.filtrar($scope.parametros, 'P002')[0].parametroDetalles;
-
-//                registro.fechaCorrespondencia = new Date(registro.fechaCorrespondencia);
-//                if (correspondencia.fechaCarta !== null) {
-//                    correspondencia.fechaCarta = new Date(correspondencia.fechaCarta);
-//                }
+                $scope.parametros = parametros;
+                $scope.paramEstado = $scope.filtrar($scope.parametros, 'P006')[0].parametroDetalles;
+                $scope.paramNotificacion = $scope.filtrar($scope.parametros, 'P007')[0].parametroDetalles;
 
                 $scope.registro = registro;
+                $scope.registro.investigador = rObj.idInvestigador;
+                $scope.registro.sede = rObj.idSede;
 
                 $scope.guardar = function () {
                     $scope.registro.usuarioModifica = "sa";
                     $scope.registro.fechaModificacion = new Date();
                     registroRR.update($scope.registro)
                             .then(function (registroRespond) {
-                                $scope.correspondenciaRespondTemp = registroRespond;
+
+                                var listbox = document.getElementById("paramEstado");
+                                var selIndex = listbox.selectedIndex;
+                                var selText = listbox.options[selIndex].text;
+                                registroRespond.paramEstado = selText;
+
+                                listbox = document.getElementById("paramNotificacion");
+                                selIndex = listbox.selectedIndex;
+                                selText = listbox.options[selIndex].text;
+                                registroRespond.paramNotificacion = selText;
+
+                                registroRespond.idInvestigador = $scope.registro.investigador;
+                                registroRespond.idSede = $scope.registro.sede;
+                                registroRespond.idInvestigacion = $scope.registro.investigacion.protocolo + ' - ' + $scope.registro.investigacion.titulo;
+
+                                var index = $scope.registros.indexOf($scope.registroObj);
+                                if (index !== -1) {
+                                    $scope.registros[index] = registroRespond;
+                                }
+                                $scope.registroObj = registroRespond;
                                 SweetAlert.swal("Hecho!", "Registro guardado exitosamente.", "success");
                             }, function (bussinessMessages) {
                                 $scope.bussinessMessages = bussinessMessages;
@@ -69,29 +58,28 @@ app.controller("EditRegistroController",
                 };
 
                 $scope.cerrar = function () {
-                    if (typeof ($scope.correspondenciaRespondTemp) === 'undefined') {
-                        $uibModalInstance.dismiss('cancel');
-                    } else {
-                        $uibModalInstance.dismiss($scope.correspondenciaRespondTemp);
-                    }
+                    $uibModalInstance.dismiss('cancel');
                 };
 
-                $scope.cerrarOtras = true;
-
-                $scope.uploadFile = function () {
-                    var file = $scope.myFile;
-                    angular.forEach(file, function (item) {
-
-                        fileUpload.uploadFileToUrl(item._file);
-                    });
+                $scope.buscarInvestigacion = function () {
+                    buscarInvestigacion($scope, $uibModal);
                 };
+
+                $scope.buscarInvestigador = function () {
+                    buscarInvestigador($scope, $uibModal);
+                };
+
+                $scope.buscarSede = function () {
+                    buscarSede($scope, $uibModal);
+                };
+
             }]);
 
 app.controller("ListRegistroController",
-        ['$scope', "registros", "registroRR", '$location',
-            "$log", "$route", "$uibModal", "$confirm", 'SweetAlert',
-            function ($scope, registros, registroRR, $location,
-                    $log, $route, $uibModal, SweetAlert) {
+        ['$scope', "registros", "registroRR",
+            "$log", "$uibModal", 'SweetAlert',
+            function ($scope, registros, registroRR,
+                    $log, $uibModal, SweetAlert) {
 
                 /*Se obtiene lista de registros*/
                 $scope.registros = registros;
@@ -113,19 +101,22 @@ app.controller("ListRegistroController",
 
                 /*Editar un registro*/
                 $scope.editarModal = function (registroObj) {
+                    $scope.registroObj = registroObj;
                     var modalInstance = $uibModal.open({
                         templateUrl: 'registro/registroEdit.html',
                         controller: "EditRegistroController",
                         size: 'md',
                         backdrop: 'static',
                         keyboard: false,
+                        scope: $scope,
                         resolve: {
                             registro: function () {
                                 return registroRR.get(registroObj.idRegistro);
                             },
                             parametros: ['parametroRR', function (parametroRR) {
                                     return parametroRR.list();
-                                }]
+                                }],
+                            rObj: registroObj
                         }
                     });
 
@@ -137,10 +128,6 @@ app.controller("ListRegistroController",
                             if (data !== "backdrop click") {
                                 if (data !== "escape key press") {
                                     //Si no es cancel, se reemplaza el objeto que se mandó a actualizar
-                                    var index = $scope.registros.indexOf(registroObj);
-                                    if (index !== -1) {
-                                        $scope.registros[index] = data;
-                                    }
                                 }
                             }
                         } else {
@@ -167,7 +154,6 @@ app.controller("ListRegistroController",
                     modalInstance.result.then(function () {
                         //Si no se devuelve nada
                     }, function (data) {
-
                         //Si devuelve un objeto
                         if (data !== "cancel") {
                             if (data !== "backdrop click") {
@@ -197,15 +183,13 @@ app.controller("ListRegistroController",
                     }, function (isConfirm) {
                         if (isConfirm) {
                             //Si se presiona Sí.
-//                            correspondencia.enviarCorreo = ((correspondencia.enviarCorreo === '1') ? 1 : 0);
-//                            correspondencia.enviado = ((correspondencia.enviado === '1') ? 1 : 0);
                             registroRR.delete(registro)
                                     .then(function (registroResult) {
                                         //Se la elimenación es exitosa.
                                         $scope.registros.splice($scope.registros.indexOf(registro), 1);
                                         SweetAlert.swal("¡Hecho!", "Registro eliminado exitosamente.", "success");
                                     }, function (bussinessMessages) {
-                                        SweetAlert.swal("Advertencia", "La investigación se encuentra activa.", "warning");
+                                        SweetAlert.swal("Advertencia", "El registro se encuentra activo.", "warning");
                                         $scope.bussinessMessages = bussinessMessages;
                                     });
                         } else {
@@ -218,10 +202,10 @@ app.controller("ListRegistroController",
             }]);
 
 app.controller("NewRegistroController",
-        ['$scope', 'registroRR',
+        ['$scope', 'registroRR', 'investigacionInvestigadorRR',
             'parametros', "$log", "$uibModalInstance", 'SweetAlert',
             '$uibModal',
-            function ($scope, registroRR,
+            function ($scope, registroRR, investigacionInvestigadorRR,
                     parametros, $log, $uibModalInstance, SweetAlert,
                     $uibModal) {
 
@@ -233,92 +217,170 @@ app.controller("NewRegistroController",
                     }
                     return obj.filter(filterByParametro);
                 };
-
                 $scope.parametros = parametros;
                 $scope.paramEstado = $scope.filtrar($scope.parametros, 'P006')[0].parametroDetalles;
                 $scope.paramNotificacion = $scope.filtrar($scope.parametros, 'P007')[0].parametroDetalles;
-
-                $scope.registroRespondTemp;
                 /*Se construyer el json*/
                 $scope.registro = {};
-
                 $scope.guardar = function () {
                     //if ($scope.form.$valid) {
                     $scope.registro.usuarioIngresa = "user1";
                     $scope.registro.fechaIngreso = new Date();
-//                    $scope.correspondencia.fechaCorrespondencia=new Date(document.getElementById("fechaCorrespondencia"));
-//                    $log.log($scope.correspondencia.fechaCorrespondencia);
-                    registroRR.insert($scope.registro)
-                            .then(function (registroRespond) {
-                                var listbox = document.getElementById("paramEstado");
-                                var selIndex = listbox.selectedIndex;
-                                var selText = listbox.options[selIndex].text;
-                                registroRespond.paramEstado = selText;
 
-                                listbox = document.getElementById("paramNotificacion");
-                                selIndex = listbox.selectedIndex;
-                                selText = listbox.options[selIndex].text;
-                                registroRespond.paramNotificacion = selText;
+                    var flag = false;
+                    registroRR.validateRegistro($scope.registro.investigacion.idInvestigacion, $scope.registro.idInvestigador, $scope.registro.idSede)
+                            .then(function (responde) {
+                                if (responde.length > 0) {
+                                    SweetAlert.swal("Advertencia", "Existe un registro con datos existentes.\nVerifique Investigación, Investigador y Sede.", "warning");
+                                } else {
+                                    registroRR.insert($scope.registro)
+                                            .then(function (registroRespond) {
+                                                var listbox = document.getElementById("paramEstado");
+                                                var selIndex = listbox.selectedIndex;
+                                                var selText = listbox.options[selIndex].text;
+                                                registroRespond.paramEstado = selText;
 
-//                                correspondenciaRespond.fechaCorrespondencia = new Date(correspondenciaRespond.fechaCorrespondencia);
-//
-//                                if (correspondenciaRespond.fechaCarta !== null) {
-//                                    correspondenciaRespond.fechaCarta = new Date(correspondenciaRespond.fechaCarta);
-//                                } else {
-//
-//                                }
+                                                listbox = document.getElementById("paramNotificacion");
+                                                selIndex = listbox.selectedIndex;
+                                                selText = listbox.options[selIndex].text;
+                                                registroRespond.paramNotificacion = selText;
 
-                                $scope.registroRespondTemp = registroRespond;
-                                $uibModalInstance.dismiss(registroRespond);
-                                SweetAlert.swal("Hecho", "Registro guardado exitosamente.", "success");
-                            }, function (bussinessMessages) {
-                                $scope.bussinessMessages = bussinessMessages;
-                                SweetAlert.swal("Hubo un error", "Intente nuevamente o comuniquese con el administrador.", "danger");
+                                                registroRespond.idInvestigador = $scope.registro.investigador;
+                                                registroRespond.idSede = $scope.registro.sede;
+                                                registroRespond.idInvestigacion = $scope.registro.investigacion.protocolo + ' - ' + $scope.registro.investigacion.titulo;
+
+                                                $uibModalInstance.dismiss(registroRespond);
+                                                SweetAlert.swal("Hecho", "Registro guardado exitosamente.", "success");
+                                            }, function (bussinessMessages) {
+                                                $scope.bussinessMessages = bussinessMessages;
+                                                SweetAlert.swal("Hubo un error", "Intente nuevamente o comuniquese con el administrador.", "warning");
+                                            });
+                                }
+                            }
+                            , function (response) {
+
                             });
                     /*} else {
                      alert("Hay datos inválidos");
                      }*/
                 };
                 $scope.cerrar = function () {
-//                    if (typeof ($scope.registroRespondTemp) === 'undefined') {
-
                     $uibModalInstance.dismiss('cancel');
-//                    } else {
-//                        $uibModalInstance.dismiss($scope.registroRespondTemp);
-//                    }
                 };
-
                 $scope.buscarInvestigacion = function () {
-
-                    var modalInstance = $uibModal.open({
-                        templateUrl: 'investigacion/investigacionSearch.html',
-                        controller: "SearchInvestigacionController",
-                        size: 'sm',
-                        backdrop: 'static',
-                        keyboard: false,
-                        resolve: {
-                            investigacions: ['investigacionRemoteResource', function (investigacionRemoteResource) {
-                                    return investigacionRemoteResource.list();
-                                }]
-                        }
-                    });
-
-                    modalInstance.result.then(function () {
-                        //Si no se devuelve nada
-                    }, function (data) {
-                        //Si devuelve un objeto
-                        if (data !== "cancel") {
-                            if (data !== "backdrop click") {
-                                if (data !== "escape key press") {
-                                    //Si no es cancel, se reemplaza el objeto que se mandó a actualizar
-//                                    $scope.registros.push(data);
-//                                    $scope.editarModal(data);
-                                }
-                            }
-                        } else {
-                            //Si es cancel
-                        }
-                    });
+                    buscarInvestigacion($scope, $uibModal);
                 };
-
+                $scope.buscarInvestigador = function () {
+                    buscarInvestigador($scope, $uibModal);
+                };
+                $scope.buscarSede = function () {
+                    buscarSede($scope, $uibModal);
+                };
             }]);
+app.controller("SearchRegistroController",
+        ['$scope',
+            "$log", "$uibModalInstance", 'registros',
+            function ($scope,
+                    $log, $uibModalInstance, registros) {
+                $scope.registros = registros;
+                $scope.registro = {};
+                $scope.enviar = function () {
+                    $uibModalInstance.dismiss($scope.registro.selected);
+                };
+                $scope.cerrar = function () {
+                    $uibModalInstance.dismiss('cancel');
+                };
+            }]);
+function buscarInvestigacion($scope, $uibModal) {
+
+    var modalInstance = $uibModal.open({
+        templateUrl: 'investigacion/investigacionSearch.html',
+        controller: "SearchInvestigacionController",
+        size: 'sm',
+        backdrop: 'static',
+        keyboard: false,
+        resolve: {
+            investigacions: ['investigacionRemoteResource', function (investigacionRemoteResource) {
+                    return investigacionRemoteResource.list();
+                }]
+        }
+    });
+    modalInstance.result.then(function () {
+        //Si no se devuelve nada
+    }, function (data) {
+        //Si devuelve un objeto
+        if (data !== "cancel") {
+            if (data !== "backdrop click") {
+                if (data !== "escape key press") {
+                    $scope.registro.investigacion = data;
+                }
+            }
+        } else {
+            //Si es cancel
+        }
+    });
+}
+
+
+function buscarInvestigador($scope, $uibModal) {
+    var idInvestigacion = $scope.registro.investigacion.idInvestigacion;
+    var modalInstance = $uibModal.open({
+        templateUrl: 'investigacionInvestigador/investigacionInvestigadorSearch.html',
+        controller: "SearchInvestigacionInvestigadorController",
+        size: 'sm',
+        backdrop: 'static',
+        keyboard: false,
+        resolve: {
+            investigacionInvestigadors: ['investigacionInvestigadorRR', function (investigacionInvestigadorRR) {
+                    return investigacionInvestigadorRR.listInvestigadorByIdInvestigacion(idInvestigacion);
+                }]
+        }
+    });
+    modalInstance.result.then(function () {
+        //Si no se devuelve nada
+    }, function (data) {
+        //Si devuelve un objeto
+        if (data !== "cancel") {
+            if (data !== "backdrop click") {
+                if (data !== "escape key press") {
+                    $scope.registro.idInvestigador = data[0].id.idInvestigador;
+                    $scope.registro.investigador = data[1].apePaterno + ' ' + data[1].apeMaterno + ', ' + data[1].nombres;
+                }
+            }
+        } else {
+            //Si es cancel
+        }
+    });
+}
+
+
+function buscarSede($scope, $uibModal) {
+    var idInvestigacion = $scope.registro.investigacion.idInvestigacion;
+    var modalInstance = $uibModal.open({
+        templateUrl: 'investigacionSede/investigacionSedeSearch.html',
+        controller: "SearchInvestigacionSedeController",
+        size: 'sm',
+        backdrop: 'static',
+        keyboard: false,
+        resolve: {
+            investigacionSedes: ['investigacionSedeRR', function (investigacionSedeRR) {
+                    return investigacionSedeRR.listSedeByIdInvestigacion(idInvestigacion);
+                }]
+        }
+    });
+    modalInstance.result.then(function () {
+        //Si no se devuelve nada
+    }, function (data) {
+        //Si devuelve un objeto
+        if (data !== "cancel") {
+            if (data !== "backdrop click") {
+                if (data !== "escape key press") {
+                    $scope.registro.idSede = data.idSede;
+                    $scope.registro.sede = data.nombre;
+                }
+            }
+        } else {
+            //Si es cancel
+        }
+    });
+}
