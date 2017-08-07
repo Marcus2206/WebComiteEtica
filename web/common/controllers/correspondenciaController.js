@@ -102,7 +102,6 @@ app.controller("EditCorrespondenciaController",
                 /*Cargando archivos de correspondencia*/
                 correspondenciaFileRR.findAllByIdCorrepondencia($scope.correspondencia.idCorrespondencia)
                         .then(function (correspondenciaFileRespond) {
-//                            $scope.correspondenciaFiles = correspondenciaFileRespond;
                             $scope.relacionarFile(correspondenciaFileRespond);
                         }, function (bussinessMessages) {
                             $scope.bussinessMessages = bussinessMessages;
@@ -135,14 +134,16 @@ app.controller("EditCorrespondenciaController",
                         return;
                     }
 
-                    $scope.correspondenciaServicio = {id: {idCorrespondencia: $scope.correspondencia.idCorrespondencia,
+                    $scope.correspondenciaServicio = {
+                        id: {idCorrespondencia: $scope.correspondencia.idCorrespondencia,
                             idCorrespondenciaServicio: 0},
                         paramTipoServicio: $scope.servicioSelect.id.idParametroDetalle,
                         costo: $scope.servicioSelect.valor,
                         observacion: $scope.observacionSelect,
                         transferido: 0,
                         usuarioIngresa: "sa",
-                        fechaIngreso: new Date()};
+                        fechaIngreso: new Date()
+                    };
                     correspondenciaServicioRR.insert($scope.correspondenciaServicio)
                             .then(function (correspondenciaServicioRespond) {
                                 correspondenciaServicioRespond.idCorrespondencia = correspondenciaServicioRespond.id.idCorrespondencia;

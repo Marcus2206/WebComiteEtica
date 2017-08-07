@@ -3,10 +3,10 @@ var app = angular.module("app");
 app.controller("EditRegistroController",
         ['$scope', 'registro', 'parametros', 'registroRR',
             "$log", "$uibModalInstance", 'SweetAlert',
-            '$uibModal', 'rObj',
+            '$uibModal', 'rObj', 'registroBitacoraRR',
             function ($scope, registro, parametros, registroRR,
                     $log, $uibModalInstance, SweetAlert,
-                    $uibModal, rObj) {
+                    $uibModal, rObj, registroBitacoraRR) {
 
                 $scope.filtrar = function (obj, param) {
                     function filterByParametro(obj) {
@@ -25,6 +25,19 @@ app.controller("EditRegistroController",
                 $scope.registro.investigador = rObj.idInvestigador;
                 $scope.registro.sede = rObj.idSede;
 
+                $scope.deshabilitado = false;
+                $scope.isBitacora = true;
+
+                $scope.registroBitacora = {id: {}};
+                $scope.registroBitacoras = [];
+
+
+                registroBitacoraRR.findAllByIdRegistro($scope.registro.idRegistro)
+                        .then(function (registroBitacoraResponse) {
+                            $scope.registroBitacoras = registroBitacoraResponse;
+                        }, function (bussinessMessages) {
+
+                        });
                 $scope.guardar = function () {
                     $scope.registro.usuarioModifica = "sa";
                     $scope.registro.fechaModificacion = new Date();
@@ -71,6 +84,27 @@ app.controller("EditRegistroController",
 
                 $scope.buscarSede = function () {
                     buscarSede($scope, $uibModal);
+                };
+
+                $scope.agregarBitacora = function () {
+                    $scope.registroBitacora.id.idRegistro = $scope.registro.idRegistro;
+                    $scope.registroBitacora.id.idBitacora = 0;
+                    registroBitacoraRR.insert($scope.registroBitacora)
+                            .then(function (registroBitacoraResponse) {
+                                $scope.registroBitacoras.push(registroBitacoraResponse);
+                            }, function (bussinessMessages) {
+
+                            });
+                };
+
+                $scope.eliminarBitacora = function (registroBitacora) {
+                    registroBitacora.fecha=new Date();
+                    registroBitacoraRR.delete(registroBitacora)
+                            .then(function (registroBitacoraResponse) {
+                                $scope.registroBitacoras.splice($scope.registroBitacoras.indexOf(registroBitacora), 1);
+                            }, function (bussinessMessages) {
+
+                            });
                 };
 
             }]);
@@ -221,6 +255,9 @@ app.controller("NewRegistroController",
                 $scope.parametros = parametros;
                 $scope.paramEstado = $scope.filtrar($scope.parametros, 'P006')[0].parametroDetalles;
                 $scope.paramNotificacion = $scope.filtrar($scope.parametros, 'P007')[0].parametroDetalles;
+
+                $scope.deshabilitado = true;
+                $scope.isBitacora = true;
 
                 /*Se construyer el json*/
                 $scope.registro = {investigacion: {}};

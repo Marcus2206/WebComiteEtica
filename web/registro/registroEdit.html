@@ -121,6 +121,66 @@
                         <input type="text" class="form-control" id="visitaInspeccionIns"  placeholder="Visita Inspección INS" ng-model="registro.visitaInspeccionIns" value="{{ registro.visitaInspeccionIns || '' }}">
                     </div> 
                 </div>
+
+
+                <!--Registro Bitácora-->
+                <div class="col">    
+                    <button ng-disabled="deshabilitado" type="button" style="width: 100%;" class="btn btn-default" ng-click="isBitacora = !isBitacora">Bitácora</button>
+                    <hr>
+                    <div uib-collapse="isBitacora">         
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="fecha">Fecha:  </label><br>
+                                    <input type="text" class="form-control" id="fecha"  placeholder="Fecha" ng-model="registroBitacora.fecha" value="{{ registroBitacora.fecha || '' }}">
+                                </div> 
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="detalle">Detalle:  </label><br>
+                                    <p class="input-group">
+                                        <input type="text" class="form-control" id="detalle"  placeholder="Detalle" ng-model="registroBitacora.detalle" value="{{ registroBitacora.detalle || '' }}">
+                                        <span class="input-group-btn">
+                                            <button type="button" class="btn btn-default" ng-click="agregarBitacora()"><i class="glyphicon glyphicon-plus"></i></button>
+                                        </span>
+                                    </p>
+                                </div> 
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <table class="table table-bordered table-hover table-condensed table-responsive">
+                                    <thead>
+                                        <tr>
+                                            <th>Bitácora de Cambios</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="registroBitacora in registroBitacoras| orderBy:'idCorrespondenciaServicio'">
+                                            <td>
+                                                <div>
+                                                    <div>
+                                                        <button type="button" class="close" aria-label="Close" ng-click="eliminarBitacora(registroBitacora)">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div>
+                                                        {{registroBitacora.detalle}} - {{registroBitacora.fecha}}
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>    
+
+
+
+
+
             </div>
         </div>
     </div>

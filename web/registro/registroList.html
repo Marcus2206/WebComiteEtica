@@ -50,17 +50,17 @@
                         <td data-title="Investigación">{{registro.idInvestigacion}}</td>
                         <td data-title="Investigador">{{registro.idInvestigador}}</td>
                         <td data-title="Sede">{{registro.idSede}}</td>
-                        <td data-title="Fecha aprobación">{{registro.fechaAprobacion}}</td>
+                        <td data-title="Fecha aprobación">{{registro.fechaAprobacion|date:'dd/MM/yyyy'}}</td>
                         <td data-title="Estado">{{registro.paramEstado}}</td>
                         <td data-title="Observación">{{registro.observacion}}</td>
                         <td data-title="Fármaco experimental">{{registro.farmacoExperimental}}</td>
-                        <td data-title="Placebo"> {{registro.placebo}}</td>
+                        <td data-title="Placebo"> {{registro.placebo|booleanToText }}</td>
                         <td data-title="Paciente EAS">{{registro.pacienteEas}}</td>
                         <td data-title="EAS Local">{{registro.easLocal}}</td>
                         <td data-title="Notificación">{{registro.paramNotificacion}}</td>
-                        <td data-title="Fecha EAS">{{registro.fechaEas}}</td>
+                        <td data-title="Fecha EAS">{{registro.fechaEas|date:'dd/MM/yyyy'}}</td>
                         <td data-title="Visita Inspección">{{registro.visitaInspeccion}}</td>
-                        <td data-title="Estudio Niños">{{registro.estudioNinos}}</td>
+                        <td data-title="Estudio Niños">{{registro.estudioNinos|booleanToText }}</td>
                         <td data-title="Visita Inspección INS">{{registro.visitaInspeccionIns}}</td>
                         <td>
                             <button class="btn btn-primary" ng-click="editarModal(registro)"><i class="fa fa-pencil-square-o" aria-hidden="true"></i><span class="hidden-xs"> Editar</span></button>

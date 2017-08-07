@@ -4,7 +4,10 @@
  * and open the template in the editor.
  */
 
-var app=angular.module("app");
+var app = angular.module("app");
 
-app.controller("MainController", ['$scope','$log',function($scope,$log) {
-}]);
+app.controller("MainController", ['$scope', '$log', function ($scope, $log) {
+        $('#myCarousel').carousel({
+            interval: 2000
+        });
+    }]);
