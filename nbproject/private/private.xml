@@ -5,6 +5,13 @@
         <group name="Comite de Etica">
             <file>file:/C:/Users/Felix/Documents/NetBeansProjects/Comite%20de%20Etica/WebComiteEtica/web/common/directives/directives.js</file>
         </group>
-        <group/>
+        <group>
+            <file>file:/C:/Users/rasec/Documents/NetBeansProjects/ComiteGit/WebComiteEtica/web/common/services/pagoServices.js</file>
+            <file>file:/C:/Users/rasec/Documents/NetBeansProjects/ComiteGit/WebComiteEtica/web/pago/pagoNew.html</file>
+            <file>file:/C:/Users/rasec/Documents/NetBeansProjects/ComiteGit/WebComiteEtica/web/pago/pagoList.html</file>
+            <file>file:/C:/Users/rasec/Documents/NetBeansProjects/ComiteGit/WebComiteEtica/web/index.html</file>
+            <file>file:/C:/Users/rasec/Documents/NetBeansProjects/ComiteGit/WebComiteEtica/web/common/controllers/pagoController.js</file>
+            <file>file:/C:/Users/rasec/Documents/NetBeansProjects/ComiteGit/WebComiteEtica/web/common/services/pagoDetalleServices.js</file>
+        </group>
     </open-files>
 </project-private>

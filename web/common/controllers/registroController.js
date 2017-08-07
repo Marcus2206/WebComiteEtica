@@ -202,10 +202,10 @@ app.controller("ListRegistroController",
             }]);
 
 app.controller("NewRegistroController",
-        ['$scope', 'registroRR', 'investigacionInvestigadorRR',
+        ['$scope', 'registroRR',
             'parametros', "$log", "$uibModalInstance", 'SweetAlert',
             '$uibModal',
-            function ($scope, registroRR, investigacionInvestigadorRR,
+            function ($scope, registroRR,
                     parametros, $log, $uibModalInstance, SweetAlert,
                     $uibModal) {
 
@@ -217,17 +217,34 @@ app.controller("NewRegistroController",
                     }
                     return obj.filter(filterByParametro);
                 };
+
                 $scope.parametros = parametros;
                 $scope.paramEstado = $scope.filtrar($scope.parametros, 'P006')[0].parametroDetalles;
                 $scope.paramNotificacion = $scope.filtrar($scope.parametros, 'P007')[0].parametroDetalles;
+
                 /*Se construyer el json*/
-                $scope.registro = {};
+                $scope.registro = {investigacion: {}};
+
                 $scope.guardar = function () {
                     //if ($scope.form.$valid) {
                     $scope.registro.usuarioIngresa = "user1";
                     $scope.registro.fechaIngreso = new Date();
 
-                    var flag = false;
+                    if (isEmptyJSON($scope.registro.investigacion)) {
+                        SweetAlert.swal("Advertencia", "Debe seleccionar una investigacion en curso.", "warning");
+                        return;
+                    }
+
+                    if (typeof ($scope.registro.idInvestigador) === 'undefined') {
+                        SweetAlert.swal("Advertencia", "Debe seleccionar un investigador asignado.", "warning");
+                        return;
+                    }
+
+                    if (typeof ($scope.registro.idSede) === 'undefined') {
+                        SweetAlert.swal("Advertencia", "Debe seleccionar una sede asignada.", "warning");
+                        return;
+                    }
+
                     registroRR.validateRegistro($scope.registro.investigacion.idInvestigacion, $scope.registro.idInvestigador, $scope.registro.idSede)
                             .then(function (responde) {
                                 if (responde.length > 0) {
@@ -277,6 +294,7 @@ app.controller("NewRegistroController",
                     buscarSede($scope, $uibModal);
                 };
             }]);
+
 app.controller("SearchRegistroController",
         ['$scope',
             "$log", "$uibModalInstance", 'registros',
@@ -291,6 +309,7 @@ app.controller("SearchRegistroController",
                     $uibModalInstance.dismiss('cancel');
                 };
             }]);
+
 function buscarInvestigacion($scope, $uibModal) {
 
     var modalInstance = $uibModal.open({
@@ -383,4 +402,11 @@ function buscarSede($scope, $uibModal) {
             //Si es cancel
         }
     });
+}
+
+function isEmptyJSON(s) {
+    for (var i in s) {
+        return false;
+    }
+    return true;
 }

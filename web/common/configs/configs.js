@@ -101,3 +101,27 @@ app.config(['baseUrl', 'fileRRProvider',
     fileRRProvider.setBaseUrl(baseUrl);
   }
 ]);
+
+app.config(['baseUrl', 'fechaSesionRRProvider',
+  function(baseUrl, fechaSesionRRProvider) {
+    fechaSesionRRProvider.setBaseUrl(baseUrl);
+  }
+]);
+
+app.config(['baseUrl', 'pagoRRProvider',
+  function(baseUrl, pagoRRProvider) {
+    pagoRRProvider.setBaseUrl(baseUrl);
+  }
+]);
+
+app.config(['baseUrl', 'correspondenciaServicioRRProvider',
+  function(baseUrl, correspondenciaServicioRRProvider) {
+    correspondenciaServicioRRProvider.setBaseUrl(baseUrl);
+  }
+]);
+
+app.config(['baseUrl', 'pagoDetalleRRProvider',
+  function(baseUrl, pagoDetalleRRProvider) {
+    pagoDetalleRRProvider.setBaseUrl(baseUrl);
+  }
+]);

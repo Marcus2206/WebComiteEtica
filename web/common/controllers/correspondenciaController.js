@@ -2,11 +2,11 @@ var app = angular.module("app");
 
 app.controller("EditCorrespondenciaController",
         ['$scope', 'correspondencia', 'parametros', 'correspondenciaRR',
-            'correspondenciaFileRR', 'fileRR',
-            "$log", "$uibModalInstance", 'SweetAlert', "$q", '$uibModal',
+            'correspondenciaFileRR', 'fileRR', 'fechaSesionRR',
+            "$log", "$uibModalInstance", 'SweetAlert', "$q", '$uibModal', 'correspondenciaServicioRR',
             function ($scope, correspondencia, parametros, correspondenciaRR,
-                    correspondenciaFileRR, fileRR,
-                    $log, $uibModalInstance, SweetAlert, $q, $uibModal) {
+                    correspondenciaFileRR, fileRR, fechaSesionRR,
+                    $log, $uibModalInstance, SweetAlert, $q, $uibModal, correspondenciaServicioRR) {
 
                 $scope.open1 = function () {
                     $scope.popup1.opened = true;
@@ -72,6 +72,7 @@ app.controller("EditCorrespondenciaController",
 
                 $scope.deshabilitado = false;
                 $scope.isCorrespondenciaFile = true;
+                $scope.isServicio = true;
                 $scope.parametros = parametros;
                 $scope.correspondenciaFiles = [];
 
@@ -86,6 +87,10 @@ app.controller("EditCorrespondenciaController",
 
                 $scope.paramTipoServicio = $scope.filtrar($scope.parametros, 'P001')[0].parametroDetalles;
                 $scope.paramDistribucion = $scope.filtrar($scope.parametros, 'P002')[0].parametroDetalles;
+
+                $scope.servicioSelect = {};
+                $scope.observacionSelect = "";
+                $scope.servicioSelectList = $scope.paramTipoServicio;
 
                 correspondencia.fechaCorrespondencia = new Date(correspondencia.fechaCorrespondencia);
                 if (correspondencia.fechaCarta !== null) {
@@ -103,19 +108,77 @@ app.controller("EditCorrespondenciaController",
                             $scope.bussinessMessages = bussinessMessages;
                         });
 
+                $scope.fechasSesion = {};
+                $scope.fechasSesions;
+                fechaSesionRR.listProx()
+                        .then(function (fechaSesionresponse) {
+                            $scope.fechasSesions = fechaSesionresponse;
+                        }, function (response) {
+
+                        });
+
+
+                /*Detalle de Correspondencia con Servicio*/
+                correspondenciaServicioRR.listServicioByCorrespondenciaFindAll($scope.correspondencia.idCorrespondencia)
+                        .then(function (correspondenciaServiciosRespond) {
+                            $scope.correspondenciaServicios = correspondenciaServiciosRespond;
+                        }, function (bussinessMessages) {
+                            $scope.bussinessMessages = bussinessMessages;
+                            //Mensaje de error
+                        });
+
+                $scope.agregarServicio = function () {
+
+//                    var s = $scope.servicioSelect;
+
+                    if (isEmptyJSON($scope.servicioSelect)) {
+                        return;
+                    }
+
+                    $scope.correspondenciaServicio = {id: {idCorrespondencia: $scope.correspondencia.idCorrespondencia,
+                            idCorrespondenciaServicio: 0},
+                        paramTipoServicio: $scope.servicioSelect.id.idParametroDetalle,
+                        costo: $scope.servicioSelect.valor,
+                        observacion: $scope.observacionSelect,
+                        transferido: 0,
+                        usuarioIngresa: "sa",
+                        fechaIngreso: new Date()};
+                    correspondenciaServicioRR.insert($scope.correspondenciaServicio)
+                            .then(function (correspondenciaServicioRespond) {
+                                correspondenciaServicioRespond.idCorrespondencia = correspondenciaServicioRespond.id.idCorrespondencia;
+                                correspondenciaServicioRespond.idCorrespondenciaServicio = correspondenciaServicioRespond.id.idCorrespondenciaServicio;
+                                correspondenciaServicioRespond.paramTipoServicio = $scope.servicioSelect.descripcion;
+                                $scope.correspondenciaServicios.push(correspondenciaServicioRespond);
+                                $scope.observacionSelect = "";
+                                $scope.servicioSelect = {};
+                            }, function (bussinessMessages) {
+
+                            });
+                };
+
+                $scope.eliminarServicio = function (correspondenciaServicio) {
+                    correspondenciaServicioRR.delete(correspondenciaServicio)
+                            .then(function (correspondenciaServicioRespond) {
+                                if (correspondenciaServicioRespond === 1) {
+                                    $scope.correspondenciaServicios.splice($scope.correspondenciaServicios.indexOf(correspondenciaServicio), 1);
+                                    $scope.servicioSelect = {};
+                                } else {
+                                    //No se puede eliminar porque ya está en pago
+                                }
+
+                            }, function (bussinessMessages) {
+
+                            });
+                };
+
                 $scope.guardar = function () {
                     $scope.correspondencia.usuarioModifica = "sa";
                     $scope.correspondencia.fechaModificacion = new Date();
                     correspondenciaRR.update($scope.correspondencia)
                             .then(function (correspondenciaRespond) {
-                                var listbox = document.getElementById("paramTipoServicio");
+                                var listbox = document.getElementById("paramDistribucion");
                                 var selIndex = listbox.selectedIndex;
                                 var selText = listbox.options[selIndex].text;
-                                correspondenciaRespond.paramTipoServicio = selText;
-
-                                listbox = document.getElementById("paramDistribucion");
-                                selIndex = listbox.selectedIndex;
-                                selText = listbox.options[selIndex].text;
                                 correspondenciaRespond.paramDistribucion = selText;
 
                                 var index = $scope.correspondencias.indexOf($scope.correspondenciaObj);
@@ -133,6 +196,10 @@ app.controller("EditCorrespondenciaController",
 
                 $scope.cerrar = function () {
                     $uibModalInstance.dismiss('cancel');
+                };
+
+                $scope.setFechaSesion = function () {
+                    setFechaSesion($scope, $log);
                 };
 
                 $scope.myFile = [];
@@ -346,9 +413,9 @@ app.controller("ListCorrespondenciaController",
             }]);
 
 app.controller("NewCorrespondenciaController",
-        ['$scope', 'correspondenciaRR',
+        ['$scope', 'correspondenciaRR', 'fechaSesionRR',
             'parametros', "$log", "$uibModalInstance", 'SweetAlert', '$uibModal',
-            function ($scope, correspondenciaRR,
+            function ($scope, correspondenciaRR, fechaSesionRR,
                     parametros, $log, $uibModalInstance, SweetAlert, $uibModal) {
 
                 $scope.open1 = function () {
@@ -413,6 +480,15 @@ app.controller("NewCorrespondenciaController",
                 $scope.deshabilitado = true;
                 $scope.isCorrespondenciaFile = true;
 
+                $scope.fechasSesion = {};
+                $scope.fechasSesions;
+                fechaSesionRR.listProx()
+                        .then(function (fechaSesionresponse) {
+                            $scope.fechasSesions = fechaSesionresponse;
+                        }, function (response) {
+
+                        });
+
                 $scope.filtrar = function (obj, param) {
                     function filterByParametro(obj) {
                         if (obj.idParametro === param) {
@@ -425,30 +501,27 @@ app.controller("NewCorrespondenciaController",
                 $scope.paramTipoServicio = $scope.filtrar($scope.parametros, 'P001')[0].parametroDetalles;
                 $scope.paramDistribucion = $scope.filtrar($scope.parametros, 'P002')[0].parametroDetalles;
 
+                $scope.servicioSelect = {};
+                $scope.servicioSelectList = $scope.paramTipoServicio;
                 /*Se construyer el json*/
                 $scope.correspondencia = {
-                    registro:{},
-                    fechaCorrespondencia:new Date()
+                    registro: {},
+                    fechaCorrespondencia: new Date()
                 };
 
                 $scope.buscarRegistro = function () {
                     buscarRegistro($scope, $uibModal);
                 };
-                
+
                 $scope.guardar = function () {
                     $scope.correspondencia.usuarioIngresa = "user1";
                     $scope.correspondencia.fechaIngreso = new Date();
 
                     correspondenciaRR.insert($scope.correspondencia)
                             .then(function (correspondenciaRespond) {
-                                var listbox = document.getElementById("paramTipoServicio");
+                                var listbox = document.getElementById("paramDistribucion");
                                 var selIndex = listbox.selectedIndex;
                                 var selText = listbox.options[selIndex].text;
-                                correspondenciaRespond.paramTipoServicio = selText;
-
-                                listbox = document.getElementById("paramDistribucion");
-                                selIndex = listbox.selectedIndex;
-                                selText = listbox.options[selIndex].text;
                                 correspondenciaRespond.paramDistribucion = selText;
 
                                 correspondenciaRespond.fechaCorrespondencia = new Date(correspondenciaRespond.fechaCorrespondencia);
@@ -473,6 +546,12 @@ app.controller("NewCorrespondenciaController",
                 $scope.cerrar = function () {
                     $uibModalInstance.dismiss('cancel');
                 };
+
+                $scope.setFechaSesion = function () {
+                    setFechaSesion($scope, $log);
+                };
+
+
 
             }]);
 
@@ -507,4 +586,14 @@ function buscarRegistro($scope, $uibModal) {
         }
     });
 }
-;
+
+function setFechaSesion($scope, $log) {
+    $scope.correspondencia.fechaSesion = $scope.fechasSesion;
+}
+
+function isEmptyJSON(s) {
+    for (var i in s) {
+        return false;
+    }
+    return true;
+}

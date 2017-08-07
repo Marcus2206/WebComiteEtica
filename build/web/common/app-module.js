@@ -5,23 +5,26 @@ var app = angular.module("app",
 app.config(['$routeProvider', "$locationProvider", function ($routeProvider, $locationProvider) {
         /*Sólo ruta por defecto*/
         $locationProvider.hashPrefix("");
-        $routeProvider.when('/', {
-            templateUrl: "main.html",
-            controller: "MainController"
-        });
-
-        $routeProvider.otherwise({
-            redirectTo: '/'
-        });
-
-        $routeProvider.when('/subirArchivo', {
-            templateUrl: 'general/subirArchivo.html',
-            controller: "subirController",
-            resolve: {
-                investigacions: ['investigacionRemoteResource', function (investigacionRemoteResource) {
-                        return investigacionRemoteResource.list();
-                    }]
-            }
-        });
+        $routeProvider
+                .when('/', {
+                    templateUrl: "main.html",
+                    controller: "MainController"
+                })
+                .when('/subirArchivo', {
+                    templateUrl: 'general/subirArchivo.html',
+                    controller: "subirController",
+                    resolve: {
+                        investigacions: ['investigacionRemoteResource', function (investigacionRemoteResource) {
+                                return investigacionRemoteResource.list();
+                            }]
+                    }
+                })
+                .when('/myCarousel', {
+//                    controller: "GlobalControllers",
+                    templateUrl: "main.html"
+                })
+                .otherwise({
+                    redirectTo: '/'
+                });
     }]);
 
