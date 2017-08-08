@@ -4,12 +4,15 @@ app.controller('fechaController', function ($scope) {
     $scope.fechaHoy = new Date();
 });
 
+
+
+
 app.controller("subirController", function ($scope, $http, $log, fileUpload, investigacions, $timeout, $interval) {
     $scope.myFile = [];
     $scope.progressBar = 0;
 
     $scope.investigacions = investigacions;
-    $scope.investigacion={};
+    $scope.investigacion = {};
 
 //    $scope.enviar = function () {
 //        $log.log($scope.investigacion);
@@ -19,14 +22,14 @@ app.controller("subirController", function ($scope, $http, $log, fileUpload, inv
     var vm = this;
 
 //    vm.disabled = undefined;
-    $scope.disabled=false;
+    $scope.disabled = false;
     vm.searchEnabled = undefined;
 
 //    vm.setInputFocus = function () {
 //        $scope.$broadcast('UiSelectDemo1');
 //    };
 
-    $scope.enable=function(){
+    $scope.enable = function () {
         $scope.disabled = false;
         alert("enabled");
     };
