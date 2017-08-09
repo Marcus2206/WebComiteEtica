@@ -27,7 +27,7 @@
         <div class="col-md-12">
             <h3>Logeo</h3>
 
-            <form class="form">
+            <form class="form" ng-submit="login()">
                 <div class="col-md-4">
                     <div class="form-group">
                         <input type="text" class="form-control" ng-model="username" placeholder="username" required=""/>
@@ -38,7 +38,7 @@
                     </div>
 
                     <div class="form-group">
-                        <button type="submit" ng-click="login()" class="btn btn-success">Login</button>
+                        <button type="submit" class="btn btn-success">Login</button>
                         <span class="text-danger">{{ error}}</span>
                     </div>
 
