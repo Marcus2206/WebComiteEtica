@@ -8,6 +8,8 @@ app.run(["$rootScope", 'auth', function ($rootScope, auth) {
             //la cuál hemos inyectado en la acción run de la aplicación
             auth.checkStatus();
         });
+        $rootScope.muestra = true;
+        $rootScope.username = "";
     }]);
 
 //al cambiar de rutas

@@ -6,8 +6,20 @@
 
 var app = angular.module("app");
 
-app.controller("MainController", ['$scope', '$log', function ($scope, $log) {
+app.controller("MainController", ['$scope', '$log', "$rootScope", "$cookies", "auth", function ($scope, $log, $rootScope, $cookies, auth) {
         $('#myCarousel').carousel({
             interval: 2000
         });
+//        $rootScope.muestra = true;
+
+//        $scope.user = $rootScope.username;
+        $scope.logout = function () {
+            auth.logout();
+//            $scope.user = "";
+            $rootScope.usernam="";
+            $rootScope.muestra = true;
+            window.location.reload();
+        };
+
+
     }]);

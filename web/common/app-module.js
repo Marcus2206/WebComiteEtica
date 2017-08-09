@@ -6,24 +6,24 @@ var app = angular.module("app",
 
 
 app.controller('loggedController', function ($scope, auth, $log, $cookies) {
-    $scope.username;
-    $scope.password;
-    $scope.mostrar = true;
-    $log.log("loggedController");
-    $log.log($cookies.username);
-    var cas = $cookies.username;
-    $scope.$watch($cookies.username, function () {
-        alert("cambió");
-    });
-
-    $scope.logout = function () {
-        $log.log("cierra");
-        auth.logout();
-        window.location.reload();
-        $scope.username = undefined;
-        $scope.password = undefined;
-        $scope.mostrar = true;
-    };
+//    $scope.username;
+//    $scope.password;
+//    $scope.mostrar = true;
+//    $log.log("loggedController");
+//    $log.log($cookies.username);
+//    var cas = $cookies.username;
+//    $scope.$watch($cookies.username, function () {
+//        alert("cambió");
+//    });
+//
+//    $scope.logout = function () {
+//        $log.log("cierra");
+//        auth.logout();
+//        window.location.reload();
+//        $scope.username = undefined;
+//        $scope.password = undefined;
+//        $scope.mostrar = true;
+//    };
 });
 
 app.config(['$routeProvider', "$locationProvider", function ($routeProvider, $locationProvider) {

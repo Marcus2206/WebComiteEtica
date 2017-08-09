@@ -6,7 +6,7 @@ and open the template in the editor.
 -->
 <html ng-app="app" >
     <head>
-        <title>TODO supply a title</title>
+        <title>Comité de Ética</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -46,7 +46,7 @@ and open the template in the editor.
         <script src="lib/js/ng-flow-standalone.min.js" type="text/javascript"></script>
         <script src="lib/js/select.js" type="text/javascript"></script>
         <script src="lib/js/angular-cookies.js" type="text/javascript"></script>
-        
+
         <!--CSS personalizado-->
         <link href="lib/css/custom.css" rel="stylesheet" type="text/css"/>
         <!--Fin JS-->
@@ -75,7 +75,7 @@ and open the template in the editor.
 
         <!--Factories-->
         <script src="common/factories/factories.js" type="text/javascript"></script>
-        
+
         <!--Services-->
         <script src="common/services/investigacionServices.js" type="text/javascript"></script>
         <script src="common/services/coordinadorServices.js" type="text/javascript"></script>
@@ -100,7 +100,7 @@ and open the template in the editor.
         <script src="common/services/correspondenciaServicioServices.js" type="text/javascript"></script>
         <script src="common/services/pagoDetalleServices.js" type="text/javascript"></script>
         <script src="common/services/registroBitacoraServices.js" type="text/javascript"></script>
-        
+
         <!--Providers-->
         <script src="common/providers/investigacionProvider.js" type="text/javascript"></script>
         <script src="common/providers/coordinadorProvider.js" type="text/javascript"></script>
@@ -124,7 +124,7 @@ and open the template in the editor.
         <script src="common/providers/correspondenciaServicioProvider.js" type="text/javascript"></script>
         <script src="common/providers/pagoDetalleProvider.js" type="text/javascript"></script>
         <script src="common/providers/registroBitacoraProvider.js" type="text/javascript"></script>
-        
+
         <!--Controllers-->
         <script src="common/controllers/mainController.js" type="text/javascript"></script>
         <script src="common/controllers/coordinadorController.js" type="text/javascript"></script>
@@ -142,7 +142,7 @@ and open the template in the editor.
         <script src="common/controllers/investigacionSedeController.js" type="text/javascript"></script>
         <script src="common/controllers/pagoController.js" type="text/javascript"></script>
         <script src="common/controllers/loginController.js" type="text/javascript"></script>
-        
+
         <!--Routes-->
         <script src="common/routes/investigacion-route.js" type="text/javascript"></script>
         <script src="common/routes/coordinador-route.js" type="text/javascript"></script>
@@ -162,9 +162,11 @@ and open the template in the editor.
         <link rel="shortcut icon" href="lib/images/favicon.ico"/>
 
     </head>
-    <ng-include src="'general/menu-navegacion.html'" ></ng-include>
+
     <body ng-controller="MainController">
+        <ng-include src="'general/menu-navegacion.html'" ></ng-include>
         <div ng-view></div>
+        <ng-include src="'general/pie-pagina.html'" ></ng-include>
     </body>
-    <ng-include src="'general/pie-pagina.html'" ></ng-include>
+
 </html>

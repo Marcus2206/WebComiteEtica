@@ -31,18 +31,20 @@
                 <li><a style="color: #FEB41C" ng-href="#/pagolist"><span class="glyphicon glyphicon-piggy-bank" aria-hidden="true"></span> Cuentas por Cobrar</a></li>
             </ul>
 
-            <ul ng-show="mostrar" class="nav navbar-nav navbar-right" ng-controller="loggedController">
-                <li>
-                    <a href="#/login"  >Iniciar sesión</a>
-                </li>
-            </ul>
-            <ul ng-show="!mostrar" class="nav navbar-nav navbar-right" ng-controller="loggedController">
-                <!--<li><a runat="server" href="~/Account/Manage" title="Manage your account">Hello, <%//: Context.User.Identity.GetUserName()  %> !</a></li>-->
-                <li><a title=""> {{username}}</a></li>
-                <li>
-                    <a href="" ng-click="logout()">Cerrar sesión </a>
-                </li>
-            </ul>
+            <div>
+                <ul ng-show="muestra" class="nav navbar-nav navbar-right" >
+                    <li>
+                        <a href="#/login"  >Iniciar sesión</a>
+                    </li>
+                </ul>
+                <ul ng-show="!muestra" class="nav navbar-nav navbar-right">
+                    <!--<li><a runat="server" href="~/Account/Manage" title="Manage your account">Hello, <%//: Context.User.Identity.GetUserName()  %> !</a></li>-->
+                    <li><a title=""> {{username}}</a></li>
+                    <li>
+                        <a href="" ng-click="logout()">Cerrar sesión </a>
+                    </li>
+                </ul>
+            </div>
         </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
 </nav>
