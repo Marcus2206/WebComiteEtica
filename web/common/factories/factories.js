@@ -8,6 +8,7 @@ app.factory("auth", function ($cookies, $cookieStore, $location, $log)
             //creamos la cookie con el nombre que nos han pasado
             $cookies.username = username;
             $cookies.password = password;
+            
             //mandamos a la home
             $location.path("/");
         },
