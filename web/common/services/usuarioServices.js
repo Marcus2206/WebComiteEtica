@@ -34,20 +34,39 @@ function UsuarioRR($http, $q, baseUrl, $log) {
 
         return promise;
     };
-//
-//    this.update = function(sede) {
-//        var defered=$q.defer();
-//        var promise=defered.promise;
-//        $http.put(baseUrl + '/api/SedeUpdate', sede)
-//        .then(function onSuccess(response){
-//            defered.resolve(response.data);
-//        })
-//        .catch(function onCatch(response){
-//            defered.reject(response.data);
-//        });
-//
-//        return promise;
-//    };
+
+    this.updatePassword = function (usuario) {
+        var defered = $q.defer();
+        var params = {
+            idUsuario: usuario.idUsuario,
+            password: usuario.password,
+            usuarioModifica: usuario.usuarioModifica
+        };
+        var config = {params};
+        $http.put(baseUrl + '/api/Usuario/PasswordUpdate', null, config)
+                .then(function onSuccess(response) {
+                    defered.resolve(response.data);
+                })
+                .catch(function onCatch(response) {
+                    defered.reject(response.data);
+                });
+
+        return defered.promise;
+    };
+
+    this.update = function (usuario) {
+        var defered = $q.defer();
+
+        $http.put(baseUrl + '/api/Usuario/UsuarioUpdate', usuario)
+                .then(function onSuccess(response) {
+                    defered.resolve(response.data);
+                })
+                .catch(function onCatch(response) {
+                    defered.reject(response.data);
+                });
+
+        return defered.promise;
+    };
 
     this.list = function () {
         var defered = $q.defer();

@@ -18,31 +18,37 @@
                         <input type="text" class="form-control" id="usuario"  placeholder="Usuario" ng-model="usuario.usuario" value="{{ usuario.usuario || '' }}">
                     </div>
                 </div>
+
+
                 <div class="col">
                     <div class="form-group">
                         <label for="password">Password: </label><br>
-                        <input type="password" class="form-control" id="password"  placeholder="Password" ng-model="usuario.password" value="{{ usuario.password || '' }}">
+                        <p class="input-group">
+                            <input type="password" class="form-control" id="password"  placeholder="Password" ng-model="usuario.password" value="{{ usuario.password || '' }}">
+                            <span class="input-group-btn">
+                                <button type="button" class="btn btn-default" ng-click="cambiarPassword()"><i class="glyphicon glyphicon-refresh"></i></button>
+                            </span>
+                        </p>
                     </div>
                 </div>
-                
                 <div class="col">
                     <div class="form-group">
                         <label for="perfil">Perfil:  </label><br>
                         <select id="perfil" class="form-control" theme="bootstrap" ng-model="usuario.perfil">
-                            <option ng-repeat="pd in paramPerfil | orderBy : 'descripcion'" value="{{pd.id.idParametroDetalle}}">{{pd.descripcion}}</option>
+                            <option ng-repeat="pd in paramPerfil| orderBy : 'descripcion'" value="{{pd.id.idParametroDetalle}}">{{pd.descripcion}}</option>
                         </select>
                     </div>
                 </div>     
-                
-          
+
+
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="submit" class="btn btn-primary" ng-click="guardar()">
+                Guardar
+            </button>
+            <button type="button" class="btn btn-default" ng-click="cerrar()">
+                Volver
+            </button>
         </div>
     </div>
-    <div class="modal-footer">
-        <button type="submit" class="btn btn-primary" ng-click="guardar()">
-            Guardar
-        </button>
-        <button type="button" class="btn btn-default" ng-click="cerrar()">
-            Volver
-        </button>
-    </div>
-</div>
