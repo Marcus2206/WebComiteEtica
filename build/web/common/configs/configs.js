@@ -126,8 +126,8 @@ app.config(['baseUrl', 'pagoDetalleRRProvider',
     }
 ]);
 
-app.config(['baseUrl', 'registroBitacoraRRProvider',
-    function (baseUrl, registroBitacoraRRProvider) {
-        registroBitacoraRRProvider.setBaseUrl(baseUrl);
+app.config(['baseUrl', 'usuarioRRProvider',
+    function (baseUrl, usuarioRRProvider) {
+        usuarioRRProvider.setBaseUrl(baseUrl);
     }
 ]);

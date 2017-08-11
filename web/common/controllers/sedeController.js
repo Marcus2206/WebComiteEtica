@@ -70,7 +70,7 @@ app.controller("NewSedeController", ['$scope', 'sedeRR', '$location', "$log", "$
                         $uibModalInstance.dismiss(sedeResult);
                         SweetAlert.swal("Hecho!", "Registro guardado exitosamente.", "success");
                     }, function (bussinessMessages) {
-                        $scope.bussinessMessages = bussinessMessages
+                        $scope.bussinessMessages = bussinessMessages;
                         SweetAlert.swal("Hubo un error!", "Intente nuevamente o comuniquese con el administrador.", "danger");
                     });
             /*} else {

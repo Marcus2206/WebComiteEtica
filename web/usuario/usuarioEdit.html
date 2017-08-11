@@ -1,0 +1,48 @@
+<div class="modal-content">
+    <div class="modal-header">
+        <button type="button" class="close" ng-click="cerrar()">&times;</button>
+        <h4 class="modal-title" id="myModalLabel">Datos del usuario</h4>
+    </div>
+    <div class="modal-body">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col">
+                    <div class="form-group">
+                        <label for="idUsuario">Id. Usuario: </label><br>
+                        <input readonly type="text" class="form-control" id="idUsuario"  placeholder="Id. Usuario" ng-model="usuario.idUsuario" value="{{ usuario.idUsuario || '' }}">
+                    </div> 
+                </div>
+                <div class="col">
+                    <div class="form-group">
+                        <label for="usuario">Usuario: </label><br>
+                        <input type="text" class="form-control" id="usuario"  placeholder="Usuario" ng-model="usuario.usuario" value="{{ usuario.usuario || '' }}">
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-group">
+                        <label for="password">Password: </label><br>
+                        <input type="password" class="form-control" id="password"  placeholder="Password" ng-model="usuario.password" value="{{ usuario.password || '' }}">
+                    </div>
+                </div>
+                
+                <div class="col">
+                    <div class="form-group">
+                        <label for="perfil">Perfil:  </label><br>
+                        <select id="perfil" class="form-control" theme="bootstrap" ng-model="usuario.perfil">
+                            <option ng-repeat="pd in paramPerfil | orderBy : 'descripcion'" value="{{pd.id.idParametroDetalle}}">{{pd.descripcion}}</option>
+                        </select>
+                    </div>
+                </div>     
+                
+          
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="submit" class="btn btn-primary" ng-click="guardar()">
+            Guardar
+        </button>
+        <button type="button" class="btn btn-default" ng-click="cerrar()">
+            Volver
+        </button>
+    </div>
+</div>

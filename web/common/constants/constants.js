@@ -1,3 +1,3 @@
 var app=angular.module("app");
 
-app.constant("baseUrl", "http://localhost:8060/RestComiteEtica");
+app.constant("baseUrl", "http://localhost:8070/RestComiteEtica");

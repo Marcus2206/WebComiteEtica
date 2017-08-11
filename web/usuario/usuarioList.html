@@ -1,0 +1,67 @@
+
+<div class="container">
+    <div class="row">
+        <div class="container-fluid">
+            <h1 style='text-align: center'><b>Lista de Usuarios</b></h1>
+        </div>
+        <br>
+        <br>
+        <br>
+    </div>
+    <div class="row">
+        <div class="container-fluid">
+            <input type="text" ng-model="txtFiltroUsuario" class="form-control" placeholder="Buscar">
+            <br>
+            <button class="btn btn-primary col-xs-12 col-sm-2" ng-click="insertarModal()">
+                <i class="fa fa-plus-circle" aria-hidden="true"></i>
+                 Usuario
+            </button>
+        </div>
+    </div>
+    <br>
+    <div class="row">
+        <div id="no-more-tables">
+            <table class="col-sm-12 table-bordered table-striped table-condensed cf" >
+                <thead class="cf">
+                    <tr>
+                        <th>Id. Usuario</th>
+                        <th>Usuario</th>
+                        <th>Perfil</th>
+                        <th>Ape. Paterno</th>
+                        <th>Ape. Materno</th>
+                        <th>Nombres</th>
+                        <th>Acción</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="usuario in usuarios| empezarDe : currentPage * pageSize | limitTo:pageSize | filter:txtFiltroSede ">
+                        <td data-title="Código">{{usuario.idUsuario}}</td>
+                        <td data-title="Nombre">{{usuario.usuario}}</td>
+                        <td data-title="Dorección">{{usuario.perfil}}</td>
+                        <td data-title="Departamento">{{usuario.idDepartamento}}</td>
+                        <td data-title="Provincia">{{usuario.idProvincia}}</td>
+                        <td data-title="Distrito">{{usuario.idDistrito}}</td>
+                        <td>
+                            <button class="btn btn-primary" ng-click="editarModal(usuario)"><i class="fa fa-pencil-square-o" aria-hidden="true"></i><span class="hidden-xs"> Editar</span></button>
+                            <button class="btn btn-danger" ng-click="eliminar(usuario)" ><i class="fa fa-trash" aria-hidden="true"></i><span class="hidden-xs"> Eliminar</span></button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <!-- paginacion -->
+    <div class="container">
+        <div class="center-block" style="text-align: center">
+            <br>
+            <button ng-disabled="currentPage === 0" ng-click="currentPage = currentPage - 1" class="btn btn-default">
+                <span aria-hidden="true">&laquo;</span>
+            </button>
+            {{currentPage + 1}}/{{numberOfPages()}}
+            <button ng-disabled="currentPage >= usuarios.length / pageSize - 1" ng-click="setNextPagina()" class="btn btn-default">
+                <span aria-hidden="true">&raquo;</span>
+            </button>
+        </div>
+    </div>
+    <!-- paginacion -->
+</div>
