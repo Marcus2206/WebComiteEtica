@@ -131,3 +131,9 @@ app.config(['baseUrl', 'usuarioRRProvider',
         usuarioRRProvider.setBaseUrl(baseUrl);
     }
 ]);
+
+app.config(['baseUrl', 'registroBitacoraRRProvider',
+    function (baseUrl, registroBitacoraRRProvider) {
+        registroBitacoraRRProvider.setBaseUrl(baseUrl);
+    }
+]);

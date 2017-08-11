@@ -14,20 +14,20 @@ app.config(['$routeProvider',"$locationProvider",function($routeProvider,$locati
        }
      });
 
-    $routeProvider.when('/croEdit/:idCro', {
-        templateUrl: "cro/croEdit.html",
-        controller: "EditCroController",
-        resolve: {
-                cro:['croRR','$route',function(croRR,$route) {
-                return croRR.get($route.current.params.idCro);
-            }]
-        }
-    });
-
-    $routeProvider.when('/croNew', {
-        templateUrl: "cro/croEdit.html",
-        controller: "NewCroController"
-    });
+//    $routeProvider.when('/croEdit/:idCro', {
+//        templateUrl: "cro/croEdit.html",
+//        controller: "EditCroController",
+//        resolve: {
+//                cro:['croRR','$route',function(croRR,$route) {
+//                return croRR.get($route.current.params.idCro);
+//            }]
+//        }
+//    });
+//
+//    $routeProvider.when('/croNew', {
+//        templateUrl: "cro/croEdit.html",
+//        controller: "NewCroController"
+//    });
 
      $routeProvider.otherwise({
            redirectTo: '/'
