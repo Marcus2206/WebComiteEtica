@@ -78,9 +78,14 @@ function UsuarioRR($http, $q, baseUrl, $log) {
         return defered.promise;
     };
 
-    this.getUser = function (idUsuario) {
+    this.getUser = function (usuario, password) {
         var defered = $q.defer();
-        $http.get(baseUrl + '/api/Usuario/UsuarioRead/' + idUsuario)
+        var params = {
+            usuario: usuario,
+            password: password
+        };
+        var config = {params};
+        $http.get(baseUrl + '/api/Usuario/UsuarioReadValidate', config)
                 .then(function onSuccess(response) {
                     defered.resolve(response.data);
                 })
