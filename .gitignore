@@ -2,3 +2,5 @@
 /build/
 /dist/
 /nbproject/
+
+git rm /nbproject
