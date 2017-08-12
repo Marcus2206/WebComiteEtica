@@ -3,4 +3,4 @@
 /dist/
 /nbproject/
 
-git rm nbproject
+$git rm /nbproject
