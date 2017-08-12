@@ -1,11 +1,11 @@
 var app = angular.module("app",
         ["ngRoute", "ui.select", "ui.bootstrap", "angular-confirm", "ngAnimate",
             "ngSanitize", "xeditable", "oitozero.ngSweetAlert", "flow", 'ui.checkbox',
-            'ngCookies']);
+            'LocalStorageModule']);
 
 
 
-app.controller('loggedController', function ($scope, auth, $log, $cookies) {
+app.controller('loggedController', function ($scope, auth, $log) {
 //    $scope.username;
 //    $scope.password;
 //    $scope.mostrar = true;

@@ -57,7 +57,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr ng-repeat="pagoDetalle in pagoDetalles | orderBy:'idPagoDetalle'">
+                                    <tr ng-repeat="pagoDetalle in pagoDetalles| orderBy:'idPagoDetalle'">
                                         <td>
                                             <div>
                                                 <div>
@@ -78,6 +78,19 @@
                 </div>    
             </div>
 
+            <div class="row">
+                <div class="col">
+                    <div class="form-group">
+                        <label for="password">Enviar correo: </label><br>
+                        <p class="input-group">
+                            <input type="password" class="form-control" id="password"  placeholder="Password" ng-model="usuario.password" value="{{ usuario.password || '' }}">
+                            <span class="input-group-btn">
+                                <button type="button" class="btn btn-default" ng-click="cambiarPassword()"><i class="glyphicon glyphicon-refresh"></i></button>
+                            </span>
+                        </p>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     <br>
