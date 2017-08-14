@@ -35,14 +35,14 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="correo in correos| empezarDe : currentPage * pageSize | limitTo:pageSize | filter:txtFiltroCorreo">
+                    <tr ng-repeat="correo in correos | empezarDe : currentPage * pageSize | limitTo:pageSize | filter:txtFiltroCorreo | orderBy : 'apePaterno' ">
                         <td data-title="Id. Correo">{{correo.idCorreo}}</td>
                         <td data-title="Ape. Paterno">{{correo.apePaterno}}</td>
                         <td data-title="Ape. Materno">{{correo.apeMaterno}}</td>
                         <td data-title="Nombres">{{correo.nombres}}</td>
                         <td data-title="Area de Trabajo">{{correo.paramAreaTrabajo}}</td>
                         <td data-title="Correo">{{correo.correo}}</td>
-                        <td data-title="Activo">{{correo.estado}}</td>
+                        <td data-title="Activo">{{correo.estado|booleanToText }}</td>
                         <td>
                             <button class="btn btn-primary" ng-click="editarModal(correo)"><i class="fa fa-pencil-square-o" aria-hidden="true"></i><span class="hidden-xs"> Editar</span></button>
                             <button class="btn btn-danger" ng-click="eliminar(correo)" ><i class="fa fa-trash" aria-hidden="true"></i><span class="hidden-xs"> Eliminar</span></button>

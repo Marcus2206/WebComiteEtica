@@ -67,14 +67,13 @@ function PagoRR($http, $q, baseUrl, $log) {
     };
 
 
-    this.validateRegistro = function (idInvestigacion, idInvestigador, idSede) {
+    this.sendMail = function (pago) {
         var defered = $q.defer();
-        var params = {idInvestigacion: idInvestigacion,
-            idInvestigador: idInvestigador,
-            idSede: idSede
+        var params = {
+            idPago: pago.idPago
         };
         var config = {params};
-        $http.put(baseUrl + '/api/Pago/PagoValidate', null, config)
+        $http.put(baseUrl + '/api/Pago/MailSend', null, config)
                 .then(function onSuccess(response) {
                     defered.resolve(response.data);
                 })

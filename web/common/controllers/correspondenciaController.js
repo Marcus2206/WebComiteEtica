@@ -164,7 +164,7 @@ app.controller("EditCorrespondenciaController",
                                     $scope.correspondenciaServicios.splice($scope.correspondenciaServicios.indexOf(correspondenciaServicio), 1);
                                     $scope.servicioSelect = {};
                                 } else {
-                                    //No se puede eliminar porque ya está en pago
+                                    SweetAlert.swal("No se puede eliminar", "Es posible que el servicio se encuentre listado en Pagos.", "warning");
                                 }
 
                             }, function (bussinessMessages) {
@@ -191,7 +191,7 @@ app.controller("EditCorrespondenciaController",
                                 SweetAlert.swal("Hecho!", "Registro guardado exitosamente.", "success");
                             }, function (bussinessMessages) {
                                 $scope.bussinessMessages = bussinessMessages;
-                                SweetAlert.swal("Hubo un error!", "Intente nuevamente o comuniquese con el administrador.", "danger");
+                                SweetAlert.swal("Hubo un error!", "Intente nuevamente o comuniquese con el administrador.", "warning");
                             });
                 };
 

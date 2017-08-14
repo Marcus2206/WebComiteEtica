@@ -16,15 +16,7 @@ function CorreoRR($http, $q, baseUrl, $log) {
 
     this.insert = function (correo) {
         var defered = $q.defer();
-        var promise = defered.promise;
-        var params = {
-            usuario: correo.usuario,
-            password: correo.password,
-            perfil: correo.perfil,
-            usuarioIngresa: correo.usuarioIngresa
-        };
-        var config = {params};
-        $http.post(baseUrl + '/api/Correo/CorreoInsert', null, config)
+        $http.post(baseUrl + '/api/Correo/CorreoInsert', correo)
                 .then(function onSuccess(response) {
                     defered.resolve(response.data);
                 })
@@ -32,7 +24,7 @@ function CorreoRR($http, $q, baseUrl, $log) {
                     defered.reject(response.data);
                 });
 
-        return promise;
+        return defered.promise;
     };
 
     this.update = function (correo) {
@@ -64,7 +56,7 @@ function CorreoRR($http, $q, baseUrl, $log) {
 
     this.delete = function (correo) {
         var defered = $q.defer();
-        var params = {idUsuario: correo.idUsuario};
+        var params = {idCorreo: correo.idCorreo};
         var config = {params};
 
         $http.put(baseUrl + '/api/Correo/CorreoDelete', null, config)

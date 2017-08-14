@@ -39,7 +39,7 @@
                     <div class="form-group">
                         <label for="registro">Registro:  </label><br>
                         <p class="input-group">
-                            <input type="text" class="form-control" id="registro"  placeholder="Seleccionar Registro" ng-model="correspondencia.registro.idRegistro" value="{{correspondencia.registro.idRegistro|| '' }}">
+                            <input type="text" class="form-control" id="registro"  readonly placeholder="Seleccionar Registro" ng-model="correspondencia.registro.idRegistro" value="{{correspondencia.registro.idRegistro|| '' }}">
                             <span class="input-group-btn">
                                 <button type="button" class="btn btn-default" ng-click="buscarRegistro()"><i class="glyphicon glyphicon-search"></i></button>
                             </span>
@@ -82,7 +82,7 @@
                             <table class="table table-bordered table-hover table-condensed table-responsive">
                                 <thead>
                                     <tr>
-                                        <th>Observación</th>
+                                        <th>Servicios</th>
                                     </tr>
                                 </thead>
                                 <tbody>

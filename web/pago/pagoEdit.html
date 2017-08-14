@@ -22,8 +22,8 @@
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label for="costo">Costo:  </label><br>
-                        <input type="text" class="form-control" id="costo"  placeholder="CostoTotal" ng-model="pago.costo" value="{{pago.costo|| '' }}">
+                        <label for="precio">Precio:  </label><br>
+                        <input type="text" class="form-control" id="precio"  placeholder="Precio total" ng-model="pago.costo" value="{{pago.costo||'' }}">
                     </div> 
                 </div>
             </div>
@@ -34,7 +34,9 @@
                         <input type="text" class="form-control" id="observacion"  placeholder="Observación" ng-model="pago.observacion" value="{{pago.observacion|| '' }}">
                     </div> 
                 </div>
-                <div class="col-md-12">
+            </div>
+            <div class="row">
+                <div class="col col-xs-6 col-md-6">
                     <div class="form-group">
                         <label for="paramEstadoPago">Estado:  </label><br>
                         <select class="form-control" id="paramEstadoPago" ng-model="pago.paramEstadoPago">
@@ -42,7 +44,21 @@
                         </select>
                     </div>
                 </div>
+                <div class="col col-xs-6 col-md-6">
+                    <div class="form-group">
+                        <label for="contador">Veces enviado: </label><br>
+                        <p class="input-group">
+                            <input type="text" class="form-control" id="contador"  readonly placeholder="Contador" ng-model="pago.contador" value="{{ pago.contador || '' }}">
+                            <span class="input-group-btn">
+                                <button type="button" class="btn btn-default" ng-click="enviarMail()" data-toggle="tooltip" title="Enviar Correo">
+                                    <i class="glyphicon glyphicon-forward"></i>
+                                </button>
+                            </span>
+                        </p>
+                    </div>
+                </div>
             </div>
+
             <div class="row">
                 <!--Inicio de Servicios-->
                 <div class="col-md-12">    
@@ -78,19 +94,7 @@
                 </div>    
             </div>
 
-            <div class="row">
-                <div class="col">
-                    <div class="form-group">
-                        <label for="password">Enviar correo: </label><br>
-                        <p class="input-group">
-                            <input type="password" class="form-control" id="password"  placeholder="Password" ng-model="usuario.password" value="{{ usuario.password || '' }}">
-                            <span class="input-group-btn">
-                                <button type="button" class="btn btn-default" ng-click="cambiarPassword()"><i class="glyphicon glyphicon-refresh"></i></button>
-                            </span>
-                        </p>
-                    </div>
-                </div>
-            </div>
+
         </div>
     </div>
     <br>
@@ -138,5 +142,9 @@
                 minView: 0,
                 maxView: 1,
                 forceParse: 0
+            });
+
+            $(document).ready(function () {
+                $('[data-toggle="tooltip"]').tooltip();
             });
 </script>

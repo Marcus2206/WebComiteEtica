@@ -1,45 +1,55 @@
 <div class="modal-content">
     <div class="modal-header">
         <button type="button" class="close" ng-click="cerrar()">&times;</button>
-        <h4 class="modal-title" id="myModalLabel">Datos del usuario</h4>
+        <h4 class="modal-title" id="myModalLabel">Datos del personal</h4>
     </div>
     <div class="modal-body">
         <div class="container-fluid">
             <div class="row">
                 <div class="col">
                     <div class="form-group">
-                        <label for="idUsuario">Id. Usuario: </label><br>
-                        <input readonly type="text" class="form-control" id="idUsuario"  placeholder="Id. Usuario" ng-model="usuario.idUsuario" value="{{ usuario.idUsuario || '' }}">
+                        <label for="idCorreo">Id. Correo: </label><br>
+                        <input readonly type="text" class="form-control" id="idUsuario"  placeholder="Id. Correo" ng-model="correo.idCorreo" value="{{ correo.idCorreo || '' }}">
                     </div> 
                 </div>
                 <div class="col">
                     <div class="form-group">
-                        <label for="usuario">Usuario: </label><br>
-                        <input type="text" class="form-control" id="usuario"  placeholder="Usuario" ng-model="usuario.usuario" value="{{ usuario.usuario || '' }}">
-                    </div>
-                </div>
-
-
-                <div class="col">
-                    <div class="form-group">
-                        <label for="password">Password: </label><br>
-                        <p class="input-group">
-                            <input type="password" class="form-control" id="password"  placeholder="Password" ng-model="usuario.password" value="{{ usuario.password || '' }}">
-                            <span class="input-group-btn">
-                                <button type="button" class="btn btn-default" ng-click="cambiarPassword()"><i class="glyphicon glyphicon-refresh"></i></button>
-                            </span>
-                        </p>
+                        <label for="apePaterno">Ape. Paterno: </label><br>
+                        <input type="text" class="form-control" id="apePaterno"  placeholder="Apellido Paterno" ng-model="correo.apePaterno" value="{{ correo.apePaterno || '' }}">
                     </div>
                 </div>
                 <div class="col">
                     <div class="form-group">
-                        <label for="perfil">Perfil:  </label><br>
-                        <select id="perfil" class="form-control" theme="bootstrap" ng-model="usuario.perfil">
-                            <option ng-repeat="pd in paramPerfil| orderBy : 'descripcion'" value="{{pd.id.idParametroDetalle}}">{{pd.descripcion}}</option>
+                        <label for="apeMaterno">Ape. Materno: </label><br>
+                        <input type="text" class="form-control" id="apeMaterno"  placeholder="Apellido Materno" ng-model="correo.apeMaterno" value="{{ correo.apeMaterno || '' }}">
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-group">
+                        <label for="apePaterno">Nombres:  </label><br>
+                        <input type="text" class="form-control" id="usuario"  placeholder="Nombres" ng-model="correo.nombres" value="{{ correo.nombres || '' }}">
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-group">
+                        <label for="correo">Correo:  </label><br>
+                        <input type="email" class="form-control" id="correo"  placeholder="Correo" ng-model="correo.correo" value="{{ correo.correo || '' }}">
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="form-group">
+                        <label for="paramAreaTrabajo">Área de Trabajo:  </label><br>
+                        <select id="paramAreaTrabajo" class="form-control" theme="bootstrap" ng-model="correo.paramAreaTrabajo">
+                            <option ng-repeat="pd in paramAreaTrabajo | orderBy : 'descripcion'" value="{{pd.id.idParametroDetalle}}">{{pd.descripcion}}</option>
                         </select>
                     </div>
                 </div>     
 
+                <div class="form-group">
+                    <label for="estado">Estado:  </label>
+                    <checkbox id="estado" ng-model="correo.estado"></checkbox>
+                </div>
 
             </div>
         </div>

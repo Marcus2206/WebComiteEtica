@@ -1,9 +1,9 @@
 var app = angular.module("app");
 
 app.controller("NewCorreoController",
-        ['$scope', 'usuarioRR', "$log", "$uibModalInstance", "parametros",
+        ['$scope', 'correoRR', "$log", "$uibModalInstance", "parametros",
             'SweetAlert',
-            function ($scope, usuarioRR, $log, $uibModalInstance, parametros,
+            function ($scope, correoRR, $log, $uibModalInstance, parametros,
                     SweetAlert) {
 
                 $scope.filtrar = function (obj, param) {
@@ -16,52 +16,37 @@ app.controller("NewCorreoController",
                 };
 
                 $scope.parametros = parametros;
-                $scope.paramPerfil = $scope.filtrar($scope.parametros, 'P010')[0].parametroDetalles;
+                $scope.paramAreaTrabajo = $scope.filtrar($scope.parametros, 'P011')[0].parametroDetalles;
 
                 /*Se construyer el json*/
-                $scope.usuario = {};
+                $scope.correo = {};
 
                 $scope.guardar = function () {
                     //if ($scope.form.$valid) {
-                    $scope.usuario.usuarioIngresa = "user1";
-                    $scope.usuario.fechaIngreso = new Date();
-                    usuarioRR.insert($scope.usuario)
-                            .then(function (usuarioResult) {
-
-                                function isEmptyJSON(s) {
-                                    for (var i in s) {
-                                        return false;
-                                    }
-                                    return true;
-                                }
-                                $log.log(usuarioResult);
-                                if (!isEmptyJSON(usuarioResult)) {
-                                                            
-                                    var listbox = document.getElementById("perfil");
-                                    var selIndex = listbox.selectedIndex;
-                                    var selText = listbox.options[selIndex].text;
-                                    usuarioResult.perfil = selText;
-                                    $uibModalInstance.dismiss(usuarioResult);
-                                     SweetAlert.swal("Hecho", "Registro guardado exitosamente.", "success");
-                                }else{
-                                    SweetAlert.swal("No es posible registrar", "El usuario ya existe.", "warning");
-                                }
+                    $scope.correo.usuarioIngresa = "user1";
+                    $scope.correo.fechaIngreso = new Date();
+                    correoRR.insert($scope.correo)
+                            .then(function (correoResult) {
+                                var listbox = document.getElementById("paramAreaTrabajo");
+                                var selIndex = listbox.selectedIndex;
+                                var selText = listbox.options[selIndex].text;
+                                correoResult.paramAreaTrabajo = selText;
+                                $log.log(correoResult);
+                                $uibModalInstance.dismiss(correoResult);
+                                SweetAlert.swal("Hecho", "Registro guardado exitosamente.", "success");
                             }, function (bussinessMessages) {
                                 $scope.bussinessMessages = bussinessMessages;
                                 SweetAlert.swal("Hubo un error", "Intente nuevamente o comuniquese con el administrador.", "warning");
-                            });
+                            }
+                            );
                     /*} else {
                      alert("Hay datos inválidos");
                      }*/
                 };
-
                 $scope.cerrar = function () {
                     $uibModalInstance.dismiss('cancel');
                 };
-
             }]);
-
-
 app.controller("ListCorreoController",
         ['$scope', "correos", "correoRR", "$log", "$location",
             "$uibModal", 'SweetAlert',
@@ -69,6 +54,7 @@ app.controller("ListCorreoController",
                     $uibModal, SweetAlert) {
                 /*Se obtiene lista de coordinadores*/
                 $scope.correos = correos;
+                $log.log(correos);
                 /*Se setea la cantidad filas por vista*/
                 $scope.currentPage = 0;
                 $scope.pageSize = 20;
@@ -113,16 +99,16 @@ app.controller("ListCorreoController",
                 };
 
                 /*Editar un registro*/
-                $scope.editarModal = function (usuarioObj) {
+                $scope.editarModal = function (correoObj) {
                     var modalInstance = $uibModal.open({
-                        templateUrl: 'usuario/usuarioEdit.html',
-                        controller: "EditUsuarioController",
+                        templateUrl: 'correo/correoEdit.html',
+                        controller: "EditCorreoController",
                         size: 'sm',
                         backdrop: 'static',
                         keyboard: false,
                         resolve: {
-                            usuario: function () {
-                                return correoRR.get(usuarioObj.idUsuario);
+                            correo: function () {
+                                return correoRR.get(correoObj.idCorreo);
                             },
                             parametros: ['parametroRR', function (parametroRR) {
                                     return parametroRR.list();
@@ -138,7 +124,7 @@ app.controller("ListCorreoController",
                             if (data !== "backdrop click") {
                                 if (data !== "escape key press") {
                                     //Si no es cancel, se reemplaza el objeto que se mandó a actualizar
-                                    var index = $scope.correos.indexOf(usuarioObj);
+                                    var index = $scope.correos.indexOf(correoObj);
                                     if (index !== -1) {
                                         $scope.correos[index] = data;
                                     }
@@ -153,8 +139,8 @@ app.controller("ListCorreoController",
                 /*Ingresar un registro*/
                 $scope.insertarModal = function () {
                     var modalInstance = $uibModal.open({
-                        templateUrl: 'usuario/usuarioEdit.html',
-                        controller: "NewUsuarioController",
+                        templateUrl: 'correo/correoEdit.html',
+                        controller: "NewCorreoController",
                         size: 'sm',
                         backdrop: 'static',
                         keyboard: false,
@@ -186,9 +172,9 @@ app.controller("ListCorreoController",
             }]);
 
 app.controller("EditCorreoController",
-        ['$scope', "usuario", 'usuarioRR', "parametros",
+        ['$scope', "correo", 'correoRR', "parametros",
             "$uibModalInstance", 'SweetAlert', "$log",
-            function ($scope, usuario, usuarioRR, parametros,
+            function ($scope, correo, correoRR, parametros,
                     $uibModalInstance, SweetAlert, $log) {
                 $scope.filtrar = function (obj, param) {
                     function filterByParametro(obj) {
@@ -200,23 +186,22 @@ app.controller("EditCorreoController",
                 };
 
                 $scope.parametros = parametros;
-                $scope.paramPerfil = $scope.filtrar($scope.parametros, 'P010')[0].parametroDetalles;
+                $scope.paramAreaTrabajo = $scope.filtrar($scope.parametros, 'P011')[0].parametroDetalles;
 
-                $scope.usuario = usuario;
-                $scope.usuario.password = '*******';
+                $scope.correo = correo;
                 $scope.guardar = function () {
                     //if ($scope.form.$valid) {
-                    $scope.usuario.usuarioModifica = "user1";
-                    $scope.usuario.fechaModificacion = new Date();
-                    usuarioRR.update($scope.usuario)
-                            .then(function (sedeResult) {
+                    $scope.correo.usuarioModifica = "user1";
+                    $scope.correo.fechaModificacion = new Date();
+                    correoRR.update($scope.correo)
+                            .then(function (correoResult) {
                                 //Devuelve objeto actualizado y cierra modal
-                                var listbox = document.getElementById("perfil");
+                                var listbox = document.getElementById("paramAreaTrabajo");
                                 var selIndex = listbox.selectedIndex;
                                 var selText = listbox.options[selIndex].text;
-                                sedeResult.perfil = selText;
+                                correoResult.paramAreaTrabajo = selText;
 
-                                $uibModalInstance.dismiss(sedeResult);
+                                $uibModalInstance.dismiss(correoResult);
                                 SweetAlert.swal("Hecho!", "Registro guardado exitosamente.", "success");
                             }, function (bussinessMessages) {
                                 SweetAlert.swal("Hubo un error!", "Intente nuevamente o comuniquese con el administrador.", "warning");
@@ -224,17 +209,6 @@ app.controller("EditCorreoController",
                     /*} else {
                      alert("Hay datos inválidos");
                      }*/
-                };
-
-                $scope.cambiarPassword = function () {
-                    $scope.usuario.usuarioModifica = "sa";
-                    $scope.usuario.fechaModificacion = new Date();
-                    usuarioRR.updatePassword($scope.usuario)
-                            .then(function (usuarioResponse) {
-                                SweetAlert.swal("Hecho!", "Se cambió exitosamente.", "success");
-                            }, function (error) {
-                                SweetAlert.swal("Hubo un error!", "Intente nuevamente o comuniquese con el administrador.", "warning");
-                            });
                 };
 
                 $scope.cerrar = function () {

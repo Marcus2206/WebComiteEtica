@@ -6,39 +6,70 @@
 
 var app = angular.module("app");
 
-app.controller("MainController", ['$scope', '$log', "$rootScope", "auth", "localStorageService", function ($scope, $log, $rootScope, auth, localStorageService) {
-        $('#myCarousel').carousel({
-            interval: 2000
-        });
-        if (localStorageService.get("mostrar") !== null) {
-            $rootScope.muestra = localStorageService.get("mostrar");
-        }else{
-            localStorageService.set("mostrar",true);
-            $rootScope.muestra = true;
-        }
-        if (localStorageService.get("rolUsuario") !== null) {
-            $rootScope.rolUsuario = localStorageService.get("rolUsuario");
-        }else{
-            localStorageService.set("rolUsuario","");
-            $rootScope.rolUsuario ="";
-        }
-        if (localStorageService.get("usuario") !== null) {
-            $rootScope.username = localStorageService.get("usuario");
-        }else{
-            localStorageService.set("usuario","");
-            $rootScope.username ="";
-        }
+app.controller("MainController",
+        ['$scope', '$log', "$rootScope", "auth",
+            "localStorageService", "$timeout",
+            function ($scope, $log, $rootScope, auth,
+                    localStorageService, $timeout) {
+                $('#myCarousel').carousel({
+                    interval: 2000
+                });
+                if (localStorageService.get("mostrar") !== null) {
+                    $rootScope.muestra = localStorageService.get("mostrar");
+                } else {
+                    localStorageService.set("mostrar", true);
+                    $rootScope.muestra = true;
+                }
+                if (localStorageService.get("rolUsuario") !== null) {
+                    $rootScope.rolUsuario = localStorageService.get("rolUsuario");
+                } else {
+                    localStorageService.set("rolUsuario", "");
+                    $rootScope.rolUsuario = "";
+                }
+                if (localStorageService.get("usuario") !== null) {
+                    $rootScope.username = localStorageService.get("usuario");
+                } else {
+                    localStorageService.set("usuario", "");
+                    $rootScope.username = "";
+                }
 
 
 
 //        $scope.user = $rootScope.username;
-        $scope.logout = function () {
-            auth.logout();
+                $scope.logout = function () {
+                    auth.logout();
 //            $scope.user = "";
-            $rootScope.username = "";
-            $rootScope.muestra = true;
-            window.location.reload();
-        };
+                    $rootScope.username = "";
+                    $rootScope.muestra = true;
+                    window.location.reload();
+                };
 
 
-    }]);
+                /*Notificaciones*/
+                $scope.testClick = function () {
+                    $log.log("asdasd");
+                };
+
+                $scope.listaNoti = [
+                    {
+                        id: 0,
+                        detalle: "sadasd"
+
+                    },
+                     {
+                        id: 1,
+                        detalle: "sadasd"
+                    }
+                
+                ];
+                var setearNotificaciones = function () {
+                    var noti={
+                        id:$scope.listaNoti.length,
+                        detalle:"eseoe eoses"
+                    };
+                    $scope.listaNoti.push(noti);
+                    $timeout(setearNotificaciones, 3000);
+                };
+                $timeout(setearNotificaciones, 3000);
+
+            }]);

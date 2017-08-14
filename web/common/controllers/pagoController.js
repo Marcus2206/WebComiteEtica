@@ -8,8 +8,6 @@ app.controller("EditPagoController",
                     $log, $uibModalInstance, SweetAlert,
                     $uibModal) {
 
-
-
                 $scope.filtrar = function (obj, param) {
                     function filterByParametro(obj) {
                         if (obj.idParametro === param) {
@@ -63,6 +61,21 @@ app.controller("EditPagoController",
                                 SweetAlert.swal("Hecho!", "Se ha removido con éxito.", "success");
                                 $scope.pagoDetalles.splice($scope.pagoDetalles.indexOf(pagoDetalle), 1);
                             }, function (bussinessMessages) {
+                                SweetAlert.swal("Hubo un error!", "Intente nuevamente o comuniquese con el administrador.", "danger");
+                            });
+                };
+
+                $scope.enviarMail = function () {
+                    pagoRR.sendMail($scope.pago)
+                            .then(function (pagoResponse) {
+                                $log.log("pagoResponse");
+                                $log.log(pagoResponse);
+                                if (pagoResponse === 1) {
+                                    SweetAlert.swal("Hecho!", "Se envió con éxito.", "success");
+                                } else {
+                                    SweetAlert.swal("Hubo un error!", "Intente nuevamente o comuniquese con el administrador.", "danger");
+                                }
+                            }, function (error) {
                                 SweetAlert.swal("Hubo un error!", "Intente nuevamente o comuniquese con el administrador.", "danger");
                             });
                 };

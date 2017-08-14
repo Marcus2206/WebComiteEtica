@@ -14,6 +14,66 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" >
             <ul class="nav navbar-nav">
+                <li class="dropdown">
+                    <a href="" class="dropdown-toggle"style="color: #FEB41C" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                        <i data-count="2" class="glyphicon glyphicon-bell notification-icon"></i> (<b>2</b>)
+                    </a>
+                    <ul class="dropdown-menu notify-drop">
+                        <div class="notify-drop-title">
+                            <div class="row">
+                                <div class="col-md-6 col-sm-6 col-xs-6">Mensajes (<b>2</b>)</div>
+                                <div class="col-md-6 col-sm-6 col-xs-6 text-right"><a href="" class="rIcon allRead" data-tooltip="tooltip" data-placement="bottom" title="Marcar todo como leído."  ng-click="testClick()"  ><i class="fa fa-dot-circle-o"></i></a></div>
+                            </div>
+                        </div>
+                        <!-- end notify title -->
+                        <!-- notify content -->
+                        <div class="drop-content" >
+                            <li ng-repeat="not in listaNoti">
+                                <div class="col-md-3 col-sm-3 col-xs-3"><div class="notify-img"><img src="http://placehold.it/45x45" alt=""></div></div>
+                                <div class="col-md-9 col-sm-9 col-xs-9 pd-l0"><a href="">{{not.id}}</a> <a href=""></a> <a href="" class="rIcon"><i class="fa fa-dot-circle-o"></i></a>
+                                    <hr>
+                                    <p class="time">{{not.detalle}}</p>
+                                </div>
+                            </li>
+
+                            <!--                           
+                                                            <li>
+                                                            <div class="col-md-3 col-sm-3 col-xs-3"><div class="notify-img"><img src="http://placehold.it/45x45" alt=""></div></div>
+                                                            <div class="col-md-9 col-sm-9 col-xs-9 pd-l0"><a href="">Ahmet</a> yorumladı. <a href="">Çicek bahçeleri...</a> <a href="" class="rIcon"><i class="fa fa-dot-circle-o"></i></a>
+                                                                <hr>
+                                                                <p class="time">Şimdi</p>
+                                                            </div>
+                                                        </li>
+                                                        <li>
+                                                            <div class="col-md-3 col-sm-3 col-xs-3"><div class="notify-img"><img src="http://placehold.it/45x45" alt=""></div></div>
+                                                            <div class="col-md-9 col-sm-9 col-xs-9 pd-l0"><a href="">Ahmet</a> yorumladı. <a href="">Çicek bahçeleri...</a> <a href="" class="rIcon"><i class="fa fa-dot-circle-o"></i></a>
+                                                                <p>Lorem ipsum sit dolor amet consilium.</p>
+                                                                <p class="time">1 Saat önce</p>
+                                                            </div>
+                                                        </li>
+                                                        <li>
+                                                            <div class="col-md-3 col-sm-3 col-xs-3"><div class="notify-img"><img src="http://placehold.it/45x45" alt=""></div></div>
+                                                            <div class="col-md-9 col-sm-9 col-xs-9 pd-l0"><a href="">Ahmet</a> yorumladı. <a href="">Çicek bahçeleri...</a> <a href="" class="rIcon"><i class="fa fa-dot-circle-o"></i></a>
+                                                                <p>Lorem ipsum sit dolor amet consilium.</p>
+                                                                <p class="time">29 Dakika önce</p>
+                                                            </div>
+                                                        </li>
+                                                        <li>
+                                                            <div class="col-md-3 col-sm-3 col-xs-3"><div class="notify-img"><img src="http://placehold.it/45x45" alt=""></div></div>
+                                                            <div class="col-md-9 col-sm-9 col-xs-9 pd-l0"><a href="">Ahmet</a> yorumladı. <a href="">Çicek bahçeleri...</a> <a href="" class="rIcon"><i class="fa fa-dot-circle-o"></i></a>
+                                                                <p>Lorem ipsum sit dolor amet consilium.</p>
+                                                                <p class="time">29 Dakika önce</p>
+                                                            </div>
+                                                        </li>-->
+
+
+                        </div >
+                        <div class="notify-drop-footer text-center">
+                            <a href=""><i class="fa fa-eye"></i> Ver Todo</a>
+                        </div>
+                    </ul>
+                </li>
+
                 <li><a style="color: #FEB41C" ng-href="#/correspondenciaList"><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span> Correspondencia</a></li>
                 <li class="dropdown">
                     <a style="color: #FEB41C;cursor: pointer;"  class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> <span class="glyphicon glyphicon-book" aria-hidden="true"></span> Administracion<span class="caret"></span></a>
@@ -27,7 +87,7 @@
                         <li><a href="#/patrocinadorList">Patrocinador</a></li>
                         <li><a href="#/croList">CRO</a></li>
                         <li><a href="#/usuarioList">Usuarios</a></li>
-                         <li><a href="#/correoList">Correos</a></li>
+                        <li><a href="#/correoList">Correos</a></li>
                     </ul>
                 </li>
                 <li><a style="color: #FEB41C" ng-href="#/pagoList"><span class="glyphicon glyphicon-piggy-bank" aria-hidden="true"></span> Cuentas por Cobrar</a></li>
@@ -36,14 +96,14 @@
             <div>
                 <ul ng-show="muestra" class="nav navbar-nav navbar-right" >
                     <li>
-                        <a href="#/login"  >Iniciar sesión</a>
+                        <a style="color: #FEB41C" href="#/login"  >Iniciar sesión</a>
                     </li>
                 </ul>
-                <ul ng-show="!muestra" class="nav navbar-nav navbar-right">
+                <ul ng-show="!muestra"style="color: #FEB41C" class="nav navbar-nav navbar-right">
                     <!--<li><a runat="server" href="~/Account/Manage" title="Manage your account">Hello, <%//: Context.User.Identity.GetUserName()  %> !</a></li>-->
-                    <li><a title=""> {{username}}</a></li>
+                    <li><a title="" style="color: #FEB41C" > {{username}}</a></li>
                     <li>
-                        <a href="" ng-click="logout()">Cerrar sesión </a>
+                        <a href="" style="color: #FEB41C" ng-click="logout()">Cerrar sesión </a>
                     </li>
                 </ul>
             </div>

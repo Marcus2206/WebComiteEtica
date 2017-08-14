@@ -26,16 +26,17 @@
                 <thead class="cf">
                     <tr>
                         <th>Id. Pago</th>
-                        <th>Costo</th>
+                        <th>Precio</th>
                         <th>Nro. Factura</th>
                         <th>Observación</th>
                         <th>Estado Pago</th>
+                         <th>Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr ng-repeat="pago in pagos| empezarDe : currentPage * pageSize | limitTo:pageSize | filter:txtFiltroPago ">
                         <td data-title="Id. Pago">{{pago.idPago}}</td>
-                        <td data-title="Costo">{{pago.costo}}</td>
+                        <td data-title="Precio">{{pago.costo}}</td>
                         <td data-title="Nro. Factura">{{pago.nroFactura}}</td>
                         <td data-title="Observación">{{pago.observacion}}</td>
                         <td data-title="Estado Pago">{{pago.paramEstadoPago}}</td>
