@@ -1,36 +1,39 @@
-var app=angular.module("app");
+var app = angular.module("app");
 
-app.config(['$routeProvider',"$locationProvider",function($routeProvider,$locationProvider) {
-    
-    /*Ruta referente a Investigación*/
-    $locationProvider.hashPrefix("");
-    $routeProvider.when('/registroList', {
-       templateUrl: "registro/registroList.html",
-       controller: "ListRegistroController",
-       resolve:{
-            registros:['registroRR',function(registroRR) {
-                return registroRR.listFindAll();
-            }]
-       }
-     });
+app.config(['$routeProvider', "$locationProvider", function ($routeProvider, $locationProvider) {
 
-    $routeProvider.when('/registroEdit/:idRegistro', {
-        templateUrl: "registro/registroEdit.html",
-        controller: "EditRegistroController",
-        resolve: {
-                registro:['registroRR','$route',function(registroRR,$route) {
-                return registroRR.get($route.current.params.idRegistro);
-            }]
-        }
-    });
+        /*Ruta referente a Investigación*/
+        $locationProvider.hashPrefix("");
+        $routeProvider.when('/registroList/:idNotificacionParam', {
+            templateUrl: "registro/registroList.html",
+            controller: "ListRegistroController",
+            resolve: {
+                idNotificacionParam: ['$route', function ($route) {
+                        return  $route.current.params.idNotificacionParam;
+                    }],
+                registros: ['registroRR', function (registroRR) {
+                        return registroRR.listFindAll();
+                    }]
+            }
+        });
 
-    $routeProvider.when('/registroNew', {
-        templateUrl: "registro/registroEdit.html",
-        controller: "NewRegistroController"
-    });
+        $routeProvider.when('/registroEdit/:idRegistro', {
+            templateUrl: "registro/registroEdit.html",
+            controller: "EditRegistroController",
+            resolve: {
+                registro: ['registroRR', '$route', function (registroRR, $route) {
+                        return registroRR.get($route.current.params.idRegistro);
+                    }]
+            }
+        });
 
-     $routeProvider.otherwise({
-           redirectTo: '/'
-     });
-}]);
+        $routeProvider.when('/registroNew', {
+            templateUrl: "registro/registroEdit.html",
+            controller: "NewRegistroController"
+        });
+
+        $routeProvider.otherwise({
+            redirectTo: '/'
+        });
+    }]);
 

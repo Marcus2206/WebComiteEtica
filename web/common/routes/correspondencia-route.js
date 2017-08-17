@@ -1,36 +1,52 @@
-var app=angular.module("app");
+var app = angular.module("app");
 
-app.config(['$routeProvider',"$locationProvider",function($routeProvider,$locationProvider) {
-    
-    /*Ruta referente a Investigación*/
-    $locationProvider.hashPrefix("");
-    $routeProvider.when('/correspondenciaList', {
-       templateUrl: "correspondencia/correspondenciaList.html",
-       controller: "ListCorrespondenciaController",
-       resolve:{
-            correspondencias:['correspondenciaRR',function(correspondenciaRR) {
-                return correspondenciaRR.listFindAll();
-            }]
-       }
-     });
+app.config(['$routeProvider', "$locationProvider", function ($routeProvider, $locationProvider) {
 
-    $routeProvider.when('/correspondenciaEdit/:idCorrespondencia', {
-        templateUrl: "correspondencia/correspondenciaEdit.html",
-        controller: "EditCorrespondenciaController",
-        resolve: {
-                correspondencia:['correspondenciaRR','$route',function(correspondenciaRR,$route) {
-                return correspondenciaRR.get($route.current.params.idCorrespondencia);
-            }]
-        }
-    });
+        /*Ruta referente a Investigación*/
+        $locationProvider.hashPrefix("");
+//        $routeProvider.when('/correspondenciaList', {
+//            templateUrl: "correspondencia/correspondenciaList.html",
+//            controller: "ListCorrespondenciaController",
+//            resolve: {
+//                idNotificacionParam: ['$route', function ($route) {
+//                        return  $route.current.params.idNotificacionParam;
+//                    }],
+//                correspondencias: ['correspondenciaRR', function (correspondenciaRR) {
+//                        return correspondenciaRR.listFindAll();
+//                    }]
+//            }
+//        });
 
-    $routeProvider.when('/correspondenciaNew', {
-        templateUrl: "correspondencia/correspondenciaEdit.html",
-        controller: "NewCorrespondenciaController"
-    });
+        $routeProvider.when('/correspondenciaList/:idNotificacionParam', {
+            templateUrl: "correspondencia/correspondenciaList.html",
+            controller: "ListCorrespondenciaController",
+            resolve: {
+                idNotificacionParam: ['$route', function ($route) {
+                        return  $route.current.params.idNotificacionParam;
+                    }],
+                correspondencias: ['correspondenciaRR', function (correspondenciaRR) {
+                        return correspondenciaRR.listFindAll();
+                    }]
+            }
+        });
 
-     $routeProvider.otherwise({
-           redirectTo: '/'
-     });
-}]);
+        $routeProvider.when('/correspondenciaEdit/:idCorrespondencia', {
+            templateUrl: "correspondencia/correspondenciaEdit.html",
+            controller: "EditCorrespondenciaController",
+            resolve: {
+                correspondencia: ['correspondenciaRR', '$route', function (correspondenciaRR, $route) {
+                        return correspondenciaRR.get($route.current.params.idCorrespondencia);
+                    }]
+            }
+        });
+
+        $routeProvider.when('/correspondenciaNew', {
+            templateUrl: "correspondencia/correspondenciaEdit.html",
+            controller: "NewCorrespondenciaController"
+        });
+
+        $routeProvider.otherwise({
+            redirectTo: '/'
+        });
+    }]);
 

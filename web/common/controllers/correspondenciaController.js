@@ -285,14 +285,18 @@ app.controller("EditCorrespondenciaController",
             }]);
 
 app.controller("ListCorrespondenciaController",
-        ['$scope', "correspondencias", "correspondenciaRR",
+        ['$scope', "correspondencias","idNotificacionParam", "correspondenciaRR",
             "$log", "$uibModal", 'SweetAlert',
-            function ($scope, correspondencias, correspondenciaRR,
+            function ($scope, correspondencias,idNotificacionParam, correspondenciaRR,
                     $log, $uibModal, SweetAlert) {
 
+                if(idNotificacionParam !== "all"){
+                    $scope.txtFiltroCorrespondencia = idNotificacionParam;
+                }
+                
                 /*Se obtiene lista de correspondencias*/
                 $scope.correspondencias = correspondencias;
-
+                
                 /*Se setea la cantidad filas por vista*/
                 $scope.currentPage = 0;
                 $scope.pageSize = 20;

@@ -1,5 +1,5 @@
 var app = angular.module("app");
-app.factory("auth", function ($location, $log, localStorageService, usuarioRR)
+app.factory("auth", function ($location, $log, localStorageService, usuarioRR, UrlOrigen)
 {
     return{
         login: function ($scope, username, password, SweetAlert)
@@ -15,7 +15,8 @@ app.factory("auth", function ($location, $log, localStorageService, usuarioRR)
 
                             //mandamos a la home
                             SweetAlert.swal("Bienvenido", "", "success");
-                            setTimeout("window.open('http://localhost:8080/WebComiteEtica', '_self', false);", 2000);
+                            setTimeout("window.open('"+UrlOrigen+"', '_self', false);", 1000);
+                            $log.log(UrlOrigen);
                         } else {
                             SweetAlert.swal("Credenciales incorrectas", "Por favor, intente nuevamente.", "warning");
                         }

@@ -8,9 +8,9 @@ var app = angular.module("app");
 
 app.controller("MainController",
         ['$scope', '$log', "$rootScope", "auth",
-            "localStorageService", "$timeout", "notificacionRR",
+            "localStorageService", "$timeout", "notificacionRR","UrlOrigen",
             function ($scope, $log, $rootScope, auth,
-                    localStorageService, $timeout, notificacionRR) {
+                    localStorageService, $timeout, notificacionRR,UrlOrigen) {
 
                 $scope.notificacions = [];
                 /*Carousel*/
@@ -102,6 +102,20 @@ app.controller("MainController",
                             , function (error) {
                             });
                 };
+
+                $scope.enlaceNotificacion = function (not) {
+                    switch (not.tablaProcedencia) {
+                        case 'Correspondencia':
+                            window.open(UrlOrigen+'#/correspondenciaList/'+not.idDocumento, '_self', false);
+                            break;
+                        case 'Registro':
+                            window.open(UrlOrigen+'#/registroList', '_self', false);
+                            break;
+                        case 'Pago':
+                            window.open(UrlOrigen+'#/pagoList', '_self', false);
+                            break;
+                    }
+                }
 
                 $scope.noLeidos;
                 $scope.setNoLeidos = function () {
