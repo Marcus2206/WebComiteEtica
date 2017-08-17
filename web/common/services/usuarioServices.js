@@ -21,7 +21,8 @@ function UsuarioRR($http, $q, baseUrl, $log) {
             usuario: usuario.usuario,
             password: usuario.password,
             perfil: usuario.perfil,
-            usuarioIngresa: usuario.usuarioIngresa
+            usuarioIngresa: usuario.usuarioIngresa,
+            estado: usuario.estado
         };
         var config = {params};
         $http.post(baseUrl + '/api/Usuario/UsuarioInsert', null, config)

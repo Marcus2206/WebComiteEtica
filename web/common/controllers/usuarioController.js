@@ -25,16 +25,9 @@ app.controller("NewUsuarioController",
                     //if ($scope.form.$valid) {
                     $scope.usuario.usuarioIngresa = "user1";
                     $scope.usuario.fechaIngreso = new Date();
+                    $log.log($scope.usuario);
                     usuarioRR.insert($scope.usuario)
                             .then(function (usuarioResult) {
-
-                                function isEmptyJSON(s) {
-                                    for (var i in s) {
-                                        return false;
-                                    }
-                                    return true;
-                                }
-                                $log.log(usuarioResult);
                                 if (!isEmptyJSON(usuarioResult)) {
                                                             
                                     var listbox = document.getElementById("perfil");
@@ -117,7 +110,7 @@ app.controller("ListUsuarioController",
                     var modalInstance = $uibModal.open({
                         templateUrl: 'usuario/usuarioEdit.html',
                         controller: "EditUsuarioController",
-                        size: 'sm',
+                        size: 'md',
                         backdrop: 'static',
                         keyboard: false,
                         resolve: {
@@ -155,7 +148,7 @@ app.controller("ListUsuarioController",
                     var modalInstance = $uibModal.open({
                         templateUrl: 'usuario/usuarioEdit.html',
                         controller: "NewUsuarioController",
-                        size: 'sm',
+                        size: 'md',
                         backdrop: 'static',
                         keyboard: false,
                         resolve: {
@@ -172,9 +165,7 @@ app.controller("ListUsuarioController",
                         if (data !== "cancel") {
                             if (data !== "backdrop click") {
                                 if (data !== "escape key press") {
-//                                    $log.log(data);
                                     /*añade a la lista sin recargar la página*/
-                                    $log.log(data);
                                     $scope.usuarios.push(data);
                                 }
                             }
@@ -190,7 +181,6 @@ app.controller("EditUsuarioController",
             "$uibModalInstance", 'SweetAlert', "$log",
             function ($scope, usuario, usuarioRR, parametros,
                     $uibModalInstance, SweetAlert, $log) {
-
 
                 $scope.filtrar = function (obj, param) {
                     function filterByParametro(obj) {
@@ -211,14 +201,14 @@ app.controller("EditUsuarioController",
                     $scope.usuario.usuarioModifica = "user1";
                     $scope.usuario.fechaModificacion = new Date();
                     usuarioRR.update($scope.usuario)
-                            .then(function (sedeResult) {
+                            .then(function (usuarioResult) {
                                 //Devuelve objeto actualizado y cierra modal
                                 var listbox = document.getElementById("perfil");
                                 var selIndex = listbox.selectedIndex;
                                 var selText = listbox.options[selIndex].text;
-                                sedeResult.perfil = selText;
+                                usuarioResult.perfil = selText;
 
-                                $uibModalInstance.dismiss(sedeResult);
+                                $uibModalInstance.dismiss(usuarioResult);
                                 SweetAlert.swal("Hecho!", "Registro guardado exitosamente.", "success");
                             }, function (bussinessMessages) {
                                 SweetAlert.swal("Hubo un error!", "Intente nuevamente o comuniquese con el administrador.", "warning");

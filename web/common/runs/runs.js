@@ -8,7 +8,19 @@ app.run(["$rootScope", 'auth', function ($rootScope, auth) {
             //la cuál hemos inyectado en la acción run de la aplicación
             auth.checkStatus();
         });
+
+        $(document).ready(function () {
+            $('[data-toggle="tooltip"]').tooltip();
+        });
+
     }]);
+
+function isEmptyJSON(s) {
+    for (var i in s) {
+        return false;
+    }
+    return true;
+}
 
 //al cambiar de rutas
    

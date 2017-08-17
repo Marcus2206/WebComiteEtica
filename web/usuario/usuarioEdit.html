@@ -6,32 +6,36 @@
     <div class="modal-body">
         <div class="container-fluid">
             <div class="row">
-                <div class="col">
+                <div class="col col-xs-6">
                     <div class="form-group">
                         <label for="idUsuario">Id. Usuario: </label><br>
                         <input readonly type="text" class="form-control" id="idUsuario"  placeholder="Id. Usuario" ng-model="usuario.idUsuario" value="{{ usuario.idUsuario || '' }}">
                     </div> 
                 </div>
-                <div class="col">
+            </div>
+            <div class="row">
+                <div class="col col-xs-6">
                     <div class="form-group">
                         <label for="usuario">Usuario: </label><br>
                         <input type="text" class="form-control" id="usuario"  placeholder="Usuario" ng-model="usuario.usuario" value="{{ usuario.usuario || '' }}">
                     </div>
                 </div>
-
-
-                <div class="col">
+                <div class="col col-xs-6">
                     <div class="form-group">
                         <label for="password">Password: </label><br>
                         <p class="input-group">
                             <input type="password" class="form-control" id="password"  placeholder="Password" ng-model="usuario.password" value="{{ usuario.password || '' }}">
                             <span class="input-group-btn">
-                                <button type="button" class="btn btn-default" ng-click="cambiarPassword()"><i class="glyphicon glyphicon-refresh"></i></button>
-                            </span>
+                                <button type="button" class="btn btn-default" ng-click="cambiarPassword()" data-toggle="tooltip" title="Resetear clave">
+                                    <i class="glyphicon glyphicon-refresh"></i>
+                                </button>
+                            </span>                
                         </p>
                     </div>
                 </div>
-                <div class="col">
+            </div>
+            <div class="row">
+                <div class="col col-xs-6">
                     <div class="form-group">
                         <label for="perfil">Perfil:  </label><br>
                         <select id="perfil" class="form-control" theme="bootstrap" ng-model="usuario.perfil">
@@ -39,8 +43,12 @@
                         </select>
                     </div>
                 </div>     
-
-
+                <div class="col col-xs-6">
+                    <div class="form-group">
+                        <label for="estado">Estado:  </label><br>
+                        <checkbox id="estado" ng-model="usuario.estado"></checkbox>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="modal-footer">

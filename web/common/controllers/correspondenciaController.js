@@ -127,9 +127,6 @@ app.controller("EditCorrespondenciaController",
                         });
 
                 $scope.agregarServicio = function () {
-
-//                    var s = $scope.servicioSelect;
-
                     if (isEmptyJSON($scope.servicioSelect)) {
                         return;
                     }
@@ -502,6 +499,7 @@ app.controller("NewCorrespondenciaController",
                 $scope.paramTipoServicio = $scope.filtrar($scope.parametros, 'P001')[0].parametroDetalles;
                 $scope.paramDistribucion = $scope.filtrar($scope.parametros, 'P002')[0].parametroDetalles;
 
+                $scope.isServicio = true;
                 $scope.servicioSelect = {};
                 $scope.servicioSelectList = $scope.paramTipoServicio;
                 /*Se construyer el json*/
@@ -517,7 +515,11 @@ app.controller("NewCorrespondenciaController",
                 $scope.guardar = function () {
                     $scope.correspondencia.usuarioIngresa = "user1";
                     $scope.correspondencia.fechaIngreso = new Date();
-
+                    $log.log($scope.correspondencia.registro);
+                    if (isEmptyJSON ($scope.correspondencia.registro)) {
+                        SweetAlert.swal("Adventencia", "La correspondencia debe contar con un registro asignado.", "warning");
+                        return;
+                    }
                     correspondenciaRR.insert($scope.correspondencia)
                             .then(function (correspondenciaRespond) {
                                 var listbox = document.getElementById("paramDistribucion");
@@ -537,7 +539,7 @@ app.controller("NewCorrespondenciaController",
                                 SweetAlert.swal("Hecho!", "Registro guardado exitosamente.", "success");
                             }, function (bussinessMessages) {
                                 $scope.bussinessMessages = bussinessMessages;
-                                SweetAlert.swal("Hubo un error!", "Intente nuevamente o comuniquese con el administrador.", "danger");
+                                SweetAlert.swal("Hubo un error!", "Intente nuevamente o comuniquese con el administrador.", "warning");
                             });
                     /*} else {
                      alert("Hay datos inválidos");
@@ -592,9 +594,3 @@ function setFechaSesion($scope, $log) {
     $scope.correspondencia.fechaSesion = $scope.fechasSesion;
 }
 
-function isEmptyJSON(s) {
-    for (var i in s) {
-        return false;
-    }
-    return true;
-}

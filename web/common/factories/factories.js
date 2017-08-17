@@ -2,7 +2,7 @@ var app = angular.module("app");
 app.factory("auth", function ($location, $log, localStorageService, usuarioRR)
 {
     return{
-        login: function ($scope, username, password,SweetAlert)
+        login: function ($scope, username, password, SweetAlert)
         {
             //creamos la cookie con el nombre que nos han pasado
             usuarioRR.getUser(username, password)
@@ -14,15 +14,15 @@ app.factory("auth", function ($location, $log, localStorageService, usuarioRR)
                             localStorageService.set("mostrar", false);
 
                             //mandamos a la home
-                            $location.path("/");
-                            SweetAlert.swal("Bienvenido","","success");
-                        }else{
-                            SweetAlert.swal("Credenciales incorrectas","Por favor, intente nuevamente.","warning");
+                            SweetAlert.swal("Bienvenido", "", "success");
+                            setTimeout("window.open('http://localhost:8080/WebComiteEtica', '_self', false);", 2000);
+                        } else {
+                            SweetAlert.swal("Credenciales incorrectas", "Por favor, intente nuevamente.", "warning");
                         }
                     }, function (response) {
-                        SweetAlert.swal("Credenciales incorrectas","Por favor, intente nuevamente.","warning");
+                        SweetAlert.swal("Credenciales incorrectas", "Por favor, intente nuevamente.", "warning");
                     });
-            
+
         },
         logout: function ()
         {

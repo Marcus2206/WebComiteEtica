@@ -440,10 +440,3 @@ function buscarSede($scope, $uibModal) {
         }
     });
 }
-
-function isEmptyJSON(s) {
-    for (var i in s) {
-        return false;
-    }
-    return true;
-}

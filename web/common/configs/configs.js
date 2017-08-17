@@ -143,3 +143,9 @@ app.config(['baseUrl', 'correoRRProvider',
         correoRRProvider.setBaseUrl(baseUrl);
     }
 ]);
+
+app.config(['baseUrl', 'notificacionRRProvider',
+    function (baseUrl, notificacionRRProvider) {
+        notificacionRRProvider.setBaseUrl(baseUrl);
+    }
+]);
