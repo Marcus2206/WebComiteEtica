@@ -2,11 +2,11 @@ var app = angular.module("app");
 
 app.controller("EditPagoController",
         ['$scope', 'pago', 'parametros', 'pagoRR', 'pagoDetalleRR',
-            "$log", "$uibModalInstance", 'SweetAlert', '$timeout',
-            '$uibModal',
+            "$log", "$uibModalInstance", 'SweetAlert',
+            '$uibModal', '$rootScope',
             function ($scope, pago, parametros, pagoRR, pagoDetalleRR,
-                    $log, $uibModalInstance, SweetAlert, $timeout,
-                    $uibModal) {
+                    $log, $uibModalInstance, SweetAlert,
+                    $uibModal, $rootScope) {
 
                 $scope.filtrar = function (obj, param) {
                     function filterByParametro(obj) {
@@ -43,22 +43,18 @@ app.controller("EditPagoController",
                     pagoRR.update($scope.pago)
                             .then(function (pagoRespond) {
                                 $log.log(pagoRespond);
+                                var listbox = document.getElementById("paramEstadoPago");
+                                var selIndex = listbox.selectedIndex;
+                                var selText = listbox.options[selIndex].text;
+                                pagoRespond.paramEstadoPago = selText;
+                                var index = $scope.pagos.indexOf($scope.pagoObj);
+                                if (index !== -1) {
+                                    $scope.pagos[index] = pagoRespond;
+                                }
 
 
-                                $timeout(function () {
-                                    var listbox = document.getElementById("paramEstadoPago");
-                                    var selIndex = listbox.selectedIndex;
-                                    var selText = listbox.options[selIndex].text;
-                                    pagoRespond.paramEstadoPago = selText;
-                                    var index = $scope.pagos.indexOf($scope.pagoObj);
-                                    if (index !== -1) {
-                                        $scope.pagos[index] = pagoRespond;
-                                    }
-
-
-                                    $scope.pagoObj = pagoRespond;
-                                    SweetAlert.swal("Hecho!", "Registro guardado exitosamente.", "success");
-                                }, 1000);
+                                $scope.pagoObj = pagoRespond;
+                                SweetAlert.swal("Hecho!", "Registro guardado exitosamente.", "success");
 
                             }, function (bussinessMessages) {
                                 $scope.bussinessMessages = bussinessMessages;
@@ -98,11 +94,14 @@ app.controller("EditPagoController",
             }]);
 
 app.controller("ListPagoController",
-        ['$scope', "pagos", "pagoRR",
+        ['$scope', "pagos","idNotificacionParam", "pagoRR",
             "$log", "$uibModal", 'SweetAlert',
             function ($scope, pagos, pagoRR,
                     $log, $uibModal, SweetAlert) {
-
+                      
+                if (idNotificacionParam !== "all") {
+                    $scope.txtFiltroPago = idNotificacionParam;
+                }
                 /*Se obtiene lista de registros*/
                 $scope.pagos = pagos;
 
@@ -220,10 +219,10 @@ app.controller("ListPagoController",
 app.controller("NewPagoController",
         ['$scope', 'pagoRR', 'correspondenciaServicioRR', 'pagoRR',
             "$log", "$uibModalInstance", 'SweetAlert', 'pagoDetalleRR',
-            '$q','$rootScope',
+            '$q', '$rootScope',
             function ($scope, pagoRR, correspondenciaServicioRR, pagoRR,
                     $log, $uibModalInstance, SweetAlert, pagoDetalleRR,
-                    $q,$rootScope) {
+                    $q, $rootScope) {
 
                 $scope.observacion = "";
                 $scope.correspondenciaServicios = [];
