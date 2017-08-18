@@ -39,7 +39,7 @@
                 <div class="col col-xs-6 col-md-6">
                     <div class="form-group">
                         <label for="paramEstadoPago">Estado:  </label><br>
-                        <select class="form-control" id="paramEstadoPago" ng-model="pago.paramEstadoPago">
+                        <select ng-disabled="true" class="form-control" id="paramEstadoPago" ng-model="pago.paramEstadoPago">
                             <option ng-repeat="pd in paramEstadoPago" value="{{pd.id.idParametroDetalle}}">{{pd.descripcion}}</option>
                         </select>
                     </div>

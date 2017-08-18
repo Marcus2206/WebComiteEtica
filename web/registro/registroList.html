@@ -26,6 +26,7 @@
                 <thead class="cf">
                     <tr>
                         <th>Id. Registro</th>
+                        <th>Estado Registro</th>
                         <th>Investigación</th>
                         <th>Investigador</th>
                         <th>Sede</th>
@@ -47,6 +48,7 @@
                 <tbody>
                     <tr ng-repeat="registro in registros| empezarDe : currentPage * pageSize | limitTo:pageSize | filter:txtFiltroRegistro ">
                         <td data-title="Id. Registro">{{registro.idRegistro}}</td>
+                        <td data-title="Estado Registro">{{registro.paramEstadoRegistro}}</td>
                         <td data-title="Investigación">{{registro.idInvestigacion}}</td>
                         <td data-title="Investigador">{{registro.idInvestigador}}</td>
                         <td data-title="Sede">{{registro.idSede}}</td>

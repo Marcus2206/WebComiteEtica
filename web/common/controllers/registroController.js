@@ -20,6 +20,7 @@ app.controller("EditRegistroController",
                 $scope.parametros = parametros;
                 $scope.paramEstado = $scope.filtrar($scope.parametros, 'P006')[0].parametroDetalles;
                 $scope.paramNotificacion = $scope.filtrar($scope.parametros, 'P007')[0].parametroDetalles;
+                $scope.paramEstadoRegistro = $scope.filtrar($scope.parametros, 'P012')[0].parametroDetalles;
 
                 $scope.registro = registro;
                 $scope.registro.investigador = rObj.idInvestigador;
@@ -39,6 +40,12 @@ app.controller("EditRegistroController",
 
                         });
                 $scope.guardar = function () {
+                    var listbox = document.getElementById("paramEstadoRegistro");
+                    var selIndex = listbox.selectedIndex;
+                    if (selIndex < 0) {
+                        SweetAlert.swal("Advertencia", "Debe seleccionar un Estado de Registro", "warning");
+                        return;
+                    }
                     $scope.registro.usuarioModifica = "sa";
                     $scope.registro.fechaModificacion = new Date();
                     registroRR.update($scope.registro)
@@ -54,6 +61,11 @@ app.controller("EditRegistroController",
                                 selText = listbox.options[selIndex].text;
                                 registroRespond.paramNotificacion = selText;
 
+                                listbox = document.getElementById("paramEstadoRegistro");
+                                selIndex = listbox.selectedIndex;
+                                selText = listbox.options[selIndex].text;
+                                registroRespond.paramEstadoRegistro = selText;
+
                                 registroRespond.idInvestigador = $scope.registro.investigador;
                                 registroRespond.idSede = $scope.registro.sede;
                                 registroRespond.idInvestigacion = $scope.registro.investigacion.protocolo + ' - ' + $scope.registro.investigacion.titulo;
@@ -66,7 +78,7 @@ app.controller("EditRegistroController",
                                 SweetAlert.swal("Hecho!", "Registro guardado exitosamente.", "success");
                             }, function (bussinessMessages) {
                                 $scope.bussinessMessages = bussinessMessages;
-                                SweetAlert.swal("Hubo un error!", "Intente nuevamente o comuniquese con el administrador.", "danger");
+                                SweetAlert.swal("Hubo un error!", "Intente nuevamente o comuniquese con el administrador.", "warning");
                             });
                 };
 
@@ -76,6 +88,8 @@ app.controller("EditRegistroController",
 
                 $scope.buscarInvestigacion = function () {
                     buscarInvestigacion($scope, $uibModal);
+//                    $scope.registro.idInvestigador=null;
+//                    $scope.registro.idSede=null;
                 };
 
                 $scope.buscarInvestigador = function () {
@@ -98,7 +112,7 @@ app.controller("EditRegistroController",
                 };
 
                 $scope.eliminarBitacora = function (registroBitacora) {
-                    registroBitacora.fecha=new Date();
+                    registroBitacora.fecha = new Date();
                     registroBitacoraRR.delete(registroBitacora)
                             .then(function (registroBitacoraResponse) {
                                 $scope.registroBitacoras.splice($scope.registroBitacoras.indexOf(registroBitacora), 1);
@@ -255,6 +269,7 @@ app.controller("NewRegistroController",
                 $scope.parametros = parametros;
                 $scope.paramEstado = $scope.filtrar($scope.parametros, 'P006')[0].parametroDetalles;
                 $scope.paramNotificacion = $scope.filtrar($scope.parametros, 'P007')[0].parametroDetalles;
+                $scope.paramEstadoRegistro = $scope.filtrar($scope.parametros, 'P012')[0].parametroDetalles;
 
                 $scope.deshabilitado = true;
                 $scope.isBitacora = true;

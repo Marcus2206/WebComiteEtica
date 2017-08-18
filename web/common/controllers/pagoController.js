@@ -2,10 +2,10 @@ var app = angular.module("app");
 
 app.controller("EditPagoController",
         ['$scope', 'pago', 'parametros', 'pagoRR', 'pagoDetalleRR',
-            "$log", "$uibModalInstance", 'SweetAlert',
+            "$log", "$uibModalInstance", 'SweetAlert', '$timeout',
             '$uibModal',
             function ($scope, pago, parametros, pagoRR, pagoDetalleRR,
-                    $log, $uibModalInstance, SweetAlert,
+                    $log, $uibModalInstance, SweetAlert, $timeout,
                     $uibModal) {
 
                 $scope.filtrar = function (obj, param) {
@@ -34,21 +34,31 @@ app.controller("EditPagoController",
                 $scope.guardar = function () {
                     $scope.pago.usuarioModifica = "sa";
                     $scope.pago.fechaModificacion = new Date();
+                    $log.log($scope.pago);
+                    if ($scope.pago.nroFactura !== '') {
+                        $scope.pago.paramEstadoPago = 'PD03';
+                    } else {
+                        $scope.pago.paramEstadoPago = 'PD01';
+                    }
                     pagoRR.update($scope.pago)
                             .then(function (pagoRespond) {
+                                $log.log(pagoRespond);
 
-                                var listbox = document.getElementById("paramEstadoPago");
-                                var selIndex = listbox.selectedIndex;
-                                var selText = listbox.options[selIndex].text;
-                                pagoRespond.paramEstadoPago = selText;
 
-                                var index = $scope.pagos.indexOf($scope.pagoObj);
-                                if (index !== -1) {
-                                    $scope.pagos[index] = pagoRespond;
-                                }
+                                $timeout(function () {
+                                    var listbox = document.getElementById("paramEstadoPago");
+                                    var selIndex = listbox.selectedIndex;
+                                    var selText = listbox.options[selIndex].text;
+                                    pagoRespond.paramEstadoPago = selText;
+                                    var index = $scope.pagos.indexOf($scope.pagoObj);
+                                    if (index !== -1) {
+                                        $scope.pagos[index] = pagoRespond;
+                                    }
 
-                                $scope.pagoObj = pagoRespond;
-                                SweetAlert.swal("Hecho!", "Registro guardado exitosamente.", "success");
+                                    $scope.pagoObj = pagoRespond;
+                                    SweetAlert.swal("Hecho!", "Registro guardado exitosamente.", "success");
+                                }, 1000);
+
                             }, function (bussinessMessages) {
                                 $scope.bussinessMessages = bussinessMessages;
                                 SweetAlert.swal("Hubo un error!", "Intente nuevamente o comuniquese con el administrador.", "danger");

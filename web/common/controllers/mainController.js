@@ -63,7 +63,7 @@ app.controller("MainController",
                     /*Cargar Notificaciones*/
                     notificacionRR.list($rootScope.username)
                             .then(function (notificacionResponse) {
-                                $scope.notificacions = notificacionResponse;
+                                $scope.notificacions=notificacionResponse;
                                 $scope.setNoLeidos();
                             }
                             , function (error) {
@@ -82,10 +82,13 @@ app.controller("MainController",
                     not.usuario = $rootScope.username;
                     notificacionRR.updateSetLeido(not)
                             .then(function (notificacionResponse) {
-                                if (not.estadoNotificacion === 1) {
-                                    $scope.notificacions[$scope.notificacions.indexOf(not)].estadoNotificacion = 0;
-                                } else {
-                                    $scope.notificacions[$scope.notificacions.indexOf(not)].estadoNotificacion = 1;
+                                var i = $scope.notificacions.indexOf(not);
+                                if (i !== -1) {
+                                    if (not.estadoNotificacion === 1) {
+                                        $scope.notificacions[i].estadoNotificacion = 0;
+                                    } else {
+                                        $scope.notificacions[i].estadoNotificacion = 1;
+                                    }
                                 }
                                 $scope.setNoLeidos();
                             }
