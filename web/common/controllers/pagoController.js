@@ -55,6 +55,7 @@ app.controller("EditPagoController",
                                         $scope.pagos[index] = pagoRespond;
                                     }
 
+
                                     $scope.pagoObj = pagoRespond;
                                     SweetAlert.swal("Hecho!", "Registro guardado exitosamente.", "success");
                                 }, 1000);
