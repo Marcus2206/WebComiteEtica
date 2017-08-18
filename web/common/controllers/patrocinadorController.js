@@ -2,9 +2,9 @@ var app = angular.module("app");
 
 app.controller("NewPatrocinadorController",
         ['$scope', 'patrocinadorRR', '$location', "$log",
-            "$uibModalInstance", 'SweetAlert',
+            "$uibModalInstance", 'SweetAlert','$rootScope',
             function ($scope, patrocinadorRR, $location, $log,
-                    $uibModalInstance, SweetAlert) {
+                    $uibModalInstance, SweetAlert,$rootScope) {
 
                 $scope.nombreBoton = "Nuevo";
 
@@ -20,7 +20,7 @@ app.controller("NewPatrocinadorController",
 
                 $scope.guardar = function () {
                     //if ($scope.form.$valid) {
-                    $scope.patrocinador.usuarioIngresa = "user1";
+                    $scope.patrocinador.usuarioIngresa = $rootScope.username;
                     $scope.patrocinador.fechaIngreso = new Date();
                     patrocinadorRR.insert($scope.patrocinador)
                             .then(function (patrocinadorResult) {
@@ -148,12 +148,12 @@ app.controller("ListPatrocinadorController", ['$scope', "patrocinadors", "patroc
         };
     }]);
 
-app.controller("EditPatrocinadorController", ['$scope', "patrocinador", 'patrocinadorRR', '$location', "$log", "$route", "$uibModalInstance", 'SweetAlert', function ($scope, patrocinador, patrocinadorRR, $location, $log, $route, $uibModalInstance, SweetAlert) {
+app.controller("EditPatrocinadorController", ['$scope', "patrocinador", 'patrocinadorRR', '$location', "$log", "$route", "$uibModalInstance", 'SweetAlert','$rootScope', function ($scope, patrocinador, patrocinadorRR, $location, $log, $route, $uibModalInstance, SweetAlert,$rootScope) {
         $scope.patrocinador = patrocinador;
 
         $scope.guardar = function () {
             //if ($scope.form.$valid) {
-            $scope.patrocinador.usuarioModifica = "user1";
+            $scope.patrocinador.usuarioModifica = $rootScope.username;
             $scope.patrocinador.fechaModificacion = new Date();
             patrocinadorRR.update($scope.patrocinador)
                     .then(function (patrocinadorResult) {

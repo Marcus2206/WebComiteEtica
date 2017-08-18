@@ -3,10 +3,10 @@ var app = angular.module("app");
 app.controller("EditCorrespondenciaController",
         ['$scope', 'correspondencia', 'parametros', 'correspondenciaRR',
             'correspondenciaFileRR', 'fileRR', 'fechaSesionRR',
-            "$log", "$uibModalInstance", 'SweetAlert', "$q", '$uibModal', 'correspondenciaServicioRR',
+            "$log", "$uibModalInstance", 'SweetAlert', "$q", '$uibModal', 'correspondenciaServicioRR',"$rootScope",
             function ($scope, correspondencia, parametros, correspondenciaRR,
                     correspondenciaFileRR, fileRR, fechaSesionRR,
-                    $log, $uibModalInstance, SweetAlert, $q, $uibModal, correspondenciaServicioRR) {
+                    $log, $uibModalInstance, SweetAlert, $q, $uibModal, correspondenciaServicioRR,$rootScope) {
 
                 $scope.open1 = function () {
                     $scope.popup1.opened = true;
@@ -138,7 +138,7 @@ app.controller("EditCorrespondenciaController",
                         costo: $scope.servicioSelect.valor,
                         observacion: $scope.observacionSelect,
                         transferido: 0,
-                        usuarioIngresa: "sa",
+                        usuarioIngresa: $rootScope.username,
                         fechaIngreso: new Date()
                     };
                     correspondenciaServicioRR.insert($scope.correspondenciaServicio)
@@ -170,7 +170,7 @@ app.controller("EditCorrespondenciaController",
                 };
 
                 $scope.guardar = function () {
-                    $scope.correspondencia.usuarioModifica = "sa";
+                    $scope.correspondencia.usuarioModifica = $rootScope.username;
                     $scope.correspondencia.fechaModificacion = new Date();
                     correspondenciaRR.update($scope.correspondencia)
                             .then(function (correspondenciaRespond) {
@@ -224,7 +224,7 @@ app.controller("EditCorrespondenciaController",
                                             },
                                             nombreArchivo: fileReturned.nombreArchivo,
                                             direccion: fileReturned.direccion,
-                                            usuarioIngresa: "sa",
+                                            usuarioIngresa: $rootScope.username,
                                             fechaIngreso: new Date()
                                         };
 
@@ -285,18 +285,19 @@ app.controller("EditCorrespondenciaController",
             }]);
 
 app.controller("ListCorrespondenciaController",
-        ['$scope', "correspondencias","idNotificacionParam", "correspondenciaRR",
-            "$log", "$uibModal", 'SweetAlert',
-            function ($scope, correspondencias,idNotificacionParam, correspondenciaRR,
-                    $log, $uibModal, SweetAlert) {
+        ['$scope', "correspondencias", "idNotificacionParam", "correspondenciaRR",
+            "$log", "$uibModal", 'SweetAlert', "UrlOrigen", "localStorageService",
+            function ($scope, correspondencias, idNotificacionParam, correspondenciaRR,
+                    $log, $uibModal, SweetAlert, UrlOrigen, localStorageService) {
 
-                if(idNotificacionParam !== "all"){
+             
+                if (idNotificacionParam !== "all") {
                     $scope.txtFiltroCorrespondencia = idNotificacionParam;
                 }
-                
+
                 /*Se obtiene lista de correspondencias*/
                 $scope.correspondencias = correspondencias;
-                
+
                 /*Se setea la cantidad filas por vista*/
                 $scope.currentPage = 0;
                 $scope.pageSize = 20;
@@ -416,9 +417,9 @@ app.controller("ListCorrespondenciaController",
 
 app.controller("NewCorrespondenciaController",
         ['$scope', 'correspondenciaRR', 'fechaSesionRR',
-            'parametros', "$log", "$uibModalInstance", 'SweetAlert', '$uibModal',
+            'parametros', "$log", "$uibModalInstance", 'SweetAlert', '$uibModal',"$rootScope",
             function ($scope, correspondenciaRR, fechaSesionRR,
-                    parametros, $log, $uibModalInstance, SweetAlert, $uibModal) {
+                    parametros, $log, $uibModalInstance, SweetAlert, $uibModal,$rootScope) {
 
                 $scope.open1 = function () {
                     $scope.popup1.opened = true;
@@ -517,10 +518,10 @@ app.controller("NewCorrespondenciaController",
                 };
 
                 $scope.guardar = function () {
-                    $scope.correspondencia.usuarioIngresa = "user1";
+                    $scope.correspondencia.usuarioIngresa = $rootScope.username;
                     $scope.correspondencia.fechaIngreso = new Date();
                     $log.log($scope.correspondencia.registro);
-                    if (isEmptyJSON ($scope.correspondencia.registro)) {
+                    if (isEmptyJSON($scope.correspondencia.registro)) {
                         SweetAlert.swal("Adventencia", "La correspondencia debe contar con un registro asignado.", "warning");
                         return;
                     }

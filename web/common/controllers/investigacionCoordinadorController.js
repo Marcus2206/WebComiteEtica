@@ -1,6 +1,6 @@
 var app=angular.module("app");
 
-app.controller("EditInvestigacionCoordinadorController", ['$scope', 'investigacionCoordinador', 'investigacionCoordinadorRemoteResource', '$location',"$log", function($scope, investigacionCoordinador, investigacionCoordinadorRemoteResource, $location, $log) {
+app.controller("EditInvestigacionCoordinadorController", ['$scope', 'investigacionCoordinador', 'investigacionCoordinadorRemoteResource', '$location',"$log","$rootScope", function($scope, investigacionCoordinador, investigacionCoordinadorRemoteResource, $location, $log,$rootScope) {
         $log.log("entrando ReadInvestigacionCoordinadorController");
         $scope.investigacionCoordinador = investigacionCoordinador;
         
@@ -57,7 +57,7 @@ app.controller("ListInvestigacionCoordinadorController", ['$scope', "investigaci
         
 }]);
 
-app.controller("NewInvestigacionCoordinadorController", ['$scope', 'investigacionCoordinadorRemoteResource', '$location',"$log", function($scope, investigacionCoordinadorRemoteResource, $location, $log) {
+app.controller("NewInvestigacionCoordinadorController", ['$scope', 'investigacionCoordinadorRemoteResource', '$location',"$log","$rootScope", function($scope, investigacionCoordinadorRemoteResource, $location, $log,$rootScope) {
         
         $scope.nombreBoton="Nuevo";
         
@@ -73,7 +73,7 @@ app.controller("NewInvestigacionCoordinadorController", ['$scope', 'investigacio
         
         $scope.guardar = function() {
             //if ($scope.form.$valid) {
-                $scope.investigacionCoordinador.usuarioIngresa="user1";
+                $scope.investigacionCoordinador.usuarioIngresa=$rootScope.username;
                 $scope.investigacionCoordinador.fechaIngreso=new Date();
                 investigacionCoordinadorRemoteResource.insert($scope.investigacionCoordinador)
                 .then(function(investigacionCoordinadorResult) {

@@ -2,9 +2,9 @@ var app = angular.module("app");
 
 app.controller("NewUsuarioController",
         ['$scope', 'usuarioRR', "$log", "$uibModalInstance", "parametros",
-            'SweetAlert',
+            'SweetAlert',"$rootScope",
             function ($scope, usuarioRR, $log, $uibModalInstance, parametros,
-                    SweetAlert) {
+                    SweetAlert,$rootScope) {
 
                 $scope.filtrar = function (obj, param) {
                     function filterByParametro(obj) {
@@ -23,7 +23,7 @@ app.controller("NewUsuarioController",
 
                 $scope.guardar = function () {
                     //if ($scope.form.$valid) {
-                    $scope.usuario.usuarioIngresa = "user1";
+                    $scope.usuario.usuarioIngresa = $rootScope.username;
                     $scope.usuario.fechaIngreso = new Date();
                     $log.log($scope.usuario);
                     usuarioRR.insert($scope.usuario)
@@ -178,9 +178,9 @@ app.controller("ListUsuarioController",
 
 app.controller("EditUsuarioController",
         ['$scope', "usuario", 'usuarioRR', "parametros",
-            "$uibModalInstance", 'SweetAlert', "$log",
+            "$uibModalInstance", 'SweetAlert', "$log","$rootScope",
             function ($scope, usuario, usuarioRR, parametros,
-                    $uibModalInstance, SweetAlert, $log) {
+                    $uibModalInstance, SweetAlert, $log,$rootScope) {
 
                 $scope.filtrar = function (obj, param) {
                     function filterByParametro(obj) {
@@ -198,7 +198,7 @@ app.controller("EditUsuarioController",
                 $scope.usuario.password = '*******';
                 $scope.guardar = function () {
                     //if ($scope.form.$valid) {
-                    $scope.usuario.usuarioModifica = "user1";
+                    $scope.usuario.usuarioModifica = $rootScope.username;
                     $scope.usuario.fechaModificacion = new Date();
                     usuarioRR.update($scope.usuario)
                             .then(function (usuarioResult) {
@@ -219,7 +219,7 @@ app.controller("EditUsuarioController",
                 };
 
                 $scope.cambiarPassword = function () {
-                    $scope.usuario.usuarioModifica = "sa";
+                    $scope.usuario.usuarioModifica = $rootScope.username;
                     $scope.usuario.fechaModificacion = new Date();
                     usuarioRR.updatePassword($scope.usuario)
                             .then(function (usuarioResponse) {

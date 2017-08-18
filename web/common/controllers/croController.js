@@ -1,6 +1,6 @@
 var app=angular.module("app");
 
-app.controller("NewCroController", ['$scope', 'croRR', '$location',"$log","$uibModalInstance", function($scope, croRR, $location, $log,$uibModalInstance) {
+app.controller("NewCroController", ['$scope', 'croRR', '$location',"$log","$uibModalInstance","$rootScope", function($scope, croRR, $location, $log,$uibModalInstance,$rootScope) {
         
         $scope.nombreBoton="Nuevo";
         
@@ -16,7 +16,7 @@ app.controller("NewCroController", ['$scope', 'croRR', '$location',"$log","$uibM
         
         $scope.guardar = function() {
             //if ($scope.form.$valid) {
-                $scope.cro.usuarioIngresa="user1";
+                $scope.cro.usuarioIngresa=$rootScope.username;
                 $scope.cro.fechaIngreso=new Date();
                 croRR.insert($scope.cro)
                 .then(function(croResult) {
@@ -147,14 +147,14 @@ app.controller("ListCroController",
 
 app.controller("EditCroController", 
 ['$scope',"cro", 'croRR', '$location',"$log",
- "$route","$uibModalInstance", 
+ "$route","$uibModalInstance", "$rootScope",
  function($scope, cro, croRR, $location, $log,
- $route,$uibModalInstance) {
+ $route,$uibModalInstance,$rootScope) {
         $scope.cro = cro;
         
         $scope.guardar = function() {
             //if ($scope.form.$valid) {
-                $scope.cro.usuarioModifica="user1";
+                $scope.cro.usuarioModifica=$rootScope.username;
                 $scope.cro.fechaModificacion=new Date();
                 croRR.update($scope.cro)
                 .then(function(croResult) {

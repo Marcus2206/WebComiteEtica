@@ -1,6 +1,6 @@
 var app = angular.module("app");
 
-app.controller("NewSedeController", ['$scope', 'sedeRR', '$location', "$log", "$uibModalInstance", "ubigeoRR", 'SweetAlert', function ($scope, sedeRR, $location, $log, $uibModalInstance, ubigeoRR, SweetAlert) {
+app.controller("NewSedeController", ['$scope', 'sedeRR', '$location', "$log", "$uibModalInstance", "ubigeoRR", 'SweetAlert','$rootScope', function ($scope, sedeRR, $location, $log, $uibModalInstance, ubigeoRR, SweetAlert,$rootScope) {
 
         $scope.departamentos;
         $scope.provincias;
@@ -51,7 +51,7 @@ app.controller("NewSedeController", ['$scope', 'sedeRR', '$location', "$log", "$
 
         $scope.guardar = function () {
             //if ($scope.form.$valid) {
-            $scope.sede.usuarioIngresa = "user1";
+            $scope.sede.usuarioIngresa = $rootScope.username;
             $scope.sede.fechaIngreso = new Date();
             sedeRR.insert($scope.sede)
                     .then(function (sedeResult) {
@@ -198,7 +198,7 @@ app.controller("ListSedeController", ['$scope', "sedes", "sedeRR", '$location', 
         };
     }]);
 
-app.controller("EditSedeController", ['$scope', "sede", 'sedeRR', '$location', "$log", "$route", "$uibModalInstance", "ubigeoRR", 'SweetAlert', function ($scope, sede, sedeRR, $location, $log, $route, $uibModalInstance, ubigeoRR, SweetAlert) {
+app.controller("EditSedeController", ['$scope', "sede", 'sedeRR', '$location', "$log", "$route", "$uibModalInstance", "ubigeoRR", 'SweetAlert','$rootScope', function ($scope, sede, sedeRR, $location, $log, $route, $uibModalInstance, ubigeoRR, SweetAlert,$rootScope) {
         $scope.departamentos;
         $scope.provincias;
         $scope.distritos;
@@ -255,7 +255,7 @@ app.controller("EditSedeController", ['$scope', "sede", 'sedeRR', '$location', "
 
         $scope.guardar = function () {
             //if ($scope.form.$valid) {
-            $scope.sede.usuarioModifica = "user1";
+            $scope.sede.usuarioModifica = $rootScope.username;
             $scope.sede.fechaModificacion = new Date();
             sedeRR.update($scope.sede)
                     .then(function (sedeResult) {

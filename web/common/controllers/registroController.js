@@ -3,7 +3,7 @@ var app = angular.module("app");
 app.controller("EditRegistroController",
         ['$scope', 'registro', 'parametros', 'registroRR',
             "$log", "$uibModalInstance", 'SweetAlert',
-            '$uibModal', 'rObj', 'registroBitacoraRR',
+            '$uibModal', 'rObj', 'registroBitacoraRR','$rootScope',
             function ($scope, registro, parametros, registroRR,
                     $log, $uibModalInstance, SweetAlert,
                     $uibModal, rObj, registroBitacoraRR) {
@@ -40,6 +40,7 @@ app.controller("EditRegistroController",
 
                         });
                 $scope.guardar = function () {
+                    $scope.registro.usuarioModifica = $rootScope.username;
                     var listbox = document.getElementById("paramEstadoRegistro");
                     var selIndex = listbox.selectedIndex;
                     if (selIndex < 0) {
@@ -252,7 +253,7 @@ app.controller("ListRegistroController",
 app.controller("NewRegistroController",
         ['$scope', 'registroRR',
             'parametros', "$log", "$uibModalInstance", 'SweetAlert',
-            '$uibModal',
+            '$uibModal','$rootScope',
             function ($scope, registroRR,
                     parametros, $log, $uibModalInstance, SweetAlert,
                     $uibModal) {
@@ -279,7 +280,7 @@ app.controller("NewRegistroController",
 
                 $scope.guardar = function () {
                     //if ($scope.form.$valid) {
-                    $scope.registro.usuarioIngresa = "user1";
+                    $scope.registro.usuarioIngresa = $rootScope.username;
                     $scope.registro.fechaIngreso = new Date();
 
                     if (isEmptyJSON($scope.registro.investigacion)) {

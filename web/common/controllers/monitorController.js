@@ -1,6 +1,6 @@
 var app = angular.module("app");
 
-app.controller("NewMonitorController", ['$scope', 'monitorRR', '$location', "$log", "$uibModalInstance", 'SweetAlert', function ($scope, monitorRR, $location, $log, $uibModalInstance, SweetAlert) {
+app.controller("NewMonitorController", ['$scope', 'monitorRR', '$location', "$log", "$uibModalInstance", 'SweetAlert','$rootScope', function ($scope, monitorRR, $location, $log, $uibModalInstance, SweetAlert,$rootScope) {
 
         $scope.nombreBoton = "Nuevo";
 
@@ -19,7 +19,7 @@ app.controller("NewMonitorController", ['$scope', 'monitorRR', '$location', "$lo
 
         $scope.guardar = function () {
             //if ($scope.form.$valid) {
-            $scope.monitor.usuarioIngresa = "user1";
+            $scope.monitor.usuarioIngresa = $rootScope.username;
             $scope.monitor.fechaIngreso = new Date();
             monitorRR.insert($scope.monitor)
                     .then(function (monitorResult) {
@@ -153,12 +153,12 @@ app.controller("ListMonitorController", ['$scope', "monitors", "monitorRR", '$lo
         };
     }]);
 
-app.controller("EditMonitorController", ['$scope', "monitor", 'monitorRR', '$location', "$log", "$route", "$uibModalInstance", 'SweetAlert', function ($scope, monitor, monitorRR, $location, $log, $route, $uibModalInstance, SweetAlert) {
+app.controller("EditMonitorController", ['$scope', "monitor", 'monitorRR', '$location', "$log", "$route", "$uibModalInstance", 'SweetAlert','$rootScope', function ($scope, monitor, monitorRR, $location, $log, $route, $uibModalInstance, SweetAlert,$rootScope) {
         $scope.monitor = monitor;
 
         $scope.guardar = function () {
             //if ($scope.form.$valid) {
-            $scope.monitor.usuarioModifica = "user1";
+            $scope.monitor.usuarioModifica = $rootScope.username;
             $scope.monitor.fechaModificacion = new Date();
             monitorRR.update($scope.monitor)
                     .then(function (monitorResult) {

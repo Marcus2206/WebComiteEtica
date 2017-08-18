@@ -32,7 +32,7 @@ app.controller("EditPagoController",
 
                         });
                 $scope.guardar = function () {
-                    $scope.pago.usuarioModifica = "sa";
+                    $scope.pago.usuarioModifica = $rootScope.username;
                     $scope.pago.fechaModificacion = new Date();
                     $log.log($scope.pago);
                     if ($scope.pago.nroFactura !== '') {
@@ -219,10 +219,10 @@ app.controller("ListPagoController",
 app.controller("NewPagoController",
         ['$scope', 'pagoRR', 'correspondenciaServicioRR', 'pagoRR',
             "$log", "$uibModalInstance", 'SweetAlert', 'pagoDetalleRR',
-            '$q',
+            '$q','$rootScope',
             function ($scope, pagoRR, correspondenciaServicioRR, pagoRR,
                     $log, $uibModalInstance, SweetAlert, pagoDetalleRR,
-                    $q) {
+                    $q,$rootScope) {
 
                 $scope.observacion = "";
                 $scope.correspondenciaServicios = [];
@@ -258,7 +258,7 @@ app.controller("NewPagoController",
                             nroFactura: "",
                             observacion: $scope.observacion,
                             paramEstadoPago: "PD01",
-                            usuarioIngresa: "sa",
+                            usuarioIngresa: $rootScope.username,
                             fechaIngreso: new Date()
                         }];
 
@@ -279,7 +279,7 @@ app.controller("NewPagoController",
                                                             paramTipoServicio: item.paramTipoServicio,
                                                             costo: item.costo,
                                                             observacion: item.observacion,
-                                                            usuarioIngresa: "sa",
+                                                            usuarioIngresa: $rootScope.username,
                                                             fechaIngreso: new Date()
                                                         };
 

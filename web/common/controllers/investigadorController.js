@@ -2,9 +2,9 @@ var app=angular.module("app");
 
 app.controller("NewInvestigadorController", 
 ['$scope', 'investigadorRR', '$location', "$log",
- "$uibModalInstance","parametroRR",
+ "$uibModalInstance","parametroRR","$rootScope",
  function($scope, investigadorRR, $location, $log,
- $uibModalInstance,parametroRR) {
+ $uibModalInstance,parametroRR,$rootScope) {
         
         $scope.nombreBoton="Nuevo";
         $scope.parametros;
@@ -40,7 +40,7 @@ app.controller("NewInvestigadorController",
         
         $scope.guardar = function() {
             //if ($scope.form.$valid) {
-                $scope.investigador.usuarioIngresa="user1";
+                $scope.investigador.usuarioIngresa=$rootScope.username;
                 $scope.investigador.fechaIngreso=new Date();
                 investigadorRR.insert($scope.investigador)
                 .then(function(investigadorResult) {
@@ -181,10 +181,10 @@ app.controller("ListInvestigadorController",
 app.controller("EditInvestigadorController", 
 ['$scope',"investigador", 'investigadorRR', 
  '$location',"$log","$route","$uibModalInstance", 
- "parametroRR",
+ "parametroRR","$rootScope",
  function($scope,investigador, investigadorRR, 
  $location, $log, $route,$uibModalInstance,
- parametroRR) {
+ parametroRR,$rootScope) {
     $scope.parametros;
     $scope.filtrar=function(obj,param){
         function filterByParametro(obj) {
@@ -206,7 +206,7 @@ app.controller("EditInvestigadorController",
 
     $scope.guardar = function() {
         //if ($scope.form.$valid) {
-            $scope.investigador.usuarioModifica="user1";
+            $scope.investigador.usuarioModifica=$rootScope.username;
             $scope.investigador.fechaModificacion=new Date();
             investigadorRR.update($scope.investigador)
             .then(function(investigadorResult) {

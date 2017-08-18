@@ -6,13 +6,13 @@ app.controller("EditInvestigacionController",
             'investigadorRR', 'investigacionInvestigadorRR',
             'sedeRR', 'investigacionSedeRR',
             "$log", "$uibModalInstance", 'SweetAlert',
-            '$confirm', 'patrocinadorRR', 'croRR',
+            '$confirm', 'patrocinadorRR', 'croRR','$rootScope',
             function ($scope, investigacion, parametros, investigacionRemoteResource,
                     coordinadorRemoteResource, investigacionCoordinadorRemoteResource,
                     investigadorRR, investigacionInvestigadorRR,
                     sedeRR, investigacionSedeRR,
                     $log, $uibModalInstance, SweetAlert,
-                    $confirm, patrocinadorRR, croRR) {
+                    $confirm, patrocinadorRR, croRR,$rootScope) {
 
                 $scope.parametros = parametros;
                 $scope.deshabilitado = false;
@@ -61,7 +61,7 @@ app.controller("EditInvestigacionController",
                 $scope.investigacion = investigacion;
                  $log.log(investigacion);
                 $scope.guardar = function () {
-                    $scope.investigacion.usuarioModifica = "sa";
+                    $scope.investigacion.usuarioModifica = $rootScope.username;
                     $scope.investigacion.fechaModificacion = new Date();
                     validaSeleccionables($scope);
                     investigacionRemoteResource.update($scope.investigacion)
@@ -141,13 +141,13 @@ app.controller("EditInvestigacionController",
                     $scope.investigacionCoordinador = {id: {idInvestigacion: "",
                             idCoordinador: ""},
                         observacion: "",
-                        usuarioIngresa: null,
-                        fechaIngreso: null};
+                        usuarioIngresa: $rootScope.username,
+                        fechaIngreso: new Date()};
 
                     $scope.investigacionCoordinador.id.idInvestigacion = $scope.investigacion.idInvestigacion;
                     $scope.investigacionCoordinador.id.idCoordinador = $scope.coordinadorSelect.idCoordinador;
                     $scope.investigacionCoordinador.observacion = $scope.coordinadorSelect.observacion;
-                    $scope.investigacionCoordinador.usuarioIngresa = "sa";
+                    $scope.investigacionCoordinador.usuarioIngresa = $rootScope.username;
                     $scope.investigacionCoordinador.fechaIngreso = new Date();
                     investigacionCoordinadorRemoteResource.insert($scope.investigacionCoordinador)
                             .then(function (invCoordRespond) {
@@ -193,13 +193,13 @@ app.controller("EditInvestigacionController",
                     $scope.investigacionInvestigador = {id: {idInvestigacion: "",
                             idInvestigador: ""},
                         observacion: "",
-                        usuarioIngresa: null,
-                        fechaIngreso: null};
+                        usuarioIngresa: $rootScope.username,
+                        fechaIngreso: new Date()};
 
                     $scope.investigacionInvestigador.id.idInvestigacion = $scope.investigacion.idInvestigacion;
                     $scope.investigacionInvestigador.id.idInvestigador = $scope.investigadorSelect.idInvestigador;
                     $scope.investigacionInvestigador.observacion = $scope.investigadorSelect.observacion;
-                    $scope.investigacionInvestigador.usuarioIngresa = "sa";
+                    $scope.investigacionInvestigador.usuarioIngresa = $rootScope.username;
                     $scope.investigacionInvestigador.fechaIngreso = new Date();
                     investigacionInvestigadorRR.insert($scope.investigacionInvestigador)
                             .then(function (invInvesRespond) {
@@ -245,13 +245,13 @@ app.controller("EditInvestigacionController",
                     $scope.investigacionSede = {id: {idInvestigacion: "",
                             idSede: ""},
                         observacion: "",
-                        usuarioIngresa: null,
-                        fechaIngreso: null};
+                        usuarioIngresa: $rootScope.username,
+                        fechaIngreso: new Date()};
 
                     $scope.investigacionSede.id.idInvestigacion = $scope.investigacion.idInvestigacion;
                     $scope.investigacionSede.id.idSede = $scope.sedeSelect.idSede;
                     $scope.investigacionSede.observacion = $scope.sedeSelect.observacion;
-                    $scope.investigacionSede.usuarioIngresa = "sa";
+                    $scope.investigacionSede.usuarioIngresa = $rootScope.username;
                     $scope.investigacionSede.fechaIngreso = new Date();
                     investigacionSedeRR.insert($scope.investigacionSede)
                             .then(function (invSedeRespond) {
@@ -470,9 +470,9 @@ app.controller("ListInvestigacionController",
 
 app.controller("NewInvestigacionController",
         ['$scope', 'investigacionRemoteResource',
-            'parametros', "$log", "$uibModalInstance", 'SweetAlert', 'patrocinadorRR', 'croRR',
+            'parametros', "$log", "$uibModalInstance", 'SweetAlert', 'patrocinadorRR', 'croRR','$rootScope',
             function ($scope, investigacionRemoteResource,
-                    parametros, $log, $uibModalInstance, SweetAlert, patrocinadorRR, croRR) {
+                    parametros, $log, $uibModalInstance, SweetAlert, patrocinadorRR, croRR,$rootScope) {
 
                 $scope.filtrar = function (obj, param) {
                     function filterByParametro(obj) {
@@ -509,7 +509,7 @@ app.controller("NewInvestigacionController",
 
                 $scope.guardar = function () {
                     //if ($scope.form.$valid) {
-                    $scope.investigacion.usuarioIngresa = "user1";
+                    $scope.investigacion.usuarioIngresa = $rootScope.username;
                     $scope.investigacion.fechaIngreso = new Date();
                     validaSeleccionables($scope, $log);
                     investigacionRemoteResource.insert($scope.investigacion)

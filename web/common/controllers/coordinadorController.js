@@ -1,5 +1,5 @@
 var app = angular.module("app");
-app.controller("NewCoordinadorController", ['$scope', 'coordinadorRemoteResource', '$location', "$log", "$uibModalInstance", 'SweetAlert', function ($scope, coordinadorRemoteResource, $location, $log, $uibModalInstance, SweetAlert) {
+app.controller("NewCoordinadorController", ['$scope', 'coordinadorRemoteResource', '$location', "$log", "$uibModalInstance", 'SweetAlert','$rootScope', function ($scope, coordinadorRemoteResource, $location, $log, $uibModalInstance, SweetAlert,$rootScope) {
 
         $scope.nombreBoton = "Nuevo";
         /*Se construyer el json*/
@@ -16,7 +16,7 @@ app.controller("NewCoordinadorController", ['$scope', 'coordinadorRemoteResource
         };
         $scope.guardar = function () {
             //if ($scope.form.$valid) {
-            $scope.coordinador.usuarioIngresa = "user1";
+            $scope.coordinador.usuarioIngresa = $rootScope.username;
             $scope.coordinador.fechaIngreso = new Date();
             coordinadorRemoteResource.insert($scope.coordinador)
                     .then(function (coordinadorResult) {
@@ -133,11 +133,11 @@ app.controller("ListCoordinadorController", ['$scope', "coordinadors", "coordina
             });
         };
     }]);
-app.controller("EditCoordinadorController", ['$scope', "coordinador", 'coordinadorRemoteResource', '$location', "$log", "$route", "$uibModalInstance", 'SweetAlert', function ($scope, coordinador, coordinadorRemoteResource, $location, $log, $route, $uibModalInstance, SweetAlert) {
+app.controller("EditCoordinadorController", ['$scope', "coordinador", 'coordinadorRemoteResource', '$location', "$log", "$route", "$uibModalInstance", 'SweetAlert','$rootScope', function ($scope, coordinador, coordinadorRemoteResource, $location, $log, $route, $uibModalInstance, SweetAlert,$rootScope) {
         $scope.coordinador = coordinador;
         $scope.guardar = function () {
             //if ($scope.form.$valid) {
-            $scope.coordinador.usuarioModifica = "user1";
+            $scope.coordinador.usuarioModifica = $rootScope.username;
             $scope.coordinador.fechaModificacion = new Date();
             coordinadorRemoteResource.update($scope.coordinador)
                     .then(function (coordinadorResult) {

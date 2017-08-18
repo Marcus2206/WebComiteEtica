@@ -2,9 +2,9 @@ var app = angular.module("app");
 
 app.controller("NewCorreoController",
         ['$scope', 'correoRR', "$log", "$uibModalInstance", "parametros",
-            'SweetAlert',
+            'SweetAlert',"$rootScope",
             function ($scope, correoRR, $log, $uibModalInstance, parametros,
-                    SweetAlert) {
+                    SweetAlert,$rootScope) {
 
                 $scope.filtrar = function (obj, param) {
                     function filterByParametro(obj) {
@@ -23,7 +23,7 @@ app.controller("NewCorreoController",
 
                 $scope.guardar = function () {
                     //if ($scope.form.$valid) {
-                    $scope.correo.usuarioIngresa = "user1";
+                    $scope.correo.usuarioIngresa = $rootScope.username;
                     $scope.correo.fechaIngreso = new Date();
                     correoRR.insert($scope.correo)
                             .then(function (correoResult) {
@@ -173,9 +173,9 @@ app.controller("ListCorreoController",
 
 app.controller("EditCorreoController",
         ['$scope', "correo", 'correoRR', "parametros",
-            "$uibModalInstance", 'SweetAlert', "$log",
+            "$uibModalInstance", 'SweetAlert', "$log","$rootScope",
             function ($scope, correo, correoRR, parametros,
-                    $uibModalInstance, SweetAlert, $log) {
+                    $uibModalInstance, SweetAlert, $log,$rootScope) {
                 $scope.filtrar = function (obj, param) {
                     function filterByParametro(obj) {
                         if (obj.idParametro === param) {
@@ -191,7 +191,7 @@ app.controller("EditCorreoController",
                 $scope.correo = correo;
                 $scope.guardar = function () {
                     //if ($scope.form.$valid) {
-                    $scope.correo.usuarioModifica = "user1";
+                    $scope.correo.usuarioModifica = $rootScope.username;
                     $scope.correo.fechaModificacion = new Date();
                     correoRR.update($scope.correo)
                             .then(function (correoResult) {

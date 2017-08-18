@@ -15,7 +15,7 @@ app.factory("auth", function ($location, $log, localStorageService, usuarioRR, U
 
                             //mandamos a la home
                             SweetAlert.swal("Bienvenido", "", "success");
-                            setTimeout("window.open('"+UrlOrigen+"', '_self', false);", 1000);
+                            setTimeout("window.open('" + UrlOrigen + "', '_self', false);", 1000);
                             $log.log(UrlOrigen);
                         } else {
                             SweetAlert.swal("Credenciales incorrectas", "Por favor, intente nuevamente.", "warning");
@@ -39,16 +39,21 @@ app.factory("auth", function ($location, $log, localStorageService, usuarioRR, U
             //creamos un array con las rutas que queremos controlar
             var rutasPrivadas = ["/investigacionList", "/correspondenciaList"];
             var rutaLogin = ["/login"];
-            if (this.in_array($location.path(), rutasPrivadas) && localStorageService.get("usuario") === "")
-            {
+            if (localStorageService.get("usuario") !== "") {
+                if (this.in_array($location.path(), rutasPrivadas))
+                {
+                    $location.path("/login");
+                }
+                //en el caso de que intente acceder al login y ya haya iniciado sesión lo mandamos a la home
+
+                if (this.in_array($location.path(), rutaLogin) )
+                {
+                    $location.path("/");
+                }
+            }else{
                 $location.path("/login");
             }
-            //en el caso de que intente acceder al login y ya haya iniciado sesión lo mandamos a la home
 
-            if (this.in_array($location.path(), rutaLogin) && localStorageService.get("usuario") !== "")
-            {
-                $location.path("/");
-            }
 
         },
         in_array: function (needle, haystack)
