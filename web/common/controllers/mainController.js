@@ -112,13 +112,13 @@ app.controller("MainController",
                             window.open(UrlOrigen+'#/correspondenciaList/'+not.idDocumento, '_self', false);
                             break;
                         case 'Registro':
-                            window.open(UrlOrigen+'#/registroList', '_self', false);
+                            window.open(UrlOrigen+'#/registroList/'+not.idDocumento, '_self', false);
                             break;
                         case 'Pago':
-                            window.open(UrlOrigen+'#/pagoList', '_self', false);
+                            window.open(UrlOrigen+'#/pagoList/'+not.idDocumento, '_self', false);
                             break;
                     }
-                }
+                };
 
                 $scope.noLeidos;
                 $scope.setNoLeidos = function () {

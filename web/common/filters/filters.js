@@ -38,44 +38,53 @@ app.filter("booleanToText", ['$log', function (l) {
         return booleanToTextFilter;
     }]);
 
-app.filter('propsFilter', function() {
-  return function(items, props) {
-    var out = [];
+app.filter('propsFilter', function () {
+    return function (items, props) {
+        var out = [];
 
-    if (angular.isArray(items)) {
-      var keys = Object.keys(props);
+        if (angular.isArray(items)) {
+            var keys = Object.keys(props);
 
-      items.forEach(function(item) {
-        var itemMatches = false;
+            items.forEach(function (item) {
+                var itemMatches = false;
 
-        for (var i = 0; i < keys.length; i++) {
-          var prop = keys[i];
-          var text = props[prop].toLowerCase();
-          if (item[prop].toString().toLowerCase().indexOf(text) !== -1) {
-            itemMatches = true;
-            break;
-          }
+                for (var i = 0; i < keys.length; i++) {
+                    var prop = keys[i];
+                    var text = props[prop].toLowerCase();
+                    if (item[prop].toString().toLowerCase().indexOf(text) !== -1) {
+                        itemMatches = true;
+                        break;
+                    }
+                }
+
+                if (itemMatches) {
+                    out.push(item);
+                }
+            });
+        } else {
+            // Let the output be the input untouched
+            out = items;
         }
 
-        if (itemMatches) {
-          out.push(item);
-        }
-      });
-    } else {
-      // Let the output be the input untouched
-      out = items;
-    }
-
-    return out;
-  };
+        return out;
+    };
 });
 
-//app.filter('filtrarParametros',function(obj,param){
-//    function filterByParametro(obj) {
-//    if (obj.idParametro===param) {
-//        return obj;
-//      } 
-//    }
-//    return obj.filter(filterByParametro);
-//});
+app.filter('myStrictFilter', function ($filter) {
+    return function (input, predicate) {
+        return $filter('filter')(input, predicate, true);
+    };
+});
 
+app.filter('unique', function () {
+    return function (arr, field) {
+        var o = {}, i, l = arr.length, r = [];
+        for (i = 0; i < l; i += 1) {
+            o[arr[i][field]] = arr[i];
+        }
+        for (i in o) {
+            r.push(o[i]);
+        }
+        return r;
+    };
+});

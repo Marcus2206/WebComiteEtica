@@ -33,6 +33,7 @@ body {
     border-top:1px solid gray;
 }
 
+/*CSS para no more tables*/
 @media only screen and (max-width: 800px) {
 
     /* Force table to not be like tables anymore */
@@ -82,7 +83,7 @@ body {
     */
     #no-more-tables td:before { content: attr(data-title); }
 }
-
+/*FIN CSS para no more tables*/
 
 /*CSS para notificaciones*/
 
@@ -217,3 +218,13 @@ body {
     left: 0px;
 }
 /*FIN CSS para notificaciones*/
+
+/*Inicio CSS para flecha de orden en st-table*/
+.st-sort-ascent:before{
+    content: '\25B2';
+}
+
+.st-sort-descent:before{
+    content: '\25BC';
+}
+/*FIN CSS para flecha de orden en st-table*/

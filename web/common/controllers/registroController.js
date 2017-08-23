@@ -6,7 +6,7 @@ app.controller("EditRegistroController",
             '$uibModal', 'rObj', 'registroBitacoraRR','$rootScope',
             function ($scope, registro, parametros, registroRR,
                     $log, $uibModalInstance, SweetAlert,
-                    $uibModal, rObj, registroBitacoraRR) {
+                    $uibModal, rObj, registroBitacoraRR,$rootScope) {
 
                 $scope.filtrar = function (obj, param) {
                     function filterByParametro(obj) {
@@ -256,7 +256,7 @@ app.controller("NewRegistroController",
             '$uibModal','$rootScope',
             function ($scope, registroRR,
                     parametros, $log, $uibModalInstance, SweetAlert,
-                    $uibModal) {
+                    $uibModal,$rootScope) {
 
                 $scope.filtrar = function (obj, param) {
                     function filterByParametro(obj) {
