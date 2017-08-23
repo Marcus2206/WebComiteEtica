@@ -96,7 +96,7 @@ app.controller("EditPagoController",
 app.controller("ListPagoController",
         ['$scope', "pagos","idNotificacionParam", "pagoRR",
             "$log", "$uibModal", 'SweetAlert',
-            function ($scope, pagos, pagoRR,
+            function ($scope, pagos, idNotificacionParam, pagoRR,
                     $log, $uibModal, SweetAlert) {
                       
                 if (idNotificacionParam !== "all") {
