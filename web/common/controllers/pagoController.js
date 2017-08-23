@@ -3,7 +3,7 @@ var app = angular.module("app");
 app.controller("EditPagoController",
         ['$scope', 'pago', 'parametros', 'pagoRR', 'pagoDetalleRR',
             "$log", "$uibModalInstance", 'SweetAlert',
-            '$uibModal','$rootScope',
+            '$uibModal', '$rootScope',
             function ($scope, pago, parametros, pagoRR, pagoDetalleRR,
                     $log, $uibModalInstance, SweetAlert,
                     $uibModal, $rootScope) {
@@ -43,8 +43,6 @@ app.controller("EditPagoController",
                     pagoRR.update($scope.pago)
                             .then(function (pagoRespond) {
                                 $log.log(pagoRespond);
-
-
                                 var listbox = document.getElementById("paramEstadoPago");
                                 var selIndex = listbox.selectedIndex;
                                 var selText = listbox.options[selIndex].text;
@@ -57,6 +55,7 @@ app.controller("EditPagoController",
 
                                 $scope.pagoObj = pagoRespond;
                                 SweetAlert.swal("Hecho!", "Registro guardado exitosamente.", "success");
+
                             }, function (bussinessMessages) {
                                 $scope.bussinessMessages = bussinessMessages;
                                 SweetAlert.swal("Hubo un error!", "Intente nuevamente o comuniquese con el administrador.", "danger");
@@ -95,11 +94,14 @@ app.controller("EditPagoController",
             }]);
 
 app.controller("ListPagoController",
-        ['$scope', "pagos", "pagoRR",
+        ['$scope', "pagos","idNotificacionParam", "pagoRR",
             "$log", "$uibModal", 'SweetAlert',
             function ($scope, pagos, pagoRR,
                     $log, $uibModal, SweetAlert) {
-
+                      
+                if (idNotificacionParam !== "all") {
+                    $scope.txtFiltroPago = idNotificacionParam;
+                }
                 /*Se obtiene lista de registros*/
                 $scope.pagos = pagos;
 

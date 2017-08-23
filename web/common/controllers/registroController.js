@@ -3,7 +3,7 @@ var app = angular.module("app");
 app.controller("EditRegistroController",
         ['$scope', 'registro', 'parametros', 'registroRR',
             "$log", "$uibModalInstance", 'SweetAlert',
-            '$uibModal', 'rObj', 'registroBitacoraRR','$rootScope',
+            '$uibModal', 'rObj', 'registroBitacoraRR', '$rootScope',
             function ($scope, registro, parametros, registroRR,
                     $log, $uibModalInstance, SweetAlert,
                     $uibModal, rObj, registroBitacoraRR,$rootScope) {
@@ -125,11 +125,14 @@ app.controller("EditRegistroController",
             }]);
 
 app.controller("ListRegistroController",
-        ['$scope', "registros", "registroRR",
+        ['$scope', "registros","idNotificacionParam", "registroRR",
             "$log", "$uibModal", 'SweetAlert',
-            function ($scope, registros, registroRR,
+            function ($scope, registros,idNotificacionParam, registroRR,
                     $log, $uibModal, SweetAlert) {
 
+                if (idNotificacionParam !== "all") {
+                    $scope.txtFiltroRegistro = idNotificacionParam;
+                }
                 /*Se obtiene lista de registros*/
                 $scope.registros = registros;
 
@@ -253,7 +256,7 @@ app.controller("ListRegistroController",
 app.controller("NewRegistroController",
         ['$scope', 'registroRR',
             'parametros', "$log", "$uibModalInstance", 'SweetAlert',
-            '$uibModal','$rootScope',
+            '$uibModal', '$rootScope',
             function ($scope, registroRR,
                     parametros, $log, $uibModalInstance, SweetAlert,
                     $uibModal,$rootScope) {
