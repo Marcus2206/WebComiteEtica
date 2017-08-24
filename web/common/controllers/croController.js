@@ -262,6 +262,7 @@ app.controller("EditCroController",
                                 //Devuelve objeto actualizado y cierra modal
                                 var index = $scope.cros.indexOf($scope.croObj);
                                 if (index !== -1) {
+                                        /*Conserva el valor del identificador HashKey del array inicial, sólo se actualzian los valores.*/
                                          angular.forEach(croResult,function(value, key){
                                              if(key!=='$$hashKey'){
                                                  $scope.cros[index][key]=value;
