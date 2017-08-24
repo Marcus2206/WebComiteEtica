@@ -149,3 +149,9 @@ app.config(['baseUrl', 'notificacionRRProvider',
         notificacionRRProvider.setBaseUrl(baseUrl);
     }
 ]);
+
+app.config(['baseUrl', 'patrocinadorCroRRProvider',
+    function (baseUrl, patrocinadorCroRRProvider) {
+        patrocinadorCroRRProvider.setBaseUrl(baseUrl);
+    }
+]);

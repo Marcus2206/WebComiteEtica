@@ -17,6 +17,66 @@
                 </div> 
             </div>
 
+            <div class="row">
+                <div class="col">
+                    <!--Inicio de Coordinador-->
+                    <button ng-disabled="deshabilitado" type="button" style="width: 100%;" class="btn btn-default" ng-click="isCro = !isCro">Cro</button>
+                    <hr>
+                    <div uib-collapse="isCro">
+                        <div>
+                            <form data-editable-form name="uiSelectFormCro" onaftersave="agregarCro()">
+                                <div editable-ui-select="croSelect" data-e-form="uiSelectFormCro" data-e-name="croSelect" name="croSelect" theme="bootstrap" data-e-ng-model="croSelect" data-e-style="min-width:300px;">
+                                    <editable-ui-select-match placeholder="Cro" style="width: 100%;" >
+                                        {{$select.selected.nombre}}
+                                    </editable-ui-select-match>
+                                    <editable-ui-select-choices repeat="cro in crosSelectList | orderBy: 'nombre' | filter: $select.search track by $index ">
+                                        {{cro.nombre}}
+                                    </editable-ui-select-choices>
+                                </div> 
+                                <div class="buttons">
+                                    <button type="button" class="btn btn-default" ng-click="uiSelectFormCro.$show()" ng-show="!uiSelectFormCro.$visible">
+                                        Agregar
+                                    </button>
+                                    <span ng-show="uiSelectFormCro.$visible">
+                                        <br/>
+                                        <button type="submit" class="btn btn-primary" ng-disabled="uiSelectFormCro.$waiting">
+                                            Confirmar
+                                        </button>
+                                        <button type="button" class="btn btn-default" ng-disabled="uiSelectFormCro.$waiting" ng-click="uiSelectFormCro.$cancel()">
+                                            Cancelar
+                                        </button>
+                                    </span>
+                                </div>  
+                            </form>
+                            <br>
+                            <table class="table table-bordered table-hover table-condensed table-responsive">
+                                <thead>
+                                    <tr>
+                                        <th>Nombre</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="patrCro in patrocinadorCros| orderBy:'nombre'">
+                                        <td>
+                                            <div>
+                                                <div>
+                                                    <button type="button" class="close" aria-label="Close" ng-click="eliminarPatrCro(patrCro)">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div>
+                                                    {{patrCro[1].nombre}} 
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>    
+                </div>
+            </div>
+
         </div>
     </div>
     <div class="modal-footer">

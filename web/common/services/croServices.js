@@ -74,4 +74,18 @@ function CroRR($http,$q, baseUrl,$log) {
         });
         return defered.promise;
     };
+    
+    this.listCroSinIdPatrocinadorFind = function(idPatrocinador) {
+        var defered=$q.defer();
+ 
+        $http.get(baseUrl + '/api/Cro/CroSinIdPatrocinadorFind/'+idPatrocinador)
+        .then(function onSuccess(response){
+            defered.resolve(response.data);
+        })
+        .catch(function onCatch(response){
+            defered.reject(response.data);
+        });
+
+        return defered.promise;
+    };
 }

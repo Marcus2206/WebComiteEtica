@@ -2,11 +2,12 @@ var app = angular.module("app");
 
 app.controller("NewPatrocinadorController",
         ['$scope', 'patrocinadorRR', '$location', "$log",
-            "$uibModalInstance", 'SweetAlert','$rootScope',
+            "$uibModalInstance", 'SweetAlert', '$rootScope',
             function ($scope, patrocinadorRR, $location, $log,
-                    $uibModalInstance, SweetAlert,$rootScope) {
+                    $uibModalInstance, SweetAlert, $rootScope) {
 
-                $scope.nombreBoton = "Nuevo";
+                $scope.deshabilitado = true;
+                $scope.isCro = true;
 
                 /*Se construyer el json*/
                 $scope.patrocinador = {
@@ -148,30 +149,114 @@ app.controller("ListPatrocinadorController", ['$scope', "patrocinadors", "patroc
         };
     }]);
 
-app.controller("EditPatrocinadorController", ['$scope', "patrocinador", 'patrocinadorRR', '$location', "$log", "$route", "$uibModalInstance", 'SweetAlert','$rootScope', function ($scope, patrocinador, patrocinadorRR, $location, $log, $route, $uibModalInstance, SweetAlert,$rootScope) {
-        $scope.patrocinador = patrocinador;
+app.controller("EditPatrocinadorController",
+        ['$scope', "patrocinador", 'patrocinadorRR', '$location', "croRR",
+            "$log", "$route", "$uibModalInstance", 'SweetAlert', '$rootScope', "patrocinadorCroRR",
+            "$confirm",
+            function ($scope, patrocinador, patrocinadorRR, $location, croRR,
+                    $log, $route, $uibModalInstance, SweetAlert, $rootScope, patrocinadorCroRR,
+                    $confirm) {
 
-        $scope.guardar = function () {
-            //if ($scope.form.$valid) {
-            $scope.patrocinador.usuarioModifica = $rootScope.username;
-            $scope.patrocinador.fechaModificacion = new Date();
-            patrocinadorRR.update($scope.patrocinador)
-                    .then(function (patrocinadorResult) {
-                        //Devuelve objeto actualizado y cierra modal
-                        $uibModalInstance.dismiss(patrocinadorResult);
-                        SweetAlert.swal("Hecho!", "Registro guardado exitosamente.", "success");
-                    }, function (bussinessMessages) {
-                        //$scope.bussinessMessages = bussinessMessages;
-                        SweetAlert.swal("Hubo un error!", "Intente nuevamente o comuniquese con el administrador.", "danger");
-                        
-                    });
-            /*} else {
-             alert("Hay datos inválidos");
-             }*/
-        };
+                $scope.patrocinadorCros = [];
+                $scope.crosSelectList = [];
+                $scope.croSelect = {};
+                $scope.isCro = true;
 
-        $scope.cerrar = function () {
-            //Se devuelve cancel
-            $uibModalInstance.dismiss('cancel');
-        };
-    }]);
+                $scope.patrocinador = patrocinador;
+
+                /*Cros seleccionables*/
+                croRR.listCroSinIdPatrocinadorFind($scope.patrocinador.idPatrocinador)
+                        .then(function (crosRespond) {
+                            $scope.crosSelectList = crosRespond;
+                        }, function (bussinessMessages) {
+                            $scope.bussinessMessages = bussinessMessages;
+                            //Mensaje de error
+                        });
+
+                /*Detalle de PatrocinaorCro*/
+                patrocinadorCroRR.listCroByIdPatrocinador($scope.patrocinador.idPatrocinador)
+                        .then(function (patrocinadorCroResponse) {
+                            $log.log(patrocinadorCroResponse);
+                            $scope.patrocinadorCros = patrocinadorCroResponse;
+                        }, function (bussinessMessages) {
+                            $scope.bussinessMessages = bussinessMessages;
+                            //Mensaje de error
+                        });
+
+
+                /*Agregar Coordinador*/
+                $scope.agregarCro = function () {
+                    $scope.patrocinadorCro = {id: {idPatrocinador: "",
+                            idCro: ""},
+                        observacion: "",
+                        usuarioIngresa: $rootScope.username,
+                        fechaIngreso: new Date()};
+
+                    $scope.patrocinadorCro.id.idCro = $scope.croSelect.idCro;
+                    $scope.patrocinadorCro.id.idPatrocinador = $scope.patrocinador.idPatrocinador;
+                    $scope.patrocinadorCro.observacion = "";
+                    $scope.patrocinadorCro.usuarioIngresa = $rootScope.username;
+                    $scope.patrocinadorCro.fechaIngreso = new Date();
+                    patrocinadorCroRR.insert($scope.patrocinadorCro)
+                            .then(function (patrCroRespond) {
+                                var ic = $scope.patrocinadorCro;
+                                var c = $scope.croSelect;
+                                var patrCro = [ic, c];
+
+                                $scope.patrocinadorCros.push(patrCro);
+                                $scope.crosSelectList.splice($scope.crosSelectList.indexOf($scope.croSelect), 1);
+                                $scope.croSelect = {};
+                            }, function (bussinessMessages) {
+
+                            });
+                };
+
+                /*Eliminar Coordinador*/
+                $scope.eliminarPatrCro = function (patrCro) {
+                    $confirm({
+                        text: '¿Está seguro de eliminar este registro?',
+                        ok: "Sí",
+                        cancel: "No",
+                        title: "Eliminar Cro"
+                    },
+                            {size: 'sm',
+                                backdrop: 'static'}
+                    )
+                            .then(function () {
+                                patrocinadorCroRR.delete(patrCro[0])
+                                        .then(function (patrCroResponse) {
+                                            $scope.crosSelectList.push(patrCro[1]);
+                                            $scope.patrocinadorCros.splice($scope.patrocinadorCros.indexOf(patrCro), 1);
+                                        }, function (bussinessMessages) {
+
+                                        });
+                            })
+                            .catch(function () {
+
+                            });
+                };
+
+                $scope.guardar = function () {
+                    //if ($scope.form.$valid) {
+                    $scope.patrocinador.usuarioModifica = $rootScope.username;
+                    $scope.patrocinador.fechaModificacion = new Date();
+                    patrocinadorRR.update($scope.patrocinador)
+                            .then(function (patrocinadorResult) {
+                                //Devuelve objeto actualizado y cierra modal
+                                $uibModalInstance.dismiss(patrocinadorResult);
+                                SweetAlert.swal("Hecho!", "Registro guardado exitosamente.", "success");
+                            }, function (bussinessMessages) {
+                                //$scope.bussinessMessages = bussinessMessages;
+                                SweetAlert.swal("Hubo un error!", "Intente nuevamente o comuniquese con el administrador.", "danger");
+
+                            });
+                    /*} else {
+                     alert("Hay datos inválidos");
+                     }*/
+                };
+
+                $scope.cerrar = function () {
+                    //Se devuelve cancel
+                    $uibModalInstance.dismiss('cancel');
+                };
+            }]);

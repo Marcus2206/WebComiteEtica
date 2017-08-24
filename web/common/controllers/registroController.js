@@ -47,7 +47,6 @@ app.controller("EditRegistroController",
                         SweetAlert.swal("Advertencia", "Debe seleccionar un Estado de Registro", "warning");
                         return;
                     }
-                    $scope.registro.usuarioModifica = "sa";
                     $scope.registro.fechaModificacion = new Date();
                     registroRR.update($scope.registro)
                             .then(function (registroRespond) {
@@ -76,6 +75,8 @@ app.controller("EditRegistroController",
                                     $scope.registros[index] = registroRespond;
                                 }
                                 $scope.registroObj = registroRespond;
+                                 $log.log($scope.registroObj);
+                                 $log.log($scope.registros);
                                 SweetAlert.swal("Hecho!", "Registro guardado exitosamente.", "success");
                             }, function (bussinessMessages) {
                                 $scope.bussinessMessages = bussinessMessages;

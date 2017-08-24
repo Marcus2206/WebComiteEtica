@@ -43,9 +43,6 @@ function PatrocinadorRR($http, $q, baseUrl, $log) {
     this.update = function (patrocinador) {
         var defered = $q.defer();
         var headers = {
-            // 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8',
-            //'crossDomain' : 'true',
-            //'Access-Control-Allow-Methods': 'GET, POST',
             'Access-Control-Allow-Origin': '*',
             'Access-Control-Allow-Credentials': true
         };
@@ -71,6 +68,20 @@ function PatrocinadorRR($http, $q, baseUrl, $log) {
                 .catch(function onCatch(response) {
                     defered.reject(response);
                 });
+
+        return defered.promise;
+    };
+    
+    this.listPatrocinadorSinIdCroFind = function(idCro) {
+        var defered=$q.defer();
+  
+        $http.get(baseUrl + '/api/Patrocinador/PatrocinadorSinIdCroFind/'+idCro)
+        .then(function onSuccess(response){
+            defered.resolve(response.data);
+        })
+        .catch(function onCatch(response){
+            defered.reject(response.data);
+        });
 
         return defered.promise;
     };

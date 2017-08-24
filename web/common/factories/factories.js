@@ -9,7 +9,6 @@ app.factory("auth", function ($location, $log, localStorageService, usuarioRR, U
                     .then(function (response) {
                         if (response.length !== 0) {
                             localStorageService.set("usuario", username);
-                            $log.log(response);
                             localStorageService.set("rolUsuario", response[0].perfil);
                             localStorageService.set("mostrar", false);
 
@@ -37,7 +36,7 @@ app.factory("auth", function ($location, $log, localStorageService, usuarioRR, U
         checkStatus: function ()
         {
             //creamos un array con las rutas que queremos controlar
-            var rutasPrivadas = ["/investigacionList", "/correspondenciaList"];
+            var rutasPrivadas = [""];
             var rutaLogin = ["/login"];
             if (localStorageService.get("usuario") !== "") {
                 if (this.in_array($location.path(), rutasPrivadas))

@@ -303,14 +303,12 @@
         </div>
     </div>
 </div>-->
-
+<!--
 <div class="container-fluid">
     <div class="row">
         <div class="col col-xs-12 col-sm-8 col-md-3 col-lg-3">
             <form>
                 <label for="predicate">Seleccionar para búsqueda por campo:</label>
-                <!--<select class="form-control" id="predicate" ng-model="selectedPredicate" ng-options="predicate for predicate in predicates">predicate.nombre</select>-->
-
                 <select class="form-control" id="predicate" ng-model="selectedPredicate.nombre">
                     <option ng-repeat="pd in predicates" value="{{pd.nombre}}">{{pd.descripcion}}</option>
                 </select>
@@ -381,4 +379,13 @@
             </div>
         </div>
     </div>
-</div>
+</div>-->
+
+<table ng-table="tableParams" class="table" show-filter="true">
+    <tr ng-repeat="user in $data">
+        <td title="'Name'" filter="{ name: 'text'}" sortable="'name'">
+            {{user.name}}</td>
+        <td title="'Age'" filter="{ age: 'number'}" sortable="'age'">
+            {{user.age}}</td>
+    </tr>
+</table>

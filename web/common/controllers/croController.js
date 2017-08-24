@@ -1,13 +1,13 @@
 var app = angular.module("app");
 
 app.controller("NewCroController",
-        ['$scope', 'croRR', '$location', "$log", "$uibModalInstance", 
-            "$rootScope",
+        ['$scope', 'croRR', '$location', "$log", "$uibModalInstance",
+            "$rootScope", "SweetAlert",
             function ($scope, croRR, $location, $log, $uibModalInstance,
-            $rootScope) {
+                    $rootScope, SweetAlert) {
 
-                $scope.nombreBoton = "Nuevo";
-
+                $scope.deshabilitado = true;
+                $scope.isPatrocinador = true;
                 /*Se construyer el json*/
                 $scope.cro = {
                     idCro: "",
@@ -26,6 +26,7 @@ app.controller("NewCroController",
                             .then(function (croResult) {
                                 //$location.path("coordinadorEdit/"+coordinadorResult.idCoordinador);
                                 $uibModalInstance.dismiss(croResult);
+                                SweetAlert.swal("Hecho!", "Registro guardado exitosamente.", "success");
                             }, function (bussinessMessages) {
                                 $scope.bussinessMessages = bussinessMessages;
                             });
@@ -51,9 +52,9 @@ app.controller("ListCroController",
                 /*Columnas para realizar el filtro*/
                 $scope.predicates = [{nombre: 'idCro', descripcion: 'Id. Cro'},
                     {nombre: 'nombre', descripcion: 'Nombre'}];
-                
+
                 $scope.displayCollection = [].concat($scope.cros);
-                
+
                 /*Campo seleccionado*/
                 $scope.selectedPredicate = $scope.predicates[0];
 
@@ -100,13 +101,15 @@ app.controller("ListCroController",
 
                 /*Editar un registro*/
                 $scope.editarModal = function (croObj) {
-                    //alert(idCoordinador);
+
+                    $scope.croObj = croObj;
                     var modalInstance = $uibModal.open({
                         templateUrl: 'cro/croEdit.html',
                         controller: "EditCroController",
                         size: 'md',
                         backdrop: 'static',
                         keyboard: false,
+                        scope: $scope,
                         resolve: {
                             cro: function () {
                                 return croRR.get(croObj.idCro);
@@ -122,10 +125,10 @@ app.controller("ListCroController",
                             if (data !== "backdrop click") {
                                 if (data !== "escape key press") {
                                     //Si no es cancel, se reemplaza el objeto que se mandó a actualizar
-                                    var index = $scope.cros.indexOf(croObj);
-                                    if (index !== -1) {
-                                        $scope.cros[index] = data;
-                                    }
+//                                    var index = $scope.cros.indexOf(croObj);
+//                                    if (index !== -1) {
+//                                        $scope.cros[index] = data;
+//                                    }
                                 }
                             }
                         } else {
@@ -134,6 +137,9 @@ app.controller("ListCroController",
                     });
                 };
 
+                $scope.test = function () {
+                    $log.log($scope.cros);
+                };
                 /*Ingresar un registro*/
                 $scope.insertarModal = function () {
                     var modalInstance = $uibModal.open({
@@ -153,7 +159,7 @@ app.controller("ListCroController",
                                 if (data !== "escape key press") {
                                     /*añade a la lista sin recargar la página*/
                                     $scope.cros.push(data);
-                                    $log.log($scope.cros);
+                                    $scope.editarModal(data);
                                 }
                             }
                         } else {
@@ -165,10 +171,87 @@ app.controller("ListCroController",
 
 app.controller("EditCroController",
         ['$scope', "cro", 'croRR', "$log",
-            "$uibModalInstance", "$rootScope",
+            "$uibModalInstance", "$rootScope", "patrocinadorCroRR", "patrocinadorRR",
+            "$confirm", "SweetAlert",
             function ($scope, cro, croRR, $log,
-                    $uibModalInstance, $rootScope) {
+                    $uibModalInstance, $rootScope, patrocinadorCroRR, patrocinadorRR,
+                    $confirm, SweetAlert) {
+                $scope.patrocinadorCros = [];
+                $scope.patrocinadorsSelectList = [];
+                $scope.patrocinadorSelect = {};
+                $scope.isPatrocinador = true;
                 $scope.cro = cro;
+
+                /*Patrocinadores seleccionables*/
+                patrocinadorRR.listPatrocinadorSinIdCroFind($scope.cro.idCro)
+                        .then(function (patrocinadorsRespond) {
+                            $scope.patrocinadorsSelectList = patrocinadorsRespond;
+                        }, function (bussinessMessages) {
+                            $scope.bussinessMessages = bussinessMessages;
+                            //Mensaje de error
+                        });
+
+                /*Detalle de PatrocinaorCro*/
+                patrocinadorCroRR.listPatrocinadorByIdCro($scope.cro.idCro)
+                        .then(function (patrocinadorCroResponse) {
+                            $scope.patrocinadorCros = patrocinadorCroResponse;
+                        }, function (bussinessMessages) {
+                            $scope.bussinessMessages = bussinessMessages;
+                            //Mensaje de error
+                        });
+
+                /*Agregar Coordinador*/
+                $scope.agregarPatrocinador = function () {
+                    $scope.patrocinadorCro = {id: {idPatrocinador: "",
+                            idCro: ""},
+                        observacion: "",
+                        usuarioIngresa: $rootScope.username,
+                        fechaIngreso: new Date()};
+
+                    $scope.patrocinadorCro.id.idPatrocinador = $scope.patrocinadorSelect.idPatrocinador;
+                    $scope.patrocinadorCro.id.idCro = $scope.cro.idCro;
+                    $scope.patrocinadorCro.observacion = "";
+                    $scope.patrocinadorCro.usuarioIngresa = $rootScope.username;
+                    $scope.patrocinadorCro.fechaIngreso = new Date();
+                    patrocinadorCroRR.insert($scope.patrocinadorCro)
+                            .then(function (invCoordRespond) {
+                                var ic = $scope.patrocinadorCro;
+                                var c = $scope.patrocinadorSelect;
+                                var patrCro = [ic, c];
+
+                                $scope.patrocinadorCros.push(patrCro);
+                                $scope.patrocinadorsSelectList.splice($scope.patrocinadorsSelectList.indexOf($scope.patrocinadorSelect), 1);
+                                $scope.patrocinadorSelect = {};
+                            }, function (bussinessMessages) {
+
+                            });
+                };
+
+                /*Eliminar Coordinador*/
+                $scope.eliminarPatrCro = function (patrCro) {
+                    $confirm({
+                        text: '¿Está seguro de eliminar este registro?',
+                        ok: "Sí",
+                        cancel: "No",
+                        title: "Eliminar Patrocinar"
+                    },
+                            {size: 'sm',
+                                backdrop: 'static'}
+                    )
+                            .then(function () {
+                                patrocinadorCroRR.delete(patrCro[0])
+                                        .then(function (invCoordinadorRespond) {
+                                            $scope.patrocinadorsSelectList.push(patrCro[1]);
+                                            $scope.patrocinadorCros.splice($scope.patrocinadorCros.indexOf(patrCro), 1);
+                                        }, function (bussinessMessages) {
+
+                                        });
+                            })
+                            .catch(function () {
+
+                            });
+                };
+
 
                 $scope.guardar = function () {
                     //if ($scope.form.$valid) {
@@ -177,7 +260,15 @@ app.controller("EditCroController",
                     croRR.update($scope.cro)
                             .then(function (croResult) {
                                 //Devuelve objeto actualizado y cierra modal
-                                $uibModalInstance.dismiss(croResult);
+                                var index = $scope.cros.indexOf($scope.croObj);
+                                if (index !== -1) {
+                                         angular.forEach(croResult,function(value, key){
+                                             if(key!=='$$hashKey'){
+                                                 $scope.cros[index][key]=value;
+                                             }
+                                         });
+                                }
+                                SweetAlert.swal("Hecho!", "Registro guardado exitosamente.", "success");
                             }, function (bussinessMessages) {
                                 //$scope.bussinessMessages = bussinessMessages;
                             });
