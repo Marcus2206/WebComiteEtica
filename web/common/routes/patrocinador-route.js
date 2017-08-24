@@ -13,23 +13,4 @@ app.config(['$routeProvider',"$locationProvider",function($routeProvider,$locati
             }]
        }
      });
-
-    $routeProvider.when('/patrocinadorEdit/:idPatrocinador', {
-        templateUrl: "patrocinador/patrocinadorEdit.html",
-        controller: "EditPatrocinadorController",
-        resolve: {
-                patrocinador:['patrocinadorRR','$route',function(patrocinadorRR,$route) {
-                return patrocinadorRR.get($route.current.params.idPatrocinador);
-            }]
-        }
-    });
-
-    $routeProvider.when('/patrocinadorNew', {
-        templateUrl: "patrocinador/patrocinadorEdit.html",
-        controller: "NewPatrocinadorController"
-    });
-
-     $routeProvider.otherwise({
-           redirectTo: '/'
-     });
 }]);

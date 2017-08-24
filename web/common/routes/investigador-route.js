@@ -13,23 +13,4 @@ app.config(['$routeProvider',"$locationProvider",function($routeProvider,$locati
             }]
        }
      });
-
-    $routeProvider.when('/investigadorEdit/:idInvestigador', {
-        templateUrl: "investigador/investigadorEdit.html",
-        controller: "EditInvestigadorController",
-        resolve: {
-                investigador:['investigadorRR','$route',function(investigadorRR,$route) {
-                return investigadorRR.get($route.current.params.idInvestigador);
-            }]
-        }
-    });
-
-    $routeProvider.when('/investigadorNew', {
-        templateUrl: "investigador/investigadorEdit.html",
-        controller: "NewInvestigadorController"
-    });
-
-     $routeProvider.otherwise({
-           redirectTo: '/'
-     });
 }]);

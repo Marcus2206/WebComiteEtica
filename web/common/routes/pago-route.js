@@ -16,24 +16,5 @@ app.config(['$routeProvider', "$locationProvider", function ($routeProvider, $lo
                     }]
             }
         });
-
-        $routeProvider.when('/pagoEdit/:idpago', {
-            templateUrl: "pago/pagoEdit.html",
-            controller: "EditPagoController",
-            resolve: {
-                pago: ['pagoRR', '$route', function (pagoRR, $route) {
-                        return pagoRR.get($route.current.params.idpago);
-                    }]
-            }
-        });
-
-        $routeProvider.when('/pagoNew', {
-            templateUrl: "pago/pagoEdit.html",
-            controller: "NewPagoController"
-        });
-
-        $routeProvider.otherwise({
-            redirectTo: '/'
-        });
     }]);
 

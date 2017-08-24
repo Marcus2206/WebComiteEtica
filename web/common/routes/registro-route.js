@@ -16,24 +16,5 @@ app.config(['$routeProvider', "$locationProvider", function ($routeProvider, $lo
                     }]
             }
         });
-
-        $routeProvider.when('/registroEdit/:idRegistro', {
-            templateUrl: "registro/registroEdit.html",
-            controller: "EditRegistroController",
-            resolve: {
-                registro: ['registroRR', '$route', function (registroRR, $route) {
-                        return registroRR.get($route.current.params.idRegistro);
-                    }]
-            }
-        });
-
-        $routeProvider.when('/registroNew', {
-            templateUrl: "registro/registroEdit.html",
-            controller: "NewRegistroController"
-        });
-
-        $routeProvider.otherwise({
-            redirectTo: '/'
-        });
     }]);
 

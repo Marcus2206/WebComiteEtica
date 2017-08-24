@@ -20,54 +20,55 @@
         <div class="col-xs-12 col-sm-4 col-md-3 col-lg-3">
             <form>
                 <label for="predicate">Seleccionar campo a buscar:</label>
-                <select class="form-control" id="predicate" ng-model="selectedPredicate.nombre">
+                <select class="form-control" id="predicate" ng-model="selectedPredicate">
                     <option ng-repeat="pd in predicates" value="{{pd.nombre}}">{{pd.descripcion}}</option>
                 </select>
             </form>
         </div>
     </div>
     <div class="row">
-        <a class="btn btn-primary" ng-click="test()"><i class="fa fa-pencil-square-o" aria-hidden="true"></i><span class="hidden-xs"> test</span></a>
         <div class="col col-lg-12">
-            <div id="no-more-tables"><!--st-safe-src="cros" -->
-                <table st-table="cros" class="table table-striped table-bordered table-condensed" >
-                    <thead>
-                        <tr>
-                            <th st-sort="idCro">Id. Cro</th>
-                            <th st-sort="nombre">Nombre</th>
-                            <th >Acción</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td colspan="2" data-title="Búsqueda global">
-                                <input st-search placeholder="global" class="input-sm form-control" type="search" />
-                            </td>
-                            <td data-title="Búsqueda por campo">
-                                <input st-search="{{selectedPredicate.nombre}}" placeholder="campo" class="input-sm form-control" type="search" />
-                            </td>
-                        </tr>
-                        <tr ng-repeat="cro in cros | empezarDe : currentPage * pageSize | limitTo:pageSize | filter: txtFiltroCro">
-                            <td data-title="Id. Cro">{{cro.idCro}}</td>
-                            <td data-title="Nombre">{{cro.nombre}}</td>
-                            <td data-title="">
-                                <a class="btn btn-primary" ng-click="editarModal(cro)"><i class="fa fa-pencil-square-o" aria-hidden="true"></i><span class="hidden-xs"> Editar</span></a>
-                                <a class="btn btn-danger" ng-click="eliminar(cro)" ><i class="fa fa-trash" aria-hidden="true"></i><span class="hidden-xs"> Eliminar</span></a>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <div class="container">
-                <div class="center-block" style="text-align: center">
-                    <br>
-                    <button ng-disabled="currentPage === 0" ng-click="currentPage = currentPage - 1" class="btn btn-default">
-                        <span aria-hidden="true">&laquo;</span>
-                    </button>
-                    {{currentPage + 1}}/{{numberOfPages()}}
-                    <button ng-disabled="currentPage >= cros.length / pageSize - 1" ng-click="setNextPagina()" class="btn btn-default">
-                        <span aria-hidden="true">&raquo;</span>
-                    </button>
+            <div class="search-table-outter wrapper">
+                <div id="no-more-tables"><!--st-safe-src="cros" -->
+                    <table st-table="cros" class="table table-striped table-bordered table-condensed" >
+                        <thead>
+                            <tr>
+                                <th st-sort="idCro">Id. Cro</th>
+                                <th st-sort="nombre">Nombre</th>
+                                <th >Acción</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td colspan="2" data-title="Búsqueda global">
+                                    <input st-search placeholder="global" class="input-sm form-control" type="search" />
+                                </td>
+                                <td data-title="Búsqueda por campo">
+                                    <input st-search="{{selectedPredicate}}" placeholder="campo" class="input-sm form-control" type="search" />
+                                </td>
+                            </tr>
+                            <tr ng-repeat="cro in cros| empezarDe : currentPage * pageSize | limitTo:pageSize | filter: txtFiltroCro">
+                                <td data-title="Id. Cro">{{cro.idCro}}</td>
+                                <td data-title="Nombre">{{cro.nombre}}</td>
+                                <td data-title="">
+                                    <a class="btn btn-primary" ng-click="editarModal(cro)"><i class="fa fa-pencil-square-o" aria-hidden="true"></i><span class="hidden-xs"> Editar</span></a>
+                                    <a class="btn btn-danger" ng-click="eliminar(cro)" ><i class="fa fa-trash" aria-hidden="true"></i><span class="hidden-xs"> Eliminar</span></a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="container">
+                    <div class="center-block" style="text-align: center">
+                        <br>
+                        <button ng-disabled="currentPage === 0" ng-click="currentPage = currentPage - 1" class="btn btn-default">
+                            <span aria-hidden="true">&laquo;</span>
+                        </button>
+                        {{currentPage + 1}}/{{numberOfPages()}}
+                        <button ng-disabled="currentPage >= cros.length / pageSize - 1" ng-click="setNextPagina()" class="btn btn-default">
+                            <span aria-hidden="true">&raquo;</span>
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>

@@ -56,7 +56,7 @@ app.controller("ListCroController",
                 $scope.displayCollection = [].concat($scope.cros);
 
                 /*Campo seleccionado*/
-                $scope.selectedPredicate = $scope.predicates[0];
+                $scope.selectedPredicate = $scope.predicates[0].nombre;
 
                 /*Se setea la cantidad filas por vista*/
                 $scope.currentPage = 0;
@@ -125,10 +125,6 @@ app.controller("ListCroController",
                             if (data !== "backdrop click") {
                                 if (data !== "escape key press") {
                                     //Si no es cancel, se reemplaza el objeto que se mandó a actualizar
-//                                    var index = $scope.cros.indexOf(croObj);
-//                                    if (index !== -1) {
-//                                        $scope.cros[index] = data;
-//                                    }
                                 }
                             }
                         } else {
@@ -137,9 +133,6 @@ app.controller("ListCroController",
                     });
                 };
 
-                $scope.test = function () {
-                    $log.log($scope.cros);
-                };
                 /*Ingresar un registro*/
                 $scope.insertarModal = function () {
                     var modalInstance = $uibModal.open({
@@ -262,12 +255,12 @@ app.controller("EditCroController",
                                 //Devuelve objeto actualizado y cierra modal
                                 var index = $scope.cros.indexOf($scope.croObj);
                                 if (index !== -1) {
-                                        /*Conserva el valor del identificador HashKey del array inicial, sólo se actualzian los valores.*/
-                                         angular.forEach(croResult,function(value, key){
-                                             if(key!=='$$hashKey'){
-                                                 $scope.cros[index][key]=value;
-                                             }
-                                         });
+                                    /*Conserva el valor del identificador HashKey del array inicial, sólo se actualzian los valores.*/
+                                    angular.forEach(croResult, function (value, key) {
+                                        if (key !== '$$hashKey') {
+                                            $scope.cros[index][key] = value;
+                                        }
+                                    });
                                 }
                                 SweetAlert.swal("Hecho!", "Registro guardado exitosamente.", "success");
                             }, function (bussinessMessages) {

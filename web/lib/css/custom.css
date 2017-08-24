@@ -228,3 +228,7 @@ body {
     content: '\25BC';
 }
 /*FIN CSS para flecha de orden en st-table*/
+
+/*Inicio Scroll para Tablas*/
+.search-table-outter { overflow-x: scroll; }
+/*Fin Scroll para Tablas*/

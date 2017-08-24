@@ -13,24 +13,5 @@ app.config(['$routeProvider',"$locationProvider",function($routeProvider,$locati
             }]
        }
      });
-
-    $routeProvider.when('/coordinadorEdit/:idCoordinador', {
-        templateUrl: "coordinador/coordinadorEdit.html",
-        controller: "EditCoordinadorController",
-        resolve: {
-                coordinador:['coordinadorRemoteResource','$route',function(coordinadorRemoteResource,$route) {
-                return coordinadorRemoteResource.get($route.current.params.idCoordinador);
-            }]
-        }
-    });
-
-    $routeProvider.when('/sedeNew', {
-        templateUrl: "sede/sedeEdit.html",
-        controller: "NewSedeController"
-    });
-
-     $routeProvider.otherwise({
-           redirectTo: '/'
-     });
 }]);
 
