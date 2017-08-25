@@ -1,85 +1,71 @@
 
 <div class="container" >
-
     <div class="row">
-        <div class="container-fluid">
+        <div class="col col-md-12">
             <h1 style='text-align: center'><b>Lista de Coordinadores</b></h1>
-            <br>
-            <br>
-            <br>
+            <hr>
         </div>
     </div>
     <div class="row">
-        <div class="container-fluid">
-            <input type="text" ng-model="txtFiltroCoordinador" class="form-control" placeholder="Buscar">
-            <!--<ul class="nav nav-pills" >
-                <li><a href="" data-toggle="modal" data-target="#newMyModal" >Crear coordinador</a></li>
-                <ng-include src="'coordinador/coordinadorEdit.html'" ></ng-include>
-            </ul>-->
-            <br>
-            <button class="btn btn-primary col-xs-12 col-sm-2" ng-click="insertarModal()">
+        <div class="col col-md-12">
+            <button class="btn btn-primary" ng-click="insertarModal()">
                 <i class="fa fa-plus-circle" aria-hidden="true"></i>
                 Coordinador
             </button>
+            <hr>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12 col-sm-4 col-md-3 col-lg-3">
+            <form>
+                <label for="predicate">Seleccionar campo a buscar:</label>
+                <select class="form-control" id="predicate" ng-model="selectedPredicate">
+                    <option ng-repeat="pd in predicates" value="{{pd.nombre}}">{{pd.descripcion}}</option>
+                </select>
+            </form>
         </div>
     </div>
     <br>
     <div class="row">
-        <div id="no-more-tables">
-            <table class="col-sm-12 table-bordered table-striped table-condensed cf" >
-                <thead class="cf">
-                    <tr>
-                        <th >Código</th>
-                        <th >Apellido Paterno</th>
-                        <th >Apellido Materno</th>
-                        <th >Nombre</th>
-                        <th >Correo</th>
-                        <th >Acción</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr ng-repeat="coordinador in coordinadors| empezarDe : currentPage * pageSize | limitTo:pageSize | filter: txtFiltroCoordinador">
-                        <td data-title="Código">{{coordinador.idCoordinador}}</td>
-                        <td data-title="Ape Pat">{{coordinador.apePaterno}}</td>
-                        <td data-title="Ape Mat">{{coordinador.apeMaterno}}</td>
-                        <td data-title="Nombres">{{coordinador.nombres}}</td>
-                        <td data-title="Correo">{{coordinador.correo}}</td>
-                        <td data-title="">
-                            <a class="btn btn-primary" ng-click="editarModal(coordinador)"><i class="fa fa-pencil-square-o" aria-hidden="true"></i><span class="hidden-xs"> Editar</span></a>
-                            <a class="btn btn-danger" ng-click="eliminar(coordinador)" ><i class="fa fa-trash" aria-hidden="true"></i><span class="hidden-xs"> Eliminar</span></a>
-                            <!--
-                            <div class="btn-group">
-                                <button ng-click='' type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Seleccione <span class="caret"></span>
-                                </button>
-                                <ul class="dropdown-menu">
-                                    <li><a href="" data-toggle="modal" data-target="#newMyModal{{coordinador.idCoordinador}}">Editar</a></li>
-                                    <li><a href="" data-toggle="modal" data-target="#newMyModal{{coordinador.idCoordinador}}">Borrar</a></li>
-                                </ul>
-                            </div>
-                            <ng-include src="'coordinador/coordinadorEdit.html'" ></ng-include>
-                            -->
-                        </td>
-                    </tr>
-                </tbody>
-                <!--                <tfoot align="center">
-                                    <tr>
-                                        <td colspan="5">
-                                            <div class="container ">
-                                                <div class="center-block">
-                                                    <button ng-disabled="currentPage === 0" ng-click="currentPage = currentPage - 1" class="btn btn-default">
-                                                        <span aria-hidden="true">&laquo;</span>
-                                                    </button>
-                                                    {{currentPage + 1}}/{{numberOfPages()}}
-                                                    <button ng-disabled="currentPage >= coordinadors.length / pageSize - 1" ng-click="setNextPagina()" class="btn btn-default">
-                                                        <span aria-hidden="true">&raquo;</span>
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                </tfoot>-->
-            </table>
+        <div class="col col-lg-12">
+            <div class="search-table-outter wrapper">
+                <div id="no-more-tables">
+                    <table st-table="displayCollection" st-safe-src="coordinadors" class="table table-striped table-bordered table-condensed" >
+                        <thead>
+                            <tr>
+                                <th st-sort="idCoordinador">Código</th>
+                                <th st-sort="apePaterno">Apellido Paterno</th>
+                                <th st-sort="apeMaterno">Apellido Materno</th>
+                                <th st-sort="nombres">Nombre</th>
+                                <th st-sort="correo">Correo</th>
+                                <th >Acción</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td colspan="2" data-title="Búsqueda global">
+                                    <input st-search placeholder="global" class="input-sm form-control" type="search" />
+                                </td>
+                                <td data-title="Búsqueda por campo">
+                                    <input st-search="{{selectedPredicate}}" placeholder="campo" class="input-sm form-control" type="search" />
+                                </td>
+                                <td colspan="3"></td>
+                            </tr>
+                            <tr ng-repeat="coordinador in displayCollection| empezarDe : currentPage * pageSize | limitTo:pageSize | filter: txtFiltroCoordinador">
+                                <td data-title="Código">{{coordinador.idCoordinador}}</td>
+                                <td data-title="Ape Pat">{{coordinador.apePaterno}}</td>
+                                <td data-title="Ape Mat">{{coordinador.apeMaterno}}</td>
+                                <td data-title="Nombres">{{coordinador.nombres}}</td>
+                                <td data-title="Correo">{{coordinador.correo}}</td>
+                                <td data-title="">
+                                    <a class="btn btn-primary" ng-click="editarModal(coordinador)"><i class="fa fa-pencil-square-o" aria-hidden="true"></i><span class="hidden-xs"> Editar</span></a>
+                                    <a class="btn btn-danger" ng-click="eliminar(coordinador)" ><i class="fa fa-trash" aria-hidden="true"></i><span class="hidden-xs"> Eliminar</span></a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
     <!-- paginacion -->

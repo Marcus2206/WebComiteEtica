@@ -3,10 +3,10 @@ var app = angular.module("app");
 app.controller("EditRegistroController",
         ['$scope', 'registro', 'parametros', 'registroRR',
             "$log", "$uibModalInstance", 'SweetAlert',
-            '$uibModal', 'rObj', 'registroBitacoraRR', '$rootScope',
+            '$uibModal', 'registroBitacoraRR', '$rootScope',
             function ($scope, registro, parametros, registroRR,
                     $log, $uibModalInstance, SweetAlert,
-                    $uibModal, rObj, registroBitacoraRR,$rootScope) {
+                    $uibModal, registroBitacoraRR, $rootScope) {
 
                 $scope.filtrar = function (obj, param) {
                     function filterByParametro(obj) {
@@ -23,8 +23,8 @@ app.controller("EditRegistroController",
                 $scope.paramEstadoRegistro = $scope.filtrar($scope.parametros, 'P012')[0].parametroDetalles;
 
                 $scope.registro = registro;
-                $scope.registro.investigador = rObj.idInvestigador;
-                $scope.registro.sede = rObj.idSede;
+                $scope.registro.investigador = $scope.registroObj.idInvestigador;
+                $scope.registro.sede = $scope.registroObj.idSede;
 
                 $scope.deshabilitado = false;
                 $scope.isBitacora = true;
@@ -72,11 +72,14 @@ app.controller("EditRegistroController",
 
                                 var index = $scope.registros.indexOf($scope.registroObj);
                                 if (index !== -1) {
-                                    $scope.registros[index] = registroRespond;
+                                    /*Conserva el valor del identificador HashKey del array inicial, sólo se actualzian los valores.*/
+                                    angular.forEach(registroRespond, function (value, key) {
+                                        if (key !== '$$hashKey') {
+                                            $scope.registros[index][key] = value;
+                                        }
+                                    });
                                 }
-                                $scope.registroObj = registroRespond;
-                                 $log.log($scope.registroObj);
-                                 $log.log($scope.registros);
+
                                 SweetAlert.swal("Hecho!", "Registro guardado exitosamente.", "success");
                             }, function (bussinessMessages) {
                                 $scope.bussinessMessages = bussinessMessages;
@@ -126,16 +129,40 @@ app.controller("EditRegistroController",
             }]);
 
 app.controller("ListRegistroController",
-        ['$scope', "registros","idNotificacionParam", "registroRR",
+        ['$scope', "registros", "idNotificacionParam", "registroRR",
             "$log", "$uibModal", 'SweetAlert',
-            function ($scope, registros,idNotificacionParam, registroRR,
+            function ($scope, registros, idNotificacionParam, registroRR,
                     $log, $uibModal, SweetAlert) {
 
                 if (idNotificacionParam !== "all") {
-                    $scope.txtFiltroRegistro = idNotificacionParam;
+                    var bg = document.getElementById("busquedaGlobal");
+                    bg.value = idNotificacionParam;
                 }
                 /*Se obtiene lista de registros*/
                 $scope.registros = registros;
+
+                /*Columnas para realizar el filtro*/
+                $scope.predicates = [{nombre: 'idRegistro', descripcion: 'Id. Registro'},
+                    {nombre: 'paramEstadoRegistro', descripcion: 'Estado Registro'},
+                    {nombre: 'idInvestigacion', descripcion: 'Investigación'},
+                    {nombre: 'idInvestigador', descripcion: 'Investigador'},
+                    {nombre: 'idSede', descripcion: 'Sede'},
+                    {nombre: 'fechaAprobacion', descripcion: 'Fecha aprobación'},
+                    {nombre: 'paramEstado', descripcion: 'Estado'},
+                    {nombre: 'observacion', descripcion: 'Observación'},
+                    {nombre: 'farmacoExperimental', descripcion: 'Fármaco experimental'},
+                    {nombre: 'placebo', descripcion: 'Placebo'},
+                    {nombre: 'pacienteEas', descripcion: 'Paciente EAS'},
+                    {nombre: 'easLocal', descripcion: 'EAS Local'},
+                    {nombre: 'paramNotificacion', descripcion: 'Notificación'},
+                    {nombre: 'fechaEas', descripcion: 'Fecha EAS'},
+                    {nombre: 'visitaInspeccion', descripcion: 'Visita Inspección'},
+                    {nombre: 'estudioNinos', descripcion: 'Estudio Niños'},
+                    {nombre: 'visitaInspeccionIns', descripcion: 'Visita Inspección INS'}];
+
+                $scope.displayCollection = [].concat($scope.registros);
+                /*Campo seleccionado*/
+                $scope.selectedPredicate = $scope.predicates[0].nombre;
 
                 /*Se setea la cantidad filas por vista*/
                 $scope.currentPage = 0;
@@ -168,8 +195,7 @@ app.controller("ListRegistroController",
                             },
                             parametros: ['parametroRR', function (parametroRR) {
                                     return parametroRR.list();
-                                }],
-                            rObj: registroObj
+                                }]
                         }
                     });
 
@@ -260,7 +286,7 @@ app.controller("NewRegistroController",
             '$uibModal', '$rootScope',
             function ($scope, registroRR,
                     parametros, $log, $uibModalInstance, SweetAlert,
-                    $uibModal,$rootScope) {
+                    $uibModal, $rootScope) {
 
                 $scope.filtrar = function (obj, param) {
                     function filterByParametro(obj) {

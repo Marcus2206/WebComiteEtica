@@ -49,11 +49,13 @@ app.controller("EditPagoController",
                                 pagoRespond.paramEstadoPago = selText;
                                 var index = $scope.pagos.indexOf($scope.pagoObj);
                                 if (index !== -1) {
-                                    $scope.pagos[index] = pagoRespond;
+                                    /*Conserva el valor del identificador HashKey del array inicial, sólo se actualzian los valores.*/
+                                    angular.forEach(pagoRespond, function (value, key) {
+                                        if (key !== '$$hashKey') {
+                                            $scope.pagos[index][key] = value;
+                                        }
+                                    });
                                 }
-
-
-                                $scope.pagoObj = pagoRespond;
                                 SweetAlert.swal("Hecho!", "Registro guardado exitosamente.", "success");
 
                             }, function (bussinessMessages) {
@@ -94,16 +96,28 @@ app.controller("EditPagoController",
             }]);
 
 app.controller("ListPagoController",
-        ['$scope', "pagos","idNotificacionParam", "pagoRR",
+        ['$scope', "pagos", "idNotificacionParam", "pagoRR",
             "$log", "$uibModal", 'SweetAlert',
             function ($scope, pagos, idNotificacionParam, pagoRR,
                     $log, $uibModal, SweetAlert) {
-                      
+
                 if (idNotificacionParam !== "all") {
-                    $scope.txtFiltroPago = idNotificacionParam;
+                     var bg = document.getElementById("busquedaGlobal");
+                     bg.value=idNotificacionParam;
                 }
                 /*Se obtiene lista de registros*/
                 $scope.pagos = pagos;
+
+                /*Columnas para realizar el filtro*/
+                $scope.predicates = [{nombre: 'idPago', descripcion: 'Id. Pago'},
+                    {nombre: 'costo', descripcion: 'Precio'},
+                    {nombre: 'nroFactura', descripcion: 'Nro. Factura'},
+                    {nombre: 'observacion', descripcion: 'Observación'},
+                    {nombre: 'paramEstadoPago', descripcion: 'Estado Pago'}];
+
+                $scope.displayCollection = [].concat($scope.pagos);
+                /*Campo seleccionado*/
+                $scope.selectedPredicate = $scope.predicates[0].nombre;
 
                 /*Se setea la cantidad filas por vista*/
                 $scope.currentPage = 0;

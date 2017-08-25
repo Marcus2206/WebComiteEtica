@@ -1,76 +1,95 @@
 
 <div class="container">
     <div class="row">
-        <div class="container-fluid">
+        <div class="col col-md-12">
             <h1 style='text-align: center'><b>Registro de Investigación</b></h1>
-            <br>
-            <br>
-            <br>
+            <hr>
         </div>
     </div>
     <div class="row">
-        <div class="container-fluid">
-            <input type="text" ng-model="txtFiltroRegistro" class="form-control" placeholder="Buscar">
-            <br>
-            <button class="btn btn-primary col-xs-12 col-sm-2" ng-click="nuevoModal()">
+        <div class="col col-md-12">
+            <button class="btn btn-primary" ng-click="nuevoModal()">
                 <i class="fa fa-plus-circle" aria-hidden="true"></i>
                 Registro
             </button>
+            <hr>
         </div>
     </div>
-
     <div class="row">
-        <br>
-        <div id="no-more-tables">
-            <table class="col-md-12 table-bordered table-striped table-condensed cf" >
-                <thead class="cf">
-                    <tr>
-                        <th>Id. Registro</th>
-                        <th>Estado Registro</th>
-                        <th>Investigación</th>
-                        <th>Investigador</th>
-                        <th>Sede</th>
-                        <th>Fecha aprobación</th>
-                        <th>Estado</th>
-                        <th>Observación</th>
-                        <th>Fármaco experimental</th>
-                        <th>Placebo</th>
-                        <th>Paciente EAS</th>
-                        <th>EAS Local</th>
-                        <th>Notificación</th>
-                        <th>Fecha EAS</th>
-                        <th>Visita Inspección</th>
-                        <th>Estudio Niños</th>
-                        <th>Visita Inspección INS</th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr ng-repeat="registro in registros| empezarDe : currentPage * pageSize | limitTo:pageSize | filter:txtFiltroRegistro ">
-                        <td data-title="Id. Registro">{{registro.idRegistro}}</td>
-                        <td data-title="Estado Registro">{{registro.paramEstadoRegistro}}</td>
-                        <td data-title="Investigación">{{registro.idInvestigacion}}</td>
-                        <td data-title="Investigador">{{registro.idInvestigador}}</td>
-                        <td data-title="Sede">{{registro.idSede}}</td>
-                        <td data-title="Fecha aprobación">{{registro.fechaAprobacion|date:'dd/MM/yyyy'}}</td>
-                        <td data-title="Estado">{{registro.paramEstado}}</td>
-                        <td data-title="Observación">{{registro.observacion}}</td>
-                        <td data-title="Fármaco experimental">{{registro.farmacoExperimental}}</td>
-                        <td data-title="Placebo"> {{registro.placebo|booleanToText }}</td>
-                        <td data-title="Paciente EAS">{{registro.pacienteEas}}</td>
-                        <td data-title="EAS Local">{{registro.easLocal}}</td>
-                        <td data-title="Notificación">{{registro.paramNotificacion}}</td>
-                        <td data-title="Fecha EAS">{{registro.fechaEas|date:'dd/MM/yyyy'}}</td>
-                        <td data-title="Visita Inspección">{{registro.visitaInspeccion}}</td>
-                        <td data-title="Estudio Niños">{{registro.estudioNinos|booleanToText }}</td>
-                        <td data-title="Visita Inspección INS">{{registro.visitaInspeccionIns}}</td>
-                        <td>
-                            <button class="btn btn-primary" ng-click="editarModal(registro)"><i class="fa fa-pencil-square-o" aria-hidden="true"></i><span class="hidden-xs"> Editar</span></button>
-                            <button class="btn btn-danger" ng-click="eliminar(registro)" ><i class="fa fa-trash" aria-hidden="true"></i><span class="hidden-xs"> Eliminar</span></button>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+        <div class="col-xs-12 col-sm-4 col-md-3 col-lg-3">
+            <form>
+                <label for="predicate">Seleccionar campo a buscar:</label>
+                <select class="form-control" id="predicate" ng-model="selectedPredicate">
+                    <option ng-repeat="pd in predicates" value="{{pd.nombre}}">{{pd.descripcion}}</option>
+                </select>
+            </form>
+        </div>
+    </div>
+    <br>
+    <div class="row">
+        <div class="col col-lg-12">
+            <div class="search-table-outter wrapper">
+                <div id="no-more-tables">
+                    <table st-table="displayCollection" st-safe-src="registros" class="table table-striped table-bordered table-condensed">
+                        <thead class="cf">
+                            <tr>
+                                <th  st-sort="idRegistro">Id. Registro</th>
+                                <th  st-sort="paramEstadoRegistro">Estado Registro</th>
+                                <th  st-sort="idInvestigacion">Investigación</th>
+                                <th  st-sort="idInvestigador">Investigador</th>
+                                <th  st-sort="idSede">Sede</th>
+                                <th st-sort="fechaAprobacion">Fecha aprobación</th>
+                                <th  st-sort="paramEstado">Estado</th>
+                                <th  st-sort="observacion">Observación</th>
+                                <th  st-sort="farmacoExperimental">Fármaco experimental</th>
+                                <th  st-sort="placebo">Placebo</th>
+                                <th  st-sort="pacienteEas">Paciente EAS</th>
+                                <th  st-sort="easLocal">EAS Local</th>
+                                <th  st-sort="paramNotificacion">Notificación</th>
+                                <th  st-sort="fechaEas">Fecha EAS</th>
+                                <th  st-sort="visitaInspeccion">Visita Inspección</th>
+                                <th  st-sort="estudioNinos">Estudio Niños</th>
+                                <th  st-sort="visitaInspeccionIns">Visita Inspección INS</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td colspan="2" data-title="Búsqueda global">
+                                    <input st-search placeholder="global" class="input-sm form-control" type="search" id="busquedaGlobal" />
+                                </td>
+                                <td data-title="Búsqueda por campo">
+                                    <input st-search="{{selectedPredicate}}" placeholder="campo" class="input-sm form-control" type="search" />
+                                </td>
+                                <td colspan="15"></td>
+                            </tr>
+                            <tr ng-repeat="registro in displayCollection| empezarDe : currentPage * pageSize | limitTo:pageSize ">
+                                <td data-title="Id. Registro">{{registro.idRegistro}}</td>
+                                <td data-title="Estado Registro">{{registro.paramEstadoRegistro}}</td>
+                                <td data-title="Investigación">{{registro.idInvestigacion}}</td>
+                                <td data-title="Investigador">{{registro.idInvestigador}}</td>
+                                <td data-title="Sede">{{registro.idSede}}</td>
+                                <td data-title="Fecha aprobación">{{registro.fechaAprobacion|date:'dd/MM/yyyy'}}</td>
+                                <td data-title="Estado">{{registro.paramEstado}}</td>
+                                <td data-title="Observación">{{registro.observacion}}</td>
+                                <td data-title="Fármaco experimental">{{registro.farmacoExperimental}}</td>
+                                <td data-title="Placebo"> {{registro.placebo|booleanToText }}</td>
+                                <td data-title="Paciente EAS">{{registro.pacienteEas}}</td>
+                                <td data-title="EAS Local">{{registro.easLocal}}</td>
+                                <td data-title="Notificación">{{registro.paramNotificacion}}</td>
+                                <td data-title="Fecha EAS">{{registro.fechaEas|date:'dd/MM/yyyy'}}</td>
+                                <td data-title="Visita Inspección">{{registro.visitaInspeccion}}</td>
+                                <td data-title="Estudio Niños">{{registro.estudioNinos|booleanToText }}</td>
+                                <td data-title="Visita Inspección INS">{{registro.visitaInspeccionIns}}</td>
+                                <td>
+                                    <button class="btn btn-primary" ng-click="editarModal(registro)"><i class="fa fa-pencil-square-o" aria-hidden="true"></i><span class="hidden-xs"> Editar</span></button>
+                                    <button class="btn btn-danger" ng-click="eliminar(registro)" ><i class="fa fa-trash" aria-hidden="true"></i><span class="hidden-xs"> Eliminar</span></button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
     <!-- paginacion -->

@@ -6,14 +6,13 @@
     <div class="modal-body">
         <div class="container-fluid">
             <div class="row">
-                <div class="col">
+                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
                     <div class="form-group">
                         <label for="idRegistro">Id. Registro:  </label><br>
                         <input readonly type="text" class="form-control" id="idRegistro"  placeholder="Id. registro" ng-model="registro.idRegistro" value="{{ registro.idRegistro || '' }}">
                     </div> 
                 </div>
-
-                <div class="col">
+                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
                     <div class="form-group">
                         <label for="paramEstadoRegistro">Estudio Inicial/Nuevo Site:  </label><br>
                         <select class="form-control" id="paramEstadoRegistro" ng-model="registro.paramEstadoRegistro">
@@ -21,8 +20,9 @@
                         </select>
                     </div>
                 </div>
-                
-                <div class="col">
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
                     <div class="form-group">
                         <label for="investigacion">Investigación:  </label><br>
                         <p class="input-group">
@@ -33,8 +33,7 @@
                         </p>
                     </div> 
                 </div>
-
-                <div class="col">
+                <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
                     <div class="form-group">
                         <label for="idInvestigador">Investigador:  </label><br>
                         <p class="input-group">
@@ -45,8 +44,7 @@
                         </p>
                     </div> 
                 </div>
-
-                <div class="col">
+                <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
                     <div class="form-group">
                         <label for="idSede">Sede:  </label><br>
                         <p class="input-group">
@@ -57,14 +55,15 @@
                         </p>
                     </div> 
                 </div>
-
-                <div class="col">
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
                     <div class="form-group">
                         <label for="fechaAprobacion">Fecha aprobación:  </label><br>
                         <input type="text" class="form-control" id="fechaAprobacion"  placeholder="Seleccionar fecha" ng-model="registro.fechaAprobacion" value="{{registro.fechaAprobacion|| '' }}">
                     </div> 
                 </div>
-                <div class="col">
+                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
                     <div class="form-group">
                         <label for="paramEstado">Estado:  </label><br>
                         <select class="form-control" id="paramEstado" ng-model="registro.paramEstado">
@@ -72,35 +71,49 @@
                         </select>
                     </div>
                 </div>
-                <div class="col">
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-5 col-lg-5">
                     <div class="form-group">
                         <label for="observacion">Observación:  </label><br>
                         <input type="text" class="form-control" id="observacion"  placeholder="Observación" ng-model="registro.observacion" value="{{registro.observacion|| '' }}">
                     </div> 
                 </div>
-                <div class="col">
+                <div class="col-xs-12 col-sm-12 col-md-5 col-lg-5">
                     <div class="form-group">
                         <label for="farmacoExperimental">Fármaco experimental:  </label><br>
                         <input type="text" class="form-control" id="farmacoExperimental"  placeholder="Seleccionar fármaco" ng-model="registro.farmacoExperimental" value="{{registro.farmacoExperimental|| '' }}">
                     </div> 
                 </div>
-                <div class="form-group">
-                    <label for="placebo">Placebo:  </label>
-                    <checkbox id="placebo" ng-model="registro.placebo"></checkbox>
+                <div class="col-xs-12 col-sm-12 col-md-2 col-lg-2">
+                    <div class="form-group">
+                        <label for="placebo">Placebo:  </label>
+                        <checkbox id="placebo" ng-model="registro.placebo"></checkbox>
+                    </div>
                 </div>
-                <div class="col">
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
                     <div class="form-group">
                         <label for="pacienteEas">Paciente EAS:  </label><br>
                         <input type="text" class="form-control" id="pacienteEas"  placeholder="Paciente EAS" ng-model="registro.pacienteEas" value="{{registro.pacienteEas|| '' }}">
                     </div> 
                 </div>
-                <div class="col">
+                <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
                     <div class="form-group">
                         <label for="easLocal">EAS Local:  </label><br>
                         <input type="text" class="form-control" id="easLocal"  placeholder="EAS Local" ng-model="registro.easLocal" value="{{registro.easLocal|| '' }}">
                     </div> 
                 </div>
-                <div class="col">
+                <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                    <div class="form-group">
+                        <label for="fechaEas">Fecha EAS:  </label><br>
+                        <input type="text" class="form-control" id="fechaEas"  placeholder="Seleccionar fecha EAS" ng-model="registro.fechaEas" value="{{registro.fechaEas|| '' }}">
+                    </div> 
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-5 col-lg-5">
                     <div class="form-group">
                         <label for="paramNotificacion">Notificación:  </label><br>
                         <select class="form-control" id="paramNotificacion" ng-model="registro.paramNotificacion">
@@ -108,32 +121,30 @@
                         </select>
                     </div>
                 </div>
-                <div class="col">
-                    <div class="form-group">
-                        <label for="fechaEas">Fecha EAS:  </label><br>
-                        <input type="text" class="form-control" id="fechaEas"  placeholder="Seleccionar fecha EAS" ng-model="registro.fechaEas" value="{{registro.fechaEas|| '' }}">
-                    </div> 
-                </div>
-                <div class="col">
+                <div class="col-xs-12 col-sm-12 col-md-5 col-lg-5">
                     <div class="form-group">
                         <label for="visitaInspeccion">Visita Inspección:  </label><br>
                         <input type="text" class="form-control" id="visitaInspeccion"  placeholder="Visita Inspección" ng-model="registro.visitaInspeccion" value="{{registro.visitaInspeccion|| '' }}">
                     </div> 
                 </div>
-                <div class="form-group">
-                    <label for="estudioNinos">Estudio Niños:  </label>
-                    <checkbox id="estudioNinos" ng-model="registro.estudioNinos"></checkbox>
+                <div class="col-xs-12 col-sm-12 col-md-2 col-lg-2">
+                    <div class="form-group">
+                        <label for="estudioNinos">Estudio Niños:  </label>
+                        <checkbox id="estudioNinos" ng-model="registro.estudioNinos"></checkbox>
+                    </div>
                 </div>
-                <div class="col">
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                     <div class="form-group">
                         <label for="visitaInspeccionIns">Visita Inspección INS:  </label><br>
                         <input type="text" class="form-control" id="visitaInspeccionIns"  placeholder="Visita Inspección INS" ng-model="registro.visitaInspeccionIns" value="{{ registro.visitaInspeccionIns || '' }}">
                     </div> 
                 </div>
-
-
+            </div>
+            <div class="row">
                 <!--Registro Bitácora-->
-                <div class="col">    
+                <div class="col-md-12">    
                     <button ng-disabled="deshabilitado" type="button" style="width: 100%;" class="btn btn-default" ng-click="isBitacora = !isBitacora">Bitácora</button>
                     <hr>
                     <div uib-collapse="isBitacora">         
@@ -185,17 +196,9 @@
                         </div>
                     </div>
                 </div>    
-
-
-
-
-
             </div>
         </div>
     </div>
-    <br>
-
-
     <div class="modal-footer">
         <button type="submit" class="btn btn-primary" ng-click="guardar()">
             Guardar
@@ -207,36 +210,36 @@
 </div>
 
 <script type="text/javascript">
-            $('.form_datetime').datetimepicker({
-                language: 'es',
-                weekStart: 1,
-                todayBtn: 1,
-                autoclose: 1,
-                todayHighlight: 1,
-                startView: 2,
-                forceParse: 0,
-                showMeridian: 1
-            });
-            $('.form_date').datetimepicker({
-                language: 'es',
-                setDate: new Date(),
-                weekStart: 1,
-                todayBtn: 1,
-                autoclose: 1,
-                todayHighlight: 1,
-                startView: 2,
-                minView: 2,
-                forceParse: 0
-            });
-            $('.form_time').datetimepicker({
-                language: 'es',
-                weekStart: 1,
-                todayBtn: 1,
-                autoclose: 1,
-                todayHighlight: 1,
-                startView: 1,
-                minView: 0,
-                maxView: 1,
-                forceParse: 0
-            });
+    $('.form_datetime').datetimepicker({
+        language: 'es',
+        weekStart: 1,
+        todayBtn: 1,
+        autoclose: 1,
+        todayHighlight: 1,
+        startView: 2,
+        forceParse: 0,
+        showMeridian: 1
+    });
+    $('.form_date').datetimepicker({
+        language: 'es',
+        setDate: new Date(),
+        weekStart: 1,
+        todayBtn: 1,
+        autoclose: 1,
+        todayHighlight: 1,
+        startView: 2,
+        minView: 2,
+        forceParse: 0
+    });
+    $('.form_time').datetimepicker({
+        language: 'es',
+        weekStart: 1,
+        todayBtn: 1,
+        autoclose: 1,
+        todayHighlight: 1,
+        startView: 1,
+        minView: 0,
+        maxView: 1,
+        forceParse: 0
+    });
 </script>

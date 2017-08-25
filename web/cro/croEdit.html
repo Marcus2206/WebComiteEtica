@@ -6,89 +6,90 @@
     <div class="modal-body">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-xs-12 col-sm-12 col-md-4 col-lg-3"
-                     <div class="form-group">
+                <div class="col-xs-12 col-sm-12 col-md-4 col-lg-3">
+                    <div class="form-group">
                         <label for="idCro">Id. cro</label><br>
                         <input readonly type="text" class="form-control" id="idCro" ng-model="cro.idCro" placeholder="Id. cro" value="{{ cro.idCro || '' }}">
                     </div>     
                 </div>
-                <div class="row">
-                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                        <div class="form-group">
-                            <label for="nombre">Nombre:  </label><br>
-                            <input type="text" class="form-control" id="nombre" ng-model="cro.nombre" placeholder="Nombres" value="{{ cro.nombre || '' }}" e-required>
-                        </div> 
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col">
-                        <!--Inicio de Coordinador-->
-                        <button ng-disabled="deshabilitado" type="button" style="width: 100%;" class="btn btn-default" ng-click="isPatrocinador = !isPatrocinador">Patrocinador</button>
-                        <hr>
-                        <div uib-collapse="isPatrocinador">
-                            <div>
-                                <form data-editable-form name="uiSelectFormPatrocinador" onaftersave="agregarPatrocinador()">
-                                    <div editable-ui-select="patrocinadorSelect" data-e-form="uiSelectFormPatrocinador" data-e-name="patrocinadorSelect" name="patrocinadorSelect" theme="bootstrap" data-e-ng-model="patrocinadorSelect" data-e-style="min-width:300px;">
-                                        <editable-ui-select-match placeholder="Patrocinador" style="width: 100%;" >
-                                            {{$select.selected.nombre}}
-                                        </editable-ui-select-match>
-                                        <editable-ui-select-choices repeat="patrocinador in patrocinadorsSelectList | orderBy: 'nombre' | filter: $select.search track by $index ">
-                                            {{patrocinador.nombre}}
-                                        </editable-ui-select-choices>
-                                    </div> 
-                                    <div class="buttons">
-                                        <button type="button" class="btn btn-default" ng-click="uiSelectFormPatrocinador.$show()" ng-show="!uiSelectFormPatrocinador.$visible">
-                                            Agregar
-                                        </button>
-                                        <span ng-show="uiSelectFormPatrocinador.$visible">
-                                            <br/>
-                                            <button type="submit" class="btn btn-primary" ng-disabled="uiSelectFormPatrocinador.$waiting">
-                                                Confirmar
-                                            </button>
-                                            <button type="button" class="btn btn-default" ng-disabled="uiSelectFormPatrocinador.$waiting" ng-click="uiSelectFormPatrocinador.$cancel()">
-                                                Cancelar
-                                            </button>
-                                        </span>
-                                    </div>  
-                                </form>
-                                <br>
-                                <table class="table table-bordered table-hover table-condensed table-responsive">
-                                    <thead>
-                                        <tr>
-                                            <th>Nombre</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr ng-repeat="patrCro in patrocinadorCros| orderBy:'nombre'">
-                                            <td>
-                                                <div>
-                                                    <div>
-                                                        <button type="button" class="close" aria-label="Close" ng-click="eliminarPatrCro(patrCro)">
-                                                            <span aria-hidden="true">&times;</span>
-                                                        </button>
-                                                    </div>
-                                                    <div>
-                                                         {{patrCro[1].nombre}} 
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>    
-                    </div>
-                </div>
-
             </div>
-        </div>
-        <div class="modal-footer">
-            <button type="submit" class="btn btn-primary" ng-click="guardar()">
-                Guardar
-            </button>
-            <button type="button" class="btn btn-default" ng-click="cerrar()">
-                Volver
-            </button>
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <div class="form-group">
+                        <label for="nombre">Nombre:  </label><br>
+                        <input type="text" class="form-control" id="nombre" ng-model="cro.nombre" placeholder="Nombres" value="{{ cro.nombre || '' }}" e-required>
+                    </div> 
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <!--Inicio de Coordinador-->
+                    <button ng-disabled="deshabilitado" type="button" style="width: 100%;" class="btn btn-default" ng-click="isPatrocinador = !isPatrocinador">Patrocinador</button>
+                    <hr>
+                    <div uib-collapse="isPatrocinador">
+                        <div>
+                            <form data-editable-form name="uiSelectFormPatrocinador" onaftersave="agregarPatrocinador()">
+                                <div editable-ui-select="patrocinadorSelect" data-e-form="uiSelectFormPatrocinador" data-e-name="patrocinadorSelect" name="patrocinadorSelect" theme="bootstrap" data-e-ng-model="patrocinadorSelect" data-e-style="min-width:300px;">
+                                    <editable-ui-select-match placeholder="Patrocinador" style="width: 100%;" >
+                                        {{$select.selected.nombre}}
+                                    </editable-ui-select-match>
+                                    <editable-ui-select-choices repeat="patrocinador in patrocinadorsSelectList | orderBy: 'nombre' | filter: $select.search track by $index ">
+                                        {{patrocinador.nombre}}
+                                    </editable-ui-select-choices>
+                                </div> 
+                                <div class="buttons">
+                                    <button type="button" class="btn btn-default" ng-click="uiSelectFormPatrocinador.$show()" ng-show="!uiSelectFormPatrocinador.$visible">
+                                        Agregar
+                                    </button>
+                                    <span ng-show="uiSelectFormPatrocinador.$visible">
+                                        <br/>
+                                        <button type="submit" class="btn btn-primary" ng-disabled="uiSelectFormPatrocinador.$waiting">
+                                            Confirmar
+                                        </button>
+                                        <button type="button" class="btn btn-default" ng-disabled="uiSelectFormPatrocinador.$waiting" ng-click="uiSelectFormPatrocinador.$cancel()">
+                                            Cancelar
+                                        </button>
+                                    </span>
+                                </div>  
+                            </form>
+                            <br>
+                            <table class="table table-bordered table-hover table-condensed table-responsive">
+                                <thead>
+                                    <tr>
+                                        <th>Nombre</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="patrCro in patrocinadorCros| orderBy:'nombre'">
+                                        <td>
+                                            <div>
+                                                <div>
+                                                    <button type="button" class="close" aria-label="Close" ng-click="eliminarPatrCro(patrCro)">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div>
+                                                    {{patrCro[1].nombre}} 
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>    
+                </div>
+            </div>
+
         </div>
     </div>
+    <div class="modal-footer">
+        <button type="submit" class="btn btn-primary" ng-click="guardar()">
+            Guardar
+        </button>
+        <button type="button" class="btn btn-default" ng-click="cerrar()">
+            Volver
+        </button>
+    </div>
+</div>
 

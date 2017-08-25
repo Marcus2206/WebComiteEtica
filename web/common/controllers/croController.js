@@ -24,7 +24,6 @@ app.controller("NewCroController",
                     $scope.cro.fechaIngreso = new Date();
                     croRR.insert($scope.cro)
                             .then(function (croResult) {
-                                //$location.path("coordinadorEdit/"+coordinadorResult.idCoordinador);
                                 $uibModalInstance.dismiss(croResult);
                                 SweetAlert.swal("Hecho!", "Registro guardado exitosamente.", "success");
                             }, function (bussinessMessages) {
@@ -43,9 +42,9 @@ app.controller("NewCroController",
 
 app.controller("ListCroController",
         ['$scope', "cros", "croRR", "$log",
-            "$uibModal", '$confirm',
+            "$uibModal", '$confirm', 'SweetAlert',
             function ($scope, cros, croRR, $log,
-                    $uibModal, $confirm) {
+                    $uibModal, $confirm, SweetAlert) {
                 /*Se obtiene lista de coordinadores*/
                 $scope.cros = cros;
 
@@ -54,7 +53,6 @@ app.controller("ListCroController",
                     {nombre: 'nombre', descripcion: 'Nombre'}];
 
                 $scope.displayCollection = [].concat($scope.cros);
-
                 /*Campo seleccionado*/
                 $scope.selectedPredicate = $scope.predicates[0].nombre;
 
@@ -90,8 +88,9 @@ app.controller("ListCroController",
                                         .then(function (croResult) {
                                             //Se la elimenación es exitosa.
                                             $scope.cros.splice($scope.cros.indexOf(cro), 1);
+                                            SweetAlert.swal("Hecho", "El registro se eliminó con éxito.", "success");
                                         }, function (bussinessMessages) {
-                                            alert("El cro esta asociado a una investigación activa.");
+                                            SweetAlert.swal("Advertencia!", "El Cro incluye Patrocinadores relacionados.", "warning");
                                         });
                             })
                             .catch(function () {
@@ -169,6 +168,7 @@ app.controller("EditCroController",
             function ($scope, cro, croRR, $log,
                     $uibModalInstance, $rootScope, patrocinadorCroRR, patrocinadorRR,
                     $confirm, SweetAlert) {
+
                 $scope.patrocinadorCros = [];
                 $scope.patrocinadorsSelectList = [];
                 $scope.patrocinadorSelect = {};
@@ -244,7 +244,6 @@ app.controller("EditCroController",
 
                             });
                 };
-
 
                 $scope.guardar = function () {
                     //if ($scope.form.$valid) {

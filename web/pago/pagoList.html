@@ -1,52 +1,71 @@
 
 <div class="container">
     <div class="row">
-        <div class="container-fluid">
+        <div class="col col-md-12">
             <h1 style='text-align: center'><b>Lista de Pagos</b></h1>
-            <br>
-            <br>
-            <br>
+            <hr>
         </div>
     </div>
     <div class="row">
-        <div class="col-xs-12">
-            <input type="text" ng-model="txtFiltroPago" class="form-control" placeholder="Buscar">
-            <br>
-            <button class="btn btn-primary col-xs-12 col-sm-2" ng-click="nuevoModal()">
+        <div class="col col-md-12">
+            <button class="btn btn-primary" ng-click="nuevoModal()">
                 <i class="fa fa-plus-circle" aria-hidden="true"></i>
                 Generar Pago
             </button>
+            <hr>
+        </div> 
+    </div>
+    <div class="row">
+        <div class="col-xs-12 col-sm-4 col-md-3 col-lg-3">
+            <form>
+                <label for="predicate">Seleccionar campo a buscar:</label>
+                <select class="form-control" id="predicate" ng-model="selectedPredicate">
+                    <option ng-repeat="pd in predicates" value="{{pd.nombre}}">{{pd.descripcion}}</option>
+                </select>
+            </form>
         </div>
     </div>
-
+    <br>
     <div class="row">
-        <br>
-        <div id="no-more-tables">
-            <table class="col-md-12 table-bordered table-striped table-condensed cf" >
-                <thead class="cf">
-                    <tr>
-                        <th>Id. Pago</th>
-                        <th>Precio</th>
-                        <th>Nro. Factura</th>
-                        <th>Observación</th>
-                        <th>Estado Pago</th>
-                         <th>Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr ng-repeat="pago in pagos| empezarDe : currentPage * pageSize | limitTo:pageSize | filter:txtFiltroPago ">
-                        <td data-title="Id. Pago">{{pago.idPago}}</td>
-                        <td data-title="Precio">{{pago.costo}}</td>
-                        <td data-title="Nro. Factura">{{pago.nroFactura}}</td>
-                        <td data-title="Observación">{{pago.observacion}}</td>
-                        <td data-title="Estado Pago">{{pago.paramEstadoPago}}</td>
-                        <td>
-                            <button class="btn btn-primary" ng-click="editarModal(pago)"><i class="fa fa-pencil-square-o" aria-hidden="true"></i><span class="hidden-xs"> Editar</span></button>
-                            <button class="btn btn-danger" ng-click="eliminar(pago)" ><i class="fa fa-trash" aria-hidden="true"></i><span class="hidden-xs"> Eliminar</span></button>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+        <div class="col col-lg-12">
+            <div class="search-table-outter wrapper">
+                <div id="no-more-tables">
+                    <table st-table="displayCollection" st-safe-src="pagos" class="table table-striped table-bordered table-condensed">
+                        <thead>
+                            <tr>
+                                <th st-sort="idPago">Id. Pago</th>
+                                <th st-sort="costo">Precio</th>
+                                <th st-sort="nroFactura">Nro. Factura</th>
+                                <th st-sort="observacion">Observación</th>
+                                <th st-sort="paramEstadoPago">Estado Pago</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td colspan="2" data-title="Búsqueda global">
+                                    <input st-search placeholder="global" class="input-sm form-control" type="search" id="busquedaGlobal" />
+                                </td>
+                                <td data-title="Búsqueda por campo">
+                                    <input st-search="{{selectedPredicate}}" placeholder="campo" class="input-sm form-control" type="search" />
+                                </td>
+                                <td colspan="3"></td>
+                            </tr>
+                            <tr ng-repeat="pago in displayCollection| empezarDe : currentPage * pageSize | limitTo:pageSize">
+                                <td data-title="Id. Pago">{{pago.idPago}}</td>
+                                <td data-title="Precio">{{pago.costo}}</td>
+                                <td data-title="Nro. Factura">{{pago.nroFactura}}</td>
+                                <td data-title="Observación">{{pago.observacion}}</td>
+                                <td data-title="Estado Pago">{{pago.paramEstadoPago}}</td>
+                                <td>
+                                    <button class="btn btn-primary" ng-click="editarModal(pago)"><i class="fa fa-pencil-square-o" aria-hidden="true"></i><span class="hidden-xs"> Editar</span></button>
+                                    <button class="btn btn-danger" ng-click="eliminar(pago)" ><i class="fa fa-trash" aria-hidden="true"></i><span class="hidden-xs"> Eliminar</span></button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
     <!-- paginacion -->
