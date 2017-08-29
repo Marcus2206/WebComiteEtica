@@ -190,7 +190,6 @@ app.controller("EditPatrocinadorController",
                 /*Detalle de PatrocinaorCro*/
                 patrocinadorCroRR.listCroByIdPatrocinador($scope.patrocinador.idPatrocinador)
                         .then(function (patrocinadorCroResponse) {
-                            $log.log(patrocinadorCroResponse);
                             $scope.patrocinadorCros = patrocinadorCroResponse;
                         }, function (bussinessMessages) {
                             $scope.bussinessMessages = bussinessMessages;

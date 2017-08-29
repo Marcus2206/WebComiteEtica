@@ -59,7 +59,6 @@ app.controller("EditInvestigacionController",
                 $scope.paramTipoInvestigacionSelected = {};
 
                 $scope.investigacion = investigacion;
-                 $log.log(investigacion);
                 $scope.guardar = function () {
                     $scope.investigacion.usuarioModifica = $rootScope.username;
                     $scope.investigacion.fechaModificacion = new Date();
@@ -331,7 +330,6 @@ app.controller("EditInvestigacionController",
                 };
 
                 $scope.inicial = function () {
-                    $log.log($scope.investigacion.patrocinadorCro);
                     if ($scope.investigacion.patrocinadorCro !== null) {
                         $scope.patrocinadorSelected.selected = $scope.investigacion.patrocinadorCro.patrocinador;
                         $scope.cargarCro();

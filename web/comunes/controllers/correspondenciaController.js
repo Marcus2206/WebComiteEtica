@@ -520,7 +520,6 @@ app.controller("NewCorrespondenciaController",
                 $scope.guardar = function () {
                     $scope.correspondencia.usuarioIngresa = $rootScope.username;
                     $scope.correspondencia.fechaIngreso = new Date();
-                    $log.log($scope.correspondencia.registro);
                     if (isEmptyJSON($scope.correspondencia.registro)) {
                         SweetAlert.swal("Adventencia", "La correspondencia debe contar con un registro asignado.", "warning");
                         return;

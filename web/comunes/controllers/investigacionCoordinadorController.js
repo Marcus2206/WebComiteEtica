@@ -1,28 +1,7 @@
 var app=angular.module("app");
 
 app.controller("EditInvestigacionCoordinadorController", ['$scope', 'investigacionCoordinador', 'investigacionCoordinadorRemoteResource', '$location',"$log","$rootScope", function($scope, investigacionCoordinador, investigacionCoordinadorRemoteResource, $location, $log,$rootScope) {
-        $log.log("entrando ReadInvestigacionCoordinadorController");
         $scope.investigacionCoordinador = investigacionCoordinador;
-        
-        $log.log($scope.investigacionCoordinador);
-        
-//        $scope.otroGato=function(){
-//            $log.log("dio click");
-//            
-//            var invCoordinadorId={
-//                idInvestigacion:"INV1700001",
-//                idCoordinador: "COD1700002"
-//            };
-//            
-//            investigacionRemoteResource.get(invCoordinadorId)
-//                .then(function(invCoordinadorRespond) {
-//                    $log.log("get invCoordinadorId");
-//                    $log.log(invCoordinadorRespond);
-//
-//                }, function(bussinessMessages) {
-//                    $scope.bussinessMessages = bussinessMessages;
-//                });
-//        };
 }]);
 
 app.controller("ListInvestigacionCoordinadorController", ['$scope', "investigacionCoordinadors", "investigacionCoordinadorRemoteResource", '$location',"$log","$route", function($scope, investigacionCoordinadors, investigacionCoordinadorRemoteResource, $location, $log,$route) {

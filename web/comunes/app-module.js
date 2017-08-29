@@ -1,7 +1,7 @@
 var app = angular.module("app",
         ["ngRoute", "ui.select", "ui.bootstrap", "angular-confirm", "ngAnimate",
             "ngSanitize", "xeditable", "oitozero.ngSweetAlert", "flow", 'ui.checkbox',
-            'LocalStorageModule','smart-table']);
+            'LocalStorageModule', 'smart-table']);
 
 app.config(['$routeProvider', "$locationProvider", function ($routeProvider, $locationProvider) {
         /*Sólo ruta por defecto*/
@@ -14,6 +14,7 @@ app.config(['$routeProvider', "$locationProvider", function ($routeProvider, $lo
                 .when("/login", {
                     controller: "loginController",
                     templateUrl: "login.html"
+//                    templateUrl: "login.jsp"
                 })
                 .when('/subirArchivo', {
                     templateUrl: 'general/subirArchivo.html',
@@ -32,4 +33,3 @@ app.config(['$routeProvider', "$locationProvider", function ($routeProvider, $lo
                     redirectTo: '/'
                 });
     }]);
-

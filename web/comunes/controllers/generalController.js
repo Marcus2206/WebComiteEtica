@@ -8,7 +8,6 @@ app.controller('fechaController', function ($scope) {
 
 
 app.controller("subirController", function ($scope, $http, $log, registros, NgTableParams) {
-//    $log.log(registros);
 //    /*Se obtiene lista de registros*/
     $scope.registros = registros;
 

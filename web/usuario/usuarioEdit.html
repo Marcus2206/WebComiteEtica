@@ -24,9 +24,9 @@
                     <div class="form-group">
                         <label for="password">Password: </label><br>
                         <p class="input-group">
-                            <input type="password" class="form-control" id="password"  placeholder="Password" ng-model="usuario.password" value="{{ usuario.password || '' }}">
+                            <input type="password"  class="form-control" id="password"  placeholder="Password" ng-model="usuario.password" value="{{ usuario.password || '' }}">
                             <span class="input-group-btn">
-                                <button type="button" class="btn btn-default" ng-click="cambiarPassword()" data-toggle="tooltip" title="Resetear clave">
+                                <button type="button" ng-disabled="btnPass" class="btn btn-default" ng-click="cambiarPassword()" data-toggle="tooltip" title="Resetear clave">
                                     <i class="glyphicon glyphicon-refresh"></i>
                                 </button>
                             </span>                
@@ -60,3 +60,4 @@
             </button>
         </div>
     </div>
+</div>

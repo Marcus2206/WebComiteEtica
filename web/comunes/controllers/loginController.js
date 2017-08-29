@@ -6,13 +6,7 @@ app.controller('loginController', function ($scope, auth, $log, $rootScope, Swee
     //login de la factoria auth pasando lo que contiene el campo
     //de texto del formulario
     $scope.login = function () {
-//        if(.login($scope,$scope.username, $scope.password)){
-//            SweetAlert.swal("Bienvenido","","success");
-//        }else{
-//            SweetAlert.swal("Credenciales incorrectas","Por favor, intente nuevamente.","warning");
-//        }
-        auth.login($scope, $scope.username, $scope.password, SweetAlert);
-
+        //auth.login($scope, $scope.username, $scope.password, SweetAlert);
     };
 });
 

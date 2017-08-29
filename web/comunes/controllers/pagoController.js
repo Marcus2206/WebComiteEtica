@@ -34,7 +34,6 @@ app.controller("EditPagoController",
                 $scope.guardar = function () {
                     $scope.pago.usuarioModifica = $rootScope.username;
                     $scope.pago.fechaModificacion = new Date();
-                    $log.log($scope.pago);
                     if ($scope.pago.nroFactura !== '') {
                         $scope.pago.paramEstadoPago = 'PD03';
                     } else {
@@ -42,7 +41,6 @@ app.controller("EditPagoController",
                     }
                     pagoRR.update($scope.pago)
                             .then(function (pagoRespond) {
-                                $log.log(pagoRespond);
                                 var listbox = document.getElementById("paramEstadoPago");
                                 var selIndex = listbox.selectedIndex;
                                 var selText = listbox.options[selIndex].text;
@@ -77,8 +75,6 @@ app.controller("EditPagoController",
                 $scope.enviarMail = function () {
                     pagoRR.sendMail($scope.pago)
                             .then(function (pagoResponse) {
-                                $log.log("pagoResponse");
-                                $log.log(pagoResponse);
                                 if (pagoResponse === 1) {
                                     SweetAlert.swal("Hecho!", "Se envió con éxito.", "success");
                                 } else {
@@ -312,7 +308,6 @@ app.controller("NewPagoController",
                                             $uibModalInstance.dismiss(pagoResponse);
                                         }, function (bussinessMessages) {
                                             $scope.bussinessMessages = bussinessMessages;
-                                            $log.log(bussinessMessages);
                                         });
 
                             });

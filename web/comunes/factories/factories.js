@@ -1,5 +1,5 @@
 var app = angular.module("app");
-app.factory("auth", function ($location, $log, localStorageService, usuarioRR, UrlOrigen)
+app.factory("auth", function ($location, $log, localStorageService, usuarioRR, UrlOrigen, baseUrl)
 {
     return{
         login: function ($scope, username, password, SweetAlert)
@@ -14,13 +14,12 @@ app.factory("auth", function ($location, $log, localStorageService, usuarioRR, U
 
                             //mandamos a la home
                             SweetAlert.swal("Bienvenido", "", "success");
-                            setTimeout("window.open('" + UrlOrigen + "', '_self', false);", 1000);
-                            $log.log(UrlOrigen);
+                            setTimeout("window.open('" + UrlOrigen + "', '_self', false);", 500);
                         } else {
                             SweetAlert.swal("Credenciales incorrectas", "Por favor, intente nuevamente.", "warning");
                         }
                     }, function (response) {
-                        SweetAlert.swal("Credenciales incorrectas", "Por favor, intente nuevamente.", "warning");
+                        SweetAlert.swal("Error en la validación", "Por favor, intente nuevamente.", "warning");
                     });
 
         },
@@ -31,13 +30,18 @@ app.factory("auth", function ($location, $log, localStorageService, usuarioRR, U
             localStorageService.set("rolUsuario", "");
             localStorageService.set("mostrar", true);
             //mandamos al login
-            $location.path("/login");
+            setTimeout("window.open('" + UrlOrigen + "/logout.jsp', '_self', false);", 500);
+            setTimeout("window.open('" + baseUrl + "/logout.jsp', '_self', false);", 0);
+//            $location.path("/login");
         },
         checkStatus: function ()
         {
             //creamos un array con las rutas que queremos controlar
             var rutasPrivadas = [""];
             var rutaLogin = ["/login"];
+//            localStorageService.set("usuario", "fsolis");
+//            localStorageService.set("rolUsuario", "PD01");
+//            localStorageService.set("mostrar", false);
             if (localStorageService.get("usuario") !== "") {
                 if (this.in_array($location.path(), rutasPrivadas))
                 {
@@ -45,11 +49,11 @@ app.factory("auth", function ($location, $log, localStorageService, usuarioRR, U
                 }
                 //en el caso de que intente acceder al login y ya haya iniciado sesión lo mandamos a la home
 
-                if (this.in_array($location.path(), rutaLogin) )
+                if (this.in_array($location.path(), rutaLogin))
                 {
                     $location.path("/");
                 }
-            }else{
+            } else {
                 $location.path("/login");
             }
 
