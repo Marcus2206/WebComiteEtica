@@ -24,36 +24,38 @@
                 </div>
             </div>
             <div class="row">
-                <div id="no-more-tables">
-                    <table class="col-md-12 table-bordered table-striped table-condensed cf" >
-                        <thead class="cf">
-                            <tr>
-                                <th></th>
-                                <th>Id Correspondencia</th>
-                                <th>Id Investigación</th>
-                                <th>Protocolo</th>
-                                <th>Titulo</th>
-                                <th>Tipo Servicio</th>
-                                <th>Costo</th>
-                                <th>Observación</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr ng-repeat="corespondenciaServicio in correspondenciaServicios| empezarDe : currentPage * pageSize | limitTo:pageSize | filter:txtFiltroServicio ">
-                                <td><checkbox ng-model="corespondenciaServicio.generar"></checkbox></td>
-                        <td data-title="Id Correspondencia">{{corespondenciaServicio.idCorrespondencia}}</td>
-                        <td data-title="Id Investigación">{{corespondenciaServicio.idInvestigacion}}</td>
-                        <td data-title="Protocolo">{{corespondenciaServicio.protocolo}}</td>
-                        <td data-title="Titulo">{{corespondenciaServicio.titulo}}</td>
-                        <td data-title="Tipo Servicio">{{corespondenciaServicio.nparamTipoServicio}}</td>
-                        <td data-title="Costo">{{corespondenciaServicio.costo}}</td>
-                        <td data-title="Observación">{{corespondenciaServicio.observacion}}</td>
-                        </tr>
-                        </tbody>
-                    </table>
+                <div class="col col-lg-12">
+                    <div class="search-table-outter wrapper">
+                        <div id="no-more-tables">
+                            <table class="col-md-12 table-bordered table-striped table-condensed cf" >
+                                <thead class="cf">
+                                    <tr>
+                                        <th></th>
+                                        <th>Id Correspondencia</th>
+                                        <th>Id Investigación</th>
+                                        <th>Protocolo</th>
+                                        <th>Titulo</th>
+                                        <th>Tipo Servicio</th>
+                                        <th>Costo</th>
+                                        <th>Observación</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="corespondenciaServicio in correspondenciaServicios| empezarDe : currentPage * pageSize | limitTo:pageSize | filter:txtFiltroServicio ">
+                                        <td><checkbox ng-model="corespondenciaServicio.generar"></checkbox></td>
+                                <td data-title="Id Correspondencia">{{corespondenciaServicio.idCorrespondencia}}</td>
+                                <td data-title="Id Investigación">{{corespondenciaServicio.idInvestigacion}}</td>
+                                <td data-title="Protocolo">{{corespondenciaServicio.protocolo}}</td>
+                                <td data-title="Titulo">{{corespondenciaServicio.titulo}}</td>
+                                <td data-title="Tipo Servicio">{{corespondenciaServicio.nparamTipoServicio}}</td>
+                                <td data-title="Costo">{{corespondenciaServicio.costo}}</td>
+                                <td data-title="Observación">{{corespondenciaServicio.observacion}}</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
-
-
             </div>
         </div>
     </div>

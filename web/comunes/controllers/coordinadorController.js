@@ -130,7 +130,7 @@ app.controller("ListCoordinadorController",
                     var modalInstance = $uibModal.open({
                         templateUrl: 'coordinador/coordinadorEdit.html',
                         controller: "NewCoordinadorController",
-                        size: 'sm',
+                        size: 'md',
                         backdrop: 'static',
                         keyboard: false
                     });

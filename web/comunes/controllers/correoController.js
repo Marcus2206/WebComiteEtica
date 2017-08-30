@@ -101,7 +101,7 @@ app.controller("ListCorreoController",
                     var modalInstance = $uibModal.open({
                         templateUrl: 'correo/correoEdit.html',
                         controller: "EditCorreoController",
-                        size: 'sm',
+                        size: 'md',
                         backdrop: 'static',
                         keyboard: false,
                         resolve: {
@@ -139,7 +139,7 @@ app.controller("ListCorreoController",
                     var modalInstance = $uibModal.open({
                         templateUrl: 'correo/correoEdit.html',
                         controller: "NewCorreoController",
-                        size: 'sm',
+                        size: 'md',
                         backdrop: 'static',
                         keyboard: false,
                         resolve: {
