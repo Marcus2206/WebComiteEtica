@@ -3,10 +3,10 @@ var app = angular.module("app");
 app.controller("EditCorrespondenciaController",
         ['$scope', 'correspondencia', 'parametros', 'correspondenciaRR',
             'correspondenciaFileRR', 'fileRR', 'fechaSesionRR',
-            "$log", "$uibModalInstance", 'SweetAlert', "$q", '$uibModal', 'correspondenciaServicioRR',"$rootScope",
+            "$log", "$uibModalInstance", 'SweetAlert', "$q", '$uibModal', 'correspondenciaServicioRR', "$rootScope",
             function ($scope, correspondencia, parametros, correspondenciaRR,
                     correspondenciaFileRR, fileRR, fechaSesionRR,
-                    $log, $uibModalInstance, SweetAlert, $q, $uibModal, correspondenciaServicioRR,$rootScope) {
+                    $log, $uibModalInstance, SweetAlert, $q, $uibModal, correspondenciaServicioRR, $rootScope) {
 
                 $scope.open1 = function () {
                     $scope.popup1.opened = true;
@@ -290,7 +290,7 @@ app.controller("ListCorrespondenciaController",
             function ($scope, correspondencias, idNotificacionParam, correspondenciaRR,
                     $log, $uibModal, SweetAlert, UrlOrigen, localStorageService) {
 
-             
+
                 if (idNotificacionParam !== "all") {
                     $scope.txtFiltroCorrespondencia = idNotificacionParam;
                 }
@@ -417,9 +417,9 @@ app.controller("ListCorrespondenciaController",
 
 app.controller("NewCorrespondenciaController",
         ['$scope', 'correspondenciaRR', 'fechaSesionRR',
-            'parametros', "$log", "$uibModalInstance", 'SweetAlert', '$uibModal',"$rootScope",
+            'parametros', "$log", "$uibModalInstance", 'SweetAlert', '$uibModal', "$rootScope",
             function ($scope, correspondenciaRR, fechaSesionRR,
-                    parametros, $log, $uibModalInstance, SweetAlert, $uibModal,$rootScope) {
+                    parametros, $log, $uibModalInstance, SweetAlert, $uibModal, $rootScope) {
 
                 $scope.open1 = function () {
                     $scope.popup1.opened = true;
@@ -586,6 +586,7 @@ function buscarRegistro($scope, $uibModal) {
                 if (data !== "escape key press") {
                     $scope.correspondencia.registro.idRegistro = data.idRegistro;
                     $scope.correspondencia.idRegistro = data.idRegistro;
+                    $scope.correspondencia.equivalenciaCorrelativo = data.equivalenciaCorrelativo;
                 }
             }
         } else {

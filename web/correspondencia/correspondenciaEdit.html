@@ -46,7 +46,12 @@
                         </p>
                     </div> 
                 </div>
-
+                <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                    <div class="form-group">
+                        <label for="equivalenciaCorrelativo">Correlativo Equiv.:  </label><br>
+                        <input type="text" class="form-control" id="equivalenciaCorrelativo"  placeholder="Correlativo equiv." ng-model="correspondencia.equivalenciaCorrelativo" value="{{correspondencia.equivalenciaCorrelativo|| '' }}">
+                    </div> 
+                </div>
                 <!--Inicio de Servicios-->
                 <div class="col">    
                     <button ng-disabled="deshabilitado" type="button" style="width: 100%;" class="btn btn-default" ng-click="isServicio = !isServicio">Servicios</button>

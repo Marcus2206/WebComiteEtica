@@ -143,6 +143,7 @@ app.controller("ListRegistroController",
 
                 /*Columnas para realizar el filtro*/
                 $scope.predicates = [{nombre: 'idRegistro', descripcion: 'Id. Registro'},
+                    {nombre: 'equivalenciaCorrelativo', descripcion: 'Equivalencia correlativo'},
                     {nombre: 'paramEstadoRegistro', descripcion: 'Estado Registro'},
                     {nombre: 'idInvestigacion', descripcion: 'Investigación'},
                     {nombre: 'idInvestigador', descripcion: 'Investigador'},
