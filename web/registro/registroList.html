@@ -34,6 +34,7 @@
                         <thead class="cf">
                             <tr>
                                 <th  st-sort="idRegistro">Id. Registro</th>
+                                <th  st-sort="equivalenciaCorrelativo">Equivalencia Correlativo</th>
                                 <th  st-sort="paramEstadoRegistro">Estado Registro</th>
                                 <th  st-sort="idInvestigacion">Investigación</th>
                                 <th  st-sort="idInvestigador">Investigador</th>
@@ -65,6 +66,7 @@
                             </tr>
                             <tr ng-repeat="registro in displayCollection| empezarDe : currentPage * pageSize | limitTo:pageSize ">
                                 <td data-title="Id. Registro">{{registro.idRegistro}}</td>
+                               <td data-title="Equivalencia Correlativo">{{registro.equivalenciaCorrelativo}}</td> 
                                 <td data-title="Estado Registro">{{registro.paramEstadoRegistro}}</td>
                                 <td data-title="Investigación">{{registro.idInvestigacion}}</td>
                                 <td data-title="Investigador">{{registro.idInvestigador}}</td>
