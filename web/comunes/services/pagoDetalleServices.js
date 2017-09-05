@@ -26,30 +26,30 @@ function PagoDetalleRR($http, $q, baseUrl, $log) {
         return defered.promise;
     };
 
-//    this.get = function (idRegistro) {
-//        var defered = $q.defer();
-//        $http.get(baseUrl + '/api/Pago/PagoRead/' + idRegistro)
-//                .then(function onSuccess(response) {
-//                    defered.resolve(response.data);
-//                })
-//                .catch(function onCatch(response) {
-//                    defered.reject(response.data);
-//                });
-//        return defered.promise;
-//    };
+    this.get = function (pagoDetalle) {
+        var defered = $q.defer();
+        $http.get(baseUrl + '/api/PagoDetalle/PagoDetalleRead/' + pagoDetalle.idPago+'/'+pagoDetalle.idPagoDetalle)
+                .then(function onSuccess(response) {
+                    defered.resolve(response.data);
+                })
+                .catch(function onCatch(response) {
+                    defered.reject(response.data);
+                });
+        return defered.promise;
+    };
 
-//    this.update = function (registro) {
-//        var defered = $q.defer();
-//        $http.put(baseUrl + '/api/Pago/PagoUpdate', registro)
-//                .then(function onSuccess(response) {
-//                    defered.resolve(response.data);
-//                })
-//                .catch(function onCatch(response) {
-//                    defered.reject(response.data);
-//                });
-//
-//        return defered.promise;
-//    };
+    this.update = function (pagoDetalle) {
+        var defered = $q.defer();
+        $http.put(baseUrl + '/api/PagoDetalle/PagoDetalleUpdate', pagoDetalle)
+                .then(function onSuccess(response) {
+                    defered.resolve(response.data);
+                })
+                .catch(function onCatch(response) {
+                    defered.reject(response.data);
+                });
+
+        return defered.promise;
+    };
 
     this.delete = function (pagoDetalle) {
         var defered = $q.defer();

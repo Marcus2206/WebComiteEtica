@@ -13,6 +13,7 @@ app.run(["$rootScope", 'auth', function ($rootScope, auth) {
             $('[data-toggle="tooltip"]').tooltip();
         });
 
+
     }]);
 
 function isEmptyJSON(s) {
@@ -22,5 +23,4 @@ function isEmptyJSON(s) {
     return true;
 }
 
-//al cambiar de rutas
    

@@ -7,14 +7,22 @@ app.factory("auth", function ($location, $log, localStorageService, usuarioRR, U
             //creamos la cookie con el nombre que nos han pasado
             usuarioRR.getUser(username, password)
                     .then(function (response) {
-                        if (response.length !== 0) {
-                            localStorageService.set("usuario", username);
-                            localStorageService.set("rolUsuario", response[0].perfil);
-                            localStorageService.set("mostrar", false);
+                        $log.log("----------------------------------------->>>>>");
+                        $log.log(typeof (response));
+                        $log.log(response);
 
-                            //mandamos a la home
-                            SweetAlert.swal("Bienvenido", "", "success");
-                            setTimeout("window.open('" + UrlOrigen + "', '_self', false);", 500);
+                        if (response.length !== 0) {
+                            if (typeof (response) !== 'string') {
+                                localStorageService.set("usuario", username);
+                                localStorageService.set("rolUsuario", response[0].perfil);
+                                localStorageService.set("mostrar", false);
+
+                                //mandamos a la home
+                                SweetAlert.swal("Bienvenido", "", "success");
+                            setTimeout("window.open('" + UrlOrigen + "', '_self', false);", 750);
+                            } else {
+                                SweetAlert.swal("Credenciales incorrectas", "Por favor, intente nuevamente.", "warning");
+                            }
                         } else {
                             SweetAlert.swal("Credenciales incorrectas", "Por favor, intente nuevamente.", "warning");
                         }

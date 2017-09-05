@@ -50,7 +50,7 @@
                         <p class="input-group">
                             <input type="text" class="form-control" id="contador"  readonly placeholder="Contador" ng-model="pago.contador" value="{{ pago.contador || '' }}">
                             <span class="input-group-btn">
-                                <button type="button" class="btn btn-default" ng-click="enviarMail()" data-toggle="tooltip" title="Enviar Correo">
+                                <button type="button" class="btn btn-default" ng-click="enviarMailConta()" data-toggle="tooltip" title="Enviar Correo">
                                     <i class="glyphicon glyphicon-forward"></i>
                                 </button>
                             </span>
@@ -59,6 +59,21 @@
                 </div>
             </div>
 
+            <div class="row">
+                <div class="col col-xs-12 col-md-12">
+                    <div class="form-group">
+                        <label for="copiaCorreo" data-toggle="tooltip" title="Para ingresar varios correos, por favor, separárlos con ;">Enviar copia a participantes: </label><br>
+                        <p class="input-group">
+                            <input type="text" class="form-control" id="copiaCorreo"  placeholder="Copia a..." ng-model="pago.copiaCorreo" value="{{ pago.copiaCorreo || '' }}">
+                            <span class="input-group-btn">
+                                <button type="button" class="btn btn-default" ng-click="enviarMailCopia()" data-toggle="tooltip" title="Enviar Copia">
+                                    <i class="glyphicon glyphicon-forward"></i>
+                                </button>
+                            </span>
+                        </p>
+                    </div>
+                </div>
+            </div>
             <div class="row">
                 <!--Inicio de Servicios-->
                 <div class="col-md-12">    
@@ -77,8 +92,11 @@
                                         <td>
                                             <div>
                                                 <div>
-                                                    <button type="button" class="close" aria-label="Close" ng-click="eliminarDetalle(pagoDetalle)">
+                                                    <button type="button" class="close" data-toggle="tooltip" title="Eliminar" ng-click="eliminarDetalle(pagoDetalle)">
                                                         <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                    <button type="button" class="close" data-toggle="tooltip" title="Editar" ng-click="editarDetalle(pagoDetalle)">
+                                                        <span aria-hidden="true">&#9998;</span>
                                                     </button>
                                                 </div>
                                                 <div>
@@ -87,6 +105,22 @@
                                             </div>
                                         </td>
                                     </tr>
+
+                                    <!--                                    <tr ng-repeat="pagoDetalle in pagoDetalles| orderBy:'idPagoDetalle'">
+                                                                            <td>
+                                                                                <div>
+                                                                                    <div>
+                                                                                        <button type="button" class="close" aria-label="Close" ng-click="eliminarDetalle(pagoDetalle)">
+                                                                                            <span aria-hidden="true">&times;</span>
+                                                                                        </button>
+                                                                                    </div>
+                                                                                    <div>
+                                                                                        {{pagoDetalle.nparamTipoServicio}} - {{pagoDetalle.protocolo}} - {{pagoDetalle.titulo}}
+                                                                                    </div>
+                                                                                </div>
+                                                                            </td>
+                                                                        </tr>-->
+
                                 </tbody>
                             </table>
                         </div>
@@ -111,40 +145,40 @@
 </div>
 
 <script type="text/javascript">
-            $('.form_datetime').datetimepicker({
-                language: 'es',
-                weekStart: 1,
-                todayBtn: 1,
-                autoclose: 1,
-                todayHighlight: 1,
-                startView: 2,
-                forceParse: 0,
-                showMeridian: 1
-            });
-            $('.form_date').datetimepicker({
-                language: 'es',
-                setDate: new Date(),
-                weekStart: 1,
-                todayBtn: 1,
-                autoclose: 1,
-                todayHighlight: 1,
-                startView: 2,
-                minView: 2,
-                forceParse: 0
-            });
-            $('.form_time').datetimepicker({
-                language: 'es',
-                weekStart: 1,
-                todayBtn: 1,
-                autoclose: 1,
-                todayHighlight: 1,
-                startView: 1,
-                minView: 0,
-                maxView: 1,
-                forceParse: 0
-            });
+    $('.form_datetime').datetimepicker({
+        language: 'es',
+        weekStart: 1,
+        todayBtn: 1,
+        autoclose: 1,
+        todayHighlight: 1,
+        startView: 2,
+        forceParse: 0,
+        showMeridian: 1
+    });
+    $('.form_date').datetimepicker({
+        language: 'es',
+        setDate: new Date(),
+        weekStart: 1,
+        todayBtn: 1,
+        autoclose: 1,
+        todayHighlight: 1,
+        startView: 2,
+        minView: 2,
+        forceParse: 0
+    });
+    $('.form_time').datetimepicker({
+        language: 'es',
+        weekStart: 1,
+        todayBtn: 1,
+        autoclose: 1,
+        todayHighlight: 1,
+        startView: 1,
+        minView: 0,
+        maxView: 1,
+        forceParse: 0
+    });
 
-            $(document).ready(function () {
-                $('[data-toggle="tooltip"]').tooltip();
-            });
+    $(document).ready(function () {
+        $('[data-toggle="tooltip"]').tooltip();
+    });
 </script>

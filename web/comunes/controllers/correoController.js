@@ -53,6 +53,20 @@ app.controller("ListCorreoController",
                     $uibModal, SweetAlert) {
                 /*Se obtiene lista de coordinadores*/
                 $scope.correos = correos;
+
+                /*Columnas para realizar el filtro*/
+                $scope.predicates = [{nombre: 'idCorreo', descripcion: 'Id. Correo'},
+                    {nombre: 'apePaterno', descripcion: 'Ape. Paterno'},
+                    {nombre: 'apeMaterno', descripcion: 'Ape. Materno'},
+                    {nombre: 'nombres', descripcion: 'Nombres'},
+                    {nombre: 'paramAreaTrabajo', descripcion: 'Area de Trabajo'},
+                    {nombre: 'correo', descripcion: 'Correo'},
+                {nombre: 'estado', descripcion: 'Activo'}];
+
+                $scope.displayCollection = [].concat($scope.correos);
+                /*Campo seleccionado*/
+                $scope.selectedPredicate = $scope.predicates[0].nombre;
+                
                 /*Se setea la cantidad filas por vista*/
                 $scope.currentPage = 0;
                 $scope.pageSize = 20;
@@ -98,12 +112,14 @@ app.controller("ListCorreoController",
 
                 /*Editar un registro*/
                 $scope.editarModal = function (correoObj) {
+                    $scope.correoObj=correoObj;
                     var modalInstance = $uibModal.open({
                         templateUrl: 'correo/correoEdit.html',
                         controller: "EditCorreoController",
-                        size: 'sm',
+                        size: 'md',
                         backdrop: 'static',
                         keyboard: false,
+                        scope:$scope,
                         resolve: {
                             correo: function () {
                                 return correoRR.get(correoObj.idCorreo);
@@ -122,10 +138,6 @@ app.controller("ListCorreoController",
                             if (data !== "backdrop click") {
                                 if (data !== "escape key press") {
                                     //Si no es cancel, se reemplaza el objeto que se mandó a actualizar
-                                    var index = $scope.correos.indexOf(correoObj);
-                                    if (index !== -1) {
-                                        $scope.correos[index] = data;
-                                    }
                                 }
                             }
                         } else {
@@ -139,7 +151,7 @@ app.controller("ListCorreoController",
                     var modalInstance = $uibModal.open({
                         templateUrl: 'correo/correoEdit.html',
                         controller: "NewCorreoController",
-                        size: 'sm',
+                        size: 'md',
                         backdrop: 'static',
                         keyboard: false,
                         resolve: {
@@ -157,6 +169,7 @@ app.controller("ListCorreoController",
                             if (data !== "backdrop click") {
                                 if (data !== "escape key press") {
                                     $scope.correos.push(data);
+                                    $scope.editarModal(data);
                                 }
                             }
                         } else {
@@ -196,7 +209,16 @@ app.controller("EditCorreoController",
                                 var selText = listbox.options[selIndex].text;
                                 correoResult.paramAreaTrabajo = selText;
 
-                                $uibModalInstance.dismiss(correoResult);
+                                var index = $scope.correos.indexOf($scope.correoObj);
+                                if (index !== -1) {
+                                    /*Conserva el valor del identificador HashKey del array inicial, sólo se actualzian los valores.*/
+                                    angular.forEach(correoResult, function (value, key) {
+                                        if (key !== '$$hashKey') {
+                                            $scope.correos[index][key] = value;
+                                        }
+                                    });
+                                }
+
                                 SweetAlert.swal("Hecho!", "Registro guardado exitosamente.", "success");
                             }, function (bussinessMessages) {
                                 SweetAlert.swal("Hubo un error!", "Intente nuevamente o comuniquese con el administrador.", "warning");

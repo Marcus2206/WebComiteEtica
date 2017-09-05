@@ -6,59 +6,65 @@
     <div class="modal-body">
         <div class="container-fluid">
             <div class="row">
-                <div class="col">
+                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
                     <div class="form-group">
                         <label for="idCorreo">Id. Correo: </label><br>
                         <input readonly type="text" class="form-control" id="idUsuario"  placeholder="Id. Correo" ng-model="correo.idCorreo" value="{{ correo.idCorreo || '' }}">
                     </div> 
                 </div>
-                <div class="col">
+                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
                     <div class="form-group">
                         <label for="apePaterno">Ape. Paterno: </label><br>
                         <input type="text" class="form-control" id="apePaterno"  placeholder="Apellido Paterno" ng-model="correo.apePaterno" value="{{ correo.apePaterno || '' }}">
                     </div>
                 </div>
-                <div class="col">
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
                     <div class="form-group">
                         <label for="apeMaterno">Ape. Materno: </label><br>
                         <input type="text" class="form-control" id="apeMaterno"  placeholder="Apellido Materno" ng-model="correo.apeMaterno" value="{{ correo.apeMaterno || '' }}">
                     </div>
                 </div>
-                <div class="col">
+                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
                     <div class="form-group">
                         <label for="apePaterno">Nombres:  </label><br>
                         <input type="text" class="form-control" id="usuario"  placeholder="Nombres" ng-model="correo.nombres" value="{{ correo.nombres || '' }}">
                     </div>
                 </div>
-                <div class="col">
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                     <div class="form-group">
                         <label for="correo">Correo:  </label><br>
                         <input type="email" class="form-control" id="correo"  placeholder="Correo" ng-model="correo.correo" value="{{ correo.correo || '' }}">
                     </div>
                 </div>
-
-                <div class="col">
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
                     <div class="form-group">
                         <label for="paramAreaTrabajo">Área de Trabajo:  </label><br>
                         <select id="paramAreaTrabajo" class="form-control" theme="bootstrap" ng-model="correo.paramAreaTrabajo">
-                            <option ng-repeat="pd in paramAreaTrabajo | orderBy : 'descripcion'" value="{{pd.id.idParametroDetalle}}">{{pd.descripcion}}</option>
+                            <option ng-repeat="pd in paramAreaTrabajo| orderBy : 'descripcion'" value="{{pd.id.idParametroDetalle}}">{{pd.descripcion}}</option>
                         </select>
                     </div>
                 </div>     
-
-                <div class="form-group">
-                    <label for="estado">Estado:  </label>
-                    <checkbox id="estado" ng-model="correo.estado"></checkbox>
+                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                    <div class="form-group">
+                        <label for="estado">Estado:  </label><br>
+                        <checkbox id="estado" ng-model="correo.estado"></checkbox>
+                    </div>
                 </div>
-
             </div>
         </div>
-        <div class="modal-footer">
-            <button type="submit" class="btn btn-primary" ng-click="guardar()">
-                Guardar
-            </button>
-            <button type="button" class="btn btn-default" ng-click="cerrar()">
-                Volver
-            </button>
-        </div>
     </div>
+    <div class="modal-footer">
+        <button type="submit" class="btn btn-primary" ng-click="guardar()">
+            Guardar
+        </button>
+        <button type="button" class="btn btn-default" ng-click="cerrar()">
+            Volver
+        </button>
+    </div>
+</div>

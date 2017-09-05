@@ -1,4 +1,4 @@
-<div class="modal-content">
+<div class="modal-content" st-table="displayCollection"  st-safe-src="registros">
     <div class="modal-header">
         <button type="button" class="close" ng-click="cerrar()">&times;</button>
         <h4 class="modal-title" id="myModalLabel">Buscar Registro</h4>
@@ -6,29 +6,74 @@
     <div class="modal-body">
         <div class="container-fluid">
             <div class="row">
-                <div class="col">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                     <div class="form-group">
-                        <label>Registro de Investigación: {{registro.selected.idInvestigacion}}</label><br>
-                        <ui-select ng-model="registro.selected" theme="selectize" title="Seleccionar registro">
-                            <ui-select-match placeholder="Seleccinar registro">{{$select.selected.idInvestigacion}}</ui-select-match>
-                            <ui-select-choices repeat="reg in registros | filter: $select.search">
-                                <div ng-bind-html="reg.idInvestigacion | highlight: $select.search"></div>
-                                <small ng-bind-html="reg.idSede | highlight: $select.search"></small>
-                                <small ng-bind-html="reg.idInvestigador | highlight: $select.search"></small>
-                                <small ng-bind-html="reg.idDistrito | highlight: $select.search"></small>
-                                <small ng-bind-html="reg.equivalenciaCorrelativo | highlight: $select.search"></small>
-                            </ui-select-choices>
-                        </ui-select>
+                        <label for="buscaGlobal">Búsqueda global:</label>
+                        <input type="text" st-search type="search"  class="form-control" id="buscaGlobal"  placeholder="Búsqueda global">
+                        <br>
                     </div>
                 </div>
             </div>
+            <div class="row">
+                <div class="col col-lg-12">
+                    <table class="table table-striped table-bordered table-condensed"  >
+                        <thead>
+                            <tr>
+                                <th>Registro</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!--                            <tr ng-repeat="registro in displayCollection | empezarDe : currentPage * pageSize | limitTo:pageSize">-->
+                            <tr ng-repeat="registro in displayCollection">
+                                <td>
+                                    <div>
+                                        <div>
+                                            <button type="button" class="close" data-toggle="tooltip" title="Enviar" ng-click="enviar(registro)">
+                                                <span aria-hidden="true">&#10132;</span>
+                                            </button>
+                                        </div>
+                                        <div style="font-size: smaller;">
+                                            <b>Investigación:</b> {{registro.idInvestigacion}}<br>
+                                            <b>Sede:</b>{{registro.idSede}}<br>
+                                            <b>Investigador</b> {{registro.idInvestigador}}<br>
+                                            <b>Distrito</b>{{registro.idDistrito}}<br>
+                                            <b>Correlativo Interno</b> {{registro.equivalenciaCorrelativo}}<br>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="1" class="text-center">
+                                    <div st-pagination="" st-items-by-page="itemsByPage" st-displayed-pages="7"></div>
+                                </td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+            <!--            <div class="row">
+                            <div class="col-md-12">
+                                <div class="container">
+                                <div class="center-block" style="text-align: center">
+                                    <button ng-disabled="currentPage === 0" ng-click="currentPage = currentPage - 1" class="btn btn-default">
+                                        <span aria-hidden="true">&laquo;</span>
+                                    </button>
+                                    {{currentPage + 1}}/{{numberOfPages()}}
+                                    <button ng-disabled="currentPage >= registros.length / pageSize - 1" ng-click="setNextPagina()" class="btn btn-default">
+                                        <span aria-hidden="true">&raquo;</span>
+                                    </button>
+                                </div>
+                                </div>
+                            </div>
+                        </div>-->
         </div>
-        <br>
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-default" ng-click="enviar()">
-            Enviar
-        </button>
+        <!--        <button type="button" class="btn btn-default" ng-click="enviar()">
+                    Enviar
+                </button>-->
         <button type="button" class="btn btn-default" ng-click="cerrar()">
             Cancelar
         </button>

@@ -1,53 +1,75 @@
 
-<div class="container">
+<div class="container"  st-table="displayCollection" st-safe-src="usuarios" >
     <div class="row">
-        <div class="container-fluid">
+        <div class="col col-md-12">
             <h1 style='text-align: center'><b>Lista de Usuarios</b></h1>
+            <hr>
         </div>
-        <br>
-        <br>
-        <br>
     </div>
     <div class="row">
-        <div class="container-fluid">
-            <input type="text" ng-model="txtFiltroUsuario" class="form-control" placeholder="Buscar">
-            <br>
-            <button class="btn btn-primary col-xs-12 col-sm-2" ng-click="insertarModal()">
+        <div class="col col-md-12">
+            <button class="btn btn-primary" ng-click="insertarModal()">
                 <i class="fa fa-plus-circle" aria-hidden="true"></i>
-                 Usuario
+                Usuario
             </button>
+            <hr>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+            <form>
+                <label for="buscaGlobal">Búsqueda global:</label>
+                <input type="text" st-search type="search"  class="form-control" id="buscaGlobal"  placeholder="Búsqueda global">
+            </form>
+            <br>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+            <form>
+                <label for="predicate">Seleccionar campo a buscar:</label>
+                <select class="form-control" id="predicate" ng-model="selectedPredicate">
+                    <option ng-repeat="pd in predicates" value="{{pd.nombre}}">{{pd.descripcion}}</option>
+                </select>
+            </form>
+        </div>
+        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+            <form>
+                <label for="buscaCampo">&nbsp;</label>
+                <input type="text" st-search="{{selectedPredicate}}" class="form-control" id="buscaCampo"  placeholder="Búsqueda campo">
+            </form>
         </div>
     </div>
     <br>
     <div class="row">
-        <div id="no-more-tables">
-            <table class="col-sm-12 table-bordered table-striped table-condensed cf" >
-                <thead class="cf">
-                    <tr>
-                        <th>Id. Usuario</th>
-                        <th>Usuario</th>
-                        <th>Perfil</th>
-                        <th>Ape. Paterno</th>
-                        <th>Ape. Materno</th>
-                        <th>Nombres</th>
-                        <th>Acción</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr ng-repeat="usuario in usuarios| empezarDe : currentPage * pageSize | limitTo:pageSize | filter:txtFiltroSede ">
-                        <td data-title="Código">{{usuario.idUsuario}}</td>
-                        <td data-title="Nombre">{{usuario.usuario}}</td>
-                        <td data-title="Dorección">{{usuario.perfil}}</td>
-                        <td data-title="Departamento">{{usuario.idDepartamento}}</td>
-                        <td data-title="Provincia">{{usuario.idProvincia}}</td>
-                        <td data-title="Distrito">{{usuario.idDistrito}}</td>
-                        <td>
-                            <button class="btn btn-primary" ng-click="editarModal(usuario)"><i class="fa fa-pencil-square-o" aria-hidden="true"></i><span class="hidden-xs"> Editar</span></button>
-                            <button class="btn btn-danger" ng-click="eliminar(usuario)" ><i class="fa fa-trash" aria-hidden="true"></i><span class="hidden-xs"> Eliminar</span></button>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+        <div class="col col-lg-12">
+            <div class="search-table-outter wrapper">
+                <div id="no-more-tables">
+                    <table class="col-sm-12 table-bordered table-striped table-condensed cf" >
+                        <thead class="cf">
+                            <tr>
+                                <th st-sort="idUsuario">Código</th>
+                                <th st-sort="usuario">Usuario</th>
+                                <th st-sort="perfil">Perfil</th>
+                                <th st-sort="estado">Estado</th>
+                                <th>Acción</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="usuario in displayCollection| empezarDe : currentPage * pageSize | limitTo:pageSize">
+                                <td data-title="Código">{{usuario.idUsuario}}</td>
+                                <td data-title="Usuario">{{usuario.usuario}}</td>
+                                <td data-title="Perfil">{{usuario.perfil}}</td>
+                                <td data-title="Estado">{{usuario.estado}}</td>
+                                <td>
+                                    <button class="btn btn-primary" ng-click="editarModal(usuario)"><i class="fa fa-pencil-square-o" aria-hidden="true"></i><span class="hidden-xs"> Editar</span></button>
+                                    <button class="btn btn-danger" ng-click="eliminar(usuario)" ><i class="fa fa-trash" aria-hidden="true"></i><span class="hidden-xs"> Eliminar</span></button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
     <!-- paginacion -->

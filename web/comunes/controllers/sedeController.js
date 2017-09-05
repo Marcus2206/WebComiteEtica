@@ -101,7 +101,7 @@ app.controller("ListSedeController",
                 $scope.sedes = sedes;
 
                 /*Columnas para realizar el filtro*/
-                $scope.predicates = [{nombre: 'idSede', descripcion: 'Id. Cro'},
+                $scope.predicates = [{nombre: 'idSede', descripcion: 'Id. Sede'},
                     {nombre: 'nombre', descripcion: 'Nombre'},
                     {nombre: 'direccion', descripcion: 'Dirección'},
                     {nombre: 'idDepartamento', descripcion: 'Departamento'},

@@ -34,6 +34,21 @@ app.controller("NewUsuarioController",
                                     var selIndex = listbox.selectedIndex;
                                     var selText = listbox.options[selIndex].text;
                                     usuarioResult.perfil = selText;
+
+                                    if (typeof (usuarioResult.estado) === 'boolean') {
+                                        if (!usuarioResult.estado) {
+                                            usuarioResult.estado = 'Inactivo';
+                                        } else {
+                                            usuarioResult.estado = 'Activo';
+                                        }
+                                    } else if (typeof (usuarioResult.estado) === 'string') {
+                                        if (usuarioResult.estado === '0') {
+                                            usuarioResult.estado = 'Inactivo';
+                                        } else {
+                                            usuarioResult.estado = 'Activo';
+                                        }
+                                    }
+
                                     $uibModalInstance.dismiss(usuarioResult);
                                     SweetAlert.swal("Hecho", "Registro guardado exitosamente.", "success");
                                 } else {
@@ -62,6 +77,18 @@ app.controller("ListUsuarioController",
                     $uibModal, SweetAlert) {
                 /*Se obtiene lista de coordinadores*/
                 $scope.usuarios = usuarios;
+
+                /*Columnas para realizar el filtro*/
+                $scope.predicates = [{nombre: 'idUsuario', descripcion: 'Código'},
+                    {nombre: 'usuario', descripcion: 'Usuario'},
+                    {nombre: 'perfil', descripcion: 'Perfil'},
+                    {nombre: 'estado', descripcion: 'Estado'}];
+
+                $scope.displayCollection = [].concat($scope.usuarios);
+                /*Campo seleccionado*/
+                $scope.selectedPredicate = $scope.predicates[0].nombre;
+
+
                 /*Se setea la cantidad filas por vista*/
                 $scope.currentPage = 0;
                 $scope.pageSize = 20;
@@ -107,12 +134,14 @@ app.controller("ListUsuarioController",
 
                 /*Editar un registro*/
                 $scope.editarModal = function (usuarioObj) {
+                    $scope.usuarioObj = usuarioObj;
                     var modalInstance = $uibModal.open({
                         templateUrl: 'usuario/usuarioEdit.html',
                         controller: "EditUsuarioController",
                         size: 'md',
                         backdrop: 'static',
                         keyboard: false,
+                        scope: $scope,
                         resolve: {
                             usuario: function () {
                                 return usuarioRR.get(usuarioObj.idUsuario);
@@ -131,10 +160,6 @@ app.controller("ListUsuarioController",
                             if (data !== "backdrop click") {
                                 if (data !== "escape key press") {
                                     //Si no es cancel, se reemplaza el objeto que se mandó a actualizar
-                                    var index = $scope.usuarios.indexOf(usuarioObj);
-                                    if (index !== -1) {
-                                        $scope.usuarios[index] = data;
-                                    }
                                 }
                             }
                         } else {
@@ -167,6 +192,7 @@ app.controller("ListUsuarioController",
                                 if (data !== "escape key press") {
                                     /*añade a la lista sin recargar la página*/
                                     $scope.usuarios.push(data);
+                                    $scope.editarModal(data);
                                 }
                             }
                         } else {
@@ -208,8 +234,28 @@ app.controller("EditUsuarioController",
                                 var selIndex = listbox.selectedIndex;
                                 var selText = listbox.options[selIndex].text;
                                 usuarioResult.perfil = selText;
-
-                                $uibModalInstance.dismiss(usuarioResult);
+                                if (typeof (usuarioResult.estado) === 'boolean') {
+                                    if (!usuarioResult.estado) {
+                                        usuarioResult.estado = 'Inactivo';
+                                    } else {
+                                        usuarioResult.estado = 'Activo';
+                                    }
+                                } else if (typeof (usuarioResult.estado) === 'string') {
+                                    if (usuarioResult.estado === '0') {
+                                        usuarioResult.estado = 'Inactivo';
+                                    } else {
+                                        usuarioResult.estado = 'Activo';
+                                    }
+                                }
+                                var index = $scope.usuarios.indexOf($scope.usuarioObj);
+                                if (index !== -1) {
+                                    /*Conserva el valor del identificador HashKey del array inicial, sólo se actualzian los valores.*/
+                                    angular.forEach(usuarioResult, function (value, key) {
+                                        if (key !== '$$hashKey') {
+                                            $scope.usuarios[index][key] = value;
+                                        }
+                                    });
+                                }
                                 SweetAlert.swal("Hecho!", "Registro guardado exitosamente.", "success");
                             }, function (bussinessMessages) {
                                 SweetAlert.swal("Hubo un error!", "Intente nuevamente o comuniquese con el administrador.", "warning");

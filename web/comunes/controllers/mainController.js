@@ -120,7 +120,7 @@ app.controller("MainController",
                     var sequence = $q.defer();
                     sequence.resolve();
                     sequence = sequence.promise;
-                    
+
                     var links = [
                         {
                             link: UrlOrigen + '/j_security_check?j_username=' + $scope.autenticar.usuario + '&j_password=' + $scope.autenticar.password
@@ -135,17 +135,23 @@ app.controller("MainController",
 
                     var wnd = window.open(links[0].link);
                     setTimeout(function () {
+//                        wnd.onload = function () {
+//                            wnd.close();
+//                        };
                         wnd.close();
-                    }, 0);
+                    }, 250);
 
                     var wnd1 = window.open(links[1].link);
                     setTimeout(function () {
+//                        wnd1.onload = function () {
+//                             wnd1.close();
+//                        };
                         wnd1.close();
-                    }, 400);
+                    }, 500);
 
                     setTimeout(function () {
                         auth.login($scope, $scope.autenticar.usuario, $scope.autenticar.password, SweetAlert);
-                    }, 800);
+                    }, 750);
                 };
 
 

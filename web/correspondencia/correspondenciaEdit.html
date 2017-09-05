@@ -6,13 +6,13 @@
     <div class="modal-body">
         <div class="container-fluid">
             <div class="row">
-                <div class="col">
+                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
                     <div class="form-group">
                         <label for="idCorrespondencia">Id. Correspondencia:  </label><br>
                         <input readonly type="text" class="form-control" id="idCorrespondencia"  placeholder="Id. correspondencia" ng-model="correspondencia.idCorrespondencia" value="{{ correspondencia.idCorrespondencia || '' }}">
                     </div> 
                 </div>
-                <div class="col">
+                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
                     <div class="form-group">
                         <label for="fechaCorrespondencia" class="control-label">Fecha correspondencia: </label><br>
                         <p class="input-group">
@@ -23,7 +23,9 @@
                         </p>
                     </div>
                 </div>
-                <div class="col">
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                     <div class="form-group">
                         <label for="fechaCarta" class="control-label">Fecha carta: </label><br>
                         <p class="input-group">
@@ -34,8 +36,9 @@
                         </p>
                     </div>
                 </div>
-
-                <div class="col">
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
                     <div class="form-group">
                         <label for="registro">Registro:  </label><br>
                         <p class="input-group">
@@ -46,14 +49,16 @@
                         </p>
                     </div> 
                 </div>
-                <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
                     <div class="form-group">
                         <label for="equivalenciaCorrelativo">Correlativo Equiv.:  </label><br>
-                        <input type="text" class="form-control" id="equivalenciaCorrelativo"  placeholder="Correlativo equiv." ng-model="correspondencia.equivalenciaCorrelativo" value="{{correspondencia.equivalenciaCorrelativo|| '' }}">
+                        <input type="text" readonly class="form-control" id="equivalenciaCorrelativo"  placeholder="Correlativo equiv." ng-model="correspondencia.equivalenciaCorrelativo" value="{{correspondencia.equivalenciaCorrelativo|| '' }}">
                     </div> 
                 </div>
+            </div>
+            <div class="row">
                 <!--Inicio de Servicios-->
-                <div class="col">    
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">    
                     <button ng-disabled="deshabilitado" type="button" style="width: 100%;" class="btn btn-default" ng-click="isServicio = !isServicio">Servicios</button>
                     <hr>
                     <div uib-collapse="isServicio">
@@ -67,7 +72,7 @@
                                         {{servicio.descripcion}}
                                     </editable-ui-select-choices>
                                 </div> <br>
-                               <input ng-show="uiSelectFormServicio.$visible"  type="text" class="form-control"  placeholder="Observación" ng-model="observacionSelect" value="{{observacionSelect|| '' }}">
+                                <input ng-show="uiSelectFormServicio.$visible"  type="text" class="form-control"  placeholder="Observación" ng-model="observacionSelect" value="{{observacionSelect|| '' }}">
                                 <div class="buttons">
                                     <button type="button" class="btn btn-default" ng-click="uiSelectFormServicio.$show()" ng-show="!uiSelectFormServicio.$visible">
                                         Agregar
@@ -110,25 +115,23 @@
                         </div>
                     </div>
                 </div>    
-
-
-
-                <div class="col">
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6"  >
                     <div class="form-group">
-                        <label for="paramDistribucion">Distribución:  </label><br>
-                        <select id="paramDistribucion" class="form-control" ng-model="correspondencia.paramDistribucion">
+                        <label for="paramDistribucion">Distribucion  </label><br>
+                        <select id="paramDistribucion" class="form-control" ng-model="correspondencia.paramDistribucion" ng-change="setTipoDistribucion()">
                             <option ng-repeat="pd in paramDistribucion" value="{{pd.id.idParametroDetalle}}">{{pd.descripcion}}</option>
                         </select>
                     </div>
                 </div>
-                <div class="col">
+                 <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6"  ng-show="correspondencia.paramDistribucion === 'PD02' || correspondencia.paramDistribucion === 'PD03'">
                     <div class="form-group">
-                        <label for="otro">Comentarios:  </label><br>
-                        <input type="text" class="form-control" id="otro"  placeholder="Comentarios" ng-model="correspondencia.otro" value="{{ correspondencia.otro || '' }}">
-                    </div> 
+                        <label for="">  </label><br>
+                           <button class="btn btn-default" >Generar Carta</button>
+                    </div>
                 </div>
-
-                <div class="col">
+                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6" ng-show="correspondencia.paramDistribucion === 'PD04'">
                     <div class="form-group">
                         <label for="fechasSesion">Fecha de Sesión - Anual  </label><br>
                         <select class="form-control" id="fechasSesion" ng-model="fechasSesion" ng-change="setFechaSesion()">
@@ -136,45 +139,65 @@
                         </select>
                     </div>
                 </div>
-
-                <div class="col">
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6"  ng-show="correspondencia.paramDistribucion === 'PD04'">
                     <div class="form-group">
-                        <label for="fechaSesion">Fecha Sesión:  </label><br>
-                        <input type="text" class="form-control" id="fechaSesion" placeholder="Fecha sesión" ng-model="correspondencia.fechaSesion" value="{{ correspondencia.fechaSesion}}">
+                        <label for="fechaSesion" class="control-label">Fecha sesión: </label><br>
+                        <p class="input-group">
+                            <input type="text" id="fechaSesion" class="form-control" uib-datepicker-popup="dd/MM/yyyy" ng-model="correspondencia.fechaSesion" is-open="popup3.opened" datepicker-options="dateOptions" ng-required="true" show-button-bar="false" readonly />
+                            <span class="input-group-btn">
+                                <button type="button" class="btn btn-default" ng-click="open3()"><i class="glyphicon glyphicon-calendar"></i></button>
+                            </span>
+                        </p>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+                    <div class="form-group">
+                        <label for="enviarCorreo">Enviar correo:  </label>
+                        <checkbox id="enviarCorreo" ng-model="correspondencia.enviarCorreo"></checkbox>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+                    <div class="form-group">
+                        <label for="enviado">Correo enviado:  </label>
+                        <checkbox id="enviado" ng-model="correspondencia.enviado" ng-disabled="true"></checkbox>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <div class="form-group">
+                        <label for="otro">Comentarios:  </label><br>
+                        <input type="text" class="form-control" id="otro"  placeholder="Comentarios" ng-model="correspondencia.otro" value="{{ correspondencia.otro || '' }}">
                     </div> 
                 </div>
-                <div class="form-group">
-                    <label for="enviarCorreo">Enviar correo:  </label>
-                    <checkbox id="enviarCorreo" ng-model="correspondencia.enviarCorreo"></checkbox>
-                </div>
-                <div class="form-group">
-                    <label for="enviado">Correo enviado:  </label>
-                    <checkbox id="enviado" ng-model="correspondencia.enviado" ng-disabled="true"></checkbox>
-                </div>
+            </div>
+            <div class="row">
                 <!--Archivos adjuntos-->
-                <div class="col">    
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">    
                     <button ng-disabled="deshabilitado" type="button" style="width: 100%;" class="btn btn-default" ng-click="isCorrespondenciaFile = !isCorrespondenciaFile">Archivos adjuntos</button>
                     <hr>
                     <div uib-collapse="isCorrespondenciaFile">
 
-                        <label for="cargarArchivo" class="btn btn-file">Seleccione Archivos</label>
+                        <label for="cargarArchivo" style="width: 100%;" class="btn btn-default">Seleccione Archivos</label>
                         <input type = "file" id="cargarArchivo" style="display: none" file-model = "myFile" multiple />
 
-                        <div id="no-more-tables" ng-show="myFile.length > 0">
-                            <table class="table-bordered table-striped table-condensed cf">
+                        <div id="no-more-tables" ng-show="myFile.length > 0" style="width: 100%;">
+                            <table class="table-bordered table-striped table-condensed cf" style="width: 100%;">
                                 <thead class="cf"> 
                                     <tr>
-                                        <td>Nombre de Archivo</td>
-                                        <td>Estado</td>
-                                        <td></td>
+                                        <td class="col-sm-6">Nombre de Archivo</td>
+                                        <td class="col-sm-3">Estado</td>
+                                        <td class="col-sm-3"></td>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr ng-repeat="file in myFile">
-                                        <td data-title="Nombre" style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">
+                                        <td data-title="Nombre"  style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">
                                             {{file.name}}
                                         </td>
-                                        <td class="col-sm-3" data-title="Estado">
+                                        <td  data-title="Estado">
                                 <uib-progressbar ng-show="file._progress < 99" class="progress-striped active" value="file._progress" type="{{file._progressType}}">
                                     {{file._progress}}%
                                 </uib-progressbar>
@@ -182,7 +205,7 @@
                                     Completado
                                 </uib-progressbar>
                                 </td>
-                                <td>
+                                <td >
                                     <a ng-show="file._progress === 100" class="btn btn-primary" ng-click="downloadFile(file)"><i class="fa fa-eye" aria-hidden="true"></i><span class="hidden-xs"></span></a>
                                     <a class="btn btn-danger" ng-click="eliminarFile(file)"><i class="fa fa-times" aria-hidden="true"></i><span class="hidden-xs"></span></a>
                                 </td>

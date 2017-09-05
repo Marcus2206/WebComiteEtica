@@ -30,8 +30,8 @@ function RegistroBitacoraRR($http, $q, baseUrl, $log) {
     this.delete = function (registroBitacora) {
         var defered = $q.defer();
         var params = {
-            idRegistro: registroBitacora.id.idRegistro,
-            idBitacora: registroBitacora.id.idBitacora
+            idRegistro: registroBitacora.idRegistro,
+            idBitacora: registroBitacora.idBitacora
         };
         var config = {params};
         $http.put(baseUrl + '/api/RegistroBitacora/RegistroBitacoraDelete', null, config)

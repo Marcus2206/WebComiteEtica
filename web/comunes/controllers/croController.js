@@ -100,7 +100,6 @@ app.controller("ListCroController",
 
                 /*Editar un registro*/
                 $scope.editarModal = function (croObj) {
-
                     $scope.croObj = croObj;
                     var modalInstance = $uibModal.open({
                         templateUrl: 'cro/croEdit.html',

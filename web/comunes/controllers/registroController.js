@@ -8,6 +8,62 @@ app.controller("EditRegistroController",
                     $log, $uibModalInstance, SweetAlert,
                     $uibModal, registroBitacoraRR, $rootScope) {
 
+                var tomorrow = new Date();
+                tomorrow.setDate(tomorrow.getDate() + 1);
+
+                var afterTomorrow = new Date();
+                afterTomorrow.setDate(tomorrow.getDate() + 1);
+
+                $scope.events = [
+                    {
+                        date: tomorrow,
+                        status: 'full'
+                    },
+                    {
+                        date: afterTomorrow,
+                        status: 'partially'
+                    }
+                ];
+                $scope.open1 = function () {
+                    $scope.popup1.opened = true;
+                };
+
+                $scope.popup1 = {
+                    opened: false
+                };
+
+                $scope.open2 = function () {
+                    $scope.popup2.opened = true;
+                };
+
+                $scope.popup2 = {
+                    opened: false
+                };
+
+                $scope.open3 = function () {
+                    $scope.popup3.opened = true;
+                };
+
+                $scope.popup3 = {
+                    opened: false
+                };
+
+                // Disable weekend selection
+                function disabled(data) {
+                    var date = data.date,
+                            mode = data.mode;
+                    return mode === 'day' && (date.getDay() === 0);
+                }
+
+                $scope.dateOptions = {
+                    dateDisabled: disabled,
+                    formatYear: 'yy',
+                    maxDate: new Date(2020, 5, 22),
+                    minDate: new Date(2007, 1, 1),
+                    startingDay: 1,
+                    showWeeks: false
+                };
+
                 $scope.filtrar = function (obj, param) {
                     function filterByParametro(obj) {
                         if (obj.idParametro === param) {
@@ -21,6 +77,8 @@ app.controller("EditRegistroController",
                 $scope.paramEstado = $scope.filtrar($scope.parametros, 'P006')[0].parametroDetalles;
                 $scope.paramNotificacion = $scope.filtrar($scope.parametros, 'P007')[0].parametroDetalles;
                 $scope.paramEstadoRegistro = $scope.filtrar($scope.parametros, 'P012')[0].parametroDetalles;
+                $scope.paramTipoBitacora = $scope.filtrar($scope.parametros, 'P013')[0].parametroDetalles;
+                $scope.paramNivelDesviacion = $scope.filtrar($scope.parametros, 'P014')[0].parametroDetalles;
 
                 $scope.registro = registro;
                 $scope.registro.investigador = $scope.registroObj.idInvestigador;
@@ -29,7 +87,7 @@ app.controller("EditRegistroController",
                 $scope.deshabilitado = false;
                 $scope.isBitacora = true;
 
-                $scope.registroBitacora = {id: {}};
+
                 $scope.registroBitacoras = [];
 
 
@@ -105,25 +163,73 @@ app.controller("EditRegistroController",
                     buscarSede($scope, $uibModal);
                 };
 
+                $scope.registroBitacora = {id: {}};
+                $scope.registroBitacora.id.idRegistro = $scope.registro.idRegistro;
+                $scope.registroBitacora.id.idBitacora = 0;
+
                 $scope.agregarBitacora = function () {
-                    $scope.registroBitacora.id.idRegistro = $scope.registro.idRegistro;
-                    $scope.registroBitacora.id.idBitacora = 0;
+                    $log.log($scope.registroBitacora);
                     registroBitacoraRR.insert($scope.registroBitacora)
                             .then(function (registroBitacoraResponse) {
-                                $scope.registroBitacoras.push(registroBitacoraResponse);
+
+                                var listbox = document.getElementById("paramTipoBitacora");
+                                var selIndex = listbox.selectedIndex;
+                                var selText = listbox.options[selIndex].text;
+                                registroBitacoraResponse.paramTipoBitacora = selText;
+
+                                var editText = document.getElementById("fecha");
+                                $scope.registroBitacora = {id: {}};
+                                $scope.registroBitacora.id.idRegistro = $scope.registro.idRegistro;
+                                $scope.registroBitacora.id.idBitacora = 0;
+
+                                var listbox1 = document.getElementById("paramDetalleBitacora");
+                                var selIndex1 = listbox1.selectedIndex;
+                                var selText1 = listbox1.options[selIndex1].text;
+                                registroBitacoraResponse.paramDetalleBitacora = selText1;
+
+                                var bit = {
+                                    idRegistro: registroBitacoraResponse.id.idRegistro,
+                                    idBitacora: registroBitacoraResponse.id.idBitacora,
+                                    detalle: registroBitacoraResponse.detalle,
+                                    fecha: editText.value,
+                                    paramTipoBitacora: registroBitacoraResponse.paramTipoBitacora,
+                                    paramDetalleBitacora: registroBitacoraResponse.paramDetalleBitacora
+                                };
+
+                                listbox.selectedIndex = -1;
+                                $scope.paramDetalleBitacora = null;
+                                $scope.registroBitacora.fecha = "";
+                                $scope.registroBitacora.detalle = "";
+                                $scope.registroBitacoras.push(bit);
                             }, function (bussinessMessages) {
 
                             });
                 };
 
                 $scope.eliminarBitacora = function (registroBitacora) {
-                    registroBitacora.fecha = new Date();
                     registroBitacoraRR.delete(registroBitacora)
                             .then(function (registroBitacoraResponse) {
                                 $scope.registroBitacoras.splice($scope.registroBitacoras.indexOf(registroBitacora), 1);
                             }, function (bussinessMessages) {
 
                             });
+                };
+
+                $scope.flagTipoBitacora = true;
+                $scope.cargarDetalleBitacora = function () {
+//                     var listbox = document.getElementById("paramTipoBitacora");
+//                      var selIndex = listbox.selectedIndex;
+                    if ($scope.registroBitacora.paramTipoBitacora === 'PD05') {
+                        $scope.flagTipoBitacora = false;
+                        $scope.paramDetalleBitacora = $scope.paramNivelDesviacion;
+                    } else if ($scope.registroBitacora.paramTipoBitacora === 'PD04') {
+                        $scope.flagTipoBitacora = false;
+                        $scope.paramDetalleBitacora = $scope.paramNotificacion;
+                    } else {
+                        $scope.paramDetalleBitacora = null;
+                        $scope.flagTipoBitacora = true;
+                    }
+
                 };
 
             }]);
@@ -135,7 +241,7 @@ app.controller("ListRegistroController",
                     $log, $uibModal, SweetAlert) {
 
                 if (idNotificacionParam !== "all") {
-                    var bg = document.getElementById("busquedaGlobal");
+                    var bg = document.getElementById("buscaGlobal");
                     bg.value = idNotificacionParam;
                 }
                 /*Se obtiene lista de registros*/
@@ -289,6 +395,61 @@ app.controller("NewRegistroController",
                     parametros, $log, $uibModalInstance, SweetAlert,
                     $uibModal, $rootScope) {
 
+                var tomorrow = new Date();
+                tomorrow.setDate(tomorrow.getDate() + 1);
+
+                var afterTomorrow = new Date();
+                afterTomorrow.setDate(tomorrow.getDate() + 1);
+
+                $scope.events = [
+                    {
+                        date: tomorrow,
+                        status: 'full'
+                    },
+                    {
+                        date: afterTomorrow,
+                        status: 'partially'
+                    }
+                ];
+                $scope.open1 = function () {
+                    $scope.popup1.opened = true;
+                };
+
+                $scope.popup1 = {
+                    opened: false
+                };
+
+                $scope.open2 = function () {
+                    $scope.popup2.opened = true;
+                };
+
+                $scope.popup2 = {
+                    opened: false
+                };
+
+                $scope.open3 = function () {
+                    $scope.popup3.opened = true;
+                };
+
+                $scope.popup3 = {
+                    opened: false
+                };
+
+                // Disable weekend selection
+                function disabled(data) {
+                    var date = data.date,
+                            mode = data.mode;
+                    return mode === 'day' && (date.getDay() === 0);
+                }
+
+                $scope.dateOptions = {
+                    dateDisabled: disabled,
+                    formatYear: 'yy',
+                    maxDate: new Date(2020, 5, 22),
+                    minDate: new Date(2007, 1, 1),
+                    startingDay: 1,
+                    showWeeks: false
+                };
                 $scope.filtrar = function (obj, param) {
                     function filterByParametro(obj) {
                         if (obj.idParametro === param) {
@@ -385,9 +546,28 @@ app.controller("SearchRegistroController",
             function ($scope,
                     $log, $uibModalInstance, registros) {
                 $scope.registros = registros;
+                $scope.displayCollection = [].concat($scope.registros);
+
+                /*Se setea la cantidad filas por vista*/
+                $scope.currentPage = 0;
+                $scope.pageSize = 5;
+
+                $scope.itemsByPage = 5;
+
+                /*Calculando número de páginas*/
+                $scope.numberOfPages = function () {
+                    return Math.ceil($scope.registros.length / $scope.pageSize);
+                };
+
+                /*Ir a la sgte página*/
+                $scope.setNextPagina = function () {
+                    $scope.currentPage = $scope.currentPage + 1;
+                    return $scope.currentPage;
+                };
+
                 $scope.registro = {};
-                $scope.enviar = function () {
-                    $uibModalInstance.dismiss($scope.registro.selected);
+                $scope.enviar = function (registro) {
+                    $uibModalInstance.dismiss(registro);
                 };
                 $scope.cerrar = function () {
                     $uibModalInstance.dismiss('cancel');
@@ -399,7 +579,7 @@ function buscarInvestigacion($scope, $uibModal) {
     var modalInstance = $uibModal.open({
         templateUrl: 'investigacion/investigacionSearch.html',
         controller: "SearchInvestigacionController",
-        size: 'sm',
+        size: 'md',
         backdrop: 'static',
         keyboard: false,
         resolve: {
@@ -416,6 +596,10 @@ function buscarInvestigacion($scope, $uibModal) {
             if (data !== "backdrop click") {
                 if (data !== "escape key press") {
                     $scope.registro.investigacion = data;
+                    $scope.registro.idInvestigador = undefined;
+                    $scope.registro.investigador = undefined;
+                    $scope.registro.idSede = undefined;
+                    $scope.registro.sede = undefined;
                 }
             }
         } else {
@@ -423,7 +607,6 @@ function buscarInvestigacion($scope, $uibModal) {
         }
     });
 }
-
 
 function buscarInvestigador($scope, $uibModal) {
     var idInvestigacion = $scope.registro.investigacion.idInvestigacion;
@@ -448,6 +631,8 @@ function buscarInvestigador($scope, $uibModal) {
                 if (data !== "escape key press") {
                     $scope.registro.idInvestigador = data[0].id.idInvestigador;
                     $scope.registro.investigador = data[1].apePaterno + ' ' + data[1].apeMaterno + ', ' + data[1].nombres;
+                    $scope.registro.idSede = undefined;
+                    $scope.registro.sede = undefined;
                 }
             }
         } else {
@@ -455,7 +640,6 @@ function buscarInvestigador($scope, $uibModal) {
         }
     });
 }
-
 
 function buscarSede($scope, $uibModal) {
     var idInvestigacion = $scope.registro.investigacion.idInvestigacion;

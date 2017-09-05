@@ -1,5 +1,4 @@
 var app = angular.module("app");
-
 app.controller("EditCorrespondenciaController",
         ['$scope', 'correspondencia', 'parametros', 'correspondenciaRR',
             'correspondenciaFileRR', 'fileRR', 'fechaSesionRR',
@@ -7,49 +6,6 @@ app.controller("EditCorrespondenciaController",
             function ($scope, correspondencia, parametros, correspondenciaRR,
                     correspondenciaFileRR, fileRR, fechaSesionRR,
                     $log, $uibModalInstance, SweetAlert, $q, $uibModal, correspondenciaServicioRR, $rootScope) {
-
-                $scope.open1 = function () {
-                    $scope.popup1.opened = true;
-                };
-
-                $scope.dateOptions = {
-                    dateDisabled: disabled,
-                    formatYear: 'yy',
-                    maxDate: new Date(2020, 5, 22),
-                    minDate: new Date(),
-                    startingDay: 1,
-                    showWeeks: false
-                };
-
-                // Disable weekend selection
-                function disabled(data) {
-                    var date = data.date,
-                            mode = data.mode;
-                    return mode === 'day' && (date.getDay() === 0 || date.getDay() === 6);
-                }
-
-                $scope.popup1 = {
-                    opened: false
-                };
-
-                $scope.open2 = function () {
-                    $scope.popup2.opened = true;
-                };
-
-                $scope.popup2 = {
-                    opened: false
-                };
-
-                $scope.events = [
-                    {
-                        date: tomorrow,
-                        status: 'full'
-                    },
-                    {
-                        date: afterTomorrow,
-                        status: 'partially'
-                    }
-                ];
 
                 var tomorrow = new Date();
                 tomorrow.setDate(tomorrow.getDate() + 1);
@@ -65,17 +21,47 @@ app.controller("EditCorrespondenciaController",
                         status: 'partially'
                     }
                 ];
+                $scope.open1 = function () {
+                    $scope.popup1.opened = true;
+                };
+                $scope.popup1 = {
+                    opened: false
+                };
+                $scope.open2 = function () {
+                    $scope.popup2.opened = true;
+                };
+                $scope.popup2 = {
+                    opened: false
+                };
+                $scope.open3 = function () {
+                    $scope.popup3.opened = true;
+                };
+                $scope.popup3 = {
+                    opened: false
+                };
+                // Disable weekend selection
+                function disabled(data) {
+                    var date = data.date,
+                            mode = data.mode;
+                    return mode === 'day' && (date.getDay() === 0);
+                }
 
+                $scope.dateOptions = {
+                    dateDisabled: disabled,
+                    formatYear: 'yy',
+                    maxDate: new Date(2020, 5, 22),
+                    minDate: new Date(2007, 1, 1),
+                    startingDay: 1,
+                    showWeeks: false
+                };
                 $scope.buscarRegistro = function () {
                     buscarRegistro($scope, $uibModal);
                 };
-
                 $scope.deshabilitado = false;
                 $scope.isCorrespondenciaFile = true;
                 $scope.isServicio = true;
                 $scope.parametros = parametros;
                 $scope.correspondenciaFiles = [];
-
                 $scope.filtrar = function (obj, param) {
                     function filterByParametro(obj) {
                         if (obj.idParametro === param) {
@@ -84,21 +70,12 @@ app.controller("EditCorrespondenciaController",
                     }
                     return obj.filter(filterByParametro);
                 };
-
                 $scope.paramTipoServicio = $scope.filtrar($scope.parametros, 'P001')[0].parametroDetalles;
                 $scope.paramDistribucion = $scope.filtrar($scope.parametros, 'P002')[0].parametroDetalles;
-
                 $scope.servicioSelect = {};
                 $scope.observacionSelect = "";
                 $scope.servicioSelectList = $scope.paramTipoServicio;
-
-                correspondencia.fechaCorrespondencia = new Date(correspondencia.fechaCorrespondencia);
-                if (correspondencia.fechaCarta !== null) {
-                    correspondencia.fechaCarta = new Date(correspondencia.fechaCarta);
-                }
-
                 $scope.correspondencia = correspondencia;
-
                 /*Cargando archivos de correspondencia*/
                 correspondenciaFileRR.findAllByIdCorrepondencia($scope.correspondencia.idCorrespondencia)
                         .then(function (correspondenciaFileRespond) {
@@ -106,7 +83,6 @@ app.controller("EditCorrespondenciaController",
                         }, function (bussinessMessages) {
                             $scope.bussinessMessages = bussinessMessages;
                         });
-
                 $scope.fechasSesion = {};
                 $scope.fechasSesions;
                 fechaSesionRR.listProx()
@@ -115,8 +91,6 @@ app.controller("EditCorrespondenciaController",
                         }, function (response) {
 
                         });
-
-
                 /*Detalle de Correspondencia con Servicio*/
                 correspondenciaServicioRR.listServicioByCorrespondenciaFindAll($scope.correspondencia.idCorrespondencia)
                         .then(function (correspondenciaServiciosRespond) {
@@ -125,7 +99,6 @@ app.controller("EditCorrespondenciaController",
                             $scope.bussinessMessages = bussinessMessages;
                             //Mensaje de error
                         });
-
                 $scope.agregarServicio = function () {
                     if (isEmptyJSON($scope.servicioSelect)) {
                         return;
@@ -153,7 +126,6 @@ app.controller("EditCorrespondenciaController",
 
                             });
                 };
-
                 $scope.eliminarServicio = function (correspondenciaServicio) {
                     correspondenciaServicioRR.delete(correspondenciaServicio)
                             .then(function (correspondenciaServicioRespond) {
@@ -168,7 +140,6 @@ app.controller("EditCorrespondenciaController",
 
                             });
                 };
-
                 $scope.guardar = function () {
                     $scope.correspondencia.usuarioModifica = $rootScope.username;
                     $scope.correspondencia.fechaModificacion = new Date();
@@ -178,40 +149,38 @@ app.controller("EditCorrespondenciaController",
                                 var selIndex = listbox.selectedIndex;
                                 var selText = listbox.options[selIndex].text;
                                 correspondenciaRespond.paramDistribucion = selText;
-
-                                var index = $scope.correspondencias.indexOf($scope.correspondenciaObj);
+                                                                
+                                 var index = $scope.correspondencias.indexOf($scope.correspondenciaObj);
                                 if (index !== -1) {
-                                    $scope.correspondencias[index] = correspondenciaRespond;
+                                    /*Conserva el valor del identificador HashKey del array inicial, sólo se actualzian los valores.*/
+                                    angular.forEach(correspondenciaRespond, function (value, key) {
+                                        if (key !== '$$hashKey') {
+                                            $scope.correspondencias[index][key] = value;
+                                        }
+                                    });
                                 }
-                                $scope.registroObj = correspondenciaRespond;
-
+                                
                                 SweetAlert.swal("Hecho!", "Registro guardado exitosamente.", "success");
                             }, function (bussinessMessages) {
                                 $scope.bussinessMessages = bussinessMessages;
                                 SweetAlert.swal("Hubo un error!", "Intente nuevamente o comuniquese con el administrador.", "warning");
                             });
                 };
-
                 $scope.cerrar = function () {
                     $uibModalInstance.dismiss('cancel');
                 };
-
                 $scope.setFechaSesion = function () {
                     setFechaSesion($scope, $log);
                 };
-
                 $scope.myFile = [];
                 $scope.progressBar = 0;
-
                 $scope.downloadFile = function (file) {
                     fileRR.downloadFileFromURL(file);
                 };
-
                 $scope.uploadFile = function () {
                     var sequence = $q.defer();
                     sequence.resolve();
                     sequence = sequence.promise;
-
                     angular.forEach($scope.myFile, function (item, key) {
                         sequence = sequence.then(function () {
                             return fileRR.uploadFileToUrl(item, $scope.correspondencia.idCorrespondencia)
@@ -227,7 +196,6 @@ app.controller("EditCorrespondenciaController",
                                             usuarioIngresa: $rootScope.username,
                                             fechaIngreso: new Date()
                                         };
-
                                         return correspondenciaFileRR.insert(newCorrespondenciaFile)
                                                 .then(function (response) {
                                                     if (key !== -1) {
@@ -242,7 +210,6 @@ app.controller("EditCorrespondenciaController",
                         });
                     });
                 };
-
                 $scope.relacionarFile = function (correspondenciaFile) {
                     var cFile = correspondenciaFile;
                     angular.forEach(cFile, function (item) {
@@ -256,7 +223,6 @@ app.controller("EditCorrespondenciaController",
                         $scope.myFile.push(newMyFile);
                     });
                 };
-
                 $scope.eliminarFile = function (file) {
                     fileRR.deleteFileFromURL(file)
                             .then(function (response) {
@@ -269,7 +235,6 @@ app.controller("EditCorrespondenciaController",
                             }, function (response) {
                             });
                 };
-
                 $scope.eliminarTodo = function () {
                     fileRR.deleteAllFileFromURL($scope.correspondencia.idCorrespondencia)
                             .then(function (response) {
@@ -283,36 +248,46 @@ app.controller("EditCorrespondenciaController",
                             });
                 };
             }]);
-
 app.controller("ListCorrespondenciaController",
         ['$scope', "correspondencias", "idNotificacionParam", "correspondenciaRR",
             "$log", "$uibModal", 'SweetAlert', "UrlOrigen", "localStorageService",
             function ($scope, correspondencias, idNotificacionParam, correspondenciaRR,
                     $log, $uibModal, SweetAlert, UrlOrigen, localStorageService) {
 
-
                 if (idNotificacionParam !== "all") {
-                    $scope.txtFiltroCorrespondencia = idNotificacionParam;
+                      var bg = document.getElementById("buscaGlobal");
+                    bg.value = idNotificacionParam;
                 }
 
                 /*Se obtiene lista de correspondencias*/
                 $scope.correspondencias = correspondencias;
-
+                /*Columnas para realizar el filtro*/
+                $scope.predicates = [{nombre: 'idCorrespondencia', descripcion: 'Código'},
+                    {nombre: 'fechaCorrespondencia', descripcion: 'Fecha Correspondencia'},
+                    {nombre: 'fechaCarta', descripcion: 'Fecha Carta'},
+                    {nombre: 'idRegistro', descripcion: 'Registro'},
+                    {nombre: 'equivalenciaCorrelativo', descripcion: 'Correlativo equiv.'},
+                    {nombre: 'paramTipoServicio', descripcion: 'Tipo de Servicio'},
+                    {nombre: 'paramDistribucion', descripcion: 'Distribución'},
+                    {nombre: 'otro', descripcion: 'Comentario'},
+                    {nombre: 'fechaSesion', descripcion: 'Fecha Sesión'},
+                    {nombre: 'enviarCorreo', descripcion: 'Enviar Correo'},
+                    {nombre: 'enviado', descripcion: 'Estado Envío'}];
+                $scope.displayCollection = [].concat($scope.correspondencias);
+                /*Campo seleccionado*/
+                $scope.selectedPredicate = $scope.predicates[0].nombre;
                 /*Se setea la cantidad filas por vista*/
                 $scope.currentPage = 0;
                 $scope.pageSize = 20;
-
                 /*Calculando número de páginas*/
                 $scope.numberOfPages = function () {
                     return Math.ceil($scope.correspondencias.length / $scope.pageSize);
                 };
-
                 /*Ir a la sgte página*/
                 $scope.setNextPagina = function () {
                     $scope.currentPage = $scope.currentPage + 1;
                     return $scope.currentPage;
                 };
-
                 /*Editar un registro*/
                 $scope.editarModal = function (correspondenciaObj) {
                     var modalInstance = $uibModal.open({
@@ -331,7 +306,6 @@ app.controller("ListCorrespondenciaController",
                                 }]
                         }
                     });
-
                     modalInstance.result.then(function () {
                         //Si no se devuelve nada
                     }, function (data) {
@@ -347,7 +321,6 @@ app.controller("ListCorrespondenciaController",
                         }
                     });
                 };
-
                 /*Crear un registro*/
                 $scope.nuevoModal = function () {
                     var modalInstance = $uibModal.open({
@@ -363,7 +336,6 @@ app.controller("ListCorrespondenciaController",
                                 }]
                         }
                     });
-
                     modalInstance.result.then(function () {
                         //Si no se devuelve nada
                     }, function (data) {
@@ -381,7 +353,6 @@ app.controller("ListCorrespondenciaController",
                         }
                     });
                 };
-
                 $scope.eliminar = function (correspondencia) {
                     //Se prepara confirm
                     SweetAlert.swal({
@@ -410,59 +381,13 @@ app.controller("ListCorrespondenciaController",
 
                         }
                     });
-
                 };
-
             }]);
-
 app.controller("NewCorrespondenciaController",
         ['$scope', 'correspondenciaRR', 'fechaSesionRR',
             'parametros', "$log", "$uibModalInstance", 'SweetAlert', '$uibModal', "$rootScope",
             function ($scope, correspondenciaRR, fechaSesionRR,
                     parametros, $log, $uibModalInstance, SweetAlert, $uibModal, $rootScope) {
-
-                $scope.open1 = function () {
-                    $scope.popup1.opened = true;
-                };
-
-                $scope.dateOptions = {
-                    dateDisabled: disabled,
-                    formatYear: 'yy',
-                    maxDate: new Date(2020, 5, 22),
-                    minDate: new Date(),
-                    startingDay: 1,
-                    showWeeks: false
-                };
-
-                // Disable weekend selection
-                function disabled(data) {
-                    var date = data.date,
-                            mode = data.mode;
-                    return mode === 'day' && (date.getDay() === 0 || date.getDay() === 6);
-                }
-
-                $scope.popup1 = {
-                    opened: false
-                };
-
-                $scope.open2 = function () {
-                    $scope.popup2.opened = true;
-                };
-
-                $scope.popup2 = {
-                    opened: false
-                };
-
-                $scope.events = [
-                    {
-                        date: tomorrow,
-                        status: 'full'
-                    },
-                    {
-                        date: afterTomorrow,
-                        status: 'partially'
-                    }
-                ];
 
                 var tomorrow = new Date();
                 tomorrow.setDate(tomorrow.getDate() + 1);
@@ -478,11 +403,41 @@ app.controller("NewCorrespondenciaController",
                         status: 'partially'
                     }
                 ];
+                $scope.open1 = function () {
+                    $scope.popup1.opened = true;
+                };
+                $scope.popup1 = {
+                    opened: false
+                };
+                $scope.open2 = function () {
+                    $scope.popup2.opened = true;
+                };
+                $scope.popup2 = {
+                    opened: false
+                };
+                $scope.open3 = function () {
+                    $scope.popup3.opened = true;
+                };
+                $scope.popup3 = {
+                    opened: false
+                };
+                function disabled(data) {
+                    var date = data.date,
+                            mode = data.mode;
+                    return mode === 'day' && (date.getDay() === 0);
+                }
 
+                $scope.dateOptions = {
+                    dateDisabled: disabled,
+                    formatYear: 'yy',
+                    maxDate: new Date(2020, 5, 22),
+                    minDate: new Date(2007, 1, 1),
+                    startingDay: 1,
+                    showWeeks: false
+                };
                 $scope.parametros = parametros;
                 $scope.deshabilitado = true;
                 $scope.isCorrespondenciaFile = true;
-
                 $scope.fechasSesion = {};
                 $scope.fechasSesions;
                 fechaSesionRR.listProx()
@@ -491,7 +446,6 @@ app.controller("NewCorrespondenciaController",
                         }, function (response) {
 
                         });
-
                 $scope.filtrar = function (obj, param) {
                     function filterByParametro(obj) {
                         if (obj.idParametro === param) {
@@ -500,10 +454,8 @@ app.controller("NewCorrespondenciaController",
                     }
                     return obj.filter(filterByParametro);
                 };
-
                 $scope.paramTipoServicio = $scope.filtrar($scope.parametros, 'P001')[0].parametroDetalles;
                 $scope.paramDistribucion = $scope.filtrar($scope.parametros, 'P002')[0].parametroDetalles;
-
                 $scope.isServicio = true;
                 $scope.servicioSelect = {};
                 $scope.servicioSelectList = $scope.paramTipoServicio;
@@ -512,11 +464,9 @@ app.controller("NewCorrespondenciaController",
                     registro: {},
                     fechaCorrespondencia: new Date()
                 };
-
                 $scope.buscarRegistro = function () {
                     buscarRegistro($scope, $uibModal);
                 };
-
                 $scope.guardar = function () {
                     $scope.correspondencia.usuarioIngresa = $rootScope.username;
                     $scope.correspondencia.fechaIngreso = new Date();
@@ -530,15 +480,12 @@ app.controller("NewCorrespondenciaController",
                                 var selIndex = listbox.selectedIndex;
                                 var selText = listbox.options[selIndex].text;
                                 correspondenciaRespond.paramDistribucion = selText;
-
                                 correspondenciaRespond.fechaCorrespondencia = new Date(correspondenciaRespond.fechaCorrespondencia);
-
                                 if (correspondenciaRespond.fechaCarta !== null) {
                                     correspondenciaRespond.fechaCarta = new Date(correspondenciaRespond.fechaCarta);
                                 }
 
                                 correspondenciaRespond.idRegistro = $scope.correspondencia.idRegistro;
-
                                 $uibModalInstance.dismiss(correspondenciaRespond);
                                 SweetAlert.swal("Hecho!", "Registro guardado exitosamente.", "success");
                             }, function (bussinessMessages) {
@@ -549,25 +496,18 @@ app.controller("NewCorrespondenciaController",
                      alert("Hay datos inválidos");
                      }*/
                 };
-
                 $scope.cerrar = function () {
                     $uibModalInstance.dismiss('cancel');
                 };
-
                 $scope.setFechaSesion = function () {
                     setFechaSesion($scope, $log);
                 };
-
-
-
             }]);
-
-
 function buscarRegistro($scope, $uibModal) {
     var modalInstance = $uibModal.open({
         templateUrl: 'registro/registroSearch.html',
         controller: "SearchRegistroController",
-        size: 'sm',
+        size: 'md',
         backdrop: 'static',
         keyboard: false,
         resolve: {
@@ -576,7 +516,6 @@ function buscarRegistro($scope, $uibModal) {
                 }]
         }
     });
-
     modalInstance.result.then(function () {
         //Si no se devuelve nada
     }, function (data) {
@@ -596,6 +535,6 @@ function buscarRegistro($scope, $uibModal) {
 }
 
 function setFechaSesion($scope, $log) {
-    $scope.correspondencia.fechaSesion = $scope.fechasSesion;
+    $scope.correspondencia.fechaSesion = new Date($scope.fechasSesion);
 }
 

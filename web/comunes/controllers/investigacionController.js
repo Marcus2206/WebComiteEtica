@@ -6,13 +6,13 @@ app.controller("EditInvestigacionController",
             'investigadorRR', 'investigacionInvestigadorRR',
             'sedeRR', 'investigacionSedeRR',
             "$log", "$uibModalInstance", 'SweetAlert',
-            '$confirm', 'patrocinadorRR', 'croRR','$rootScope',
+            '$confirm', 'patrocinadorRR', 'croRR', '$rootScope',
             function ($scope, investigacion, parametros, investigacionRemoteResource,
                     coordinadorRemoteResource, investigacionCoordinadorRemoteResource,
                     investigadorRR, investigacionInvestigadorRR,
                     sedeRR, investigacionSedeRR,
                     $log, $uibModalInstance, SweetAlert,
-                    $confirm, patrocinadorRR, croRR,$rootScope) {
+                    $confirm, patrocinadorRR, croRR, $rootScope) {
 
                 $scope.parametros = parametros;
                 $scope.deshabilitado = false;
@@ -63,14 +63,25 @@ app.controller("EditInvestigacionController",
                     $scope.investigacion.usuarioModifica = $rootScope.username;
                     $scope.investigacion.fechaModificacion = new Date();
                     validaSeleccionables($scope);
+                    if (isEmptyJSON($scope.investigacion.patrocinador)) {
+                        $scope.investigacion.patrocinador = null;
+                    }
+                    if (isEmptyJSON($scope.investigacion.cro)) {
+                        $scope.investigacion.cro = null;
+                    }
                     investigacionRemoteResource.update($scope.investigacion)
                             .then(function (investigacionRespond) {
                                 cambioEtiquetas(investigacionRespond, $scope);
+
                                 var index = $scope.investigacions.indexOf($scope.investigacionObj);
                                 if (index !== -1) {
-                                    $scope.investigacions[index] = investigacionRespond;
+                                    /*Conserva el valor del identificador HashKey del array inicial, sólo se actualzian los valores.*/
+                                    angular.forEach(investigacionRespond, function (value, key) {
+                                        if (key !== '$$hashKey') {
+                                            $scope.investigacions[index][key] = value;
+                                        }
+                                    });
                                 }
-                                $scope.investigacionObj = investigacionRespond;
                                 SweetAlert.swal("Hecho!", "Registro guardado exitosamente.", "success");
                             }, function (bussinessMessages) {
                                 $scope.bussinessMessages = bussinessMessages;
@@ -92,6 +103,7 @@ app.controller("EditInvestigacionController",
                 /*Investigadores seleccionables*/
                 investigadorRR.listInvestigadorSinIdInvestigacionFind($scope.investigacion.idInvestigacion)
                         .then(function (investigadorRespond) {
+                            $log.log(investigadorRespond);
                             $scope.investigadorsSelectList = investigadorRespond;
                         }, function (bussinessMessages) {
                             $scope.bussinessMessages = bussinessMessages;
@@ -119,6 +131,7 @@ app.controller("EditInvestigacionController",
                 /*Detalle de Investigación Investigador*/
                 investigacionInvestigadorRR.listInvestigadorByIdInvestigacion($scope.investigacion.idInvestigacion)
                         .then(function (investigadorsRespond) {
+                            $log.log(investigadorsRespond);
                             $scope.investigacionInvestigadors = investigadorsRespond;
                         }, function (bussinessMessages) {
                             $scope.bussinessMessages = bussinessMessages;
@@ -330,12 +343,17 @@ app.controller("EditInvestigacionController",
                 };
 
                 $scope.inicial = function () {
-                    if ($scope.investigacion.patrocinadorCro !== null) {
-                        $scope.patrocinadorSelected.selected = $scope.investigacion.patrocinadorCro.patrocinador;
+                    if ($scope.investigacion.patrocinador !== null) {
+                        $scope.patrocinadorSelected.selected = $scope.investigacion.patrocinador;
                         $scope.cargarCro();
-                        $scope.croSelected.selected = $scope.investigacion.patrocinadorCro.cro;
-                    }else{
-                        $scope.investigacion.patrocinadorCro={id:{}};
+                        if ($scope.investigacion.cro !== null) {
+                            $scope.croSelected.selected = $scope.investigacion.cro;
+                        } else {
+                            $scope.investigacion.cro = {};
+                        }
+                    } else {
+                        $scope.investigacion.patrocinador = {};
+
                     }
                     $scope.paramEspecialidadSelected.selected = $scope.filtrarDetalle($scope.paramEspecialidad, $scope.investigacion.paramEspecialidad)[0];
                     $scope.paramTipoInvestigacionSelected.selected = $scope.filtrarDetalle($scope.paramTipoInvestigacion, $scope.investigacion.paramTipoInvestigacion)[0];
@@ -351,6 +369,19 @@ app.controller("ListInvestigacionController",
                     $log, $uibModal, SweetAlert) {
                 /*Se obtiene lista de coordinadores*/
                 $scope.investigacions = investigacions;
+
+                /*Columnas para realizar el filtro*/
+                $scope.predicates = [{nombre: 'idInvestigacion', descripcion: 'Código'},
+                    {nombre: 'protocolo', descripcion: 'Protocolo'},
+                    {nombre: 'titulo', descripcion: 'Titulo'},
+                    {nombre: 'paramEspecialidad', descripcion: 'Especialidad'},
+                    {nombre: 'paramFase', descripcion: 'Fase'},
+                    {nombre: 'paramTipoInvestigacion', descripcion: 'Tipo de Investigación'}];
+
+                $scope.displayCollection = [].concat($scope.investigacions);
+                /*Campo seleccionado*/
+                $scope.selectedPredicate = $scope.predicates[0].nombre;
+
                 /*Se setea la cantidad filas por vista*/
                 $scope.currentPage = 0;
                 $scope.pageSize = 20;
@@ -403,7 +434,7 @@ app.controller("ListInvestigacionController",
                 };
 
                 /*Crear un registro*/
-                $scope.nuevoModal = function () {
+                $scope.insertarModal = function () {
                     var modalInstance = $uibModal.open({
                         templateUrl: 'investigacion/investigacionEdit.html',
                         controller: "NewInvestigacionController",
@@ -468,9 +499,9 @@ app.controller("ListInvestigacionController",
 
 app.controller("NewInvestigacionController",
         ['$scope', 'investigacionRemoteResource',
-            'parametros', "$log", "$uibModalInstance", 'SweetAlert', 'patrocinadorRR', 'croRR','$rootScope',
+            'parametros', "$log", "$uibModalInstance", 'SweetAlert', 'patrocinadorRR', 'croRR', '$rootScope',
             function ($scope, investigacionRemoteResource,
-                    parametros, $log, $uibModalInstance, SweetAlert, patrocinadorRR, croRR,$rootScope) {
+                    parametros, $log, $uibModalInstance, SweetAlert, patrocinadorRR, croRR, $rootScope) {
 
                 $scope.filtrar = function (obj, param) {
                     function filterByParametro(obj) {
@@ -503,13 +534,20 @@ app.controller("NewInvestigacionController",
                 $scope.paramTipoInvestigacionSelected = {};
 
                 /*Se construyer el json*/
-                $scope.investigacion = {patrocinadorCro: {id: {}}};
+                $scope.investigacion = {patrocinador: {},
+                    cro: {}};
 
                 $scope.guardar = function () {
                     //if ($scope.form.$valid) {
                     $scope.investigacion.usuarioIngresa = $rootScope.username;
                     $scope.investigacion.fechaIngreso = new Date();
                     validaSeleccionables($scope, $log);
+                    if (isEmptyJSON($scope.investigacion.patrocinador)) {
+                        $scope.investigacion.patrocinador = null;
+                    }
+                    if (isEmptyJSON($scope.investigacion.cro)) {
+                        $scope.investigacion.cro = null;
+                    }
                     investigacionRemoteResource.insert($scope.investigacion)
                             .then(function (investigacionRespond) {
                                 cambioEtiquetas(investigacionRespond, $scope);
@@ -518,7 +556,7 @@ app.controller("NewInvestigacionController",
                             }, function (bussinessMessages) {
                                 $scope.bussinessMessages = bussinessMessages;
                                 $uibModalInstance.dismiss('cancel');
-                                SweetAlert.swal("Hubo un error!", "Intente nuevamente o comuniquese con el administrador.", "danger");
+                                SweetAlert.swal("Hubo un error!", "Intente nuevamente o comuniquese con el administrador.", "warning");
                             });
                     /*} else {
                      alert("Hay datos inválidos");
@@ -548,12 +586,34 @@ app.controller("SearchInvestigacionController",
             function ($scope,
                     $log, $uibModalInstance, investigacions) {
                 $scope.investigacions = investigacions;
+                $scope.displayCollection = [].concat($scope.investigacions);
+
+                /*Se setea la cantidad filas por vista*/
+                $scope.currentPage = 0;
+                $scope.pageSize = 5;
+
+                $scope.itemsByPage = 5;
+
+                /*Calculando número de páginas*/
+                $scope.numberOfPages = function () {
+                    return Math.ceil($scope.investigacions.length / $scope.pageSize);
+                };
+
+                /*Ir a la sgte página*/
+                $scope.setNextPagina = function () {
+                    $scope.currentPage = $scope.currentPage + 1;
+                    return $scope.currentPage;
+                };
+
                 $scope.investigacion = {};
-                $scope.enviar = function () {
-                    $uibModalInstance.dismiss($scope.investigacion.selected);
+                $scope.enviar = function (investigacion) {
+                    $uibModalInstance.dismiss(investigacion);
                 };
                 $scope.cerrar = function () {
                     $uibModalInstance.dismiss('cancel');
+                };
+                $scope.test = function () {
+                    $log.log("test");
                 };
             }]);
 
@@ -569,8 +629,8 @@ function cargarPatrocinador(patrocinadorRR, $scope) {
 
 function cargarCro(croRR, $scope) {
     /*Cro*/
-    $scope.investigacion.patrocinadorCro.id.idPatrocinador = $scope.patrocinadorSelected.selected.idPatrocinador;
-    croRR.listCroByPatrocinador($scope.investigacion.patrocinadorCro.id.idPatrocinador)
+    $scope.investigacion.patrocinador.idPatrocinador = $scope.patrocinadorSelected.selected.idPatrocinador;
+    croRR.listCroByPatrocinador($scope.investigacion.patrocinador.idPatrocinador)
             .then(function (croRespond) {
                 $scope.cros = croRespond;
             }, function (bussinessMessages) {
@@ -579,7 +639,7 @@ function cargarCro(croRR, $scope) {
 }
 
 function setearCro($scope) {
-    $scope.investigacion.patrocinadorCro.id.idCro = $scope.croSelected.selected.idCro;
+    $scope.investigacion.cro.idCro = $scope.croSelected.selected.idCro;
 }
 
 function cambioEtiquetas(investigacionRespond, $scope) {

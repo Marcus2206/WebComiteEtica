@@ -72,16 +72,67 @@ app.controller("EditPagoController",
                             });
                 };
 
-                $scope.enviarMail = function () {
-                    pagoRR.sendMail($scope.pago)
+
+                /*Editar un registro*/
+                $scope.editarDetalle = function (pagoDetalleObj) {
+                    $scope.pagoDetalleObj = pagoDetalleObj;
+                    var modalInstance = $uibModal.open({
+                        templateUrl: 'pagoDetalle/pagoDetalleEdit.html',
+                        controller: "EditPagoDetalleController",
+                        size: 'md',
+                        backdrop: 'static',
+                        keyboard: false,
+                        scope: $scope,
+                        resolve: {
+                            pagoDetalle: function () {
+                                return pagoDetalleRR.get(pagoDetalleObj);
+                            },
+                            parametros: ['parametroRR', function (parametroRR) {
+                                    return parametroRR.list();
+                                }]
+                        }
+                    });
+
+                    modalInstance.result.then(function () {
+                        //Si no se devuelve nada
+                    }, function (data) {
+                        //Si devuelve un objeto
+                        if (data !== "cancel") {
+                            if (data !== "backdrop click") {
+                                if (data !== "escape key press") {
+                                    //Si no es cancel, se reemplaza el objeto que se mandó a actualizar
+                                }
+                            }
+                        } else {
+                            //Si es cancel
+                        }
+                    });
+                };
+
+                $scope.enviarMailConta = function () {
+                    pagoRR.sendMailConta($scope.pago)
+                            .then(function (pagoResponse) {
+                                if (pagoResponse === 1) {
+                                    SweetAlert.swal("Hecho!", "Se envió con éxito.", "success");
+                                    $scope.pago.contador++;
+                                } else {
+                                    SweetAlert.swal("Hubo un error!", "Intente nuevamente o comuniquese con el administrador.", "warning");
+                                }
+                            }, function (error) {
+                                SweetAlert.swal("Hubo un error!", "Intente nuevamente o comuniquese con el administrador.", "warning");
+                            });
+                };
+
+                $scope.enviarMailCopia = function () {
+                    pagoRR.sendMailCopia($scope.pago)
                             .then(function (pagoResponse) {
                                 if (pagoResponse === 1) {
                                     SweetAlert.swal("Hecho!", "Se envió con éxito.", "success");
                                 } else {
-                                    SweetAlert.swal("Hubo un error!", "Intente nuevamente o comuniquese con el administrador.", "danger");
+                                    SweetAlert.swal("Hubo un error!", "Intente nuevamente o comuniquese con el administrador.", "warning");
                                 }
                             }, function (error) {
-                                SweetAlert.swal("Hubo un error!", "Intente nuevamente o comuniquese con el administrador.", "danger");
+                                SweetAlert.swal("Hubo un error!", "Intente nuevamente o comuniquese con el administrador.", "warning");
                             });
                 };
 
@@ -97,13 +148,14 @@ app.controller("ListPagoController",
             function ($scope, pagos, idNotificacionParam, pagoRR,
                     $log, $uibModal, SweetAlert) {
 
-                if (idNotificacionParam !== "all") {
-                     var bg = document.getElementById("busquedaGlobal");
-                     bg.value=idNotificacionParam;
-                }
+
                 /*Se obtiene lista de registros*/
                 $scope.pagos = pagos;
-
+                
+                if (idNotificacionParam !== "all") {
+                    var bg = document.getElementById("buscaGlobal");
+                    bg.value = idNotificacionParam;
+                }
                 /*Columnas para realizar el filtro*/
                 $scope.predicates = [{nombre: 'idPago', descripcion: 'Id. Pago'},
                     {nombre: 'costo', descripcion: 'Precio'},
@@ -268,6 +320,7 @@ app.controller("NewPagoController",
                             nroFactura: "",
                             observacion: $scope.observacion,
                             paramEstadoPago: "PD01",
+                            contador: 0,
                             usuarioIngresa: $rootScope.username,
                             fechaIngreso: new Date()
                         }];

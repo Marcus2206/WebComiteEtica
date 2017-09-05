@@ -1,5 +1,5 @@
 
-<div class="container">
+<div class="container" st-table="displayCollection" st-safe-src="registros" >
     <div class="row">
         <div class="col col-md-12">
             <h1 style='text-align: center'><b>Registro de Investigación</b></h1>
@@ -16,12 +16,28 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-xs-12 col-sm-4 col-md-3 col-lg-3">
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+            <form>
+                <label for="modelBuscaGlobal">Búsqueda global:</label>
+                <input type="text" st-search type="search"  class="form-control" id="buscaGlobal"  placeholder="Búsqueda global">
+            </form>
+            <br>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
             <form>
                 <label for="predicate">Seleccionar campo a buscar:</label>
                 <select class="form-control" id="predicate" ng-model="selectedPredicate">
                     <option ng-repeat="pd in predicates" value="{{pd.nombre}}">{{pd.descripcion}}</option>
                 </select>
+            </form>
+        </div>
+        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+            <form>
+                <label for="modelBusca">&nbsp;</label>
+                <!--<input type="text" class="form-control" id="modelBusca"  placeholder="Búsqueda campo" ng-keyup="buscarCampo()" ng-model="modelBusca" value="{{ modelBusca || '' }}">-->
+                <input type="text" st-search="{{selectedPredicate}}" class="form-control" id="buscaCampo"  placeholder="Búsqueda campo">
             </form>
         </div>
     </div>
@@ -30,7 +46,7 @@
         <div class="col col-lg-12">
             <div class="search-table-outter wrapper">
                 <div id="no-more-tables">
-                    <table st-table="displayCollection" st-safe-src="registros" class="table table-striped table-bordered table-condensed">
+                    <table class="table table-striped table-bordered table-condensed">
                         <thead class="cf">
                             <tr>
                                 <th  st-sort="idRegistro">Id. Registro</th>
@@ -55,18 +71,18 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
+<!--                            <tr>
                                 <td colspan="2" data-title="Búsqueda global">
-                                    <input st-search placeholder="global" class="input-sm form-control" type="search" id="busquedaGlobal" />
+                                    <input st-search placeholder="global" class="input-sm form-control" id="buscaGlobal" type="search" />
                                 </td>
                                 <td data-title="Búsqueda por campo">
-                                    <input st-search="{{selectedPredicate}}" placeholder="campo" class="input-sm form-control" type="search" />
+                                    <input st-search="{{selectedPredicate}}" placeholder="campo" id="buscaCampo" class="input-sm form-control" type="search" />
                                 </td>
                                 <td colspan="15"></td>
-                            </tr>
+                            </tr>-->
                             <tr ng-repeat="registro in displayCollection| empezarDe : currentPage * pageSize | limitTo:pageSize ">
                                 <td data-title="Id. Registro">{{registro.idRegistro}}</td>
-                               <td data-title="Equivalencia Correlativo">{{registro.equivalenciaCorrelativo}}</td> 
+                                <td data-title="Equivalencia Correlativo">{{registro.equivalenciaCorrelativo}}</td> 
                                 <td data-title="Estado Registro">{{registro.paramEstadoRegistro}}</td>
                                 <td data-title="Investigación">{{registro.idInvestigacion}}</td>
                                 <td data-title="Investigador">{{registro.idInvestigador}}</td>

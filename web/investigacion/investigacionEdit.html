@@ -6,52 +6,55 @@
     <div class="modal-body">
         <div class="container-fluid">
             <div class="row">
-                <div class="col">
+                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
                     <div class="form-group">
                         <label for="idInvestigacion">Id. Investigación:  </label><br>
                         <input readonly type="text" class="form-control" id="idInvestigacion"  placeholder="Id. investigación" ng-model="investigacion.idInvestigacion" value="{{ investigacion.idInvestigacion || '' }}">
                     </div> 
                 </div>
-                <div class="col">
+                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
                     <div class="form-group">
                         <label for="protocolo">Protocolo:  </label><br>
                         <input type="text" class="form-control" id="protocolo"  placeholder="Ingresar protocolo" ng-model="investigacion.protocolo" value="{{ investigacion.protocolo || '' }}">
                     </div> 
                 </div>
-                <div class="col">
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                     <div class="form-group">
                         <label for="titulo">Título:  </label><br>
                         <input type="text" class="form-control" id="titulo"  placeholder="Ingresar título" ng-model="investigacion.titulo" value="{{ investigacion.titulo || '' }}">
                     </div> 
                 </div>
-                <!--
-                <div class="col">
-                    <div class="form-group" >
-                        <label for="paramEspecialidad">Especialidad:  </label><br>
-                        <select class="form-control" id="paramEspecialidad" theme="bootstrap" ng-model="investigacion.paramEspecialidad">
-                            <option ng-repeat="pd in paramEspecialidad | orderBy : 'descripcion'" value="{{pd.id.idParametroDetalle}}">{{pd.descripcion}}</option>
-                        </select>
-                    </div>
+            </div>
+            <!--
+            <div class="col">
+                <div class="form-group" >
+                    <label for="paramEspecialidad">Especialidad:  </label><br>
+                    <select class="form-control" id="paramEspecialidad" theme="bootstrap" ng-model="investigacion.paramEspecialidad">
+                        <option ng-repeat="pd in paramEspecialidad | orderBy : 'descripcion'" value="{{pd.id.idParametroDetalle}}">{{pd.descripcion}}</option>
+                    </select>
                 </div>
-                <div class="col">
-                    <div class="form-group">
-                        <label for="paramFase">Fase:  </label><br>
-                        <select id="paramFase" class="form-control" theme="bootstrap" ng-model="investigacion.paramFase">
-                            <option ng-repeat="pd in paramFase | orderBy : 'descripcion'" value="{{pd.id.idParametroDetalle}}">{{pd.descripcion}}</option>
-                        </select>
-                    </div>
+            </div>
+            <div class="col">
+                <div class="form-group">
+                    <label for="paramFase">Fase:  </label><br>
+                    <select id="paramFase" class="form-control" theme="bootstrap" ng-model="investigacion.paramFase">
+                        <option ng-repeat="pd in paramFase | orderBy : 'descripcion'" value="{{pd.id.idParametroDetalle}}">{{pd.descripcion}}</option>
+                    </select>
                 </div>
-                <div class="col">
-                    <div class="form-group">
-                        <label for="paramTipoInvestigacion">Tipo de Investigación:  </label><br>
-                        <select  id="paramTipoInvestigacion" theme="bootstrap" class="form-control" ng-model="investigacion.paramTipoInvestigacion">
-                            <option ng-repeat="pd in paramTipoInvestigacion | orderBy : 'descripcion' " value="{{pd.id.idParametroDetalle}}">{{pd.descripcion}}</option>
-                        </select>
-                    </div>
+            </div>
+            <div class="col">
+                <div class="form-group">
+                    <label for="paramTipoInvestigacion">Tipo de Investigación:  </label><br>
+                    <select  id="paramTipoInvestigacion" theme="bootstrap" class="form-control" ng-model="investigacion.paramTipoInvestigacion">
+                        <option ng-repeat="pd in paramTipoInvestigacion | orderBy : 'descripcion' " value="{{pd.id.idParametroDetalle}}">{{pd.descripcion}}</option>
+                    </select>
                 </div>
-                -->
-
-                <div class="col">
+            </div>
+            -->
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
                     <div class="form-group">
                         <label>Fase: </label><br>
                         <ui-select ng-model="paramFaseSelected.selected" theme="selectize" title="Seleccionar fase">
@@ -62,8 +65,8 @@
                         </ui-select>
                     </div>
                 </div>
-                
-                <div class="col">
+
+                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
                     <div class="form-group">
                         <label>Tipo de Investigación: </label><br>
                         <ui-select ng-model="paramTipoInvestigacionSelected.selected" theme="selectize" title="Seleccionar especialidad">
@@ -74,9 +77,10 @@
                         </ui-select>
                     </div>
                 </div>
-                
-                
-                <div class="col">
+            </div>
+            <div class="row">
+
+                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
                     <div class="form-group">
                         <label for="paramEspecialidad">Especialidad: </label><br>
                         <ui-select ng-model="paramEspecialidadSelected.selected" theme="selectize" title="Seleccionar especialidad">
@@ -89,7 +93,7 @@
                 </div>
 
                 <!--Patrocinador-->
-                <div class="col">
+                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
                     <div class="form-group">
                         <label>Patrocinador: </label><br>
                         <ui-select ng-model="patrocinadorSelected.selected"  ng-change="cargarCro()" theme="selectize" title="Seleccionar patrocinador">
@@ -100,9 +104,10 @@
                         </ui-select>
                     </div>
                 </div>
-
+            </div>
+            <div class="row">
                 <!--Cro por Patrocinador-->
-                <div class="col">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                     <div class="form-group">
                         <label>Cro </label><br>
                         <ui-select ng-model="croSelected.selected"  ng-change="setearCro()" theme="selectize" title="Seleccionar cro">
@@ -113,9 +118,10 @@
                         </ui-select>
                     </div>
                 </div>
-
+            </div>
+            <div class="row">
                 <!--Inicio de Coordinador-->
-                <div class="col">    
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">    
                     <button ng-disabled="deshabilitado" type="button" style="width: 100%;" class="btn btn-default" ng-click="isCoordinador = !isCoordinador">Coordinador</button>
                     <hr>
                     <div uib-collapse="isCoordinador">
@@ -170,9 +176,11 @@
                             </table>
                         </div>
                     </div>
-                </div>    
+                </div>  
+            </div>
+            <div class="row">
                 <!--Inicio de Investigador-->
-                <div class="col">    
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">    
                     <button ng-disabled="deshabilitado" type="button" style="width: 100%;" class="btn btn-default" ng-click="isInvestigador = !isInvestigador">Investigador</button>
                     <hr>
                     <div uib-collapse="isInvestigador">
@@ -218,7 +226,7 @@
                                                     </button>
                                                 </div>
                                                 <div>
-                                                    {{invInvestigador[1].apePaterno}} {{invCoordinador[1].apeMaterno}}, {{invCoordinador[1].nombres}}
+                                                    {{invInvestigador[1].apePaterno}} {{invInvestigador[1].apeMaterno}}, {{invInvestigador[1].nombres}}
                                                 </div>
                                             </div>
                                         </td>
@@ -228,9 +236,11 @@
                         </div>
                     </div>
                 </div>   
+            </div>
+            <div class="row">
 
                 <!--Inicio de Sede-->
-                <div class="col">    
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">    
                     <button ng-disabled="deshabilitado" type="button" style="width: 100%;" class="btn btn-default" ng-click="isSede = !isSede">Sede</button>
                     <div uib-collapse="isSede">
                         <div>
@@ -285,8 +295,6 @@
                         </div>
                     </div>
                 </div>   
-
-
             </div>
         </div>
         <br>

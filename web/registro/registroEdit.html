@@ -1,4 +1,4 @@
-<div class="modal-content" style="z-index: 1050">
+<div class="modal-content" style="font-size: smaller;">
     <div class="modal-header">
         <button type="button" class="close" ng-click="cerrar()">&times;</button>
         <h4 class="modal-title" id="myModalLabel">Datos de Registro</h4>
@@ -65,9 +65,14 @@
             <div class="row">
                 <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
                     <div class="form-group">
-                        <label for="fechaAprobacion">Fecha aprobación:  </label><br>
-                        <input type="text" class="form-control" id="fechaAprobacion"  placeholder="Seleccionar fecha" ng-model="registro.fechaAprobacion" value="{{registro.fechaAprobacion|| '' }}">
-                    </div> 
+                        <label for="fechaAprobacion" class="control-label">Fecha aprobación: </label><br>
+                        <p class="input-group">
+                            <input type="text" id="fechaAprobacion"  class="form-control" uib-datepicker-popup="dd/MM/yyyy" ng-model="registro.fechaAprobacion" is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true" show-button-bar="false" readonly />
+                            <span class="input-group-btn">
+                                <button type="button" class="btn btn-default" ng-click="open1()"><i class="glyphicon glyphicon-calendar"></i></button>
+                            </span>
+                        </p>
+                    </div>
                 </div>
                 <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
                     <div class="form-group">
@@ -99,13 +104,13 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
                     <div class="form-group">
                         <label for="pacienteEas">Paciente EAS:  </label><br>
                         <input type="text" class="form-control" id="pacienteEas"  placeholder="Paciente EAS" ng-model="registro.pacienteEas" value="{{registro.pacienteEas|| '' }}">
                     </div> 
                 </div>
-                <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
                     <div class="form-group">
                         <label for="easLocal">EAS Local:  </label><br>
                         <input type="text" class="form-control" id="easLocal"  placeholder="EAS Local" ng-model="registro.easLocal" value="{{registro.easLocal|| '' }}">
@@ -113,9 +118,14 @@
                 </div>
                 <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
                     <div class="form-group">
-                        <label for="fechaEas">Fecha EAS:  </label><br>
-                        <input type="text" class="form-control" id="fechaEas"  placeholder="Seleccionar fecha EAS" ng-model="registro.fechaEas" value="{{registro.fechaEas|| '' }}">
-                    </div> 
+                        <label for="fechaEas" class="control-label">Fecha aprobación: </label><br>
+                        <p class="input-group">
+                            <input type="text" id="fechaEas"  class="form-control" uib-datepicker-popup="dd/MM/yyyy" ng-model="registro.fechaEas" is-open="popup2.opened" datepicker-options="dateOptions" ng-required="true" show-button-bar="false" readonly />
+                            <span class="input-group-btn">
+                                <button type="button" class="btn btn-default" ng-click="open2()"><i class="glyphicon glyphicon-calendar"></i></button>
+                            </span>
+                        </p>
+                    </div>
                 </div>
             </div>
             <div class="row">
@@ -155,13 +165,36 @@
                     <hr>
                     <div uib-collapse="isBitacora">         
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
                                 <div class="form-group">
-                                    <label for="fecha">Fecha:  </label><br>
-                                    <input type="text" class="form-control" id="fecha"  placeholder="Fecha" ng-model="registroBitacora.fecha" value="{{ registroBitacora.fecha || '' }}">
-                                </div> 
+                                    <label for="fecha" class="control-label">Fecha: </label><br>
+                                    <p class="input-group">
+                                        <input type="text" id="fecha"  class="form-control" uib-datepicker-popup="dd/MM/yyyy" ng-model="registroBitacora.fecha" is-open="popup3.opened" datepicker-options="dateOptions" ng-required="true" show-button-bar="false" readonly />
+                                        <span class="input-group-btn">
+                                            <button type="button" class="btn btn-default" ng-click="open3()"><i class="glyphicon glyphicon-calendar"></i></button>
+                                        </span>
+                                    </p>
+                                </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+                                <div class="form-group">
+                                    <label for="paramTipoBitacora">Tipo bitacora:  </label><br>
+                                    <select class="form-control" id="paramTipoBitacora" ng-model="registroBitacora.paramTipoBitacora" ng-change="cargarDetalleBitacora()">
+                                        <option ng-repeat="pd in paramTipoBitacora | orderBy:'descripcion'" value="{{pd.id.idParametroDetalle}}">{{pd.descripcion}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+                                <div class="form-group">
+                                    <label for="paramDetalleBitacora">Detalle:  </label><br>
+                                    <select ng-disabled="flagTipoBitacora" class="form-control" id="paramDetalleBitacora" ng-model="registroBitacora.paramDetalleBitacora">
+                                        <option ng-repeat="pd in paramDetalleBitacora | orderBy:'descripcion'" value="{{pd.id.idParametroDetalle}}">{{pd.descripcion}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-12 col-md-12col-lg-12">
                                 <div class="form-group">
                                     <label for="detalle">Detalle:  </label><br>
                                     <p class="input-group">
@@ -175,6 +208,12 @@
                         </div>
                         <div class="row">
                             <div class="col-md-12">
+                                <input type="text" ng-model="txtFiltroBitacora" class="form-control" placeholder="Buscar">
+                            </div>
+                            <hr>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
                                 <table class="table table-bordered table-hover table-condensed table-responsive">
                                     <thead>
                                         <tr>
@@ -182,7 +221,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr ng-repeat="registroBitacora in registroBitacoras | orderBy:'idCorrespondenciaServicio'">
+                                        <tr ng-repeat="registroBitacora in registroBitacoras| filter:txtFiltroBitacora | orderBy:'paramTipoBitacora' track by $index ">
                                             <td>
                                                 <div>
                                                     <div>
@@ -191,7 +230,7 @@
                                                         </button>
                                                     </div>
                                                     <div>
-                                                        {{registroBitacora.detalle}} - {{registroBitacora.fecha}}
+                                                        <b>{{registroBitacora.paramTipoBitacora}}: </b> {{registroBitacora.paramDetalleBitacora}} -  {{registroBitacora.detalle}} - {{registroBitacora.fecha}}
                                                     </div>
                                                 </div>
                                             </td>
@@ -214,38 +253,3 @@
         </button>
     </div>
 </div>
-
-<script type="text/javascript">
-    $('.form_datetime').datetimepicker({
-        language: 'es',
-        weekStart: 1,
-        todayBtn: 1,
-        autoclose: 1,
-        todayHighlight: 1,
-        startView: 2,
-        forceParse: 0,
-        showMeridian: 1
-    });
-    $('.form_date').datetimepicker({
-        language: 'es',
-        setDate: new Date(),
-        weekStart: 1,
-        todayBtn: 1,
-        autoclose: 1,
-        todayHighlight: 1,
-        startView: 2,
-        minView: 2,
-        forceParse: 0
-    });
-    $('.form_time').datetimepicker({
-        language: 'es',
-        weekStart: 1,
-        todayBtn: 1,
-        autoclose: 1,
-        todayHighlight: 1,
-        startView: 1,
-        minView: 0,
-        maxView: 1,
-        forceParse: 0
-    });
-</script>

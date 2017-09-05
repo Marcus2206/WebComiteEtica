@@ -1,4 +1,4 @@
-<div class="modal-content">
+<div class="modal-content" st-table="displayCollection"  st-safe-src="investigacions" >
     <div class="modal-header">
         <button type="button" class="close" ng-click="cerrar()">&times;</button>
         <h4 class="modal-title" id="myModalLabel">Buscar investigación</h4>
@@ -6,29 +6,73 @@
     <div class="modal-body">
         <div class="container-fluid">
             <div class="row">
-                <div class="col">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
                     <div class="form-group">
-                        <label>Investigación: {{investigacion.selected.titulo}}</label><br>
-                        <ui-select ng-model="investigacion.selected" theme="selectize" title="Seleccionar investigación">
-                            <ui-select-match placeholder="Seleccinar investigación">{{$select.selected.protocolo}}</ui-select-match>
-                            <ui-select-choices repeat="inv in investigacions | filter: $select.search">
-                                <div ng-bind-html="inv.protocolo | highlight: $select.search"></div>
-                                <small ng-bind-html="inv.titulo | highlight: $select.search"></small>
-                                <small ng-bind-html="inv.paramEspecialidad | highlight: $select.search"></small>
-                                <small ng-bind-html="inv.paramFase | highlight: $select.search"></small>
-                                <small ng-bind-html="inv.paramTipoInvestigacion | highlight: $select.search"></small>
-                            </ui-select-choices>
-                        </ui-select>
+                        <label for="buscaGlobal">Búsqueda global:</label>
+                        <input type="text" st-search type="search"  class="form-control" id="buscaGlobal"  placeholder="Búsqueda global">
+                        <br>
                     </div>
                 </div>
             </div>
+            <div class="row">
+                <div class="col col-lg-12">
+                    <table class="table table-striped table-bordered table-condensed"  >
+                        <thead>
+                            <tr>
+                                <th>Investigación</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="investigacion in displayCollection| empezarDe : currentPage * pageSize | limitTo:pageSize">
+                                <td>
+                                    <div>
+                                        <div>
+                                            <button type="button" class="close" data-toggle="tooltip" title="Enviar" ng-click="enviar(investigacion)">
+                                                <span aria-hidden="true">&#10132;</span>
+                                            </button>
+                                        </div>
+                                        <div style="font-size: smaller;">
+                                            <b>Id. Investigación:</b>{{investigacion.idInvestigacion}}<br>
+                                             <b>Protocolo:</b>{{investigacion.protocolo}}<br>
+                                             <b>Título</b>{{investigacion.titulo}}<br>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="1" class="text-center">
+                                    <div st-pagination="" st-items-by-page="itemsByPage" st-displayed-pages="7"></div>
+                                </td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+<!--            <div class="row">
+                <div class="col-md-12">
+                    <div class="container">
+                    <div class="center-block" style="text-align: center">
+                        <button ng-disabled="currentPage === 0" ng-click="currentPage = currentPage - 1" class="btn btn-default">
+                            <span aria-hidden="true">&laquo;</span>
+                        </button>
+                        {{currentPage + 1}}/{{numberOfPages()}}
+                        <button ng-disabled="currentPage >= investigacions.length / pageSize - 1" ng-click="setNextPagina()" class="btn btn-default">
+                            <span aria-hidden="true">&raquo;</span>
+                        </button>
+                    </div>
+                    </div>
+                </div>
+            </div>-->
         </div>
-        <br>
+
     </div>
+
     <div class="modal-footer">
-        <button type="button" class="btn btn-default" ng-click="enviar()">
-            Enviar
-        </button>
+        <!--        <button type="button" class="btn btn-default" ng-click="enviar()">
+                    Enviar
+                </button>-->
         <button type="button" class="btn btn-default" ng-click="cerrar()">
             Cancelar
         </button>

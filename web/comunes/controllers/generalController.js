@@ -7,22 +7,12 @@ app.controller('fechaController', function ($scope) {
 
 
 
-app.controller("subirController", function ($scope, $http, $log, registros, NgTableParams) {
+app.controller("subirController", function ($scope, $http, $log, registros) {
 //    /*Se obtiene lista de registros*/
-    $scope.registros = registros;
-
-    /*Columnas para realizar el filtro*/
-    $scope.predicates = [{nombre: 'idRegistro', descripcion: 'Id. Registro'},
-        {nombre: 'paramEstadoRegistro', descripcion: 'Estado Registro'},
-        {nombre: 'idInvestigacion', descripcion: 'Investigación'},
-        {nombre: 'idInvestigador', descripcion: 'Investigador'},
-        {nombre: 'paramNotificacion', descripcion: 'Notificación'}];
-    $scope.selectedPredicate = $scope.predicates[0];
-
-
-    var self = this;
-    $scope.data = [{name: "Moroni", age: 50},{name: "asdasd", age: 12} ,{name: "ddddd", age: 65} ,{name: "eeeeeMoroni", age: 88}  /*,*/];
-    $scope.tableParams = new NgTableParams({}, {dataset: $scope.data});
-
+//    $scope.rowCollection = [
+//        {firstName: 'Laurent', lastName: 'Renard', birthDate: new Date('1987-05-21'), balance: 102, email: 'whatever@gmail.com'},
+//        {firstName: 'Blandine', lastName: 'Faivre', birthDate: new Date('1987-04-25'), balance: -2323.22, email: 'oufblandou@gmail.com'},
+//        {firstName: 'Francoise', lastName: 'Frere', birthDate: new Date('1955-08-27'), balance: 42343, email: 'raymondef@gmail.com'}
+//    ];
 });
 
