@@ -2,10 +2,10 @@ var app = angular.module("app");
 
 app.controller("EditRegistroController",
         ['$scope', 'registro', 'parametros', 'registroRR',
-            "$log", "$uibModalInstance", 'SweetAlert',
+            "$log", "$uibModalInstance", 'SweetAlert', 'opcion',
             '$uibModal', 'registroBitacoraRR', '$rootScope',
             function ($scope, registro, parametros, registroRR,
-                    $log, $uibModalInstance, SweetAlert,
+                    $log, $uibModalInstance, SweetAlert, opcion,
                     $uibModal, registroBitacoraRR, $rootScope) {
 
                 var tomorrow = new Date();
@@ -73,6 +73,7 @@ app.controller("EditRegistroController",
                     return obj.filter(filterByParametro);
                 };
 
+                $scope.opcion = opcion;
                 $scope.parametros = parametros;
                 $scope.paramEstado = $scope.filtrar($scope.parametros, 'P006')[0].parametroDetalles;
                 $scope.paramNotificacion = $scope.filtrar($scope.parametros, 'P007')[0].parametroDetalles;
@@ -287,8 +288,9 @@ app.controller("ListRegistroController",
                 };
 
                 /*Editar un registro*/
-                $scope.editarModal = function (registroObj) {
+                $scope.editarModal = function (registroObj, opcion) {
                     $scope.registroObj = registroObj;
+                    $scope.opcion = opcion;
                     var modalInstance = $uibModal.open({
                         templateUrl: 'registro/registroEdit.html',
                         controller: "EditRegistroController",
@@ -302,7 +304,8 @@ app.controller("ListRegistroController",
                             },
                             parametros: ['parametroRR', function (parametroRR) {
                                     return parametroRR.list();
-                                }]
+                                }],
+                            opcion: opcion
                         }
                     });
 
@@ -333,7 +336,8 @@ app.controller("ListRegistroController",
                         resolve: {
                             parametros: ['parametroRR', function (parametroRR) {
                                     return parametroRR.list();
-                                }]
+                                }],
+                            opcion: false
                         }
                     });
 
@@ -346,7 +350,7 @@ app.controller("ListRegistroController",
                                 if (data !== "escape key press") {
                                     //Si no es cancel, se reemplaza el objeto que se mandó a actualizar
                                     $scope.registros.push(data);
-                                    $scope.editarModal(data);
+                                    $scope.editarModal(data, false);
                                 }
                             }
                         } else {
@@ -459,6 +463,7 @@ app.controller("NewRegistroController",
                     return obj.filter(filterByParametro);
                 };
 
+                $scope.opcion = false;
                 $scope.parametros = parametros;
                 $scope.paramEstado = $scope.filtrar($scope.parametros, 'P006')[0].parametroDetalles;
                 $scope.paramNotificacion = $scope.filtrar($scope.parametros, 'P007')[0].parametroDetalles;

@@ -36,7 +36,6 @@
         <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
             <form>
                 <label for="buscaCampo">&nbsp;</label>
-                <!--<input type="text" class="form-control" id="modelBusca"  placeholder="Búsqueda campo" ng-keyup="buscarCampo()" ng-model="modelBusca" value="{{ modelBusca || '' }}">-->
                 <input type="text" st-search="{{selectedPredicate}}" class="form-control" id="buscaCampo"  placeholder="Búsqueda campo">
             </form>
         </div>
@@ -54,28 +53,24 @@
                                 <th st-sort="nroFactura">Nro. Factura</th>
                                 <th st-sort="observacion">Observación</th>
                                 <th st-sort="paramEstadoPago">Estado Pago</th>
-                                <th>Acciones</th>
+                                <th colspan="3" style="text-align: center">Acciones</th>
                             </tr>
                         </thead>
                         <tbody>
-<!--                            <tr>
-                                <td colspan="2" data-title="Búsqueda global">
-                                    <input st-search placeholder="global" class="input-sm form-control" type="search" id="busquedaGlobal" />
-                                </td>
-                                <td data-title="Búsqueda por campo">
-                                    <input st-search="{{selectedPredicate}}" placeholder="campo" class="input-sm form-control" type="search" />
-                                </td>
-                                <td colspan="3"></td>
-                            </tr>-->
                             <tr ng-repeat="pago in displayCollection| empezarDe : currentPage * pageSize | limitTo:pageSize">
                                 <td data-title="Id. Pago">{{pago.idPago}}</td>
                                 <td data-title="Precio">{{pago.costo}}</td>
                                 <td data-title="Nro. Factura">{{pago.nroFactura}}</td>
                                 <td data-title="Observación">{{pago.observacion}}</td>
                                 <td data-title="Estado Pago">{{pago.paramEstadoPago}}</td>
-                                <td>
-                                    <button class="btn btn-primary" ng-click="editarModal(pago)"><i class="fa fa-pencil-square-o" aria-hidden="true"></i><span class="hidden-xs"> Editar</span></button>
-                                    <button class="btn btn-danger" ng-click="eliminar(pago)" ><i class="fa fa-trash" aria-hidden="true"></i><span class="hidden-xs"> Eliminar</span></button>
+                                <td data-title="Ver">
+                                    <button data-toggle="tooltip" title="Ver"  class="btn btn-default" ng-click="editarModal(pago,true)"><i class="fa fa-eye" aria-hidden="true"></i><span class="hidden-xs"> </span></button>
+                                </td>
+                                <td data-title="Editar">
+                                    <button data-toggle="tooltip" title="Editar"  class="btn btn-default" ng-click="editarModal(pago,false)"><i class="fa fa-pencil-square-o" aria-hidden="true"></i><span class="hidden-xs"></span></button>
+                                </td>
+                                <td data-title="Eliminar">
+                                    <button data-toggle="tooltip" title="Eliminar"  class="btn btn-danger" ng-click="eliminar(pago)" ><i class="fa fa-trash" aria-hidden="true"></i><span class="hidden-xs"></span></button>
                                 </td>
                             </tr>
                         </tbody>

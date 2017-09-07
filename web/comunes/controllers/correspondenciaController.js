@@ -1,10 +1,10 @@
 var app = angular.module("app");
 app.controller("EditCorrespondenciaController",
         ['$scope', 'correspondencia', 'parametros', 'correspondenciaRR',
-            'correspondenciaFileRR', 'fileRR', 'fechaSesionRR',
+            'correspondenciaFileRR', 'fileRR', 'fechaSesionRR', 'opcion',
             "$log", "$uibModalInstance", 'SweetAlert', "$q", '$uibModal', 'correspondenciaServicioRR', "$rootScope",
             function ($scope, correspondencia, parametros, correspondenciaRR,
-                    correspondenciaFileRR, fileRR, fechaSesionRR,
+                    correspondenciaFileRR, fileRR, fechaSesionRR, opcion,
                     $log, $uibModalInstance, SweetAlert, $q, $uibModal, correspondenciaServicioRR, $rootScope) {
 
                 var tomorrow = new Date();
@@ -70,6 +70,7 @@ app.controller("EditCorrespondenciaController",
                     }
                     return obj.filter(filterByParametro);
                 };
+                $scope.opcion = opcion;
                 $scope.paramTipoServicio = $scope.filtrar($scope.parametros, 'P001')[0].parametroDetalles;
                 $scope.paramDistribucion = $scope.filtrar($scope.parametros, 'P002')[0].parametroDetalles;
                 $scope.servicioSelect = {};
@@ -149,8 +150,8 @@ app.controller("EditCorrespondenciaController",
                                 var selIndex = listbox.selectedIndex;
                                 var selText = listbox.options[selIndex].text;
                                 correspondenciaRespond.paramDistribucion = selText;
-                                                                
-                                 var index = $scope.correspondencias.indexOf($scope.correspondenciaObj);
+
+                                var index = $scope.correspondencias.indexOf($scope.correspondenciaObj);
                                 if (index !== -1) {
                                     /*Conserva el valor del identificador HashKey del array inicial, sólo se actualzian los valores.*/
                                     angular.forEach(correspondenciaRespond, function (value, key) {
@@ -159,7 +160,7 @@ app.controller("EditCorrespondenciaController",
                                         }
                                     });
                                 }
-                                
+
                                 SweetAlert.swal("Hecho!", "Registro guardado exitosamente.", "success");
                             }, function (bussinessMessages) {
                                 $scope.bussinessMessages = bussinessMessages;
@@ -255,7 +256,7 @@ app.controller("ListCorrespondenciaController",
                     $log, $uibModal, SweetAlert, UrlOrigen, localStorageService) {
 
                 if (idNotificacionParam !== "all") {
-                      var bg = document.getElementById("buscaGlobal");
+                    var bg = document.getElementById("buscaGlobal");
                     bg.value = idNotificacionParam;
                 }
 
@@ -289,7 +290,8 @@ app.controller("ListCorrespondenciaController",
                     return $scope.currentPage;
                 };
                 /*Editar un registro*/
-                $scope.editarModal = function (correspondenciaObj) {
+                $scope.editarModal = function (correspondenciaObj, opcion) {
+                    $scope.correspondenciaObj = correspondenciaObj;
                     var modalInstance = $uibModal.open({
                         templateUrl: 'correspondencia/correspondenciaEdit.html',
                         controller: "EditCorrespondenciaController",
@@ -303,7 +305,8 @@ app.controller("ListCorrespondenciaController",
                             },
                             parametros: ['parametroRR', function (parametroRR) {
                                     return parametroRR.list();
-                                }]
+                                }],
+                            opcion: opcion
                         }
                     });
                     modalInstance.result.then(function () {
@@ -333,7 +336,8 @@ app.controller("ListCorrespondenciaController",
                         resolve: {
                             parametros: ['parametroRR', function (parametroRR) {
                                     return parametroRR.list();
-                                }]
+                                }],
+                            opcion: false
                         }
                     });
                     modalInstance.result.then(function () {
@@ -345,7 +349,7 @@ app.controller("ListCorrespondenciaController",
                                 if (data !== "escape key press") {
                                     //Si no es cancel, se reemplaza el objeto que se mandó a actualizar
                                     $scope.correspondencias.push(data);
-                                    $scope.editarModal(data);
+                                    $scope.editarModal(data,false);
                                 }
                             }
                         } else {
@@ -384,9 +388,9 @@ app.controller("ListCorrespondenciaController",
                 };
             }]);
 app.controller("NewCorrespondenciaController",
-        ['$scope', 'correspondenciaRR', 'fechaSesionRR',
+        ['$scope', 'correspondenciaRR', 'fechaSesionRR', 'opcion',
             'parametros', "$log", "$uibModalInstance", 'SweetAlert', '$uibModal', "$rootScope",
-            function ($scope, correspondenciaRR, fechaSesionRR,
+            function ($scope, correspondenciaRR, fechaSesionRR, opcion,
                     parametros, $log, $uibModalInstance, SweetAlert, $uibModal, $rootScope) {
 
                 var tomorrow = new Date();
@@ -454,6 +458,7 @@ app.controller("NewCorrespondenciaController",
                     }
                     return obj.filter(filterByParametro);
                 };
+                $scope.opcion = opcion;
                 $scope.paramTipoServicio = $scope.filtrar($scope.parametros, 'P001')[0].parametroDetalles;
                 $scope.paramDistribucion = $scope.filtrar($scope.parametros, 'P002')[0].parametroDetalles;
                 $scope.isServicio = true;

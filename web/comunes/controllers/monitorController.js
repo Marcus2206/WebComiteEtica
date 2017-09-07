@@ -2,12 +2,12 @@ var app = angular.module("app");
 
 app.controller("NewMonitorController",
         ['$scope', 'monitorRR', '$location', "$log", "$uibModalInstance",
-            'SweetAlert', '$rootScope',
+            'SweetAlert', '$rootScope','opcion',
             function ($scope, monitorRR, $location, $log, $uibModalInstance,
-                    SweetAlert, $rootScope) {
+                    SweetAlert, $rootScope, opcion) {
 
                 $scope.nombreBoton = "Nuevo";
-
+                $scope.opcion=opcion;
                 /*Se construyer el json*/
                 $scope.monitor = {
                     idMonitor: "",
@@ -107,7 +107,7 @@ app.controller("ListMonitorController",
                 };
 
                 /*Editar un registro*/
-                $scope.editarModal = function (monitorObj) {
+                $scope.editarModal = function (monitorObj, opcion) {
                     $scope.monitorObj = monitorObj;
                     var modalInstance = $uibModal.open({
                         templateUrl: 'monitor/monitorEdit.html',
@@ -120,7 +120,8 @@ app.controller("ListMonitorController",
                         resolve: {
                             monitor: function () {
                                 return monitorRR.get(monitorObj.idMonitor);
-                            }
+                            },
+                            opcion:opcion
                         }
                     });
 
@@ -147,7 +148,10 @@ app.controller("ListMonitorController",
                         controller: "NewMonitorController",
                         size: 'md',
                         backdrop: 'static',
-                        keyboard: false
+                        keyboard: false,
+                        resolve:{
+                            opcion:false
+                        }
                     });
 
                     modalInstance.result.then(function () {
@@ -159,7 +163,7 @@ app.controller("ListMonitorController",
                                 if (data !== "escape key press") {
                                     /*añade a la lista sin recargar la página*/
                                     $scope.monitors.push(data);
-                                    $scope.editarModal(data);
+                                    $scope.editarModal(data, false);
                                 }
                             }
                         } else {
@@ -171,12 +175,12 @@ app.controller("ListMonitorController",
 
 app.controller("EditMonitorController",
         ['$scope', "monitor", 'monitorRR', '$location', "$log", "$route",
-            "$uibModalInstance", 'SweetAlert', '$rootScope',
+            "$uibModalInstance", 'SweetAlert', '$rootScope','opcion',
             function ($scope, monitor, monitorRR, $location, $log, $route,
-                    $uibModalInstance, SweetAlert, $rootScope) {
+                    $uibModalInstance, SweetAlert, $rootScope, opcion) {
 
                 $scope.monitor = monitor;
-
+                $scope.opcion=opcion;
                 $scope.guardar = function () {
                     //if ($scope.form.$valid) {
                     $scope.monitor.usuarioModifica = $rootScope.username;

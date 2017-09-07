@@ -15,7 +15,6 @@
             <hr>
         </div>
     </div>
-
     <div class="row">
         <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
             <form>
@@ -50,36 +49,40 @@
                         <thead>
                             <tr>
                                 <th st-sort="idCorrespondencia">Código</th>
+                                <th st-sort="correlativoInterno">Correlativo Interno</th>
                                 <th st-sort="fechaCorrespondencia">Fecha Correspondencia</th>
                                 <th st-sort="fechaCarta">Fecha Carta</th>
                                 <th st-sort="idRegistro">Registro</th>
                                 <th st-sort="equivalenciaCorrelativo">Correlativo equiv.</th>
-                                <th st-sort="paramTipoServicio">Tipo de Servicio</th>
                                 <th st-sort="paramDistribucion">Distribución</th>
                                 <th st-sort="otro">Comentario</th>
                                 <th st-sort="fechaSesion">Fecha Sesión</th>
                                 <th st-sort="enviarCorreo">Enviar Correo</th>
                                 <th st-sort="enviado">Estado Envío</th>
-                                <th>Acción</th>
+                                <th colspan="3" style="text-align: center">Acción</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr ng-repeat="correspondencia in displayCollection| empezarDe : currentPage * pageSize | limitTo:pageSize">
                                 <td data-title="Código">{{correspondencia.idCorrespondencia}}</td>
+                                <td data-title="Código">{{correspondencia.correlativoInterno}}</td>
                                 <td data-title="Fecha Correspodencia">{{correspondencia.fechaCorrespondencia|date:'dd/MM/yyyy'}}</td>
                                 <td data-title="Fecha Carta">{{correspondencia.fechaCarta|date:'dd/MM/yyyy'}}</td>
                                 <td data-title="Registro">{{correspondencia.idRegistro}}</td>
                                 <td data-title="Correlativo equiv.">{{correspondencia.equivalenciaCorrelativo}}</td>
-                                <td data-title="Tipo de Servicio">{{correspondencia.paramTipoServicio}}</td>
                                 <td data-title="Distribución">{{correspondencia.paramDistribucion}}</td>
                                 <td data-title="Comentario">{{correspondencia.otro}}</td>
                                 <td data-title="Fecha Sesión">{{correspondencia.fechaSesion|date:'dd/MM/yyyy'}}</td>
                                 <td data-title="Enviar Correo"> {{correspondencia.enviarCorreo|booleanToText}}</td>
                                 <td data-title="Estado Envío">{{correspondencia.enviado|booleanToText}}</td>
-                                <td>
-                                    <button class="btn btn-primary" ng-click="editarModal(correspondencia)"><i class="fa fa-pencil-square-o" aria-hidden="true"></i><span class="hidden-xs"> Editar</span></button>
-                                    <button class="btn btn-danger" ng-click="eliminar(correspondencia)" ><i class="fa fa-trash" aria-hidden="true"></i><span class="hidden-xs"> Eliminar</span></button>
-
+                                <td  data-title="Ver">
+                                    <button data-toggle="tooltip" title="Ver"  class="btn btn-default" ng-click="editarModal(correspondencia, true)"><i class="fa fa-eye" aria-hidden="true"></i><span class="hidden-xs"> </span></button> 
+                                </td>
+                                <td  data-title="Editar">
+                                    <button data-toggle="tooltip" title="Editar"  class="btn btn-default" ng-click="editarModal(correspondencia, false)"><i class="fa fa-pencil-square-o" aria-hidden="true"></i><span class="hidden-xs"> </span></button>
+                                </td>
+                                <td  data-title="Eliminar">
+                                    <button data-toggle="tooltip" title="Eliminar"  class="btn btn-danger" ng-click="eliminar(correspondencia)" ><i class="fa fa-trash" aria-hidden="true"></i><span class="hidden-xs"> </span></button>
                                 </td>
                             </tr>
                         </tbody>

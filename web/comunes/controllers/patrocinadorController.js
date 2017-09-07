@@ -1,14 +1,14 @@
 var app = angular.module("app");
 
 app.controller("NewPatrocinadorController",
-        ['$scope', 'patrocinadorRR', '$location', "$log",
+        ['$scope', 'patrocinadorRR', '$location', "$log", 'opcion',
             "$uibModalInstance", 'SweetAlert', '$rootScope',
-            function ($scope, patrocinadorRR, $location, $log,
+            function ($scope, patrocinadorRR, $location, $log, opcion,
                     $uibModalInstance, SweetAlert, $rootScope) {
 
                 $scope.deshabilitado = true;
                 $scope.isCro = true;
-
+                $scope.opcion = opcion;
                 /*Se construyer el json*/
                 $scope.patrocinador = {
                     idPatrocinador: "",
@@ -102,7 +102,7 @@ app.controller("ListPatrocinadorController",
                 };
 
                 /*Editar un registro*/
-                $scope.editarModal = function (patrocinadorObj) {
+                $scope.editarModal = function (patrocinadorObj, opcion) {
                     $scope.patrocinadorObj = patrocinadorObj;
                     var modalInstance = $uibModal.open({
                         templateUrl: 'patrocinador/patrocinadorEdit.html',
@@ -114,7 +114,8 @@ app.controller("ListPatrocinadorController",
                         resolve: {
                             patrocinador: function () {
                                 return patrocinadorRR.get(patrocinadorObj.idPatrocinador);
-                            }
+                            },
+                            opcion: opcion
                         }
                     });
 
@@ -141,7 +142,10 @@ app.controller("ListPatrocinadorController",
                         controller: "NewPatrocinadorController",
                         size: 'md',
                         backdrop: 'static',
-                        keyboard: false
+                        keyboard: false,
+                        resolve: {
+                            opcion: false
+                        }
                     });
 
                     modalInstance.result.then(function () {
@@ -153,7 +157,7 @@ app.controller("ListPatrocinadorController",
                                 if (data !== "escape key press") {
                                     /*añade a la lista sin recargar la página*/
                                     $scope.patrocinadors.push(data);
-                                    $scope.editarModal(data);
+                                    $scope.editarModal(data, false);
                                 }
                             }
                         } else {
@@ -164,10 +168,10 @@ app.controller("ListPatrocinadorController",
             }]);
 
 app.controller("EditPatrocinadorController",
-        ['$scope', "patrocinador", 'patrocinadorRR', '$location', "croRR",
+        ['$scope', "patrocinador", 'patrocinadorRR', '$location', "croRR", 'opcion',
             "$log", "$route", "$uibModalInstance", 'SweetAlert', '$rootScope', "patrocinadorCroRR",
             "$confirm",
-            function ($scope, patrocinador, patrocinadorRR, $location, croRR,
+            function ($scope, patrocinador, patrocinadorRR, $location, croRR, opcion,
                     $log, $route, $uibModalInstance, SweetAlert, $rootScope, patrocinadorCroRR,
                     $confirm) {
 
@@ -175,7 +179,7 @@ app.controller("EditPatrocinadorController",
                 $scope.crosSelectList = [];
                 $scope.croSelect = {};
                 $scope.isCro = true;
-
+                $scope.opcion = opcion;
                 $scope.patrocinador = patrocinador;
 
                 /*Cros seleccionables*/

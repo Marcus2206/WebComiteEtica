@@ -2,14 +2,14 @@ var app = angular.module("app");
 
 app.controller("NewSedeController",
         ['$scope', 'sedeRR', '$location', "$log", "$uibModalInstance", "ubigeoRR",
-            'SweetAlert', '$rootScope',
+            'SweetAlert', '$rootScope','opcion',
             function ($scope, sedeRR, $location, $log, $uibModalInstance, ubigeoRR,
-                    SweetAlert, $rootScope) {
+                    SweetAlert, $rootScope, opcion) {
 
                 $scope.departamentos;
                 $scope.provincias;
                 $scope.distritos;
-
+                $scope.opcion=opcion;
                 ubigeoRR.getDepartamentoList()
                         .then(function (ubigeoResult) {
                             $scope.departamentos = ubigeoResult;
@@ -157,7 +157,7 @@ app.controller("ListSedeController",
                 };
 
                 /*Editar un registro*/
-                $scope.editarModal = function (sedeObj) {
+                $scope.editarModal = function (sedeObj, opcion) {
                     $scope.sedeObj = sedeObj;
                     var modalInstance = $uibModal.open({
                         templateUrl: 'sede/sedeEdit.html',
@@ -169,7 +169,8 @@ app.controller("ListSedeController",
                         resolve: {
                             sede: function () {
                                 return sedeRR.get(sedeObj.idSede);
-                            }
+                            },
+                            opcion:opcion
                         }
                     });
 
@@ -196,7 +197,10 @@ app.controller("ListSedeController",
                         controller: "NewSedeController",
                         size: 'md',
                         backdrop: 'static',
-                        keyboard: false
+                        keyboard: false,
+                        resolve:{
+                            opcion:false
+                        }
                     });
 
                     modalInstance.result.then(function () {
@@ -208,7 +212,7 @@ app.controller("ListSedeController",
                                 if (data !== "escape key press") {
                                     /*añade a la lista sin recargar la página*/
                                     $scope.sedes.push(data);
-                                    $scope.editarModal(data);
+                                    $scope.editarModal(data, false);
                                 }
                             }
                         } else {
@@ -220,14 +224,14 @@ app.controller("ListSedeController",
 
 app.controller("EditSedeController",
         ['$scope', "sede", 'sedeRR', '$location', "$log", "$route", "$uibModalInstance",
-            "ubigeoRR", 'SweetAlert', '$rootScope',
+            "ubigeoRR", 'SweetAlert', '$rootScope','opcion',
             function ($scope, sede, sedeRR, $location, $log, $route, $uibModalInstance,
-                    ubigeoRR, SweetAlert, $rootScope) {
+                    ubigeoRR, SweetAlert, $rootScope, opcion) {
                 $scope.departamentos;
                 $scope.provincias;
                 $scope.distritos;
                 $scope.first = true;
-
+                $scope.opcion=opcion;
                 $scope.cargarDistrito = function () {
                     if (!$scope.first) {
                         $scope.sede.idDistrito = null;

@@ -17,13 +17,13 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="nroFactura">Nro. Factura:  </label><br>
-                        <input type="text" class="form-control" id="nroFactura"  placeholder="Nro. Factura" ng-model="pago.nroFactura" value="{{pago.nroFactura|| '' }}">
+                        <input ng-readonly="opcion" type="text" class="form-control" id="nroFactura"  placeholder="Nro. Factura" ng-model="pago.nroFactura" value="{{pago.nroFactura|| '' }}">
                     </div> 
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="precio">Precio:  </label><br>
-                        <input type="text" class="form-control" id="precio"  placeholder="Precio total" ng-model="pago.costo" value="{{pago.costo||'' }}">
+                        <input ng-readonly="opcion" type="text" class="form-control" id="precio"  placeholder="Precio total" ng-model="pago.costo" value="{{pago.costo||'' }}">
                     </div> 
                 </div>
             </div>
@@ -31,7 +31,7 @@
                 <div class="col-md-12">
                     <div class="form-group">
                         <label for="observacion">Observación:  </label><br>
-                        <input type="text" class="form-control" id="observacion"  placeholder="Observación" ng-model="pago.observacion" value="{{pago.observacion|| '' }}">
+                        <input ng-readonly="opcion" type="text" class="form-control" id="observacion"  placeholder="Observación" ng-model="pago.observacion" value="{{pago.observacion|| '' }}">
                     </div> 
                 </div>
             </div>
@@ -50,7 +50,7 @@
                         <p class="input-group">
                             <input type="text" class="form-control" id="contador"  readonly placeholder="Contador" ng-model="pago.contador" value="{{ pago.contador || '' }}">
                             <span class="input-group-btn">
-                                <button type="button" class="btn btn-default" ng-click="enviarMailConta()" data-toggle="tooltip" title="Enviar Correo">
+                                <button ng-disabled="opcion" type="button" class="btn btn-default" ng-click="enviarMailConta()" data-toggle="tooltip" title="Enviar Correo">
                                     <i class="glyphicon glyphicon-forward"></i>
                                 </button>
                             </span>
@@ -64,9 +64,9 @@
                     <div class="form-group">
                         <label for="copiaCorreo" data-toggle="tooltip" title="Para ingresar varios correos, por favor, separárlos con ;">Enviar copia a participantes: </label><br>
                         <p class="input-group">
-                            <input type="text" class="form-control" id="copiaCorreo"  placeholder="Copia a..." ng-model="pago.copiaCorreo" value="{{ pago.copiaCorreo || '' }}">
+                            <input ng-readonly="opcion" type="text" class="form-control" id="copiaCorreo"  placeholder="Copia a..." ng-model="pago.copiaCorreo" value="{{ pago.copiaCorreo || '' }}">
                             <span class="input-group-btn">
-                                <button type="button" class="btn btn-default" ng-click="enviarMailCopia()" data-toggle="tooltip" title="Enviar Copia">
+                                <button  ng-disabled="opcion"  type="button" class="btn btn-default" ng-click="enviarMailCopia()" data-toggle="tooltip" title="Enviar Copia">
                                     <i class="glyphicon glyphicon-forward"></i>
                                 </button>
                             </span>
@@ -92,10 +92,10 @@
                                         <td>
                                             <div>
                                                 <div>
-                                                    <button type="button" class="close" data-toggle="tooltip" title="Eliminar" ng-click="eliminarDetalle(pagoDetalle)">
+                                                    <button ng-disabled="opcion" type="button" class="close" data-toggle="tooltip" title="Eliminar" ng-click="eliminarDetalle(pagoDetalle)">
                                                         <span aria-hidden="true">&times;</span>
                                                     </button>
-                                                    <button type="button" class="close" data-toggle="tooltip" title="Editar" ng-click="editarDetalle(pagoDetalle)">
+                                                    <button ng-disabled="opcion" type="button"  class="close" data-toggle="tooltip" title="Editar" ng-click="editarDetalle(pagoDetalle)">
                                                         <span aria-hidden="true">&#9998;</span>
                                                     </button>
                                                 </div>
@@ -105,37 +105,19 @@
                                             </div>
                                         </td>
                                     </tr>
-
-                                    <!--                                    <tr ng-repeat="pagoDetalle in pagoDetalles| orderBy:'idPagoDetalle'">
-                                                                            <td>
-                                                                                <div>
-                                                                                    <div>
-                                                                                        <button type="button" class="close" aria-label="Close" ng-click="eliminarDetalle(pagoDetalle)">
-                                                                                            <span aria-hidden="true">&times;</span>
-                                                                                        </button>
-                                                                                    </div>
-                                                                                    <div>
-                                                                                        {{pagoDetalle.nparamTipoServicio}} - {{pagoDetalle.protocolo}} - {{pagoDetalle.titulo}}
-                                                                                    </div>
-                                                                                </div>
-                                                                            </td>
-                                                                        </tr>-->
-
                                 </tbody>
                             </table>
                         </div>
                     </div>
                 </div>    
             </div>
-
-
         </div>
     </div>
     <br>
 
 
     <div class="modal-footer">
-        <button type="submit" class="btn btn-primary" ng-click="guardar()">
+        <button ng-hide="opcion" type="submit" class="btn btn-primary" ng-click="guardar()">
             Guardar
         </button>
         <button type="button" class="btn btn-default" ng-click="cerrar()">
@@ -143,42 +125,3 @@
         </button>
     </div>
 </div>
-
-<script type="text/javascript">
-    $('.form_datetime').datetimepicker({
-        language: 'es',
-        weekStart: 1,
-        todayBtn: 1,
-        autoclose: 1,
-        todayHighlight: 1,
-        startView: 2,
-        forceParse: 0,
-        showMeridian: 1
-    });
-    $('.form_date').datetimepicker({
-        language: 'es',
-        setDate: new Date(),
-        weekStart: 1,
-        todayBtn: 1,
-        autoclose: 1,
-        todayHighlight: 1,
-        startView: 2,
-        minView: 2,
-        forceParse: 0
-    });
-    $('.form_time').datetimepicker({
-        language: 'es',
-        weekStart: 1,
-        todayBtn: 1,
-        autoclose: 1,
-        todayHighlight: 1,
-        startView: 1,
-        minView: 0,
-        maxView: 1,
-        forceParse: 0
-    });
-
-    $(document).ready(function () {
-        $('[data-toggle="tooltip"]').tooltip();
-    });
-</script>

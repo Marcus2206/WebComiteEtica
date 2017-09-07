@@ -15,7 +15,7 @@
                 <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
                     <div class="form-group">
                         <label for="protocolo">Protocolo:  </label><br>
-                        <input type="text" class="form-control" id="protocolo"  placeholder="Ingresar protocolo" ng-model="investigacion.protocolo" value="{{ investigacion.protocolo || '' }}">
+                        <input ng-readonly="opcion" type="text" class="form-control" id="protocolo"  placeholder="Ingresar protocolo" ng-model="investigacion.protocolo" value="{{ investigacion.protocolo || '' }}">
                     </div> 
                 </div>
             </div>
@@ -23,7 +23,7 @@
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                     <div class="form-group">
                         <label for="titulo">Título:  </label><br>
-                        <input type="text" class="form-control" id="titulo"  placeholder="Ingresar título" ng-model="investigacion.titulo" value="{{ investigacion.titulo || '' }}">
+                        <input ng-readonly="opcion" type="text" class="form-control" id="titulo"  placeholder="Ingresar título" ng-model="investigacion.titulo" value="{{ investigacion.titulo || '' }}">
                     </div> 
                 </div>
             </div>
@@ -57,7 +57,7 @@
                 <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
                     <div class="form-group">
                         <label>Fase: </label><br>
-                        <ui-select ng-model="paramFaseSelected.selected" theme="selectize" title="Seleccionar fase">
+                        <ui-select ng-disabled="opcion" ng-model="paramFaseSelected.selected" theme="selectize" title="Seleccionar fase">
                             <ui-select-match placeholder="Seleccinar fase">{{$select.selected.descripcion}}</ui-select-match>
                             <ui-select-choices repeat="p in paramFase | orderBy : 'descripcion' | filter: $select.search">
                                 <div ng-bind-html="p.descripcion | highlight: $select.search"></div> 
@@ -69,7 +69,7 @@
                 <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
                     <div class="form-group">
                         <label>Tipo de Investigación: </label><br>
-                        <ui-select ng-model="paramTipoInvestigacionSelected.selected" theme="selectize" title="Seleccionar especialidad">
+                        <ui-select ng-disabled="opcion" ng-model="paramTipoInvestigacionSelected.selected" theme="selectize" title="Seleccionar especialidad">
                             <ui-select-match placeholder="Seleccinar especialidad">{{$select.selected.descripcion}}</ui-select-match>
                             <ui-select-choices repeat="p in paramTipoInvestigacion | orderBy : 'descripcion' | filter: $select.search">
                                 <div ng-bind-html="p.descripcion | highlight: $select.search"></div> 
@@ -83,7 +83,7 @@
                 <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
                     <div class="form-group">
                         <label for="paramEspecialidad">Especialidad: </label><br>
-                        <ui-select ng-model="paramEspecialidadSelected.selected" theme="selectize" title="Seleccionar especialidad">
+                        <ui-select ng-disabled="opcion" ng-model="paramEspecialidadSelected.selected" theme="selectize" title="Seleccionar especialidad">
                             <ui-select-match placeholder="Seleccinar especialidad">{{$select.selected.descripcion}}</ui-select-match>
                             <ui-select-choices repeat="p in paramEspecialidad | orderBy : 'descripcion' | filter: $select.search">
                                 <div ng-bind-html="p.descripcion | highlight: $select.search"></div> 
@@ -96,7 +96,7 @@
                 <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
                     <div class="form-group">
                         <label>Patrocinador: </label><br>
-                        <ui-select ng-model="patrocinadorSelected.selected"  ng-change="cargarCro()" theme="selectize" title="Seleccionar patrocinador">
+                        <ui-select ng-disabled="opcion" ng-model="patrocinadorSelected.selected"  ng-change="cargarCro()" theme="selectize" title="Seleccionar patrocinador">
                             <ui-select-match placeholder="Seleccinar patrocinador">{{$select.selected.nombre}}</ui-select-match>
                             <ui-select-choices repeat="p in patrocinadors | orderBy : 'nombre' | filter: $select.search">
                                 <div ng-bind-html="p.nombre | highlight: $select.search"></div> 
@@ -110,7 +110,7 @@
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                     <div class="form-group">
                         <label>Cro </label><br>
-                        <ui-select ng-model="croSelected.selected"  ng-change="setearCro()" theme="selectize" title="Seleccionar cro">
+                        <ui-select ng-disabled="opcion" ng-model="croSelected.selected"  ng-change="setearCro()" theme="selectize" title="Seleccionar cro">
                             <ui-select-match placeholder="Seleccinar cro">{{$select.selected.nombre}}</ui-select-match>
                             <ui-select-choices repeat="c in cros | orderBy : 'nombre' | filter: $select.search">
                                 <div ng-bind-html="c.nombre | highlight: $select.search"></div> 
@@ -136,7 +136,7 @@
                                     </editable-ui-select-choices>
                                 </div> 
                                 <div class="buttons">
-                                    <button type="button" class="btn btn-default" ng-click="uiSelectFormCoordinador.$show()" ng-show="!uiSelectFormCoordinador.$visible">
+                                    <button ng-disabled="opcion" type="button" class="btn btn-default" ng-click="uiSelectFormCoordinador.$show()" ng-show="!uiSelectFormCoordinador.$visible">
                                         Agregar
                                     </button>
                                     <span ng-show="uiSelectFormCoordinador.$visible">
@@ -162,7 +162,7 @@
                                         <td>
                                             <div>
                                                 <div>
-                                                    <button type="button" class="close" aria-label="Close" ng-click="eliminarInvCoordinador(invCoordinador)">
+                                                    <button ng-disabled="opcion" type="button" class="close" aria-label="Close" ng-click="eliminarInvCoordinador(invCoordinador)">
                                                         <span aria-hidden="true">&times;</span>
                                                     </button>
                                                 </div>
@@ -195,7 +195,7 @@
                                     </editable-ui-select-choices>
                                 </div> 
                                 <div class="buttons">
-                                    <button type="button" class="btn btn-default" ng-click="uiSelectFormInvestigador.$show()" ng-show="!uiSelectFormInvestigador.$visible">
+                                    <button ng-disabled="opcion" type="button" class="btn btn-default" ng-click="uiSelectFormInvestigador.$show()" ng-show="!uiSelectFormInvestigador.$visible">
                                         Agregar
                                     </button>
                                     <span ng-show="uiSelectFormInvestigador.$visible">
@@ -221,7 +221,7 @@
                                         <td>
                                             <div>
                                                 <div>
-                                                    <button type="button" class="close" aria-label="Close" ng-click="eliminarInvInvestigador(invInvestigador)">
+                                                    <button ng-disabled="opcion" type="button" class="close" aria-label="Close" ng-click="eliminarInvInvestigador(invInvestigador)">
                                                         <span aria-hidden="true">&times;</span>
                                                     </button>
                                                 </div>
@@ -242,6 +242,7 @@
                 <!--Inicio de Sede-->
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">    
                     <button ng-disabled="deshabilitado" type="button" style="width: 100%;" class="btn btn-default" ng-click="isSede = !isSede">Sede</button>
+                    <hr>
                     <div uib-collapse="isSede">
                         <div>
                             <form data-editable-form name="uiSelectFormSede" onaftersave="agregarSede()">
@@ -254,7 +255,7 @@
                                     </editable-ui-select-choices>
                                 </div> 
                                 <div class="buttons">
-                                    <button type="button" class="btn btn-default" ng-click="uiSelectFormSede.$show()" ng-show="!uiSelectFormSede.$visible">
+                                    <button ng-disabled="opcion" type="button" class="btn btn-default" ng-click="uiSelectFormSede.$show()" ng-show="!uiSelectFormSede.$visible">
                                         Agregar
                                     </button>
                                     <span ng-show="uiSelectFormSede.$visible">
@@ -280,7 +281,7 @@
                                         <td>
                                             <div>
                                                 <div>
-                                                    <button type="button" class="close" aria-label="Close" ng-click="eliminarInvSede(invSede)">
+                                                    <button ng-disabled="opcion" type="button" class="close" aria-label="Close" ng-click="eliminarInvSede(invSede)">
                                                         <span aria-hidden="true">&times;</span>
                                                     </button>
                                                 </div>
@@ -301,7 +302,7 @@
     </div>
 
     <div class="modal-footer">
-        <button type="submit" class="btn btn-primary" ng-click="guardar()">
+        <button ng-hide="opcion" type="submit" class="btn btn-primary" ng-click="guardar()">
             Guardar
         </button>
         <button type="button" class="btn btn-default" ng-click="cerrar()">

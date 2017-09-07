@@ -1,10 +1,11 @@
 var app = angular.module("app");
 app.controller("NewCoordinadorController",
         ['$scope', 'coordinadorRemoteResource', '$location', "$log", "$uibModalInstance",
-            'SweetAlert', '$rootScope',
+            'SweetAlert', '$rootScope', 'opcion',
             function ($scope, coordinadorRemoteResource, $location, $log, $uibModalInstance,
-                    SweetAlert, $rootScope) {
+                    SweetAlert, $rootScope, opcion) {
 
+                $scope.opcion = opcion;
                 /*Se construyer el json*/
                 $scope.coordinador = {
                     idCoordinador: "",
@@ -95,7 +96,7 @@ app.controller("ListCoordinadorController",
                     });
                 };
                 /*Editar un registro*/
-                $scope.editarModal = function (coordinadorObj) {
+                $scope.editarModal = function (coordinadorObj, opcion) {
                     $scope.coordinadorObj = coordinadorObj;
                     var modalInstance = $uibModal.open({
                         templateUrl: 'coordinador/coordinadorEdit.html',
@@ -107,7 +108,8 @@ app.controller("ListCoordinadorController",
                         resolve: {
                             coordinador: function () {
                                 return coordinadorRemoteResource.get(coordinadorObj.idCoordinador);
-                            }
+                            },
+                            opcion: opcion
                         }
                     });
                     modalInstance.result.then(function () {
@@ -132,7 +134,10 @@ app.controller("ListCoordinadorController",
                         controller: "NewCoordinadorController",
                         size: 'md',
                         backdrop: 'static',
-                        keyboard: false
+                        keyboard: false,
+                        resolve: {
+                            opcion: false
+                        }
                     });
                     modalInstance.result.then(function () {
                         //Si no devuelve nada.
@@ -143,7 +148,7 @@ app.controller("ListCoordinadorController",
                                 if (data !== "escape key press") {
                                     /*añade a la lista sin recargar la página*/
                                     $scope.coordinadors.push(data);
-                                    $scope.editarModal(data);
+                                    $scope.editarModal(data,false);
                                 }
                             }
                         } else {
@@ -155,10 +160,11 @@ app.controller("ListCoordinadorController",
 
 app.controller("EditCoordinadorController",
         ['$scope', "coordinador", 'coordinadorRemoteResource', '$location', "$log",
-            "$route", "$uibModalInstance", 'SweetAlert', '$rootScope',
+            "$route", "$uibModalInstance", 'SweetAlert', '$rootScope', 'opcion',
             function ($scope, coordinador, coordinadorRemoteResource, $location, $log,
-                    $route, $uibModalInstance, SweetAlert, $rootScope) {
+                    $route, $uibModalInstance, SweetAlert, $rootScope, opcion) {
                 $scope.coordinador = coordinador;
+                $scope.opcion = opcion;
                 $scope.guardar = function () {
                     //if ($scope.form.$valid) {
                     $scope.coordinador.usuarioModifica = $rootScope.username;

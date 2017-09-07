@@ -16,7 +16,7 @@
                 <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
                     <div class="form-group">
                         <label for="apePaterno">Ap. paterno:  </label><br>
-                        <input type="text" class="form-control" id="apePaterno" ng-model="investigador.apePaterno" placeholder="Apellido paterno" value="{{ investigador.apePaterno || '' }}" e-required>
+                        <input ng-readonly="opcion" type="text" class="form-control" id="apePaterno" ng-model="investigador.apePaterno" placeholder="Apellido paterno" value="{{ investigador.apePaterno || '' }}" e-required>
                     </div> 
                 </div>
             </div>
@@ -24,14 +24,14 @@
                 <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
                     <div class="form-group">
                         <label for="apeMaterno">Ap. Materno:  </label><br>
-                        <input type="text" class="form-control" id="apeMaterno" ng-model="investigador.apeMaterno" placeholder="Apellido materno" value="{{ investigador.apeMaterno || '' }}" e-required>
+                        <input ng-readonly="opcion"  type="text" class="form-control" id="apeMaterno" ng-model="investigador.apeMaterno" placeholder="Apellido materno" value="{{ investigador.apeMaterno || '' }}" e-required>
                     </div> 
                 </div>
             
                 <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
                     <div class="form-group">
                         <label for="nombres">Nombres:  </label><br>
-                        <input type="text" class="form-control" id="nombres" ng-model="investigador.nombres" placeholder="Nombres" value="{{ investigador.nombres || '' }}" e-required>
+                        <input ng-readonly="opcion"  type="text" class="form-control" id="nombres" ng-model="investigador.nombres" placeholder="Nombres" value="{{ investigador.nombres || '' }}" e-required>
                     </div> 
                 </div>
                 </div>
@@ -39,14 +39,14 @@
                 <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
                     <div class="form-group">
                         <label for="correo">Correo:  </label><br>
-                        <input type="email" class="form-control" id="correo" ng-model="investigador.correo" placeholder="Correo" value="{{ investigador.correo || '' }}" e-required>
+                        <input ng-readonly="opcion"  type="email" class="form-control" id="correo" ng-model="investigador.correo" placeholder="Correo" value="{{ investigador.correo || '' }}" e-required>
                     </div>
                 </div>
             
                 <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
                     <div class="form-group">
                         <label for="paramEspecialidadInvestigador">Especialidad Investigador:  </label><br>
-                        <select  id="paramEspecialidadInvestigador" class="form-control" ng-model="investigador.paramEspecialidadInvestigador">
+                        <select ng-disabled="opcion"  id="paramEspecialidadInvestigador" class="form-control" ng-model="investigador.paramEspecialidadInvestigador">
                             <option ng-repeat="pd in paramEspecialidadInvestigador" value="{{pd.id.idParametroDetalle}}">{{pd.descripcion}}</option>
                         </select>
                     </div>
@@ -56,7 +56,7 @@
         </div>
     </div>
     <div class="modal-footer">
-        <button type="submit" class="btn btn-primary" ng-click="guardar()">
+        <button ng-hide="opcion" type="submit" class="btn btn-primary" ng-click="guardar()">
             Guardar
         </button>
         <button type="button" class="btn btn-default" ng-click="cerrar()">

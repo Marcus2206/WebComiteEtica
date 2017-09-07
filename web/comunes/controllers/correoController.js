@@ -1,10 +1,10 @@
 var app = angular.module("app");
 
 app.controller("NewCorreoController",
-        ['$scope', 'correoRR', "$log", "$uibModalInstance", "parametros",
-            'SweetAlert',"$rootScope",
-            function ($scope, correoRR, $log, $uibModalInstance, parametros,
-                    SweetAlert,$rootScope) {
+        ['$scope', 'correoRR', "$log", "$uibModalInstance", "parametros", 'opcion',
+            'SweetAlert', "$rootScope",
+            function ($scope, correoRR, $log, $uibModalInstance, parametros, opcion,
+                    SweetAlert, $rootScope) {
 
                 $scope.filtrar = function (obj, param) {
                     function filterByParametro(obj) {
@@ -15,6 +15,7 @@ app.controller("NewCorreoController",
                     return obj.filter(filterByParametro);
                 };
 
+                $scope.opcion = opcion;
                 $scope.parametros = parametros;
                 $scope.paramAreaTrabajo = $scope.filtrar($scope.parametros, 'P011')[0].parametroDetalles;
 
@@ -61,12 +62,12 @@ app.controller("ListCorreoController",
                     {nombre: 'nombres', descripcion: 'Nombres'},
                     {nombre: 'paramAreaTrabajo', descripcion: 'Area de Trabajo'},
                     {nombre: 'correo', descripcion: 'Correo'},
-                {nombre: 'estado', descripcion: 'Activo'}];
+                    {nombre: 'estado', descripcion: 'Activo'}];
 
                 $scope.displayCollection = [].concat($scope.correos);
                 /*Campo seleccionado*/
                 $scope.selectedPredicate = $scope.predicates[0].nombre;
-                
+
                 /*Se setea la cantidad filas por vista*/
                 $scope.currentPage = 0;
                 $scope.pageSize = 20;
@@ -111,22 +112,23 @@ app.controller("ListCorreoController",
                 };
 
                 /*Editar un registro*/
-                $scope.editarModal = function (correoObj) {
-                    $scope.correoObj=correoObj;
+                $scope.editarModal = function (correoObj, opcion) {
+                    $scope.correoObj = correoObj;
                     var modalInstance = $uibModal.open({
                         templateUrl: 'correo/correoEdit.html',
                         controller: "EditCorreoController",
                         size: 'md',
                         backdrop: 'static',
                         keyboard: false,
-                        scope:$scope,
+                        scope: $scope,
                         resolve: {
                             correo: function () {
                                 return correoRR.get(correoObj.idCorreo);
                             },
                             parametros: ['parametroRR', function (parametroRR) {
                                     return parametroRR.list();
-                                }]
+                                }],
+                            opcion: opcion
                         }
                     });
 
@@ -157,7 +159,8 @@ app.controller("ListCorreoController",
                         resolve: {
                             parametros: ['parametroRR', function (parametroRR) {
                                     return parametroRR.list();
-                                }]
+                                }],
+                            opcion: false
                         }
                     });
 
@@ -169,7 +172,7 @@ app.controller("ListCorreoController",
                             if (data !== "backdrop click") {
                                 if (data !== "escape key press") {
                                     $scope.correos.push(data);
-                                    $scope.editarModal(data);
+                                    $scope.editarModal(data, false);
                                 }
                             }
                         } else {
@@ -180,10 +183,10 @@ app.controller("ListCorreoController",
             }]);
 
 app.controller("EditCorreoController",
-        ['$scope', "correo", 'correoRR', "parametros",
-            "$uibModalInstance", 'SweetAlert', "$log","$rootScope",
-            function ($scope, correo, correoRR, parametros,
-                    $uibModalInstance, SweetAlert, $log,$rootScope) {
+        ['$scope', "correo", 'correoRR', "parametros", 'opcion',
+            "$uibModalInstance", 'SweetAlert', "$log", "$rootScope",
+            function ($scope, correo, correoRR, parametros, opcion,
+                    $uibModalInstance, SweetAlert, $log, $rootScope) {
                 $scope.filtrar = function (obj, param) {
                     function filterByParametro(obj) {
                         if (obj.idParametro === param) {
@@ -193,6 +196,7 @@ app.controller("EditCorreoController",
                     return obj.filter(filterByParametro);
                 };
 
+                $scope.opcion = opcion;
                 $scope.parametros = parametros;
                 $scope.paramAreaTrabajo = $scope.filtrar($scope.parametros, 'P011')[0].parametroDetalles;
 

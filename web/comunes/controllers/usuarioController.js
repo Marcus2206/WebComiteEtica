@@ -2,9 +2,9 @@ var app = angular.module("app");
 
 app.controller("NewUsuarioController",
         ['$scope', 'usuarioRR', "$log", "$uibModalInstance", "parametros",
-            'SweetAlert', "$rootScope",
+            'SweetAlert', "$rootScope",'opcion',
             function ($scope, usuarioRR, $log, $uibModalInstance, parametros,
-                    SweetAlert, $rootScope) {
+                    SweetAlert, $rootScope, opcion) {
 
                 $scope.filtrar = function (obj, param) {
                     function filterByParametro(obj) {
@@ -18,7 +18,7 @@ app.controller("NewUsuarioController",
                 $scope.btnPass = true;
                 $scope.parametros = parametros;
                 $scope.paramPerfil = $scope.filtrar($scope.parametros, 'P010')[0].parametroDetalles;
-
+                $scope.opcion=opcion;
                 /*Se construyer el json*/
                 $scope.usuario = {};
 
@@ -133,7 +133,7 @@ app.controller("ListUsuarioController",
                 };
 
                 /*Editar un registro*/
-                $scope.editarModal = function (usuarioObj) {
+                $scope.editarModal = function (usuarioObj, opcion) {
                     $scope.usuarioObj = usuarioObj;
                     var modalInstance = $uibModal.open({
                         templateUrl: 'usuario/usuarioEdit.html',
@@ -148,7 +148,8 @@ app.controller("ListUsuarioController",
                             },
                             parametros: ['parametroRR', function (parametroRR) {
                                     return parametroRR.list();
-                                }]
+                                }],
+                            opcion:opcion
                         }
                     });
 
@@ -179,7 +180,8 @@ app.controller("ListUsuarioController",
                         resolve: {
                             parametros: ['parametroRR', function (parametroRR) {
                                     return parametroRR.list();
-                                }]
+                                }],
+                            opcion:false
                         }
                     });
 
@@ -192,7 +194,7 @@ app.controller("ListUsuarioController",
                                 if (data !== "escape key press") {
                                     /*añade a la lista sin recargar la página*/
                                     $scope.usuarios.push(data);
-                                    $scope.editarModal(data);
+                                    $scope.editarModal(data, false);
                                 }
                             }
                         } else {
@@ -203,9 +205,9 @@ app.controller("ListUsuarioController",
             }]);
 
 app.controller("EditUsuarioController",
-        ['$scope', "usuario", 'usuarioRR', "parametros",
+        ['$scope', "usuario", 'usuarioRR', "parametros",'opcion',
             "$uibModalInstance", 'SweetAlert', "$log", "$rootScope",
-            function ($scope, usuario, usuarioRR, parametros,
+            function ($scope, usuario, usuarioRR, parametros, opcion,
                     $uibModalInstance, SweetAlert, $log, $rootScope) {
 
                 $scope.filtrar = function (obj, param) {
@@ -220,7 +222,8 @@ app.controller("EditUsuarioController",
                 $scope.btnPass = false;
                 $scope.parametros = parametros;
                 $scope.paramPerfil = $scope.filtrar($scope.parametros, 'P010')[0].parametroDetalles;
-
+                $scope.opcion=opcion;
+                
                 $scope.usuario = usuario;
                 $scope.usuario.password = '*******';
                 $scope.guardar = function () {

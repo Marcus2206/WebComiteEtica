@@ -17,16 +17,16 @@
                 <div class="col col-xs-6">
                     <div class="form-group">
                         <label for="usuario">Usuario: </label><br>
-                        <input type="text" class="form-control" id="usuario"  placeholder="Usuario" ng-model="usuario.usuario" value="{{ usuario.usuario || '' }}">
+                        <input ng-readonly="opcion" type="text" class="form-control" id="usuario"  placeholder="Usuario" ng-model="usuario.usuario" value="{{ usuario.usuario || '' }}">
                     </div>
                 </div>
                 <div class="col col-xs-6">
                     <div class="form-group">
                         <label for="password">Password: </label><br>
                         <p class="input-group">
-                            <input type="password"  class="form-control" id="password"  placeholder="Password" ng-model="usuario.password" value="{{ usuario.password || '' }}">
+                            <input ng-readonly="opcion" type="password"  class="form-control" id="password"  placeholder="Password" ng-model="usuario.password" value="{{ usuario.password || '' }}">
                             <span class="input-group-btn">
-                                <button type="button" ng-disabled="btnPass" class="btn btn-default" ng-click="cambiarPassword()" data-toggle="tooltip" title="Resetear clave">
+                                <button ng-disabled="opcion" type="button" ng-disabled="btnPass" class="btn btn-default" ng-click="cambiarPassword()" data-toggle="tooltip" title="Resetear clave">
                                     <i class="glyphicon glyphicon-refresh"></i>
                                 </button>
                             </span>                
@@ -38,7 +38,7 @@
                 <div class="col col-xs-6">
                     <div class="form-group">
                         <label for="perfil">Perfil:  </label><br>
-                        <select id="perfil" class="form-control" theme="bootstrap" ng-model="usuario.perfil">
+                        <select ng-disabled="opcion" id="perfil" class="form-control" theme="bootstrap" ng-model="usuario.perfil">
                             <option ng-repeat="pd in paramPerfil| orderBy : 'descripcion'" value="{{pd.id.idParametroDetalle}}">{{pd.descripcion}}</option>
                         </select>
                     </div>
@@ -46,13 +46,13 @@
                 <div class="col col-xs-6">
                     <div class="form-group">
                         <label for="estado">Estado:  </label><br>
-                        <checkbox id="estado" ng-model="usuario.estado"></checkbox>
+                        <checkbox ng-disabled="opcion" id="estado" ng-model="usuario.estado"></checkbox>
                     </div>
                 </div>
             </div>
         </div>
         <div class="modal-footer">
-            <button type="submit" class="btn btn-primary" ng-click="guardar()">
+            <button ng-hide="opcion" type="submit" class="btn btn-primary" ng-click="guardar()">
                 Guardar
             </button>
             <button type="button" class="btn btn-default" ng-click="cerrar()">

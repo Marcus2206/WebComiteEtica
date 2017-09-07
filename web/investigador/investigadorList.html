@@ -54,7 +54,7 @@
                                 <th st-sort="nombres">Nombres</th>
                                 <th st-sort="correo">Correo</th>
                                 <th st-sort="paramEspecialidadInvestigador">Especialidad</th>
-                                <th >Acción</th>
+                                <th colspan="3" style="text-align: center" >Acción</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -65,9 +65,14 @@
                                 <td data-title="Nombres">{{investigador.nombres}}</td>
                                 <td data-title="Correo">{{investigador.correo}}</td>
                                 <td data-title="Especialidad">{{investigador.paramEspecialidadInvestigador}}</td>
-                                <td data-title="">
-                                    <a class="btn btn-primary" ng-click="editarModal(investigador)"><i class="fa fa-pencil-square-o" aria-hidden="true"></i><span class="hidden-xs"> Editar</span></a>
-                                    <a class="btn btn-danger" ng-click="eliminar(investigador)" ><i class="fa fa-trash" aria-hidden="true"></i><span class="hidden-xs"> Eliminar</span></a>
+                                <td data-title="Ver">
+                                    <button data-toggle="tooltip" title="Ver"  class="btn btn-default" ng-click="editarModal(investigador, true)"><i class="fa fa-eye" aria-hidden="true"></i><span class="hidden-xs"> </span></button>
+                                </td>
+                                <td data-title="Editar">
+                                    <button data-toggle="tooltip" title="Editar"  class="btn btn-default" ng-click="editarModal(investigador, false)"><i class="fa fa-pencil-square-o" aria-hidden="true"></i><span class="hidden-xs"></span></button>
+                                </td>
+                                <td data-title="Eliminar">
+                                    <button data-toggle="tooltip" title="Eliminar"  class="btn btn-danger" ng-click="eliminar(investigador)" ><i class="fa fa-trash" aria-hidden="true"></i><span class="hidden-xs"></span></button>
                                 </td>
                             </tr>
                         </tbody>

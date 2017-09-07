@@ -54,19 +54,10 @@
                                 <th st-sort="idDepartamento">Departamento</th>
                                 <th st-sort="idProvincia">Provincia</th>
                                 <th st-sort="idDistrito">Distrito</th>
-                                <th>Acción</th>
+                                <th colspan="3" style="text-align: center">Acción</th>
                             </tr>
                         </thead>
                         <tbody>
-<!--                            <tr>
-                                <td colspan="2" data-title="Búsqueda global">
-                                    <input st-search placeholder="global" class="input-sm form-control" type="search" />
-                                </td>
-                                <td data-title="Búsqueda por campo">
-                                    <input st-search="{{selectedPredicate}}" placeholder="campo" class="input-sm form-control" type="search" />
-                                </td>
-                                <td colspan="4"></td>
-                            </tr>-->
                             <tr ng-repeat="sede in displayCollection| empezarDe : currentPage * pageSize | limitTo:pageSize | filter:txtFiltroSede ">
                                 <td data-title="Código">{{sede.idSede}}</td>
                                 <td data-title="Nombre">{{sede.nombre}}</td>
@@ -74,18 +65,14 @@
                                 <td data-title="Departamento">{{sede.idDepartamento}}</td>
                                 <td data-title="Provincia">{{sede.idProvincia}}</td>
                                 <td data-title="Distrito">{{sede.idDistrito}}</td>
-                                <td>
-                                    <!--<div class="btn-group"><button ng-click='' type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            Seleccione <span class="caret"></span>
-                                        </button>
-                                        <ul class="dropdown-menu">
-                                            <li><a href="" data-toggle="modal" data-target="#newMyModal{{coordinador.idCoordinador}}">Editar</a></li>
-                                            <li><a href="" data-toggle="modal" data-target="#newMyModal{{coordinador.idCoordinador}}">Borrar</a></li>
-                                        </ul>
-                                    </div>-->
-                                    <button class="btn btn-primary" ng-click="editarModal(sede)"><i class="fa fa-pencil-square-o" aria-hidden="true"></i><span class="hidden-xs"> Editar</span></button>
-                                    <button class="btn btn-danger" ng-click="eliminar(sede)" ><i class="fa fa-trash" aria-hidden="true"></i><span class="hidden-xs"> Eliminar</span></button>
-
+                                <td data-title="Ver">
+                                    <button data-toggle="tooltip" title="Ver"  class="btn btn-default" ng-click="editarModal(sede, true)"><i class="fa fa-eye" aria-hidden="true"></i><span class="hidden-xs"> </span></button> 
+                                </td>
+                                <td data-title="Editar">
+                                    <button data-toggle="tooltip" title="Editar"  class="btn btn-default" ng-click="editarModal(sede, false)"><i class="fa fa-pencil-square-o" aria-hidden="true"></i><span class="hidden-xs"> </span></button>
+                                </td>
+                                <td data-title="Eliminar">
+                                    <button data-toggle="tooltip" title="Eliminar"  class="btn btn-danger" ng-click="eliminar(sede)" ><i class="fa fa-trash" aria-hidden="true"></i><span class="hidden-xs"> </span></button>
                                 </td>
                             </tr>
                         </tbody>

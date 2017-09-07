@@ -2,12 +2,13 @@ var app = angular.module("app");
 
 app.controller("NewCroController",
         ['$scope', 'croRR', '$location', "$log", "$uibModalInstance",
-            "$rootScope", "SweetAlert",
+            "$rootScope", "SweetAlert", 'opcion',
             function ($scope, croRR, $location, $log, $uibModalInstance,
-                    $rootScope, SweetAlert) {
+                    $rootScope, SweetAlert, opcion) {
 
                 $scope.deshabilitado = true;
                 $scope.isPatrocinador = true;
+                $scope.opcion = opcion;
                 /*Se construyer el json*/
                 $scope.cro = {
                     idCro: "",
@@ -99,7 +100,7 @@ app.controller("ListCroController",
                 };
 
                 /*Editar un registro*/
-                $scope.editarModal = function (croObj) {
+                $scope.editarModal = function (croObj, opcion) {
                     $scope.croObj = croObj;
                     var modalInstance = $uibModal.open({
                         templateUrl: 'cro/croEdit.html',
@@ -111,7 +112,8 @@ app.controller("ListCroController",
                         resolve: {
                             cro: function () {
                                 return croRR.get(croObj.idCro);
-                            }
+                            },
+                            opcion: opcion
                         }
                     });
 
@@ -138,7 +140,10 @@ app.controller("ListCroController",
                         controller: "NewCroController",
                         size: 'md',
                         backdrop: 'static',
-                        keyboard: false
+                        keyboard: false,
+                        resolve: {
+                            opcion: false
+                        }
                     });
 
                     modalInstance.result.then(function () {
@@ -150,7 +155,7 @@ app.controller("ListCroController",
                                 if (data !== "escape key press") {
                                     /*añade a la lista sin recargar la página*/
                                     $scope.cros.push(data);
-                                    $scope.editarModal(data);
+                                    $scope.editarModal(data, false);
                                 }
                             }
                         } else {
@@ -161,10 +166,10 @@ app.controller("ListCroController",
             }]);
 
 app.controller("EditCroController",
-        ['$scope', "cro", 'croRR', "$log",
+        ['$scope', "cro", 'croRR', "$log", 'opcion',
             "$uibModalInstance", "$rootScope", "patrocinadorCroRR", "patrocinadorRR",
             "$confirm", "SweetAlert",
-            function ($scope, cro, croRR, $log,
+            function ($scope, cro, croRR, $log, opcion,
                     $uibModalInstance, $rootScope, patrocinadorCroRR, patrocinadorRR,
                     $confirm, SweetAlert) {
 
@@ -173,6 +178,7 @@ app.controller("EditCroController",
                 $scope.patrocinadorSelect = {};
                 $scope.isPatrocinador = true;
                 $scope.cro = cro;
+                $scope.opcion = opcion;
 
                 /*Patrocinadores seleccionables*/
                 patrocinadorRR.listPatrocinadorSinIdCroFind($scope.cro.idCro)

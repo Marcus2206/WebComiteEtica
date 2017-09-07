@@ -15,7 +15,7 @@
                 <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
                     <div class="form-group">
                         <label for="paramEstadoRegistro">Est. Inicial/Nuevo Site:  </label><br>
-                        <select class="form-control" id="paramEstadoRegistro" ng-model="registro.paramEstadoRegistro">
+                        <select ng-disabled="opcion"  class="form-control" id="paramEstadoRegistro" ng-model="registro.paramEstadoRegistro">
                             <option ng-repeat="pd in paramEstadoRegistro" value="{{pd.id.idParametroDetalle}}">{{pd.descripcion}}</option>
                         </select>
                     </div>
@@ -23,7 +23,7 @@
                 <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
                     <div class="form-group">
                         <label for="equivalenciaCorrelativo">Correlativo Equiv.:  </label><br>
-                        <input type="text" class="form-control" id="equivalenciaCorrelativo"  placeholder="Correlativo equiv." ng-model="registro.equivalenciaCorrelativo" value="{{registro.equivalenciaCorrelativo|| '' }}">
+                        <input ng-readonly="opcion" type="text" class="form-control" id="equivalenciaCorrelativo"  placeholder="Correlativo equiv." ng-model="registro.equivalenciaCorrelativo" value="{{registro.equivalenciaCorrelativo|| '' }}">
                     </div> 
                 </div>
             </div>
@@ -34,7 +34,7 @@
                         <p class="input-group">
                             <input type="text" class="form-control" id="investigacion"  placeholder="Buscar Investigación" ng-model="registro.investigacion.idInvestigacion" readonly value="{{registro.investigacion.idInvestigacion|| '' }}"/>
                             <span class="input-group-btn">
-                                <button type="button" class="btn btn-default" ng-click="buscarInvestigacion()"><i class="glyphicon glyphicon-search"></i></button>
+                                <button ng-disabled="opcion" type="button" class="btn btn-default" ng-click="buscarInvestigacion()"><i class="glyphicon glyphicon-search"></i></button>
                             </span>
                         </p>
                     </div> 
@@ -45,7 +45,7 @@
                         <p class="input-group">
                             <input type="text" class="form-control" id="idInvestigador"  placeholder="Buscar Investigador" ng-model="registro.idInvestigador" readonly value="{{registro.idInvestigador|| '' }}"/>
                             <span class="input-group-btn">
-                                <button type="button" class="btn btn-default" ng-click="buscarInvestigador()"><i class="glyphicon glyphicon-search"></i></button>
+                                <button ng-disabled="opcion" type="button" class="btn btn-default" ng-click="buscarInvestigador()"><i class="glyphicon glyphicon-search"></i></button>
                             </span>
                         </p>
                     </div> 
@@ -56,7 +56,7 @@
                         <p class="input-group">
                             <input type="text" class="form-control" id="idSede"  placeholder="Buscar Sede" ng-model="registro.idSede" readonly value="{{registro.idSede|| '' }}"/>
                             <span class="input-group-btn">
-                                <button type="button" class="btn btn-default" ng-click="buscarSede()"><i class="glyphicon glyphicon-search"></i></button>
+                                <button  ng-disabled="opcion" type="button" class="btn btn-default" ng-click="buscarSede()"><i class="glyphicon glyphicon-search"></i></button>
                             </span>
                         </p>
                     </div> 
@@ -69,7 +69,7 @@
                         <p class="input-group">
                             <input type="text" id="fechaAprobacion"  class="form-control" uib-datepicker-popup="dd/MM/yyyy" ng-model="registro.fechaAprobacion" is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true" show-button-bar="false" readonly />
                             <span class="input-group-btn">
-                                <button type="button" class="btn btn-default" ng-click="open1()"><i class="glyphicon glyphicon-calendar"></i></button>
+                                <button ng-disabled="opcion" type="button" class="btn btn-default" ng-click="open1()"><i class="glyphicon glyphicon-calendar"></i></button>
                             </span>
                         </p>
                     </div>
@@ -77,7 +77,7 @@
                 <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
                     <div class="form-group">
                         <label for="paramEstado">Estado:  </label><br>
-                        <select class="form-control" id="paramEstado" ng-model="registro.paramEstado">
+                        <select ng-disabled="opcion"  class="form-control" id="paramEstado" ng-model="registro.paramEstado">
                             <option ng-repeat="pd in paramEstado" value="{{pd.id.idParametroDetalle}}">{{pd.descripcion}}</option>
                         </select>
                     </div>
@@ -87,19 +87,19 @@
                 <div class="col-xs-12 col-sm-12 col-md-5 col-lg-5">
                     <div class="form-group">
                         <label for="observacion">Observación:  </label><br>
-                        <input type="text" class="form-control" id="observacion"  placeholder="Observación" ng-model="registro.observacion" value="{{registro.observacion|| '' }}">
+                        <input ng-readonly="opcion" type="text" class="form-control" id="observacion"  placeholder="Observación" ng-model="registro.observacion" value="{{registro.observacion|| '' }}">
                     </div> 
                 </div>
                 <div class="col-xs-12 col-sm-12 col-md-5 col-lg-5">
                     <div class="form-group">
                         <label for="farmacoExperimental">Fármaco experimental:  </label><br>
-                        <input type="text" class="form-control" id="farmacoExperimental"  placeholder="Seleccionar fármaco" ng-model="registro.farmacoExperimental" value="{{registro.farmacoExperimental|| '' }}">
+                        <input ng-disabled="opcion" type="text" class="form-control" id="farmacoExperimental"  placeholder="Seleccionar fármaco" ng-model="registro.farmacoExperimental" value="{{registro.farmacoExperimental|| '' }}">
                     </div> 
                 </div>
                 <div class="col-xs-12 col-sm-12 col-md-2 col-lg-2">
                     <div class="form-group">
                         <label for="placebo">Placebo:  </label>
-                        <checkbox id="placebo" ng-model="registro.placebo"></checkbox>
+                        <checkbox ng-disabled="opcion" id="placebo" ng-model="registro.placebo"></checkbox>
                     </div>
                 </div>
             </div>
@@ -107,13 +107,13 @@
                 <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
                     <div class="form-group">
                         <label for="pacienteEas">Paciente EAS:  </label><br>
-                        <input type="text" class="form-control" id="pacienteEas"  placeholder="Paciente EAS" ng-model="registro.pacienteEas" value="{{registro.pacienteEas|| '' }}">
+                        <input ng-readonly="opcion" type="text" class="form-control" id="pacienteEas"  placeholder="Paciente EAS" ng-model="registro.pacienteEas" value="{{registro.pacienteEas|| '' }}">
                     </div> 
                 </div>
                 <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
                     <div class="form-group">
                         <label for="easLocal">EAS Local:  </label><br>
-                        <input type="text" class="form-control" id="easLocal"  placeholder="EAS Local" ng-model="registro.easLocal" value="{{registro.easLocal|| '' }}">
+                        <input ng-readonly="opcion" type="text" class="form-control" id="easLocal"  placeholder="EAS Local" ng-model="registro.easLocal" value="{{registro.easLocal|| '' }}">
                     </div> 
                 </div>
                 <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
@@ -122,7 +122,7 @@
                         <p class="input-group">
                             <input type="text" id="fechaEas"  class="form-control" uib-datepicker-popup="dd/MM/yyyy" ng-model="registro.fechaEas" is-open="popup2.opened" datepicker-options="dateOptions" ng-required="true" show-button-bar="false" readonly />
                             <span class="input-group-btn">
-                                <button type="button" class="btn btn-default" ng-click="open2()"><i class="glyphicon glyphicon-calendar"></i></button>
+                                <button   ng-disabled="opcion"  type="button" class="btn btn-default" ng-click="open2()"><i class="glyphicon glyphicon-calendar"></i></button>
                             </span>
                         </p>
                     </div>
@@ -132,7 +132,7 @@
                 <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
                     <div class="form-group">
                         <label for="paramNotificacion">Notificación:  </label><br>
-                        <select class="form-control" id="paramNotificacion" ng-model="registro.paramNotificacion">
+                        <select  ng-disabled="opcion" class="form-control" id="paramNotificacion" ng-model="registro.paramNotificacion">
                             <option ng-repeat="pd in paramNotificacion" value="{{pd.id.idParametroDetalle}}">{{pd.descripcion}}</option>
                         </select>
                     </div>
@@ -140,13 +140,13 @@
                 <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
                     <div class="form-group">
                         <label for="visitaInspeccion">Visita Inspección:  </label><br>
-                        <input type="text" class="form-control" id="visitaInspeccion"  placeholder="Visita Inspección" ng-model="registro.visitaInspeccion" value="{{registro.visitaInspeccion|| '' }}">
+                        <input  ng-readonly="opcion" type="text" class="form-control" id="visitaInspeccion"  placeholder="Visita Inspección" ng-model="registro.visitaInspeccion" value="{{registro.visitaInspeccion|| '' }}">
                     </div> 
                 </div>
                 <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
                     <div class="form-group">
                         <label for="estudioNinos">Est. Niños:  </label><br>
-                        <checkbox id="estudioNinos" ng-model="registro.estudioNinos"></checkbox>
+                        <checkbox  ng-disabled="opcion" id="estudioNinos" ng-model="registro.estudioNinos"></checkbox>
                     </div>
                 </div>
             </div>
@@ -154,7 +154,7 @@
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                     <div class="form-group">
                         <label for="visitaInspeccionIns">Visita Inspección INS:  </label><br>
-                        <input type="text" class="form-control" id="visitaInspeccionIns"  placeholder="Visita Inspección INS" ng-model="registro.visitaInspeccionIns" value="{{ registro.visitaInspeccionIns || '' }}">
+                        <input  ng-readonly="opcion" type="text" class="form-control" id="visitaInspeccionIns"  placeholder="Visita Inspección INS" ng-model="registro.visitaInspeccionIns" value="{{ registro.visitaInspeccionIns || '' }}">
                     </div> 
                 </div>
             </div>
@@ -171,7 +171,7 @@
                                     <p class="input-group">
                                         <input type="text" id="fecha"  class="form-control" uib-datepicker-popup="dd/MM/yyyy" ng-model="registroBitacora.fecha" is-open="popup3.opened" datepicker-options="dateOptions" ng-required="true" show-button-bar="false" readonly />
                                         <span class="input-group-btn">
-                                            <button type="button" class="btn btn-default" ng-click="open3()"><i class="glyphicon glyphicon-calendar"></i></button>
+                                            <button  ng-disabled="opcion" type="button" class="btn btn-default" ng-click="open3()"><i class="glyphicon glyphicon-calendar"></i></button>
                                         </span>
                                     </p>
                                 </div>
@@ -179,7 +179,7 @@
                             <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
                                 <div class="form-group">
                                     <label for="paramTipoBitacora">Tipo bitacora:  </label><br>
-                                    <select class="form-control" id="paramTipoBitacora" ng-model="registroBitacora.paramTipoBitacora" ng-change="cargarDetalleBitacora()">
+                                    <select  ng-disabled="opcion" class="form-control" id="paramTipoBitacora" ng-model="registroBitacora.paramTipoBitacora" ng-change="cargarDetalleBitacora()">
                                         <option ng-repeat="pd in paramTipoBitacora | orderBy:'descripcion'" value="{{pd.id.idParametroDetalle}}">{{pd.descripcion}}</option>
                                     </select>
                                 </div>
@@ -198,9 +198,9 @@
                                 <div class="form-group">
                                     <label for="detalle">Detalle:  </label><br>
                                     <p class="input-group">
-                                        <input type="text" class="form-control" id="detalle"  placeholder="Detalle" ng-model="registroBitacora.detalle" value="{{ registroBitacora.detalle || '' }}">
+                                        <input ng-readonly="opcion" type="text" class="form-control" id="detalle"  placeholder="Detalle" ng-model="registroBitacora.detalle" value="{{ registroBitacora.detalle || '' }}">
                                         <span class="input-group-btn">
-                                            <button type="button" class="btn btn-default" ng-click="agregarBitacora()"><i class="glyphicon glyphicon-plus"></i></button>
+                                            <button   ng-disabled="opcion"  type="button" class="btn btn-default" ng-click="agregarBitacora()"><i class="glyphicon glyphicon-plus"></i></button>
                                         </span>
                                     </p>
                                 </div> 
@@ -225,7 +225,7 @@
                                             <td>
                                                 <div>
                                                     <div>
-                                                        <button type="button" class="close" aria-label="Close" ng-click="eliminarBitacora(registroBitacora)">
+                                                        <button  ng-disabled="opcion"  type="button" class="close" aria-label="Close" ng-click="eliminarBitacora(registroBitacora)">
                                                             <span aria-hidden="true">&times;</span>
                                                         </button>
                                                     </div>
@@ -245,7 +245,7 @@
         </div>
     </div>
     <div class="modal-footer">
-        <button type="submit" class="btn btn-primary" ng-click="guardar()">
+        <button ng-hide="opcion" type="submit" class="btn btn-primary" ng-click="guardar()">
             Guardar
         </button>
         <button type="button" class="btn btn-default" ng-click="cerrar()">

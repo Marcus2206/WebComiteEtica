@@ -13,7 +13,7 @@
 
                 <div class="form-group">
                     <label for="nombre">Nombre:  </label><br>
-                    <input type="text" class="form-control" id="nombre" ng-model="patrocinador.nombre" placeholder="Nombres" value="{{ patrocinador.nombre || '' }}" e-required>
+                    <input ng-readonly="opcion" type="text" class="form-control" id="nombre" ng-model="patrocinador.nombre" placeholder="Nombres" value="{{ patrocinador.nombre || '' }}" e-required>
                 </div> 
             </div>
 
@@ -34,7 +34,7 @@
                                     </editable-ui-select-choices>
                                 </div> 
                                 <div class="buttons">
-                                    <button type="button" class="btn btn-default" ng-click="uiSelectFormCro.$show()" ng-show="!uiSelectFormCro.$visible">
+                                    <button ng-disabled="opcion" type="button" class="btn btn-default" ng-click="uiSelectFormCro.$show()" ng-show="!uiSelectFormCro.$visible">
                                         Agregar
                                     </button>
                                     <span ng-show="uiSelectFormCro.$visible">
@@ -60,7 +60,7 @@
                                         <td>
                                             <div>
                                                 <div>
-                                                    <button type="button" class="close" aria-label="Close" ng-click="eliminarPatrCro(patrCro)">
+                                                    <button ng-disabled="opcion" type="button" class="close" aria-label="Close" ng-click="eliminarPatrCro(patrCro)">
                                                         <span aria-hidden="true">&times;</span>
                                                     </button>
                                                 </div>

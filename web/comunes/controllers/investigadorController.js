@@ -1,12 +1,13 @@
 var app = angular.module("app");
 
 app.controller("NewInvestigadorController",
-        ['$scope', 'investigadorRR', '$location', "$log",
+        ['$scope', 'investigadorRR', '$location', "$log",'opcion',
             "$uibModalInstance", "parametroRR", "$rootScope", 'SweetAlert',
-            function ($scope, investigadorRR, $location, $log,
+            function ($scope, investigadorRR, $location, $log, opcion,
                     $uibModalInstance, parametroRR, $rootScope, SweetAlert) {
 
                 $scope.parametros;
+                $scope.opcion=opcion;
                 $scope.filtrar = function (obj, param) {
                     function filterByParametro(obj) {
                         if (obj.idParametro === param) {
@@ -127,7 +128,7 @@ app.controller("ListInvestigadorController",
                 };
 
                 /*Editar un registro*/
-                $scope.editarModal = function (investigadorObj) {
+                $scope.editarModal = function (investigadorObj, opcion) {
                     $scope.investigadorObj = investigadorObj;
                     var modalInstance = $uibModal.open({
                         templateUrl: 'investigador/investigadorEdit.html',
@@ -139,7 +140,8 @@ app.controller("ListInvestigadorController",
                         resolve: {
                             investigador: function () {
                                 return investigadorRR.get(investigadorObj.idInvestigador);
-                            }
+                            },
+                            opcion:opcion
                         }
                     });
 
@@ -178,7 +180,7 @@ app.controller("ListInvestigadorController",
                                 if (data !== "escape key press") {
                                     /*añade a la lista sin recargar la página*/
                                     $scope.investigadors.push(data);
-                                    $scope.editarModal(data);
+                                    $scope.editarModal(data,false);
                                 }
                             }
                         } else {
@@ -191,10 +193,10 @@ app.controller("ListInvestigadorController",
 app.controller("EditInvestigadorController",
         ['$scope', "investigador", 'investigadorRR',
             '$location', "$log", "$route", "$uibModalInstance",
-            "parametroRR", "$rootScope", 'SweetAlert',
+            "parametroRR", "$rootScope", 'SweetAlert','opcion',
             function ($scope, investigador, investigadorRR,
                     $location, $log, $route, $uibModalInstance,
-                    parametroRR, $rootScope, SweetAlert) {
+                    parametroRR, $rootScope, SweetAlert, opcion) {
                 $scope.parametros;
                 $scope.filtrar = function (obj, param) {
                     function filterByParametro(obj) {
@@ -213,7 +215,7 @@ app.controller("EditInvestigadorController",
                 });
 
                 $scope.investigador = investigador;
-
+                $scope.opcion=opcion;
                 $scope.guardar = function () {
                     //if ($scope.form.$valid) {
                     $scope.investigador.usuarioModifica = $rootScope.username;

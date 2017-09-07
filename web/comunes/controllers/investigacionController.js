@@ -4,19 +4,19 @@ app.controller("EditInvestigacionController",
         ['$scope', 'investigacion', 'parametros', 'investigacionRemoteResource',
             'coordinadorRemoteResource', 'investigacionCoordinadorRemoteResource',
             'investigadorRR', 'investigacionInvestigadorRR',
-            'sedeRR', 'investigacionSedeRR',
+            'sedeRR', 'investigacionSedeRR', 'opcion',
             "$log", "$uibModalInstance", 'SweetAlert',
             '$confirm', 'patrocinadorRR', 'croRR', '$rootScope',
             function ($scope, investigacion, parametros, investigacionRemoteResource,
                     coordinadorRemoteResource, investigacionCoordinadorRemoteResource,
                     investigadorRR, investigacionInvestigadorRR,
-                    sedeRR, investigacionSedeRR,
+                    sedeRR, investigacionSedeRR, opcion,
                     $log, $uibModalInstance, SweetAlert,
                     $confirm, patrocinadorRR, croRR, $rootScope) {
 
                 $scope.parametros = parametros;
                 $scope.deshabilitado = false;
-
+                $scope.opcion = opcion;
                 $scope.investigacionCoordinadors = [];
                 $scope.investigacionInvestigadors = [];
                 $scope.investigacionSedes = [];
@@ -398,7 +398,7 @@ app.controller("ListInvestigacionController",
                 };
 
                 /*Editar un registro*/
-                $scope.editarModal = function (investigacionObj) {
+                $scope.editarModal = function (investigacionObj, opcion) {
                     $scope.investigacionObj = investigacionObj;
                     var modalInstance = $uibModal.open({
                         templateUrl: 'investigacion/investigacionEdit.html',
@@ -413,7 +413,8 @@ app.controller("ListInvestigacionController",
                             },
                             parametros: ['parametroRR', function (parametroRR) {
                                     return parametroRR.list();
-                                }]
+                                }],
+                            opcion: opcion
                         }
                     });
 
@@ -444,7 +445,8 @@ app.controller("ListInvestigacionController",
                         resolve: {
                             parametros: ['parametroRR', function (parametroRR) {
                                     return parametroRR.list();
-                                }]
+                                }],
+                            opcion: false
                         }
                     });
 
@@ -457,7 +459,7 @@ app.controller("ListInvestigacionController",
                                 if (data !== "escape key press") {
                                     //Si no es cancel, se reemplaza el objeto que se mandó a actualizar
                                     $scope.investigacions.push(data);
-                                    $scope.editarModal(data);
+                                    $scope.editarModal(data, false);
                                 }
                             }
                         } else {
@@ -498,9 +500,9 @@ app.controller("ListInvestigacionController",
             }]);
 
 app.controller("NewInvestigacionController",
-        ['$scope', 'investigacionRemoteResource',
+        ['$scope', 'investigacionRemoteResource','opcion',
             'parametros', "$log", "$uibModalInstance", 'SweetAlert', 'patrocinadorRR', 'croRR', '$rootScope',
-            function ($scope, investigacionRemoteResource,
+            function ($scope, investigacionRemoteResource, opcion,
                     parametros, $log, $uibModalInstance, SweetAlert, patrocinadorRR, croRR, $rootScope) {
 
                 $scope.filtrar = function (obj, param) {
@@ -516,6 +518,7 @@ app.controller("NewInvestigacionController",
                 $scope.isInvestigador = true;
                 $scope.isSede = true;
 
+                $scope.opcion = opcion;
                 $scope.deshabilitado = true;
 
                 $scope.parametros = parametros;

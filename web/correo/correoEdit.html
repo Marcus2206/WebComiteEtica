@@ -15,7 +15,7 @@
                 <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
                     <div class="form-group">
                         <label for="apePaterno">Ape. Paterno: </label><br>
-                        <input type="text" class="form-control" id="apePaterno"  placeholder="Apellido Paterno" ng-model="correo.apePaterno" value="{{ correo.apePaterno || '' }}">
+                        <input ng-readonly="opcion" type="text" class="form-control" id="apePaterno"  placeholder="Apellido Paterno" ng-model="correo.apePaterno" value="{{ correo.apePaterno || '' }}">
                     </div>
                 </div>
             </div>
@@ -23,13 +23,13 @@
                 <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
                     <div class="form-group">
                         <label for="apeMaterno">Ape. Materno: </label><br>
-                        <input type="text" class="form-control" id="apeMaterno"  placeholder="Apellido Materno" ng-model="correo.apeMaterno" value="{{ correo.apeMaterno || '' }}">
+                        <input ng-readonly="opcion" type="text" class="form-control" id="apeMaterno"  placeholder="Apellido Materno" ng-model="correo.apeMaterno" value="{{ correo.apeMaterno || '' }}">
                     </div>
                 </div>
                 <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
                     <div class="form-group">
                         <label for="apePaterno">Nombres:  </label><br>
-                        <input type="text" class="form-control" id="usuario"  placeholder="Nombres" ng-model="correo.nombres" value="{{ correo.nombres || '' }}">
+                        <input ng-readonly="opcion" type="text" class="form-control" id="usuario"  placeholder="Nombres" ng-model="correo.nombres" value="{{ correo.nombres || '' }}">
                     </div>
                 </div>
             </div>
@@ -37,7 +37,7 @@
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                     <div class="form-group">
                         <label for="correo">Correo:  </label><br>
-                        <input type="email" class="form-control" id="correo"  placeholder="Correo" ng-model="correo.correo" value="{{ correo.correo || '' }}">
+                        <input ng-readonly="opcion" type="email" class="form-control" id="correo"  placeholder="Correo" ng-model="correo.correo" value="{{ correo.correo || '' }}">
                     </div>
                 </div>
             </div>
@@ -45,7 +45,7 @@
                 <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
                     <div class="form-group">
                         <label for="paramAreaTrabajo">Área de Trabajo:  </label><br>
-                        <select id="paramAreaTrabajo" class="form-control" theme="bootstrap" ng-model="correo.paramAreaTrabajo">
+                        <select ng-disabled="opcion" id="paramAreaTrabajo" class="form-control" theme="bootstrap" ng-model="correo.paramAreaTrabajo">
                             <option ng-repeat="pd in paramAreaTrabajo| orderBy : 'descripcion'" value="{{pd.id.idParametroDetalle}}">{{pd.descripcion}}</option>
                         </select>
                     </div>
@@ -53,14 +53,14 @@
                 <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
                     <div class="form-group">
                         <label for="estado">Estado:  </label><br>
-                        <checkbox id="estado" ng-model="correo.estado"></checkbox>
+                        <checkbox ng-disabled="opcion" id="estado" ng-model="correo.estado"></checkbox>
                     </div>
                 </div>
             </div>
         </div>
     </div>
     <div class="modal-footer">
-        <button type="submit" class="btn btn-primary" ng-click="guardar()">
+        <button  ng-hide="opcion" type="submit" class="btn btn-primary" ng-click="guardar()">
             Guardar
         </button>
         <button type="button" class="btn btn-default" ng-click="cerrar()">
