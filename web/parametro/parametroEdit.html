@@ -1,0 +1,106 @@
+<div class="modal-content">
+    <div class="modal-header">
+        <button type="button" class="close" ng-click="cerrar()">&times;</button>
+        <h4 class="modal-title" id="myModalLabel">Parámetro de sistema </h4>
+    </div>
+    <div class="modal-body">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                    <div class="form-group">
+                        <label for="idParametro">Id. Parámetro: </label><br>
+                        <input readonly type="text" class="form-control" id="idParametro"  placeholder="Id. Parámetro" ng-model="parametro.idParametro" value="{{ parametro.idParametro || '' }}">
+                    </div> 
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <div class="form-group">
+                        <label for="descripcion">Descripción: </label><br>
+                        <input ng-readonly="opcion" type="text" class="form-control" id="descripcion"  placeholder="Descripción" ng-model="parametro.descripcion" value="{{ parametro.descripcion || '' }}">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <!--Inicio de Servicios-->
+                <div class="col-md-12">    
+                    <button ng-disabled="deshabilitado" type="button" style="width: 100%;" class="btn btn-default" ng-click="isParametroDetalle = !isParametroDetalle">Parámetro Detalle</button>
+                    <hr>
+                    <div uib-collapse="isParametroDetalle">
+                        <div>
+                            <div class="form-group">
+                                <label for="descripcionDetalle">Descripción:  </label><br>
+                                <p class="input-group">
+                                    <input ng-readonly="opcion" type="text" class="form-control" id="descripcionDetalle"  placeholder="Detalle" ng-model="descripcionDetalle" value="{{ descripcionDetalle || '' }}">
+                                    <span class="input-group-btn">
+                                        <button   ng-disabled="opcion"  type="button" class="btn btn-default" ng-click="agregarDetalle()"><i class="glyphicon glyphicon-plus"></i></button>
+                                    </span>
+                                </p>
+                            </div> 
+                        </div>
+                        <div>
+                            <table class="table table-bordered table-hover table-condensed table-responsive">
+                                <thead>
+                                    <tr>
+                                        <th>Descripción</th>
+                                        <th>Valor</th>
+                                        <th>Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="parametroDetalle in parametro.parametroDetalles| orderBy:'idParametroDetalle'">
+                                        <!--                                        <td>
+                                                                                    <div>
+                                                                                        <div>
+                                                                                            <button ng-disabled="opcion" type="button" class="close" data-toggle="tooltip" title="Eliminar" ng-click="eliminarDetalle(parametroDetalle)">
+                                                                                                <span aria-hidden="true">&times;</span>
+                                                                                            </button>
+                                                                                            <button ng-disabled="opcion" type="button"  class="close" data-toggle="tooltip" title="Editar" ng-click="editarDetalle(parametroDetalle)">
+                                                                                                <span aria-hidden="true">&#9998;</span>
+                                                                                            </button>
+                                                                                        </div>
+                                                                                        <div>
+                                                                                            {{parametroDetalle.descripcion}}
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </td>-->
+
+                                        <td><span editable-text="parametroDetalle.descripcion" e-name="parametroDetalle.descripcion" e-form="rowform">
+                                                {{ parametroDetalle.descripcion || '' }}
+                                            </span></td>
+                                        <td><span editable-text="parametroDetalle.valor" e-name="parametroDetalle.valor" e-form="rowform">
+                                                {{ parametroDetalle.valor || 0.00 }}
+                                            </span></td>
+                                        <td style="white-space: nowrap">
+                                            <!-- form -->
+                                            <form editable-form name="rowform" onbeforesave="guardarDetalle(parametroDetalle)" ng-show="rowform.$visible" class="form-buttons form-inline" shown="parametroDetalleNew == parametroDetalle">
+                                                <button ng-disabled="opcion"  type="submit" ng-disabled="rowform.$waiting" class="btn btn-primary">
+                                                    guardar
+                                                </button>
+                                                <button ng-disabled="opcion"  type="button" ng-disabled="rowform.$waiting" ng-click="rowform.$cancel()" class="btn btn-default">
+                                                    cancelar
+                                                </button>
+                                            </form>
+                                            <div class="buttons" ng-show="!rowform.$visible">
+                                                <button ng-disabled="opcion"  data-toggle="tooltip" title="Editar"  class="btn btn-default" type="button" ng-click="rowform.$show()"><i class="fa fa-pencil-square-o" aria-hidden="true"></i><span class="hidden-xs"> </span></button>
+                                                <button ng-disabled="opcion"  data-toggle="tooltip" title="Eliminar"  class="btn btn-danger" type="button"  ng-click="eliminarDetalle(parametroDetalle)"><i class="fa fa-trash" aria-hidden="true"></i><span class="hidden-xs"> </span></button>
+                                            </div>  
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>    
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button  ng-hide="opcion" type="submit" class="btn btn-primary" ng-click="guardar()">
+            Guardar
+        </button>
+        <button type="button" class="btn btn-default" ng-click="cerrar()">
+            Volver
+        </button>
+    </div>
+</div>

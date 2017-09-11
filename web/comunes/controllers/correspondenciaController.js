@@ -248,6 +248,30 @@ app.controller("EditCorrespondenciaController",
                             }, function (response) {
                             });
                 };
+
+                $scope.generarHojaRuta = function () {
+                    fileRR.setHojaRuta($scope.correspondencia)
+                            .then(function (rutaResponse) {
+//                                $scope.myFile=[];
+//                                correspondenciaFileRR.findAllByIdCorrepondencia($scope.correspondencia.idCorrespondencia)
+//                                        .then(function (correspondenciaFileRespond) {
+//                                            $scope.relacionarFile(correspondenciaFileRespond);
+//                                        }, function (bussinessMessages) {
+//                                            $scope.bussinessMessages = bussinessMessages;
+//                                        });
+                                var newMyFile = {
+                                    name: rutaResponse.nombreArchivo,
+                                    _file: undefined,
+                                    _progress: 100,
+                                    _progressType: 'success',
+                                    _correspondenciaFile: rutaResponse
+                                };
+                                $scope.myFile.push(newMyFile);
+                                SweetAlert.swal("¡Hecho!", "Se generó la Hoja de Ruta.\nPuede verla en los archivos adjuntos", "success");
+                            }, function (error) {
+                                SweetAlert.swal("¡Advertencia!", "Ocurrió un inconveniente.", "warning");
+                            });
+                };
             }]);
 app.controller("ListCorrespondenciaController",
         ['$scope', "correspondencias", "idNotificacionParam", "correspondenciaRR",
@@ -349,7 +373,7 @@ app.controller("ListCorrespondenciaController",
                                 if (data !== "escape key press") {
                                     //Si no es cancel, se reemplaza el objeto que se mandó a actualizar
                                     $scope.correspondencias.push(data);
-                                    $scope.editarModal(data,false);
+                                    $scope.editarModal(data, false);
                                 }
                             }
                         } else {

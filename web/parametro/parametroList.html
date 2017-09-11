@@ -1,0 +1,90 @@
+
+<div class="container" st-table="displayCollection" st-safe-src="parametros" >
+    <div class="row">
+        <div class="col col-md-12">
+            <h1 style='text-align: center'><b>Parámetros del Sistema</b></h1>
+            <hr>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col col-md-12">
+            <button class="btn btn-primary" ng-click="insertarModal()">
+                <i class="fa fa-plus-circle" aria-hidden="true"></i>
+                Parámetro
+            </button>
+            <hr>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+            <form>
+                <label for="buscaGlobal">Búsqueda global:</label>
+                <input type="text" st-search type="search"  class="form-control" id="buscaGlobal"  placeholder="Búsqueda global">
+            </form>
+            <br>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+            <form>
+                <label for="predicate">Seleccionar campo a buscar:</label>
+                <select class="form-control" id="predicate" ng-model="selectedPredicate">
+                    <option ng-repeat="pd in predicates" value="{{pd.nombre}}">{{pd.descripcion}}</option>
+                </select>
+            </form>
+        </div>
+        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+            <form>
+                <label for="buscaCampo">&nbsp;</label>
+                <input type="text" st-search="{{selectedPredicate}}" class="form-control" id="buscaCampo"  placeholder="Búsqueda campo">
+            </form>
+        </div>
+    </div>
+    <br>
+    <div class="row">
+        <div class="col col-lg-12">
+            <div class="search-table-outter wrapper">
+                <div id="no-more-tables">
+                    <table class="table table-striped table-bordered table-condensed" >
+                        <thead>
+                            <tr>
+                                <th st-sort="idParametro">Id. Parámetro</th>
+                                <th st-sort="descripcion">Descripción</th>
+                                <th colspan="3" style="text-align: center">Acción</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="parametro in displayCollection| empezarDe : currentPage * pageSize | limitTo:pageSize | orderBy : 'apePaterno' ">
+                                <td data-title="Id. Parámetro">{{parametro.idParametro}}</td>
+                                <td data-title="Descripción">{{parametro.descripcion}}</td>
+                                <td  data-title="Ver">
+                                    <button data-toggle="tooltip" title="Ver"  class="btn btn-default" ng-click="editarModal(parametro, true)"><i class="fa fa-eye" aria-hidden="true"></i><span class="hidden-xs"> </span></button> 
+                                </td>
+                                <td  data-title="Editar">
+                                    <button data-toggle="tooltip" title="Editar"  class="btn btn-default" ng-click="editarModal(parametro, false)"><i class="fa fa-pencil-square-o" aria-hidden="true"></i><span class="hidden-xs"> </span></button>
+                                </td>
+                                <td  data-title="Eliminar">
+                                    <button data-toggle="tooltip" title="Eliminar"  class="btn btn-danger" ng-click="eliminar(parametro)" ><i class="fa fa-trash" aria-hidden="true"></i><span class="hidden-xs"> </span></button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- paginacion -->
+    <div class="container">
+        <div class="center-block" style="text-align: center">
+            <br>
+            <button ng-disabled="currentPage === 0" ng-click="currentPage = currentPage - 1" class="btn btn-default">
+                <span aria-hidden="true">&laquo;</span>
+            </button>
+            {{currentPage + 1}}/{{numberOfPages()}}
+            <button ng-disabled="currentPage >= correos.length / pageSize - 1" ng-click="setNextPagina()" class="btn btn-default">
+                <span aria-hidden="true">&raquo;</span>
+            </button>
+        </div>
+    </div>
+    <!-- paginacion -->
+</div>
