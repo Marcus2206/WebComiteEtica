@@ -39,3 +39,16 @@ app.directive('fileModel', ['$parse', function ($parse) {
             }
         };
     }]);
+
+app.directive("limitInputTo", [function () {
+        return {
+            restrict: "A",
+            link: function (scope, elem, attrs) {
+                var limit = parseInt(attrs.limitInputTo);
+                angular.element(elem).on("keypress", function (e) {
+                    if (this.value.length === limit)
+                        e.preventDefault();
+                });
+            }
+        };
+    }]);

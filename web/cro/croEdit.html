@@ -21,6 +21,29 @@
                     </div> 
                 </div>
             </div>
+
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
+                    <div class="form-group">
+                        <label for="razonSocial">Razón Social:  </label><br>
+                        <input ng-readonly="opcion" type="text" class="form-control" id="razonSocial" ng-model="cro.razonSocial" placeholder="Razón Social" value="{{ cro.razonSocial || '' }}" e-required>
+                    </div> 
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                    <div class="form-group">
+                        <label for="ruc">RUC:  </label><br>
+                        <input ng-readonly="opcion" type="text" class="form-control" id="ruc" ng-model="cro.ruc" limit-input-to="11" placeholder="RUC" value="{{ cro.ruc || '' }}" e-required>
+                    </div> 
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <div class="form-group">
+                        <label for="direccion">Dirección:  </label><br>
+                        <input ng-readonly="opcion" type="text" class="form-control" id="direccion" ng-model="cro.direccion" placeholder="Dirección" value="{{ cro.direccion || '' }}" e-required>
+                    </div> 
+                </div>
+            </div>
             <div class="row">
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                     <!--Inicio de Coordinador-->

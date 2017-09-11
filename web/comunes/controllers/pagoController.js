@@ -2,10 +2,10 @@ var app = angular.module("app");
 
 app.controller("EditPagoController",
         ['$scope', 'pago', 'parametros', 'pagoRR', 'pagoDetalleRR',
-            "$log", "$uibModalInstance", 'SweetAlert',
+            "$log", "$uibModalInstance", 'SweetAlert', 'cros', 'patrocinadors',
             '$uibModal', '$rootScope', 'opcion',
             function ($scope, pago, parametros, pagoRR, pagoDetalleRR,
-                    $log, $uibModalInstance, SweetAlert,
+                    $log, $uibModalInstance, SweetAlert, cros, patrocinadors,
                     $uibModal, $rootScope, opcion) {
                 $scope.filtrar = function (obj, param) {
                     function filterByParametro(obj) {
@@ -20,9 +20,47 @@ app.controller("EditPagoController",
                 $scope.paramEstadoPago = $scope.filtrar($scope.parametros, 'P009')[0].parametroDetalles;
                 $scope.pagoDetalles = [];
 
+//                $scope.opcionFacturacion = {};
+                $scope.opcionFacturacions = [{id: "01", descripcion: "Cro"}, {id: "02", descripcion: "Patrocinador"}, {id: "03", descripcion: "Otro"}];
+
                 $scope.isDetalle = true;
 
+                $scope.proveedores;
                 $scope.pago = pago;
+                $scope.facturacionSelected = {};
+                $scope.etiqueta = "&nbsp;";
+                $scope.cros = cros;
+                $scope.patrocinadors = patrocinadors;
+
+                $scope.setOpcionFacturacion = function () {
+                    if ($scope.pago.opcionFacturacion === '01') {
+                        $scope.etiqueta = "Cro:";
+                        $scope.proveedores = $scope.cros;
+                        $scope.facturacionSelected = {};
+                    } else if ($scope.pago.opcionFacturacion === '02') {
+                        $scope.etiqueta = "Patrocinador:";
+                        $scope.proveedores = $scope.patrocinadors;
+                        $scope.facturacionSelected = {};
+                    } else if ($scope.pago.opcionFacturacion === '03') {
+                        $scope.proveedores = [];
+                        $scope.facturacionSelected = {};
+                    }
+                };
+
+
+
+                $scope.setDatos = function () {
+                    if ($scope.pago.opcionFacturacion === '01') {
+                        $scope.pago.idProveedor = $scope.facturacionSelected.selected.idCro;
+                    } else if ($scope.pago.opcionFacturacion === '02') {
+                        $scope.pago.idProveedor = $scope.facturacionSelected.selected.idPatrocinador;
+                    } else {
+                        $scope.pago.idProveedor = null;
+                    }
+                    $scope.pago.razonSocial = $scope.facturacionSelected.selected.razonSocial;
+                    $scope.pago.ruc = $scope.facturacionSelected.selected.ruc;
+                    $scope.pago.direccion = $scope.facturacionSelected.selected.direccion;
+                };
 
                 pagoDetalleRR.listFindPagoDetalleByPago(pago.idPago)
                         .then(function (pagoDetalleResponse) {
@@ -135,6 +173,31 @@ app.controller("EditPagoController",
                             });
                 };
 
+                $scope.setOpcionFacturacion();
+
+                $scope.filtrarObjetos = function (obj, param, op) {
+
+                    function filterByidProveedor(obj) {
+                        if (op === 1) {
+                            if (obj.idCro === param) {
+                                return obj;
+                            }
+                        } else {
+                            if (obj.idPatrocinador === param) {
+                                return obj;
+                            }
+                        }
+                    }
+
+                    return obj.filter(filterByidProveedor);
+                };
+
+                if ($scope.pago.opcionFacturacion === '01') {
+                    $scope.facturacionSelected.selected = $scope.filtrarObjetos($scope.cros, $scope.pago.idProveedor, 1)[0];
+                } else if ($scope.pago.opcionFacturacion === '02') {
+                    $scope.facturacionSelected.selected = $scope.filtrarObjetos($scope.patrocinadors, $scope.pago.idProveedor, 2)[0];
+                }
+                
                 $scope.cerrar = function () {
                     $uibModalInstance.dismiss('cancel');
                 };
@@ -198,7 +261,13 @@ app.controller("ListPagoController",
                             parametros: ['parametroRR', function (parametroRR) {
                                     return parametroRR.list();
                                 }],
-                            opcion: opcion
+                            opcion: opcion,
+                            cros: ['croRR', function (croRR) {
+                                    return croRR.list();
+                                }],
+                            patrocinadors: ['patrocinadorRR', function (patrocinadorRR) {
+                                    return patrocinadorRR.list();
+                                }]
                         }
                     });
 

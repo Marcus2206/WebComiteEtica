@@ -35,6 +35,52 @@
                     </div> 
                 </div>
             </div>
+
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6"  >
+                    <div class="form-group">
+                        <label for="opcionFacturacion">Opción facturación:  </label><br>
+                        <select  id="opcionFacturacion" ng-disabled="opcion" class="form-control" ng-model="pago.opcionFacturacion" ng-change="setOpcionFacturacion()">
+                            <option ng-repeat="pd in opcionFacturacions" value="{{pd.id}}">{{pd.descripcion}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6" ng-show="pago.opcionFacturacion === '01' || pago.opcionFacturacion === '02'">
+                    <div class="form-group">
+                        <label>{{etiqueta}} </label><br>
+                        <ui-select ng-disabled="opcion" ng-model="facturacionSelected.selected" theme="selectize" title="Seleccionar" ng-change="setDatos()">
+                            <ui-select-match placeholder="Seleccinar">{{$select.selected.nombre}}</ui-select-match>
+                            <ui-select-choices repeat="p in proveedores | orderBy : 'nombre' | filter: $select.search">
+                                <div ng-bind-html="p.nombre | highlight: $select.search"></div> 
+                            </ui-select-choices>
+                        </ui-select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
+                    <div class="form-group">
+                        <label for="razonSocial">Razón Social:  </label><br>
+                        <input ng-readonly="opcion" type="text" class="form-control" id="razonSocial" ng-model="pago.razonSocial" placeholder="Razón Social" value="{{ pago.razonSocial || '' }}" e-required>
+                    </div> 
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                    <div class="form-group">
+                        <label for="ruc">RUC:  </label><br>
+                        <input ng-readonly="opcion" type="text" class="form-control" id="ruc" ng-model="pago.ruc" limit-input-to="11" placeholder="RUC" value="{{ pago.ruc || '' }}" e-required>
+                    </div> 
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <div class="form-group">
+                        <label for="direccion">Dirección:  </label><br>
+                        <input ng-readonly="opcion" type="text" class="form-control" id="direccion" ng-model="pago.direccion" placeholder="Dirección" value="{{ pago.direccion || '' }}" e-required>
+                    </div> 
+                </div>
+            </div>
+
             <div class="row">
                 <div class="col col-xs-6 col-md-6">
                     <div class="form-group">

@@ -6,15 +6,41 @@
     <div class="modal-body">
         <div class="container-fluid">
             <div class="row">
-                <div class="form-group">
-                    <label for="idPatrocinador">Id. patrocinador:</label><br>
-                    <input readonly type="text" class="form-control" id="idPatrocinador" ng-model="patrocinador.idPatrocinador" placeholder="Id. patrocinador" value="{{ patrocinador.idPatrocinador || '' }}">
-                </div>     
+                <div class="col-xs-12 col-sm-12 col-md-4 col-lg-3">
+                    <div class="form-group">
+                        <label for="idPatrocinador">Id. patrocinador:</label><br>
+                        <input readonly type="text" class="form-control" id="idPatrocinador" ng-model="patrocinador.idPatrocinador" placeholder="Id. patrocinador" value="{{ patrocinador.idPatrocinador || '' }}">
+                    </div>     
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <div class="form-group">
+                        <label for="nombre">Nombre:  </label><br>
+                        <input ng-readonly="opcion" type="text" class="form-control" id="nombre" ng-model="patrocinador.nombre" placeholder="Nombres" value="{{ patrocinador.nombre || '' }}" e-required>
+                    </div> 
+                </div>
+            </div>
 
-                <div class="form-group">
-                    <label for="nombre">Nombre:  </label><br>
-                    <input ng-readonly="opcion" type="text" class="form-control" id="nombre" ng-model="patrocinador.nombre" placeholder="Nombres" value="{{ patrocinador.nombre || '' }}" e-required>
-                </div> 
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
+                    <div class="form-group">
+                        <label for="razonSocial">Razón Social:  </label><br>
+                        <input ng-readonly="opcion" type="text" class="form-control" id="razonSocial" ng-model="patrocinador.razonSocial" placeholder="Razón Social" value="{{ patrocinador.razonSocial || '' }}" e-required>
+                    </div> 
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                    <div class="form-group">
+                        <label for="ruc">RUC:  </label><br>
+                        <input ng-readonly="opcion" type="text" class="form-control" id="ruc" ng-model="patrocinador.ruc" limit-input-to="11" placeholder="RUC" value="{{ patrocinador.ruc || '' }}" e-required>
+                    </div> 
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <div class="form-group">
+                        <label for="direccion">Dirección:  </label><br>
+                        <input ng-readonly="opcion" type="text" class="form-control" id="direccion" ng-model="patrocinador.direccion" placeholder="Dirección" value="{{ patrocinador.direccion || '' }}" e-required>
+                    </div> 
+                </div>
             </div>
 
             <div class="row">
