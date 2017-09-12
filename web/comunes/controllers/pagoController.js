@@ -92,7 +92,7 @@ app.controller("EditPagoController",
                                     });
                                 }
                                 SweetAlert.swal("Hecho!", "Registro guardado exitosamente.", "success");
-
+                                $scope.formPago.$setPristine();
                             }, function (bussinessMessages) {
                                 $scope.bussinessMessages = bussinessMessages;
                                 SweetAlert.swal("Hubo un error!", "Intente nuevamente o comuniquese con el administrador.", "danger");
@@ -147,30 +147,38 @@ app.controller("EditPagoController",
                 };
 
                 $scope.enviarMailConta = function () {
-                    pagoRR.sendMailConta($scope.pago)
-                            .then(function (pagoResponse) {
-                                if (pagoResponse === 1) {
-                                    SweetAlert.swal("Hecho!", "Se envió con éxito.", "success");
-                                    $scope.pago.contador++;
-                                } else {
+                    if (!$scope.formPago.$dirty) {
+                        pagoRR.sendMailConta($scope.pago)
+                                .then(function (pagoResponse) {
+                                    if (pagoResponse === 1) {
+                                        SweetAlert.swal("Hecho!", "Se envió con éxito.", "success");
+                                        $scope.pago.contador++;
+                                    } else {
+                                        SweetAlert.swal("Hubo un error!", "Intente nuevamente o comuniquese con el administrador.", "warning");
+                                    }
+                                }, function (error) {
                                     SweetAlert.swal("Hubo un error!", "Intente nuevamente o comuniquese con el administrador.", "warning");
-                                }
-                            }, function (error) {
-                                SweetAlert.swal("Hubo un error!", "Intente nuevamente o comuniquese con el administrador.", "warning");
-                            });
+                                });
+                    } else {
+                        SweetAlert.swal("Hubo un error!", "Guardar los datos antes del envío.", "warning");
+                    }
                 };
 
                 $scope.enviarMailCopia = function () {
-                    pagoRR.sendMailCopia($scope.pago)
-                            .then(function (pagoResponse) {
-                                if (pagoResponse === 1) {
-                                    SweetAlert.swal("Hecho!", "Se envió con éxito.", "success");
-                                } else {
+                    if (!$scope.formPago.$dirty) {
+                        pagoRR.sendMailCopia($scope.pago)
+                                .then(function (pagoResponse) {
+                                    if (pagoResponse === 1) {
+                                        SweetAlert.swal("Hecho!", "Se envió con éxito.", "success");
+                                    } else {
+                                        SweetAlert.swal("Hubo un error!", "Intente nuevamente o comuniquese con el administrador.", "warning");
+                                    }
+                                }, function (error) {
                                     SweetAlert.swal("Hubo un error!", "Intente nuevamente o comuniquese con el administrador.", "warning");
-                                }
-                            }, function (error) {
-                                SweetAlert.swal("Hubo un error!", "Intente nuevamente o comuniquese con el administrador.", "warning");
-                            });
+                                });
+                    } else {
+                        SweetAlert.swal("Hubo un error!", "Guardar los datos antes del envío.", "warning");
+                    }
                 };
 
                 $scope.setOpcionFacturacion();
@@ -197,7 +205,7 @@ app.controller("EditPagoController",
                 } else if ($scope.pago.opcionFacturacion === '02') {
                     $scope.facturacionSelected.selected = $scope.filtrarObjetos($scope.patrocinadors, $scope.pago.idProveedor, 2)[0];
                 }
-                
+
                 $scope.cerrar = function () {
                     $uibModalInstance.dismiss('cancel');
                 };
@@ -471,10 +479,6 @@ app.controller("NewPagoController",
                                 }, function (bussinessMessages) {
                                     $scope.bussinessMessages = bussinessMessages;
                                 });
-
-
-
-
 
                     } else {
                         SweetAlert.swal("Advertencia", "Debe seleccionar al menos un servicio para generar el pago.", "warning");

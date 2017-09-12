@@ -2,7 +2,7 @@
 <div class="container" st-table="displayCollection" st-safe-src="registros" >
     <div class="row">
         <div class="col col-md-12">
-            <h1 style='text-align: center'><b>Registro de Investigación</b></h1>
+            <h1 style='text-align: center'><b>Registro de General</b></h1>
             <hr>
         </div>
     </div>
@@ -51,9 +51,10 @@
                                 <th  st-sort="idRegistro">Id. Registro</th>
                                 <th  st-sort="equivalenciaCorrelativo">Equivalencia Correlativo</th>
                                 <th  st-sort="paramEstadoRegistro">Estado Registro</th>
-                                <th  st-sort="idInvestigacion">Investigación</th>
-                                <th  st-sort="idInvestigador">Investigador</th>
-                                <th  st-sort="idSede">Sede</th>
+                                <th  st-sort="protocolo">Protocolo</th>
+                                <th  st-sort="titulo">Título</th>
+                                <th  st-sort="nombreInvestigador">Investigador</th>
+                                <th  st-sort="nombreSede">Sede</th>
                                 <th st-sort="fechaAprobacion">Fecha aprobación</th>
                                 <th  st-sort="paramEstado">Estado</th>
                                 <th  st-sort="observacion">Observación</th>
@@ -74,9 +75,10 @@
                                 <td data-title="Id. Registro">{{registro.idRegistro}}</td>
                                 <td data-title="Equivalencia Correlativo">{{registro.equivalenciaCorrelativo}}</td> 
                                 <td data-title="Estado Registro">{{registro.paramEstadoRegistro}}</td>
-                                <td data-title="Investigación">{{registro.idInvestigacion}}</td>
-                                <td data-title="Investigador">{{registro.idInvestigador}}</td>
-                                <td data-title="Sede">{{registro.idSede}}</td>
+                                <td data-title="Protocolo">{{registro.protocolo}}</td>
+                                <td data-title="Título">{{registro.titulo}}</td>
+                                <td data-title="Investigador">{{registro.nombreInvestigador}}</td>
+                                <td data-title="Sede">{{registro.nombreSede}}</td>
                                 <td data-title="Fecha aprobación">{{registro.fechaAprobacion|date:'dd/MM/yyyy'}}</td>
                                 <td data-title="Estado">{{registro.paramEstado}}</td>
                                 <td data-title="Observación">{{registro.observacion}}</td>

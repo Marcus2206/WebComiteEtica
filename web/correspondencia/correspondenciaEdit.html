@@ -38,7 +38,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                <div class="col-xs-12 col-sm-12 col-md-5 col-lg-5">
                     <div class="form-group">
                         <label for="registro">Registro:  </label><br>
                         <p class="input-group">
@@ -49,10 +49,16 @@
                         </p>
                     </div> 
                 </div>
-                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
                     <div class="form-group">
-                        <label for="equivalenciaCorrelativo">Correlativo Equiv.:  </label><br>
+                        <label for="equivalenciaCorrelativo">Corre. Equiv.:  </label><br>
                         <input type="text" readonly class="form-control" id="equivalenciaCorrelativo"  placeholder="Correlativo equiv." ng-model="correspondencia.equivalenciaCorrelativo" value="{{correspondencia.equivalenciaCorrelativo|| '' }}">
+                    </div> 
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                    <div class="form-group">
+                        <label for="protocolo">Protocolo:  </label><br>
+                        <input type="text" readonly class="form-control" id="protocolo"  placeholder="Protocolo" ng-model="correspondencia.protocolo" value="{{correspondencia.protocolo|| '' }}">
                     </div> 
                 </div>
             </div>

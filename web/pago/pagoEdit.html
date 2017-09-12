@@ -5,121 +5,123 @@
     </div>
     <div class="modal-body">
         <div class="container-fluid">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="form-group">
-                        <label for="idPago">Id. Pago:  </label><br>
-                        <input readonly type="text" class="form-control" id="idPago"  placeholder="Id. pago" ng-model="pago.idPago" value="{{ pago.idPago || '' }}">
-                    </div> 
+            <form name="formPago">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label for="idPago">Id. Pago:  </label><br>
+                            <input readonly type="text" class="form-control" id="idPago"  placeholder="Id. pago" ng-model="pago.idPago" value="{{ pago.idPago || '' }}">
+                        </div> 
+                    </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="nroFactura">Nro. Factura:  </label><br>
-                        <input ng-readonly="opcion" type="text" class="form-control" id="nroFactura"  placeholder="Nro. Factura" ng-model="pago.nroFactura" value="{{pago.nroFactura|| '' }}">
-                    </div> 
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="nroFactura">Nro. Factura:  </label><br>
+                            <input ng-readonly="opcion" type="text" class="form-control" id="nroFactura"  placeholder="Nro. Factura" ng-model="pago.nroFactura" value="{{pago.nroFactura|| '' }}">
+                        </div> 
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="precio">Precio:  </label><br>
+                            <input ng-readonly="opcion" type="text" class="form-control" id="precio"  placeholder="Precio total" ng-model="pago.costo" value="{{pago.costo||'' }}">
+                        </div> 
+                    </div>
                 </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="precio">Precio:  </label><br>
-                        <input ng-readonly="opcion" type="text" class="form-control" id="precio"  placeholder="Precio total" ng-model="pago.costo" value="{{pago.costo||'' }}">
-                    </div> 
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label for="observacion">Observación:  </label><br>
+                            <input ng-readonly="opcion" type="text" class="form-control" id="observacion"  placeholder="Observación" ng-model="pago.observacion" value="{{pago.observacion|| '' }}">
+                        </div> 
+                    </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="form-group">
-                        <label for="observacion">Observación:  </label><br>
-                        <input ng-readonly="opcion" type="text" class="form-control" id="observacion"  placeholder="Observación" ng-model="pago.observacion" value="{{pago.observacion|| '' }}">
-                    </div> 
-                </div>
-            </div>
 
-            <div class="row">
-                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6"  >
-                    <div class="form-group">
-                        <label for="opcionFacturacion">Opción facturación:  </label><br>
-                        <select  id="opcionFacturacion" ng-disabled="opcion" class="form-control" ng-model="pago.opcionFacturacion" ng-change="setOpcionFacturacion()">
-                            <option ng-repeat="pd in opcionFacturacions" value="{{pd.id}}">{{pd.descripcion}}</option>
-                        </select>
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6"  >
+                        <div class="form-group">
+                            <label for="opcionFacturacion">Opción facturación:  </label><br>
+                            <select  id="opcionFacturacion" ng-disabled="opcion" class="form-control" ng-model="pago.opcionFacturacion" ng-change="setOpcionFacturacion()">
+                                <option ng-repeat="pd in opcionFacturacions" value="{{pd.id}}">{{pd.descripcion}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6" ng-show="pago.opcionFacturacion === '01' || pago.opcionFacturacion === '02'">
+                        <div class="form-group">
+                            <label>{{etiqueta}} </label><br>
+                            <ui-select ng-disabled="opcion" ng-model="facturacionSelected.selected" theme="selectize" title="Seleccionar" ng-change="setDatos()">
+                                <ui-select-match placeholder="Seleccinar">{{$select.selected.nombre}}</ui-select-match>
+                                <ui-select-choices repeat="p in proveedores | orderBy : 'nombre' | filter: $select.search">
+                                    <div ng-bind-html="p.nombre | highlight: $select.search"></div> 
+                                </ui-select-choices>
+                            </ui-select>
+                        </div>
                     </div>
                 </div>
-                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6" ng-show="pago.opcionFacturacion === '01' || pago.opcionFacturacion === '02'">
-                    <div class="form-group">
-                        <label>{{etiqueta}} </label><br>
-                        <ui-select ng-disabled="opcion" ng-model="facturacionSelected.selected" theme="selectize" title="Seleccionar" ng-change="setDatos()">
-                            <ui-select-match placeholder="Seleccinar">{{$select.selected.nombre}}</ui-select-match>
-                            <ui-select-choices repeat="p in proveedores | orderBy : 'nombre' | filter: $select.search">
-                                <div ng-bind-html="p.nombre | highlight: $select.search"></div> 
-                            </ui-select-choices>
-                        </ui-select>
-                    </div>
-                </div>
-            </div>
 
-            <div class="row">
-                <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
-                    <div class="form-group">
-                        <label for="razonSocial">Razón Social:  </label><br>
-                        <input ng-readonly="opcion" type="text" class="form-control" id="razonSocial" ng-model="pago.razonSocial" placeholder="Razón Social" value="{{ pago.razonSocial || '' }}" e-required>
-                    </div> 
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
+                        <div class="form-group">
+                            <label for="razonSocial">Razón Social:  </label><br>
+                            <input ng-readonly="opcion" type="text" class="form-control" id="razonSocial" ng-model="pago.razonSocial" placeholder="Razón Social" value="{{ pago.razonSocial || '' }}" e-required>
+                        </div> 
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                        <div class="form-group">
+                            <label for="ruc">RUC:  </label><br>
+                            <input ng-readonly="opcion" type="text" class="form-control" id="ruc" ng-model="pago.ruc" limit-input-to="11" placeholder="RUC" value="{{ pago.ruc || '' }}" e-required>
+                        </div> 
+                    </div>
                 </div>
-                <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
-                    <div class="form-group">
-                        <label for="ruc">RUC:  </label><br>
-                        <input ng-readonly="opcion" type="text" class="form-control" id="ruc" ng-model="pago.ruc" limit-input-to="11" placeholder="RUC" value="{{ pago.ruc || '' }}" e-required>
-                    </div> 
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <div class="form-group">
+                            <label for="direccion">Dirección:  </label><br>
+                            <input ng-readonly="opcion" type="text" class="form-control" id="direccion" ng-model="pago.direccion" placeholder="Dirección" value="{{ pago.direccion || '' }}" e-required>
+                        </div> 
+                    </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                    <div class="form-group">
-                        <label for="direccion">Dirección:  </label><br>
-                        <input ng-readonly="opcion" type="text" class="form-control" id="direccion" ng-model="pago.direccion" placeholder="Dirección" value="{{ pago.direccion || '' }}" e-required>
-                    </div> 
-                </div>
-            </div>
 
-            <div class="row">
-                <div class="col col-xs-6 col-md-6">
-                    <div class="form-group">
-                        <label for="paramEstadoPago">Estado:  </label><br>
-                        <select ng-disabled="true" class="form-control" id="paramEstadoPago" ng-model="pago.paramEstadoPago">
-                            <option ng-repeat="pd in paramEstadoPago" value="{{pd.id.idParametroDetalle}}">{{pd.descripcion}}</option>
-                        </select>
+                <div class="row">
+                    <div class="col col-xs-6 col-md-6">
+                        <div class="form-group">
+                            <label for="paramEstadoPago">Estado:  </label><br>
+                            <select ng-disabled="true" class="form-control" id="paramEstadoPago" ng-model="pago.paramEstadoPago">
+                                <option ng-repeat="pd in paramEstadoPago" value="{{pd.id.idParametroDetalle}}">{{pd.descripcion}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col col-xs-6 col-md-6">
+                        <div class="form-group">
+                            <label for="contador">Veces enviado: </label><br>
+                            <p class="input-group">
+                                <input type="text" class="form-control" id="contador"  readonly placeholder="Contador" ng-model="pago.contador" value="{{ pago.contador || '' }}">
+                                <span class="input-group-btn">
+                                    <button ng-disabled="opcion" type="button" class="btn btn-default" ng-click="enviarMailConta()" data-toggle="tooltip" title="Enviar Correo">
+                                        <i class="glyphicon glyphicon-forward"></i>
+                                    </button>
+                                </span>
+                            </p>
+                        </div>
                     </div>
                 </div>
-                <div class="col col-xs-6 col-md-6">
-                    <div class="form-group">
-                        <label for="contador">Veces enviado: </label><br>
-                        <p class="input-group">
-                            <input type="text" class="form-control" id="contador"  readonly placeholder="Contador" ng-model="pago.contador" value="{{ pago.contador || '' }}">
-                            <span class="input-group-btn">
-                                <button ng-disabled="opcion" type="button" class="btn btn-default" ng-click="enviarMailConta()" data-toggle="tooltip" title="Enviar Correo">
-                                    <i class="glyphicon glyphicon-forward"></i>
-                                </button>
-                            </span>
-                        </p>
-                    </div>
-                </div>
-            </div>
 
-            <div class="row">
-                <div class="col col-xs-12 col-md-12">
-                    <div class="form-group">
-                        <label for="copiaCorreo" data-toggle="tooltip" title="Para ingresar varios correos, por favor, separárlos con ;">Enviar copia a participantes: </label><br>
-                        <p class="input-group">
-                            <input ng-readonly="opcion" type="text" class="form-control" id="copiaCorreo"  placeholder="Copia a..." ng-model="pago.copiaCorreo" value="{{ pago.copiaCorreo || '' }}">
-                            <span class="input-group-btn">
-                                <button  ng-disabled="opcion"  type="button" class="btn btn-default" ng-click="enviarMailCopia()" data-toggle="tooltip" title="Enviar Copia">
-                                    <i class="glyphicon glyphicon-forward"></i>
-                                </button>
-                            </span>
-                        </p>
+                <div class="row">
+                    <div class="col col-xs-12 col-md-12">
+                        <div class="form-group">
+                            <label for="copiaCorreo" data-toggle="tooltip" title="Para ingresar varios correos, por favor, separárlos con ;">Enviar copia a participantes: </label><br>
+                            <p class="input-group">
+                                <input ng-readonly="opcion" type="text" class="form-control" id="copiaCorreo"  placeholder="Copia a..." ng-model="pago.copiaCorreo" value="{{ pago.copiaCorreo || '' }}">
+                                <span class="input-group-btn">
+                                    <button  ng-disabled="opcion"  type="button" class="btn btn-default" ng-click="enviarMailCopia()" data-toggle="tooltip" title="Enviar Copia">
+                                        <i class="glyphicon glyphicon-forward"></i>
+                                    </button>
+                                </span>
+                            </p>
+                        </div>
                     </div>
                 </div>
-            </div>
+            </form>
             <div class="row">
                 <!--Inicio de Servicios-->
                 <div class="col-md-12">    
@@ -160,7 +162,6 @@
         </div>
     </div>
     <br>
-
 
     <div class="modal-footer">
         <button ng-hide="opcion" type="submit" class="btn btn-primary" ng-click="guardar()">

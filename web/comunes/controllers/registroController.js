@@ -82,8 +82,8 @@ app.controller("EditRegistroController",
                 $scope.paramNivelDesviacion = $scope.filtrar($scope.parametros, 'P014')[0].parametroDetalles;
 
                 $scope.registro = registro;
-                $scope.registro.investigador = $scope.registroObj.idInvestigador;
-                $scope.registro.sede = $scope.registroObj.idSede;
+//                $scope.registro.investigador = $scope.registroObj.idInvestigador;
+//                $scope.registro.sede = $scope.registroObj.idSede;
 
                 $scope.deshabilitado = false;
                 $scope.isBitacora = true;
@@ -100,10 +100,8 @@ app.controller("EditRegistroController",
                         });
                 $scope.guardar = function () {
                     $scope.registro.usuarioModifica = $rootScope.username;
-                    var listbox = document.getElementById("paramEstadoRegistro");
-                    var selIndex = listbox.selectedIndex;
-                    if (selIndex < 0) {
-                        SweetAlert.swal("Advertencia", "Debe seleccionar un Estado de Registro", "warning");
+                    if ($scope.registro.paramEstadoRegistro === null) {
+                        SweetAlert.swal("Advertencia", "Debe seleccionar un Estado de Registro. \nEstudio Inicial / Nuevo Site.", "warning");
                         return;
                     }
                     $scope.registro.fechaModificacion = new Date();
@@ -125,9 +123,10 @@ app.controller("EditRegistroController",
                                 selText = listbox.options[selIndex].text;
                                 registroRespond.paramEstadoRegistro = selText;
 
-                                registroRespond.idInvestigador = $scope.registro.investigador;
-                                registroRespond.idSede = $scope.registro.sede;
-                                registroRespond.idInvestigacion = $scope.registro.investigacion.protocolo + ' - ' + $scope.registro.investigacion.titulo;
+                                registroRespond.nombreInvestigador = $scope.registro.investigador.apePaterno + ' ' + $scope.registro.investigador.apePaterno + ', ' + $scope.registro.investigador.nombres;
+                                registroRespond.nombreSede = $scope.registro.sede.nombre;
+                                registroRespond.protocolo = $scope.registro.investigacion.protocolo;
+                                registroRespond.titulo = $scope.registro.investigacion.titulo;
 
                                 var index = $scope.registros.indexOf($scope.registroObj);
                                 if (index !== -1) {
@@ -169,7 +168,6 @@ app.controller("EditRegistroController",
                 $scope.registroBitacora.id.idBitacora = 0;
 
                 $scope.agregarBitacora = function () {
-                    $log.log($scope.registroBitacora);
                     registroBitacoraRR.insert($scope.registroBitacora)
                             .then(function (registroBitacoraResponse) {
 
@@ -485,17 +483,17 @@ app.controller("NewRegistroController",
                         return;
                     }
 
-                    if (typeof ($scope.registro.idInvestigador) === 'undefined') {
+                    if (typeof ($scope.registro.investigador) === 'undefined') {
                         SweetAlert.swal("Advertencia", "Debe seleccionar un investigador asignado.", "warning");
                         return;
                     }
 
-                    if (typeof ($scope.registro.idSede) === 'undefined') {
+                    if (typeof ($scope.registro.sede) === 'undefined') {
                         SweetAlert.swal("Advertencia", "Debe seleccionar una sede asignada.", "warning");
                         return;
                     }
 
-                    registroRR.validateRegistro($scope.registro.investigacion.idInvestigacion, $scope.registro.idInvestigador, $scope.registro.idSede)
+                    registroRR.validateRegistro($scope.registro.investigacion.idInvestigacion, $scope.registro.investigador.idInvestigador, $scope.registro.sede.idSede)
                             .then(function (responde) {
                                 if (responde.length > 0) {
                                     SweetAlert.swal("Advertencia", "Existe un registro con datos existentes.\nVerifique Investigación, Investigador y Sede.", "warning");
@@ -512,9 +510,10 @@ app.controller("NewRegistroController",
                                                 selText = listbox.options[selIndex].text;
                                                 registroRespond.paramNotificacion = selText;
 
-                                                registroRespond.idInvestigador = $scope.registro.investigador;
-                                                registroRespond.idSede = $scope.registro.sede;
-                                                registroRespond.idInvestigacion = $scope.registro.investigacion.protocolo + ' - ' + $scope.registro.investigacion.titulo;
+                                                registroRespond.nombreInvestigador = $scope.registro.investigador.apePaterno + ' ' + $scope.registro.investigador.apePaterno + ', ' + $scope.registro.investigador.nombres;
+                                                registroRespond.nombreSede = $scope.registro.sede.nombre;
+                                                registroRespond.protocolo = $scope.registro.investigacion.protocolo;
+                                                registroRespond.titulo = $scope.registro.investigacion.titulo;
 
                                                 $uibModalInstance.dismiss(registroRespond);
                                                 SweetAlert.swal("Hecho", "Registro guardado exitosamente.", "success");
@@ -634,10 +633,10 @@ function buscarInvestigador($scope, $uibModal) {
         if (data !== "cancel") {
             if (data !== "backdrop click") {
                 if (data !== "escape key press") {
-                    $scope.registro.idInvestigador = data[0].id.idInvestigador;
-                    $scope.registro.investigador = data[1].apePaterno + ' ' + data[1].apeMaterno + ', ' + data[1].nombres;
-                    $scope.registro.idSede = undefined;
+                    $scope.registro.investigador = data[1];
+                    $scope.registro.nombreInvestigador = data[1].apePaterno + ' ' + data[1].apeMaterno + ', ' + data[1].nombres;
                     $scope.registro.sede = undefined;
+                    $scope.registro.nombreSede = undefined;
                 }
             }
         } else {
@@ -667,8 +666,8 @@ function buscarSede($scope, $uibModal) {
         if (data !== "cancel") {
             if (data !== "backdrop click") {
                 if (data !== "escape key press") {
-                    $scope.registro.idSede = data.idSede;
-                    $scope.registro.sede = data.nombre;
+                    $scope.registro.sede = data;
+                    $scope.registro.nombreSede = data.nombre;
                 }
             }
         } else {

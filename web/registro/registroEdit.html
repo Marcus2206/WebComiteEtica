@@ -41,24 +41,52 @@
                 </div>
                 <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
                     <div class="form-group">
+                        <label for="protocolo">Protocolo:  </label><br>
+                        <input ng-readonly="true" type="text" class="form-control" id="protocolo"  placeholder="Correlativo equiv." ng-model="registro.investigacion.protocolo" value="{{registro.investigacion.protocolo|| '' }}">
+                    </div> 
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                    <div class="form-group">
+                        <label for="titulo">Título:  </label><br>
+                        <input ng-readonly="true" type="text" class="form-control" id="titulo"  placeholder="Titulo" data-toggle="tooltip" title="{{registro.investigacion.titulo}}"  ng-model="registro.investigacion.titulo" value="{{registro.investigacion.titulo|| '' }}">
+                    </div> 
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                    <div class="form-group">
                         <label for="idInvestigador">Investigador:  </label><br>
                         <p class="input-group">
-                            <input type="text" class="form-control" id="idInvestigador"  placeholder="Buscar Investigador" ng-model="registro.idInvestigador" readonly value="{{registro.idInvestigador|| '' }}"/>
+                            <input type="text" class="form-control" id="idInvestigador"  placeholder="Buscar Investigador" ng-model="registro.investigador.idInvestigador" readonly value="{{registro.investigador.idInvestigador|| '' }}"/>
                             <span class="input-group-btn">
                                 <button ng-disabled="opcion" type="button" class="btn btn-default" ng-click="buscarInvestigador()"><i class="glyphicon glyphicon-search"></i></button>
                             </span>
                         </p>
                     </div> 
                 </div>
+                <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
+                    <div class="form-group">
+                        <label for="nombreInvestigador">Nombre Investigador:  </label><br>
+                        <input ng-readonly="true" type="text" class="form-control" id="nombreInvestigador"  placeholder="Nombre Investigador" value="{{registro.investigador.apePaterno|| ''}} {{registro.investigador.apeMaterno|| ''}}  {{registro.investigador.nombres|| '' }}">
+                    </div> 
+                </div>
+            </div>
+            <div class="row">
                 <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
                     <div class="form-group">
                         <label for="idSede">Sede:  </label><br>
                         <p class="input-group">
-                            <input type="text" class="form-control" id="idSede"  placeholder="Buscar Sede" ng-model="registro.idSede" readonly value="{{registro.idSede|| '' }}"/>
+                            <input type="text" class="form-control" id="idSede"  placeholder="Buscar Sede" ng-model="registro.sede.idSede" readonly value="{{registro.sede.idSede|| '' }}"/>
                             <span class="input-group-btn">
                                 <button  ng-disabled="opcion" type="button" class="btn btn-default" ng-click="buscarSede()"><i class="glyphicon glyphicon-search"></i></button>
                             </span>
                         </p>
+                    </div> 
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
+                    <div class="form-group">
+                        <label for="nombreSede">Nombre Sede:  </label><br>
+                        <input ng-readonly="true" type="text" class="form-control" id="nombreSede"  placeholder="Nombre Sede" ng-model="registro.sede.nombre" value="{{registro.sede.nombre|| '' }}">
                     </div> 
                 </div>
             </div>
@@ -180,7 +208,7 @@
                                 <div class="form-group">
                                     <label for="paramTipoBitacora">Tipo bitacora:  </label><br>
                                     <select  ng-disabled="opcion" class="form-control" id="paramTipoBitacora" ng-model="registroBitacora.paramTipoBitacora" ng-change="cargarDetalleBitacora()">
-                                        <option ng-repeat="pd in paramTipoBitacora | orderBy:'descripcion'" value="{{pd.id.idParametroDetalle}}">{{pd.descripcion}}</option>
+                                        <option ng-repeat="pd in paramTipoBitacora| orderBy:'descripcion'" value="{{pd.id.idParametroDetalle}}">{{pd.descripcion}}</option>
                                     </select>
                                 </div>
                             </div>
@@ -188,7 +216,7 @@
                                 <div class="form-group">
                                     <label for="paramDetalleBitacora">Detalle:  </label><br>
                                     <select ng-disabled="flagTipoBitacora" class="form-control" id="paramDetalleBitacora" ng-model="registroBitacora.paramDetalleBitacora">
-                                        <option ng-repeat="pd in paramDetalleBitacora | orderBy:'descripcion'" value="{{pd.id.idParametroDetalle}}">{{pd.descripcion}}</option>
+                                        <option ng-repeat="pd in paramDetalleBitacora| orderBy:'descripcion'" value="{{pd.id.idParametroDetalle}}">{{pd.descripcion}}</option>
                                     </select>
                                 </div>
                             </div>
