@@ -103,7 +103,6 @@ app.controller("EditInvestigacionController",
                 /*Investigadores seleccionables*/
                 investigadorRR.listInvestigadorSinIdInvestigacionFind($scope.investigacion.idInvestigacion)
                         .then(function (investigadorRespond) {
-                            $log.log(investigadorRespond);
                             $scope.investigadorsSelectList = investigadorRespond;
                         }, function (bussinessMessages) {
                             $scope.bussinessMessages = bussinessMessages;
@@ -131,7 +130,6 @@ app.controller("EditInvestigacionController",
                 /*Detalle de Investigación Investigador*/
                 investigacionInvestigadorRR.listInvestigadorByIdInvestigacion($scope.investigacion.idInvestigacion)
                         .then(function (investigadorsRespond) {
-                            $log.log(investigadorsRespond);
                             $scope.investigacionInvestigadors = investigadorsRespond;
                         }, function (bussinessMessages) {
                             $scope.bussinessMessages = bussinessMessages;
@@ -386,6 +384,7 @@ app.controller("ListInvestigacionController",
                 $scope.currentPage = 0;
                 $scope.pageSize = 20;
 
+                $scope.itemsByPage;
                 /*Calculando número de páginas*/
                 $scope.numberOfPages = function () {
                     return Math.ceil($scope.investigacions.length / $scope.pageSize);
@@ -500,7 +499,7 @@ app.controller("ListInvestigacionController",
             }]);
 
 app.controller("NewInvestigacionController",
-        ['$scope', 'investigacionRemoteResource','opcion',
+        ['$scope', 'investigacionRemoteResource', 'opcion',
             'parametros', "$log", "$uibModalInstance", 'SweetAlert', 'patrocinadorRR', 'croRR', '$rootScope',
             function ($scope, investigacionRemoteResource, opcion,
                     parametros, $log, $uibModalInstance, SweetAlert, patrocinadorRR, croRR, $rootScope) {
@@ -616,7 +615,6 @@ app.controller("SearchInvestigacionController",
                     $uibModalInstance.dismiss('cancel');
                 };
                 $scope.test = function () {
-                    $log.log("test");
                 };
             }]);
 

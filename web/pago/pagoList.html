@@ -15,13 +15,24 @@
             <hr>
         </div> 
     </div>
-<div class="row">
+    <div class="row">
         <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
             <form>
                 <label for="buscaGlobal">Búsqueda global:</label>
-                <input type="text" st-search type="search"  class="form-control" id="buscaGlobal"  placeholder="Búsqueda global">
+                <input type="text" st-search type="search"  class="form-control" id="buscaGlobal" placeholder="Búsqueda global">
             </form>
             <br>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+            <form>
+                <label for="vistaPagina">Listar por página:</label>
+                <select class="form-control" id="vistaPagina" ng-init="itemsByPage = '2'" ng-model="itemsByPage">
+                    <option value="5">5</option>
+                    <option value="20">20</option>
+                    <option value="50">50</option>
+                    <option value="100">100</option>
+                </select>
+            </form>
         </div>
     </div>
     <div class="row">
@@ -64,10 +75,10 @@
                                 <td data-title="Observación">{{pago.observacion}}</td>
                                 <td data-title="Estado Pago">{{pago.paramEstadoPago}}</td>
                                 <td data-title="Ver">
-                                    <button data-toggle="tooltip" title="Ver"  class="btn btn-default" ng-click="editarModal(pago,true)"><i class="fa fa-eye" aria-hidden="true"></i><span class="hidden-xs"> </span></button>
+                                    <button data-toggle="tooltip" title="Ver"  class="btn btn-default" ng-click="editarModal(pago, true)"><i class="fa fa-eye" aria-hidden="true"></i><span class="hidden-xs"> </span></button>
                                 </td>
                                 <td data-title="Editar">
-                                    <button data-toggle="tooltip" title="Editar"  class="btn btn-default" ng-click="editarModal(pago,false)"><i class="fa fa-pencil-square-o" aria-hidden="true"></i><span class="hidden-xs"></span></button>
+                                    <button data-toggle="tooltip" title="Editar"  class="btn btn-default" ng-click="editarModal(pago, false)"><i class="fa fa-pencil-square-o" aria-hidden="true"></i><span class="hidden-xs"></span></button>
                                 </td>
                                 <td data-title="Eliminar">
                                     <button data-toggle="tooltip" title="Eliminar"  class="btn btn-danger" ng-click="eliminar(pago)" ><i class="fa fa-trash" aria-hidden="true"></i><span class="hidden-xs"></span></button>
@@ -82,14 +93,19 @@
     <!-- paginacion -->
     <div class="container">
         <div class="center-block" style="text-align: center">
-            <br>
-            <button ng-disabled="currentPage === 0" ng-click="currentPage = currentPage - 1" class="btn btn-default">
-                <span aria-hidden="true">&laquo;</span>
-            </button>
-            {{currentPage + 1}}/{{numberOfPages()}}
-            <button ng-disabled="currentPage >= pagos.length / pageSize - 1" ng-click="setNextPagina()" class="btn btn-default">
-                <span aria-hidden="true">&raquo;</span>
-            </button>
+            <div st-pagination="" st-items-by-page="itemsByPage" st-displayed-pages="7"></div>
         </div>
     </div>
+    <!--    <div class="container">
+            <div class="center-block" style="text-align: center">
+                <br>
+                <button ng-disabled="currentPage === 0" ng-click="currentPage = currentPage - 1" class="btn btn-default">
+                    <span aria-hidden="true">&laquo;</span>
+                </button>
+                {{currentPage + 1}}/{{numberOfPages()}}
+                <button ng-disabled="currentPage >= pagos.length / pageSize - 1" ng-click="setNextPagina()" class="btn btn-default">
+                    <span aria-hidden="true">&raquo;</span>
+                </button>
+            </div>
+        </div>-->
 </div>

@@ -53,6 +53,8 @@ app.controller("ListParametroController",
                 /*Se setea la cantidad filas por vista*/
                 $scope.currentPage = 0;
                 $scope.pageSize = 20;
+
+                $scope.itemsByPage;
                 /*Calculando número de páginas*/
                 $scope.numberOfPages = function () {
                     return Math.ceil($scope.parametros.length / $scope.pageSize);
@@ -198,11 +200,9 @@ app.controller("EditParametroController",
                     //if ($scope.form.$valid) {
                     $scope.parametro.usuarioModifica = $rootScope.username;
                     $scope.parametro.fechaModificacion = new Date();
-                    $log.log($scope.parametro);
                     parametroRR.update($scope.parametro)
                             .then(function (correoResult) {
                                 //Devuelve objeto actualizado y cierra modal
-
                                 var index = $scope.parametros.indexOf($scope.parametroObj);
                                 if (index !== -1) {
                                     /*Conserva el valor del identificador HashKey del array inicial, sólo se actualzian los valores.*/

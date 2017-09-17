@@ -53,7 +53,8 @@ app.controller("ListPatrocinadorController",
 
                 /*Columnas para realizar el filtro*/
                 $scope.predicates = [{nombre: 'idPatrocinador', descripcion: 'Id. Patrocinador'},
-                    {nombre: 'nombre', descripcion: 'Nombre'}];
+                    {nombre: 'nombre', descripcion: 'Nombre'},
+                {nombre: 'ruc', descripcion: 'RUC'}];
 
                 $scope.displayCollection = [].concat($scope.patrocinadors);
                 /*Campo seleccionado*/
@@ -63,6 +64,7 @@ app.controller("ListPatrocinadorController",
                 $scope.currentPage = 0;
                 $scope.pageSize = 20;
 
+                $scope.itemsByPage;
                 /*Calculando número de páginas*/
                 $scope.numberOfPages = function () {
                     return Math.ceil($scope.patrocinadors.length / $scope.pageSize);

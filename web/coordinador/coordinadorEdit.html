@@ -1,58 +1,53 @@
 <div class="modal-content">
-
     <div class="modal-header">
         <button type="button" class="close" ng-click="cerrar()">&times;</button>
         <h4 class="modal-title" id="myModalLabel">Datos del Coordinador</h4>
     </div>
     <div class="modal-body">
         <div class="container-fluid">
-            <form data-toggle="validator" role="form">
-                <div class="row">
-                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6"
-                         <div class="form-group">
-                            <label for="idCoordinador">Id. coordinador:</label><br>
-                            <input readonly type="text" class="form-control" id="idCoordinador" ng-model="coordinador.idCoordinador" placeholder="Id. coordinador" value="{{ coordinador.idCoordinador || '' }}">
-                        </div>     
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                    <div class="form-group">
+                        <label for="idCoordinador">Id. coordinador:</label><br>
+                        <input readonly type="text" class="form-control" id="idCoordinador" ng-model="coordinador.idCoordinador" placeholder="Id. coordinador" value="{{ coordinador.idCoordinador || '' }}">
+                    </div>     
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                    <div class="form-group">
+                        <label for="apePaterno">Ap. paterno:  </label><br>
+                        <input ng-readonly="opcion"  type="text" class="form-control" id="apePaterno" ng-model="coordinador.apePaterno" placeholder="Apellido paterno" value="{{ coordinador.apePaterno || '' }}" required>
+                    </div> 
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                    <div class="form-group">
+                        <label for="apeMaterno">Ap. Materno:  </label><br>
+                        <input ng-readonly="opcion" type="text" class="form-control" id="apeMaterno" ng-model="coordinador.apeMaterno" placeholder="Apellido materno" value="{{ coordinador.apeMaterno || '' }}" required>
+                    </div> 
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                    <div class="form-group">
+                        <label for="nombres">Nombres:  </label><br>
+                        <input ng-readonly="opcion"  type="text" class="form-control" id="nombres" ng-model="coordinador.nombres" placeholder="Nombres" value="{{ coordinador.nombres || '' }}" required>
+                    </div> 
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                    <div class="form-group">
+                        <label  class="control-label">Correo:  </label><br>
+                        <input ng-readonly="opcion" type="email" class="form-control" id="correo" ng-model="coordinador.correo" placeholder="Correo" data-error="Correo no valido" value="{{ coordinador.correo || '' }}" required>
+                        <div class="help-block with-errors"></div>
                     </div>
-                    <div class="row">
-                        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-                            <div class="form-group">
-                                <label for="apePaterno">Ap. paterno:  </label><br>
-                                <input readonly="opcion"  type="text" class="form-control" id="apePaterno" ng-model="coordinador.apePaterno" placeholder="Apellido paterno" value="{{ coordinador.apePaterno || '' }}" required>
-                            </div> 
-                        </div>
-                        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-                            <div class="form-group">
-                                <label for="apeMaterno">Ap. Materno:  </label><br>
-                                <input readonly="opcion" type="text" class="form-control" id="apeMaterno" ng-model="coordinador.apeMaterno" placeholder="Apellido materno" value="{{ coordinador.apeMaterno || '' }}" required>
-                            </div> 
-                        </div>
-                    </div>
-                    <div class="row">
-
-                        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-                            <div class="form-group">
-                                <label for="nombres">Nombres:  </label><br>
-                                <input readonly="opcion"  type="text" class="form-control" id="nombres" ng-model="coordinador.nombres" placeholder="Nombres" value="{{ coordinador.nombres || '' }}" required>
-                            </div> 
-                        </div>
-                        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-                            <div class="form-group">
-                                <label  class="control-label">Correo:  </label><br>
-                                <input readonly="opcion" type="email" class="form-control" id="correo" ng-model="coordinador.correo" placeholder="Correo" data-error="Correo no valido" value="{{ coordinador.correo || '' }}" required>
-                                <div class="help-block with-errors"></div>
-                            </div>
-                        </div>
-                    </div>
-            </form>
+                </div>
+            </div>
         </div>
     </div>
     <div class="modal-footer">
-
-            <button ng-hide="opcion" type="submit" class="btn btn-primary" ng-click="guardar()">
-                Guardar
-            </button>
-
+        <button ng-hide="opcion" type="submit" class="btn btn-primary" ng-click="guardar()">
+            Guardar
+        </button>
         <button type="button" class="btn btn-default" ng-click="cerrar()">
             Volver
         </button>

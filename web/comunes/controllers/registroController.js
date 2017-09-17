@@ -274,6 +274,7 @@ app.controller("ListRegistroController",
                 $scope.currentPage = 0;
                 $scope.pageSize = 20;
 
+                $scope.itemsByPage;
                 /*Calculando número de páginas*/
                 $scope.numberOfPages = function () {
                     return Math.ceil($scope.registros.length / $scope.pageSize);

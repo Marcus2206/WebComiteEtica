@@ -5,6 +5,12 @@
         <group name="Comite de Etica">
             <file>file:/C:/Users/Felix/Documents/NetBeansProjects/Comite%20de%20Etica/WebComiteEtica/web/general/menu-navegacion.html</file>
         </group>
-        <group/>
+        <group>
+            <file>file:/C:/Users/rasec/Documents/NetBeansProjects/ComiteGit/WebComiteEtica/web/comunes/controllers/coordinadorController.js</file>
+            <file>file:/C:/Users/rasec/Documents/NetBeansProjects/ComiteGit/WebComiteEtica/web/registro/registroList.html</file>
+            <file>file:/C:/Users/rasec/Documents/NetBeansProjects/ComiteGit/WebComiteEtica/web/correspondencia/correspondenciaList.html</file>
+            <file>file:/C:/Users/rasec/Documents/NetBeansProjects/ComiteGit/WebComiteEtica/web/comunes/controllers/correspondenciaController.js</file>
+            <file>file:/C:/Users/rasec/Documents/NetBeansProjects/ComiteGit/WebComiteEtica/web/coordinador/coordinadorList.html</file>
+        </group>
     </open-files>
 </project-private>

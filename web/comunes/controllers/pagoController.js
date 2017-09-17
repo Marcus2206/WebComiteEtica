@@ -218,7 +218,6 @@ app.controller("ListPagoController",
             function ($scope, pagos, idNotificacionParam, pagoRR,
                     $log, $uibModal, SweetAlert) {
 
-
                 /*Se obtiene lista de registros*/
                 $scope.pagos = pagos;
 
@@ -240,6 +239,8 @@ app.controller("ListPagoController",
                 /*Se setea la cantidad filas por vista*/
                 $scope.currentPage = 0;
                 $scope.pageSize = 20;
+
+                $scope.itemsByPage;
 
                 /*Calculando número de páginas*/
                 $scope.numberOfPages = function () {
@@ -406,50 +407,6 @@ app.controller("NewPagoController",
                     };
 
                     if (cont !== 0) {
-
-
-//                        angular.forEach(pago, function (item, key) {
-//                            sequence = sequence.then(function () {
-//                                return pagoRR.insert(item)
-//                                        .then(function (pagoResponse) {
-//                                            angular.forEach($scope.correspondenciaServicios, function (item, key) {
-//                                                if (item.generar) {
-//                                                    sequence2 = sequence2.then(function () {
-//                                                        var pagoDetalle = {
-//                                                            id: {idPago: pagoResponse.idPago,
-//                                                                idPagoDetalle: 0
-//                                                            },
-//                                                            idCorrespondencia: item.idCorrespondencia,
-//                                                            idCorrespondenciaServicio: item.idCorrespondenciaServicio,
-//                                                            paramTipoServicio: item.paramTipoServicio,
-//                                                            costo: item.costo,
-//                                                            observacion: item.observacion,
-//                                                            usuarioIngresa: $rootScope.username,
-//                                                            fechaIngreso: new Date()
-//                                                        };
-//
-//                                                        return pagoDetalleRR.insert(pagoDetalle)
-//                                                                .then(function (response) {
-//                                                                    $log.log("detalle");
-//                                                                }, function (bussinessMessages) {
-//                                                                    $scope.bussinessMessages = bussinessMessages;
-//                                                                });
-//                                                    });
-//
-//                                                }
-//                                            });
-////                                            SweetAlert.swal("¡Hecho!", "Se ha registrado el pago.", "success");
-//                                            pagoResponse.paramEstadoPago = "Pendiente";
-//                                            $log.log("cabecera");
-//                                            $uibModalInstance.dismiss(pagoResponse);
-//                                        }, function (bussinessMessages) {
-//                                            $scope.bussinessMessages = bussinessMessages;
-//                                        });
-//
-//                            });
-//                        });
-
-
                         var pagoDetalles = [];
                         angular.forEach($scope.correspondenciaServicios, function (item, key) {
                             if (item.generar) {

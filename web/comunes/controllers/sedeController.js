@@ -2,14 +2,14 @@ var app = angular.module("app");
 
 app.controller("NewSedeController",
         ['$scope', 'sedeRR', '$location', "$log", "$uibModalInstance", "ubigeoRR",
-            'SweetAlert', '$rootScope','opcion',
+            'SweetAlert', '$rootScope', 'opcion',
             function ($scope, sedeRR, $location, $log, $uibModalInstance, ubigeoRR,
                     SweetAlert, $rootScope, opcion) {
 
                 $scope.departamentos;
                 $scope.provincias;
                 $scope.distritos;
-                $scope.opcion=opcion;
+                $scope.opcion = opcion;
                 ubigeoRR.getDepartamentoList()
                         .then(function (ubigeoResult) {
                             $scope.departamentos = ubigeoResult;
@@ -116,6 +116,8 @@ app.controller("ListSedeController",
                 /*Se setea la cantidad filas por vista*/
                 $scope.currentPage = 0;
                 $scope.pageSize = 20;
+
+                $scope.itemsByPage;
                 /*Calculando número de páginas*/
                 $scope.numberOfPages = function () {
                     return Math.ceil($scope.sedes.length / $scope.pageSize);
@@ -170,7 +172,7 @@ app.controller("ListSedeController",
                             sede: function () {
                                 return sedeRR.get(sedeObj.idSede);
                             },
-                            opcion:opcion
+                            opcion: opcion
                         }
                     });
 
@@ -198,8 +200,8 @@ app.controller("ListSedeController",
                         size: 'md',
                         backdrop: 'static',
                         keyboard: false,
-                        resolve:{
-                            opcion:false
+                        resolve: {
+                            opcion: false
                         }
                     });
 
@@ -224,14 +226,14 @@ app.controller("ListSedeController",
 
 app.controller("EditSedeController",
         ['$scope', "sede", 'sedeRR', '$location', "$log", "$route", "$uibModalInstance",
-            "ubigeoRR", 'SweetAlert', '$rootScope','opcion',
+            "ubigeoRR", 'SweetAlert', '$rootScope', 'opcion',
             function ($scope, sede, sedeRR, $location, $log, $route, $uibModalInstance,
                     ubigeoRR, SweetAlert, $rootScope, opcion) {
                 $scope.departamentos;
                 $scope.provincias;
                 $scope.distritos;
                 $scope.first = true;
-                $scope.opcion=opcion;
+                $scope.opcion = opcion;
                 $scope.cargarDistrito = function () {
                     if (!$scope.first) {
                         $scope.sede.idDistrito = null;

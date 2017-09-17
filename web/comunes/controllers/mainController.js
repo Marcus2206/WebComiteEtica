@@ -7,11 +7,12 @@
 var app = angular.module("app");
 
 app.controller("MainController",
-        ['$scope', '$log', "$rootScope", "auth", "$q", "SweetAlert",
+        ['$scope', '$log', "$rootScope", "auth", "$q", "SweetAlert", 'usuarioRR',
             "localStorageService", "$timeout", "notificacionRR", "UrlOrigen", "baseUrl",
-            function ($scope, $log, $rootScope, auth, $q, SweetAlert,
+            function ($scope, $log, $rootScope, auth, $q, SweetAlert, usuarioRR,
                     localStorageService, $timeout, notificacionRR, UrlOrigen, baseUrl) {
 
+//                $scope.patternCadenaValida=/^[a-zA-Z]*$/;
                 $scope.notificacions = [];
                 /*Carousel*/
                 $('#myCarousel').carousel({
@@ -111,6 +112,9 @@ app.controller("MainController",
                         case 'Pago':
                             window.open(UrlOrigen + '#/pagoList/' + not.idDocumento, '_self', false);
                             break;
+                        case 'Vencimiento':
+                            window.open(UrlOrigen + '#/registroList/' + not.idDocumento, '_self', false);
+                            break;
                     }
                 };
 
@@ -121,37 +125,41 @@ app.controller("MainController",
                     sequence.resolve();
                     sequence = sequence.promise;
 
-                    var links = [
-                        {
-                            link: UrlOrigen + '/j_security_check?j_username=' + $scope.autenticar.usuario + '&j_password=' + $scope.autenticar.password
-                        },
-                        {
-                            link: baseUrl + '/j_security_check?j_username=' + $scope.autenticar.usuario + '&j_password=' + $scope.autenticar.password
-                        },
-                        {
-                            link: UrlOrigen
-                        }
-                    ];
+                    usuarioRR.getRestSession($scope.autenticar.usuario, $scope.autenticar.password)
+                            .then(function (response) {
+                                usuarioRR.getWebSession($scope.autenticar.usuario, $scope.autenticar.password)
+                                        .then(function (response) {
+                                            auth.login($scope, $scope.autenticar.usuario, $scope.autenticar.password, SweetAlert);
+                                        }, function (error) {
+                                        });
+                            }, function (error) {
+                            });
 
-                    var wnd = window.open(links[0].link);
-                    setTimeout(function () {
-//                        wnd.onload = function () {
-//                            wnd.close();
-//                        };
-                        wnd.close();
-                    }, 250);
-
-                    var wnd1 = window.open(links[1].link);
-                    setTimeout(function () {
-//                        wnd1.onload = function () {
-//                             wnd1.close();
-//                        };
-                        wnd1.close();
-                    }, 500);
-
-                    setTimeout(function () {
-                        auth.login($scope, $scope.autenticar.usuario, $scope.autenticar.password, SweetAlert);
-                    }, 750);
+//                    var links = [
+//                        {
+//                            link: UrlOrigen + '/j_security_check?j_username=' + $scope.autenticar.usuario + '&j_password=' + $scope.autenticar.password
+//                        },
+//                        {
+//                            link: baseUrl + '/j_security_check?j_username=' + $scope.autenticar.usuario + '&j_password=' + $scope.autenticar.password
+//                        },
+//                        {
+//                            link: UrlOrigen
+//                        }
+//                    ];
+//
+//                    var wnd = window.open(links[0].link);
+//                    setTimeout(function () {
+//                        wnd.close();
+//                    }, 250);
+//
+//                    var wnd1 = window.open(links[1].link);
+//                    setTimeout(function () {
+//                        wnd1.close();
+//                    }, 500);
+//
+//                    setTimeout(function () {
+//                        auth.login($scope, $scope.autenticar.usuario, $scope.autenticar.password, SweetAlert);
+//                    }, 750);
                 };
 
 

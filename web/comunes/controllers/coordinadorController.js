@@ -61,6 +61,8 @@ app.controller("ListCoordinadorController",
                 /*Se setea la cantidad filas por vista*/
                 $scope.currentPage = 0;
                 $scope.pageSize = 20;
+                
+                $scope.itemsByPage;
                 /*Calculando número de páginas*/
                 $scope.numberOfPages = function () {
                     return Math.ceil($scope.coordinadors.length / $scope.pageSize);

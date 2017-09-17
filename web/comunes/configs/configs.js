@@ -126,9 +126,9 @@ app.config(['baseUrl', 'pagoDetalleRRProvider',
     }
 ]);
 
-app.config(['baseUrl', 'usuarioRRProvider',
-    function (baseUrl, usuarioRRProvider) {
-        usuarioRRProvider.setBaseUrl(baseUrl);
+app.config(['baseUrl', 'usuarioRRProvider','UrlOrigen',
+    function (baseUrl, usuarioRRProvider, UrlOrigen) {
+        usuarioRRProvider.setBaseUrl(baseUrl,UrlOrigen);
     }
 ]);
 

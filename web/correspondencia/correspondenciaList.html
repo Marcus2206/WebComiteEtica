@@ -17,11 +17,18 @@
     </div>
     <div class="row">
         <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-            <form>
-                <label for="buscaGlobal">Búsqueda global:</label>
-                <input type="text" st-search type="search"  class="form-control" id="buscaGlobal"  placeholder="Búsqueda global">
-            </form>
+            <label for="buscaGlobal">Búsqueda global:</label>
+            <input type="text" st-search type="search"  class="form-control" id="buscaGlobal"  placeholder="Búsqueda global">
             <br>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+            <label for="vistaPagina">Listar por página:</label>
+            <select class="form-control" id="vistaPagina" ng-init="itemsByPage = '20'" ng-model="itemsByPage">
+                <option value="5">5</option>
+                <option value="20">20</option>
+                <option value="50">50</option>
+                <option value="100">100</option>
+            </select>
         </div>
     </div>
     <div class="row">
@@ -94,14 +101,19 @@
     <!-- paginacion -->
     <div class="container">
         <div class="center-block" style="text-align: center">
-            <br>
-            <button ng-disabled="currentPage === 0" ng-click="currentPage = currentPage - 1" class="btn btn-default">
-                <span aria-hidden="true">&laquo;</span>
-            </button>
-            {{currentPage + 1}}/{{numberOfPages()}}
-            <button ng-disabled="currentPage >= correspondencias.length / pageSize - 1" ng-click="setNextPagina()" class="btn btn-default">
-                <span aria-hidden="true">&raquo;</span>
-            </button>
+            <div st-pagination="" st-items-by-page="itemsByPage" st-displayed-pages="7"></div>
         </div>
     </div>
+    <!--    <div class="container">
+            <div class="center-block" style="text-align: center">
+                <br>
+                <button ng-disabled="currentPage === 0" ng-click="currentPage = currentPage - 1" class="btn btn-default">
+                    <span aria-hidden="true">&laquo;</span>
+                </button>
+                {{currentPage + 1}}/{{numberOfPages()}}
+                <button ng-disabled="currentPage >= correspondencias.length / pageSize - 1" ng-click="setNextPagina()" class="btn btn-default">
+                    <span aria-hidden="true">&raquo;</span>
+                </button>
+            </div>
+        </div>-->
 </div>

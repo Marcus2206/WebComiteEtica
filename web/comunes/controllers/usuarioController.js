@@ -2,7 +2,7 @@ var app = angular.module("app");
 
 app.controller("NewUsuarioController",
         ['$scope', 'usuarioRR', "$log", "$uibModalInstance", "parametros",
-            'SweetAlert', "$rootScope",'opcion',
+            'SweetAlert', "$rootScope", 'opcion',
             function ($scope, usuarioRR, $log, $uibModalInstance, parametros,
                     SweetAlert, $rootScope, opcion) {
 
@@ -18,7 +18,7 @@ app.controller("NewUsuarioController",
                 $scope.btnPass = true;
                 $scope.parametros = parametros;
                 $scope.paramPerfil = $scope.filtrar($scope.parametros, 'P010')[0].parametroDetalles;
-                $scope.opcion=opcion;
+                $scope.opcion = opcion;
                 /*Se construyer el json*/
                 $scope.usuario = {};
 
@@ -92,6 +92,8 @@ app.controller("ListUsuarioController",
                 /*Se setea la cantidad filas por vista*/
                 $scope.currentPage = 0;
                 $scope.pageSize = 20;
+
+                $scope.itemsByPage;
                 /*Calculando número de páginas*/
                 $scope.numberOfPages = function () {
                     return Math.ceil($scope.usuarios.length / $scope.pageSize);
@@ -149,7 +151,7 @@ app.controller("ListUsuarioController",
                             parametros: ['parametroRR', function (parametroRR) {
                                     return parametroRR.list();
                                 }],
-                            opcion:opcion
+                            opcion: opcion
                         }
                     });
 
@@ -181,7 +183,7 @@ app.controller("ListUsuarioController",
                             parametros: ['parametroRR', function (parametroRR) {
                                     return parametroRR.list();
                                 }],
-                            opcion:false
+                            opcion: false
                         }
                     });
 
@@ -205,7 +207,7 @@ app.controller("ListUsuarioController",
             }]);
 
 app.controller("EditUsuarioController",
-        ['$scope', "usuario", 'usuarioRR', "parametros",'opcion',
+        ['$scope', "usuario", 'usuarioRR', "parametros", 'opcion',
             "$uibModalInstance", 'SweetAlert', "$log", "$rootScope",
             function ($scope, usuario, usuarioRR, parametros, opcion,
                     $uibModalInstance, SweetAlert, $log, $rootScope) {
@@ -222,8 +224,8 @@ app.controller("EditUsuarioController",
                 $scope.btnPass = false;
                 $scope.parametros = parametros;
                 $scope.paramPerfil = $scope.filtrar($scope.parametros, 'P010')[0].parametroDetalles;
-                $scope.opcion=opcion;
-                
+                $scope.opcion = opcion;
+
                 $scope.usuario = usuario;
                 $scope.usuario.password = '*******';
                 $scope.guardar = function () {

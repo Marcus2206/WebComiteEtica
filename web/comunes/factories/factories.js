@@ -7,10 +7,6 @@ app.factory("auth", function ($location, $log, localStorageService, usuarioRR, U
             //creamos la cookie con el nombre que nos han pasado
             usuarioRR.getUser(username, password)
                     .then(function (response) {
-                        $log.log("----------------------------------------->>>>>");
-                        $log.log(typeof (response));
-                        $log.log(response);
-
                         if (response.length !== 0) {
                             if (typeof (response) !== 'string') {
                                 localStorageService.set("usuario", username);
@@ -19,7 +15,7 @@ app.factory("auth", function ($location, $log, localStorageService, usuarioRR, U
 
                                 //mandamos a la home
                                 SweetAlert.swal("Bienvenido", "", "success");
-                            setTimeout("window.open('" + UrlOrigen + "', '_self', false);", 750);
+                                setTimeout("window.open('" + UrlOrigen + "', '_self', false);", 750);
                             } else {
                                 SweetAlert.swal("Credenciales incorrectas", "Por favor, intente nuevamente.", "warning");
                             }
@@ -34,13 +30,13 @@ app.factory("auth", function ($location, $log, localStorageService, usuarioRR, U
         logout: function ()
         {
             //al hacer logout eliminamos la cookie con $cookieStore.remove
-            localStorageService.set("usuario", "");
-            localStorageService.set("rolUsuario", "");
-            localStorageService.set("mostrar", true);
             //mandamos al login
             setTimeout("window.open('" + UrlOrigen + "/logout.jsp', '_self', false);", 500);
             setTimeout("window.open('" + baseUrl + "/logout.jsp', '_self', false);", 0);
-//            $location.path("/login");
+            localStorageService.set("usuario", "");
+            localStorageService.set("rolUsuario", "");
+            localStorageService.set("mostrar", true);
+
         },
         checkStatus: function ()
         {

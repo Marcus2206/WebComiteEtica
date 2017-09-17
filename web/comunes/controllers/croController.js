@@ -51,7 +51,8 @@ app.controller("ListCroController",
 
                 /*Columnas para realizar el filtro*/
                 $scope.predicates = [{nombre: 'idCro', descripcion: 'Id. Cro'},
-                    {nombre: 'nombre', descripcion: 'Nombre'}];
+                    {nombre: 'nombre', descripcion: 'Nombre'},
+                    {nombre: 'ruc', descripcion: 'RUC'}];
 
                 $scope.displayCollection = [].concat($scope.cros);
                 /*Campo seleccionado*/
@@ -61,6 +62,7 @@ app.controller("ListCroController",
                 $scope.currentPage = 0;
                 $scope.pageSize = 20;
 
+                $scope.itemsByPage;
                 /*Calculando número de páginas*/
                 $scope.numberOfPages = function () {
                     return Math.ceil($scope.cros.length / $scope.pageSize);

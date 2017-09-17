@@ -1,5 +1,5 @@
 
-function UsuarioRR($http, $q, baseUrl, $log) {
+function UsuarioRR($http, $q, baseUrl, $log, UrlOrigen) {
 
     this.get = function (idUsuario) {
         var defered = $q.defer();
@@ -106,6 +106,78 @@ function UsuarioRR($http, $q, baseUrl, $log) {
         };
         var config = {params};
         $http.get(baseUrl + '/api/Usuario/UsuarioReadValidate', config)
+                .then(function onSuccess(response) {
+                    defered.resolve(response.data);
+                })
+                .catch(function onCatch(response) {
+                    defered.reject(response.data);
+                });
+
+        return defered.promise;
+    };
+
+    this.getRestSession = function (usuario, password) {
+        var defered = $q.defer();
+        var params = {
+            usuario: usuario,
+            password: password
+        };
+        var config = {params};
+        $http.get(baseUrl + '/j_security_check?j_username=' + usuario + '&j_password=' + password)
+                .then(function onSuccess(response) {
+                    defered.resolve(response.data);
+                })
+                .catch(function onCatch(response) {
+                    defered.reject(response.data);
+                });
+
+        return defered.promise;
+    };
+
+    this.getWebSession = function (usuario, password) {
+        var defered = $q.defer();
+        var params = {
+            usuario: usuario,
+            password: password
+        };
+        var config = {params};
+        $http.get(UrlOrigen + '/j_security_check?j_username=' + usuario + '&j_password=' + password)
+                .then(function onSuccess(response) {
+                    defered.resolve(response.data);
+                })
+                .catch(function onCatch(response) {
+                    defered.reject(response.data);
+                });
+
+        return defered.promise;
+    };
+
+    this.getLogOutRestSession = function (usuario, password) {
+        var defered = $q.defer();
+        var params = {
+            usuario: usuario,
+            password: password
+        };
+        var config = {params};
+        $http.get(baseUrl + '/logout.jsp')
+                .then(function onSuccess(response) {
+                    defered.resolve(response.data);
+                })
+                .catch(function onCatch(response) {
+                    defered.reject(response.data);
+                });
+
+        return defered.promise;
+    };
+
+    this.getLogOutWebSession = function (usuario, password) {
+        var defered = $q.defer();
+        var params = {
+            usuario: usuario,
+            password: password
+        };
+        var config = {params};
+        $http.get(UrlOrigen + '/logout.jsp')
                 .then(function onSuccess(response) {
                     defered.resolve(response.data);
                 })
