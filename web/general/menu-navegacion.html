@@ -29,7 +29,7 @@
                         <!-- notify content -->
                         <div class="drop-content" >
                             <li ng-repeat="not in notificacions">
-                                <div class="col-md-12 col-sm-12 col-xs-12 pd-l0" ng-style="not.estadoNotificacion === '0' ? {'background-color' : '#E6E6FA' } :{'background-color':none}" >
+                                <div class="col-md-12 col-sm-12 col-xs-12 pd-l0" ng-style="not.estadoNotificacion === '0' ? {'background-color': '#E6E6FA'} : {'background-color': none}" >
                                     &nbsp;
                                     <a href="" ng-click="enlaceNotificacion(not)">{{not.idDocumento}}</a> 
                                     <a href="" class="rIcon" ng-click="marcar(not)"><i class="fa fa-dot-circle-o"></i></a>
@@ -68,7 +68,7 @@
                         <li><a href="#/parametroList">Parámetros</a></li>
                     </ul>
                 </li>
-                
+
             </ul>
 
             <div>
@@ -79,10 +79,20 @@
                 </ul>
                 <ul ng-show="!muestra" style="color: #FEB41C" class="nav navbar-nav navbar-right">
                     <!--<li><a runat="server" href="~/Account/Manage" title="Manage your account">Hello, <%//: Context.User.Identity.GetUserName()  %> !</a></li>-->
-                    <li><a title="" style="color: #FEB41C" > {{username}}</a></li>
-                    <li>
-                        <a href="" style="color: #FEB41C" ng-click="logout()">Cerrar sesión </a>
+                    <!--                    <li><a title="" style="color: #FEB41C" > {{username}}</a></li>
+                                        <li>
+                                            <a href="" style="color: #FEB41C" ng-click="logout()">Cerrar sesión </a>
+                                        </li>-->
+
+                    <li class="dropdown">
+                        <a style="color: #FEB41C;cursor: pointer;"  class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> <span class="glyphicon glyphicon-user" aria-hidden="true"></span><span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a title="" style="color: #FEB41C" > {{username}}</a></li>
+                            <li><a href="" style="color: #FEB41C" ng-click="logout()">Cerrar sesión </a></li>
+                        </ul>
                     </li>
+
+
                 </ul>
             </div>
         </div><!-- /.navbar-collapse -->

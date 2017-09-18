@@ -55,14 +55,32 @@ app.controller("MainController",
                 };
 
                 /*Notificaciones*/
+                /*Validar sesión activa*/
+                $scope.contadorSession = 0;
                 var setearNotificaciones = function () {
                     /*Cargar Notificaciones*/
                     notificacionRR.list($rootScope.username)
                             .then(function (notificacionResponse) {
-                                $scope.notificacions = notificacionResponse;
-                                $scope.setNoLeidos();
-                            }
-                            , function (error) {
+                                if (typeof (notificacionResponse) !== 'string') {
+                                    if ($scope.contadorSession === 3) {
+                                        localStorageService.set("usuario", "");
+                                        localStorageService.set("rolUsuario", "");
+                                        localStorageService.set("mostrar", true);
+                                    }
+                                    $scope.notificacions = notificacionResponse;
+                                    $scope.setNoLeidos();
+                                    $scope.contadorSession = 0;
+
+                                } else {
+                                    $scope.contadorSession++;
+                                }
+                            }, function (error) {
+                                $scope.contadorSession++;
+                                if ($scope.contadorSession === 3) {
+                                    localStorageService.set("usuario", "");
+                                    localStorageService.set("rolUsuario", "");
+                                    localStorageService.set("mostrar", true);
+                                }
                             });
                     $timeout(setearNotificaciones, 3000);
                 };
