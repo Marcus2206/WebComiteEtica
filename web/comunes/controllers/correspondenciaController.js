@@ -252,13 +252,6 @@ app.controller("EditCorrespondenciaController",
                 $scope.generarHojaRuta = function () {
                     fileRR.setHojaRuta($scope.correspondencia)
                             .then(function (rutaResponse) {
-//                                $scope.myFile=[];
-//                                correspondenciaFileRR.findAllByIdCorrepondencia($scope.correspondencia.idCorrespondencia)
-//                                        .then(function (correspondenciaFileRespond) {
-//                                            $scope.relacionarFile(correspondenciaFileRespond);
-//                                        }, function (bussinessMessages) {
-//                                            $scope.bussinessMessages = bussinessMessages;
-//                                        });
                                 var newMyFile = {
                                     name: rutaResponse.nombreArchivo,
                                     _file: undefined,
@@ -272,6 +265,19 @@ app.controller("EditCorrespondenciaController",
                                 SweetAlert.swal("¡Advertencia!", "Ocurrió un inconveniente.", "warning");
                             });
                 };
+
+                $scope.generarCarta = function () {
+                    $log.log("$scope.correspondencia.fechaSesion");
+                    $log.log($scope.correspondencia.fechaSesion);
+                    correspondenciaRR.getSesionesCorrespondencia($scope.correspondencia.fechaSesion)
+                            .then(function (cartaResponse) {
+                                $log.log(cartaResponse);
+                            }, function (error) {
+
+                            });
+                };
+
+
             }]);
 app.controller("ListCorrespondenciaController",
         ['$scope', "correspondencias", "idNotificacionParam", "correspondenciaRR",
