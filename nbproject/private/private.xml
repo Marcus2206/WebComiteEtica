@@ -2,9 +2,6 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group name="Comite de Etica">
-            <file>file:/C:/Users/Felix/Documents/NetBeansProjects/Comite%20de%20Etica/WebComiteEtica/web/general/menu-navegacion.html</file>
-        </group>
         <group>
             <file>file:/C:/Users/rasec/Documents/NetBeansProjects/ComiteGit/WebComiteEtica/web/comunes/controllers/coordinadorController.js</file>
             <file>file:/C:/Users/rasec/Documents/NetBeansProjects/ComiteGit/WebComiteEtica/web/registro/registroList.html</file>
@@ -12,5 +9,6 @@
             <file>file:/C:/Users/rasec/Documents/NetBeansProjects/ComiteGit/WebComiteEtica/web/comunes/controllers/correspondenciaController.js</file>
             <file>file:/C:/Users/rasec/Documents/NetBeansProjects/ComiteGit/WebComiteEtica/web/coordinador/coordinadorList.html</file>
         </group>
+        <group name="Comite de Etica"/>
     </open-files>
 </project-private>
