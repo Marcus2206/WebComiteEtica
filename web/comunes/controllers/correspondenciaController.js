@@ -284,7 +284,7 @@ app.controller("EditCorrespondenciaController",
                                     _correspondenciaFile: rutaResponse
                                 };
                                 $scope.myFile.push(newMyFile);
-                                SweetAlert.swal("¡Hecho!", "Se generó la Hoja de Ruta.\nPuede verla en los archivos adjuntos", "success");
+                                SweetAlert.swal("¡Hecho!", "Se generó la Carta de Aprobación.\nPuede verla en los archivos adjuntos", "success");
                             }, function (error) {
                                 SweetAlert.swal("¡Advertencia!", "Ocurrió un inconveniente.", "warning");
                             });
@@ -308,7 +308,7 @@ app.controller("EditCorrespondenciaController",
                                     _correspondenciaFile: rutaResponse
                                 };
                                 $scope.myFile.push(newMyFile);
-                                SweetAlert.swal("¡Hecho!", "Se generó la Hoja de Ruta.\nPuede verla en los archivos adjuntos", "success");
+                                SweetAlert.swal("¡Hecho!", "Se generó la Carta de Observación.\nPuede verla en los archivos adjuntos", "success");
                             }, function (error) {
                                 SweetAlert.swal("¡Advertencia!", "Ocurrió un inconveniente.", "warning");
                             });
