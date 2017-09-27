@@ -129,7 +129,7 @@
                     <div class="form-group">
                         <label for="paramDistribucion">Distribucion:  </label><br>
                         <select ng-disabled="deshabilitado"  id="paramDistribucion" ng-disabled="opcion" class="form-control" ng-model="correspondencia.paramDistribucion" ng-change="setTipoDistribucion()">
-                            <option ng-repeat="pd in paramDistribucion" value="{{pd.id.idParametroDetalle}}">{{pd.descripcion}}</option>
+                            <option ng-repeat="pd in paramDistribucion | orderBy: 'descripcion'" value="{{pd.id.idParametroDetalle}}">{{pd.descripcion}}</option>
                         </select>
                     </div>
                 </div>
@@ -148,6 +148,7 @@
                         </select>
                     </div>
                 </div>
+                <!--<button ng-disabled="opcion" class="btn btn-default" ng-click="generarCarta()" >Generar Carta</button>-->
             </div>
             <div class="row">
                 <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6"  ng-show="correspondencia.paramDistribucion === 'PD04'">

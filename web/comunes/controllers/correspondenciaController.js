@@ -252,13 +252,6 @@ app.controller("EditCorrespondenciaController",
                 $scope.generarHojaRuta = function () {
                     fileRR.setHojaRuta($scope.correspondencia)
                             .then(function (rutaResponse) {
-//                                $scope.myFile=[];
-//                                correspondenciaFileRR.findAllByIdCorrepondencia($scope.correspondencia.idCorrespondencia)
-//                                        .then(function (correspondenciaFileRespond) {
-//                                            $scope.relacionarFile(correspondenciaFileRespond);
-//                                        }, function (bussinessMessages) {
-//                                            $scope.bussinessMessages = bussinessMessages;
-//                                        });
                                 var newMyFile = {
                                     name: rutaResponse.nombreArchivo,
                                     _file: undefined,

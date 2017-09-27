@@ -1,0 +1,56 @@
+<div class="modal-content">
+    <div class="modal-header">
+        <button type="button" class="close" ng-click="cerrar()">&times;</button>
+        <h4 class="modal-title" id="myModalLabel">Sesión </h4>
+    </div>
+    <div class="modal-body">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                    <div class="form-group">
+                        <label for="idFechaSesion">Id. Sesión: </label><br>
+                        <input readonly type="text" class="form-control" id="idFechaSesion"  placeholder="Id. Fecha Sesión" ng-model="fechaSesion.idFechaSesion" value="{{ fechaSesion.idFechaSesion || '' }}">
+                    </div> 
+                </div>
+            </div>
+<!--            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <div class="form-group">
+                        <label for="fechaSesion">Fecha Sesión: </label><br>
+                        <input ng-readonly="opcion" type="text" class="form-control" id="fechaSesion"  placeholder="Fecha Sesión" ng-model="fechaSesion.fechaSesion" value="{{ fechaSesion.fechaSesion || '' }}">
+                    </div>
+                </div>
+            </div>-->
+
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <div class="form-group">
+                        <label for="fechaSesion" class="control-label">Fecha Sesión:</label><br>
+                        <p class="input-group">
+                            <input readonly type="text" class="form-control" id="fechaSesion" uib-datepicker-popup="dd/MM/yyyy" ng-model="fechaSesion.fechaSesion" is-open="popup2.opened" datepicker-options="dateOptions" ng-required="true" show-button-bar="false" readonly />
+                            <span class="input-group-btn">
+                                <button  ng-disabled="opcion" type="button" class="btn btn-default" ng-click="open2()"><i class="glyphicon glyphicon-calendar"></i></button>
+                            </span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <div class="form-group">
+                        <label for="observacion">Observación: </label><br>
+                        <input ng-readonly="opcion" type="text" class="form-control" id="observacion"  placeholder="Observación" ng-model="fechaSesion.observacion" value="{{ fechaSesion.observacion || '' }}">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button  ng-hide="opcion" type="submit" class="btn btn-primary" ng-click="guardar()">
+            Guardar
+        </button>
+        <button type="button" class="btn btn-default" ng-click="cerrar()">
+            Volver
+        </button>
+    </div>
+</div>

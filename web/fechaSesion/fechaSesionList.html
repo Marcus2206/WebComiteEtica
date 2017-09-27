@@ -1,8 +1,8 @@
 
-<div class="container"  st-table="displayCollection" st-safe-src="usuarios" >
+<div class="container" st-table="displayCollection" st-safe-src="fechaSesions" >
     <div class="row">
         <div class="col col-md-12">
-            <h1 style='text-align: center'><b>Lista de Usuarios</b></h1>
+            <h1 style='text-align: center'><b>Sesiones programadas</b></h1>
             <hr>
         </div>
     </div>
@@ -10,7 +10,7 @@
         <div class="col col-md-12">
             <button class="btn btn-primary" ng-click="insertarModal()">
                 <i class="fa fa-plus-circle" aria-hidden="true"></i>
-                Usuario
+                Sesión
             </button>
             <hr>
         </div>
@@ -56,30 +56,28 @@
         <div class="col col-lg-12">
             <div class="search-table-outter wrapper">
                 <div id="no-more-tables">
-                    <table class="col-sm-12 table-bordered table-striped table-condensed cf" >
-                        <thead class="cf">
+                    <table class="table table-striped table-bordered table-condensed" >
+                        <thead>
                             <tr>
-                                <th st-sort="idUsuario">Código</th>
-                                <th st-sort="usuario">Usuario</th>
-                                <th st-sort="perfil">Perfil</th>
-                                <th st-sort="estado">Estado</th>
+                                <th st-sort="idFechaSesion">Id. Sesión</th>
+                                <th st-sort="fechaSesion">Fecha Sesión</th>
+                                <th st-sort="observacion">Observación</th>
                                 <th colspan="3" style="text-align: center">Acción</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="usuario in displayCollection| empezarDe : currentPage * pageSize | limitTo:pageSize">
-                                <td data-title="Código">{{usuario.idUsuario}}</td>
-                                <td data-title="Usuario">{{usuario.usuario}}</td>
-                                <td data-title="Perfil">{{usuario.perfil}}</td>
-                                <td data-title="Estado">{{usuario.estado}}</td>
+                            <tr ng-repeat="fechaSesion in displayCollection | orderBy : 'apePaterno' ">
+                                <td data-title="Id. Sesión">{{fechaSesion.idFechaSesion}}</td>
+                                <td data-title="Fecha Sesión">{{fechaSesion.fechaSesion}}</td>
+                                <td data-title="Observación">{{fechaSesion.observacion}}</td>
                                 <td  data-title="Ver">
-                                    <button data-toggle="tooltip" title="Ver"  class="btn btn-default" ng-click="editarModal(usuario, true)"><i class="fa fa-eye" aria-hidden="true"></i><span class="hidden-xs"> </span></button> 
+                                    <button data-toggle="tooltip" title="Ver"  class="btn btn-default" ng-click="editarModal(fechaSesion, true)"><i class="fa fa-eye" aria-hidden="true"></i><span class="hidden-xs"> </span></button> 
                                 </td>
                                 <td  data-title="Editar">
-                                    <button data-toggle="tooltip" title="Editar"  class="btn btn-default" ng-click="editarModal(usuario, false)"><i class="fa fa-pencil-square-o" aria-hidden="true"></i><span class="hidden-xs"> </span></button>
+                                    <button data-toggle="tooltip" title="Editar"  class="btn btn-default" ng-click="editarModal(fechaSesion, false)"><i class="fa fa-pencil-square-o" aria-hidden="true"></i><span class="hidden-xs"> </span></button>
                                 </td>
                                 <td  data-title="Eliminar">
-                                    <button data-toggle="tooltip" title="Eliminar"  class="btn btn-danger" ng-click="eliminar(usuario)" ><i class="fa fa-trash" aria-hidden="true"></i><span class="hidden-xs"> </span></button>
+                                    <button data-toggle="tooltip" title="Eliminar"  class="btn btn-danger" ng-click="eliminar(fechaSesion)" ><i class="fa fa-trash" aria-hidden="true"></i><span class="hidden-xs"> </span></button>
                                 </td>
                             </tr>
                         </tbody>
@@ -96,7 +94,7 @@
                     <span aria-hidden="true">&laquo;</span>
                 </button>
                 {{currentPage + 1}}/{{numberOfPages()}}
-                <button ng-disabled="currentPage >= usuarios.length / pageSize - 1" ng-click="setNextPagina()" class="btn btn-default">
+                <button ng-disabled="currentPage >= correos.length / pageSize - 1" ng-click="setNextPagina()" class="btn btn-default">
                     <span aria-hidden="true">&raquo;</span>
                 </button>
             </div>
