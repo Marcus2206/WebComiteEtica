@@ -265,19 +265,55 @@ app.controller("EditCorrespondenciaController",
                                 SweetAlert.swal("¡Advertencia!", "Ocurrió un inconveniente.", "warning");
                             });
                 };
-
-                $scope.generarCarta = function () {
-                    $log.log("$scope.correspondencia.fechaSesion");
-                    $log.log($scope.correspondencia.fechaSesion);
-                    correspondenciaRR.getSesionesCorrespondencia($scope.correspondencia.fechaSesion)
-                            .then(function (cartaResponse) {
-                                $log.log(cartaResponse);
+                
+                $scope.generarCartaArpobacion = function () {
+                    fileRR.setCartaAprobacion($scope.correspondencia)
+                            .then(function (rutaResponse) {
+//                                $scope.myFile=[];
+//                                correspondenciaFileRR.findAllByIdCorrepondencia($scope.correspondencia.idCorrespondencia)
+//                                        .then(function (correspondenciaFileRespond) {
+//                                            $scope.relacionarFile(correspondenciaFileRespond);
+//                                        }, function (bussinessMessages) {
+//                                            $scope.bussinessMessages = bussinessMessages;
+//                                        });
+                                var newMyFile = {
+                                    name: rutaResponse.nombreArchivo,
+                                    _file: undefined,
+                                    _progress: 100,
+                                    _progressType: 'success',
+                                    _correspondenciaFile: rutaResponse
+                                };
+                                $scope.myFile.push(newMyFile);
+                                SweetAlert.swal("¡Hecho!", "Se generó la Carta de Aprobación.\nPuede verla en los archivos adjuntos", "success");
                             }, function (error) {
-
+                                SweetAlert.swal("¡Advertencia!", "Ocurrió un inconveniente.", "warning");
                             });
                 };
-
-
+                
+                $scope.generarCartaObservacion = function () {
+                    fileRR.setCartaObservacion($scope.correspondencia)
+                            .then(function (rutaResponse) {
+//                                $scope.myFile=[];
+//                                correspondenciaFileRR.findAllByIdCorrepondencia($scope.correspondencia.idCorrespondencia)
+//                                        .then(function (correspondenciaFileRespond) {
+//                                            $scope.relacionarFile(correspondenciaFileRespond);
+//                                        }, function (bussinessMessages) {
+//                                            $scope.bussinessMessages = bussinessMessages;
+//                                        });
+                                var newMyFile = {
+                                    name: rutaResponse.nombreArchivo,
+                                    _file: undefined,
+                                    _progress: 100,
+                                    _progressType: 'success',
+                                    _correspondenciaFile: rutaResponse
+                                };
+                                $scope.myFile.push(newMyFile);
+                                SweetAlert.swal("¡Hecho!", "Se generó la Carta de Observación.\nPuede verla en los archivos adjuntos", "success");
+                            }, function (error) {
+                                SweetAlert.swal("¡Advertencia!", "Ocurrió un inconveniente.", "warning");
+                            });
+                };
+                
             }]);
 app.controller("ListCorrespondenciaController",
         ['$scope', "correspondencias", "idNotificacionParam", "correspondenciaRR",
