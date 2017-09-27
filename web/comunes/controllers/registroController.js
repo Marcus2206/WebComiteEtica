@@ -2,10 +2,10 @@ var app = angular.module("app");
 
 app.controller("EditRegistroController",
         ['$scope', 'registro', 'parametros', 'registroRR',
-            "$log", "$uibModalInstance", 'SweetAlert', 'opcion',
+            "$log", "$uibModalInstance", 'SweetAlert', 'opcion', 'Excel', '$timeout',
             '$uibModal', 'registroBitacoraRR', '$rootScope',
             function ($scope, registro, parametros, registroRR,
-                    $log, $uibModalInstance, SweetAlert, opcion,
+                    $log, $uibModalInstance, SweetAlert, opcion, Excel, $timeout,
                     $uibModal, registroBitacoraRR, $rootScope) {
 
                 var tomorrow = new Date();
@@ -82,15 +82,11 @@ app.controller("EditRegistroController",
                 $scope.paramNivelDesviacion = $scope.filtrar($scope.parametros, 'P014')[0].parametroDetalles;
 
                 $scope.registro = registro;
-//                $scope.registro.investigador = $scope.registroObj.idInvestigador;
-//                $scope.registro.sede = $scope.registroObj.idSede;
 
                 $scope.deshabilitado = false;
                 $scope.isBitacora = true;
 
-
                 $scope.registroBitacoras = [];
-
 
                 registroBitacoraRR.findAllByIdRegistro($scope.registro.idRegistro)
                         .then(function (registroBitacoraResponse) {
@@ -229,6 +225,31 @@ app.controller("EditRegistroController",
                         $scope.flagTipoBitacora = true;
                     }
 
+                };
+
+
+//        .controller('MyCtrl', function (Excel, $timeout) {
+                $scope.exportToExcel = function () { // ex: '#my-table'
+                    var tablaBitacora = document.getElementById("tablaBitacora");
+                    $scope.tablaBitacora = tablaBitacora;
+                    $scope.exportHref = Excel.tableToExcel($scope.tablaBitacora, 'Bitácora');
+
+                    var linkElement = document.createElement('a');
+                    try {
+                        linkElement.setAttribute('href', $scope.exportHref);
+                        linkElement.setAttribute("download", "Bitácora");
+                        var clickEvent = new MouseEvent("click", {
+                            "view": window,
+                            "bubbles": true,
+                            "cancelable": false
+                        });
+                        linkElement.dispatchEvent(clickEvent);
+                    } catch (ex) {
+                    }
+
+//                    $timeout(function () {
+//                        location.href = $scope.exportHref;
+//                    }, 100);
                 };
 
             }]);
