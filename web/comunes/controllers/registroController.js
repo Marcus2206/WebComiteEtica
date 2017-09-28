@@ -97,7 +97,7 @@ app.controller("EditRegistroController",
                         });
 
 
-                registroRR.validateRegistroEnCorrespondencia()
+                registroRR.validateRegistroEnCorrespondencia($scope.registro.idRegistro)
                         .then(function (response) {
                             if (parseInt(response) > 0) {
                                 $scope.disabledExiste = true;

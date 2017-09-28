@@ -34,7 +34,7 @@
                         <p class="input-group">
                             <input type="text" class="form-control" id="investigacion"  placeholder="Buscar Investigación" ng-model="registro.investigacion.idInvestigacion" readonly value="{{registro.investigacion.idInvestigacion|| '' }}"/>
                             <span class="input-group-btn">
-                                <button ng-disabled="opcion||disabledExiste" type="button" class="btn btn-default" ng-click="buscarInvestigacion()"><i class="glyphicon glyphicon-search"></i></button>
+                                <button ng-disabled="opcion||disabledExiste||registro.usuarioIngresa==='Inicial'" type="button" class="btn btn-default" ng-click="buscarInvestigacion()"><i class="glyphicon glyphicon-search"></i></button>
                             </span>
                         </p>
                     </div> 
@@ -59,7 +59,7 @@
                         <p class="input-group">
                             <input type="text" class="form-control" id="idInvestigador"  placeholder="Buscar Investigador" ng-model="registro.investigador.idInvestigador" readonly value="{{registro.investigador.idInvestigador|| '' }}"/>
                             <span class="input-group-btn">
-                                <button ng-disabled="opcion||disabledExiste" type="button" class="btn btn-default" ng-click="buscarInvestigador()"><i class="glyphicon glyphicon-search"></i></button>
+                                <button ng-disabled="opcion||disabledExiste||registro.usuarioIngresa==='Inicial'" type="button" class="btn btn-default" ng-click="buscarInvestigador()"><i class="glyphicon glyphicon-search"></i></button>
                             </span>
                         </p>
                     </div> 
@@ -78,7 +78,7 @@
                         <p class="input-group">
                             <input type="text" class="form-control" id="idSede"  placeholder="Buscar Sede" ng-model="registro.sede.idSede" readonly value="{{registro.sede.idSede|| '' }}"/>
                             <span class="input-group-btn">
-                                <button  ng-disabled="opcion||disabledExiste" type="button" class="btn btn-default" ng-click="buscarSede()"><i class="glyphicon glyphicon-search"></i></button>
+                                <button  ng-disabled="opcion||disabledExiste||registro.usuarioIngresa==='Inicial' " type="button" class="btn btn-default" ng-click="buscarSede()"><i class="glyphicon glyphicon-search"></i></button>
                             </span>
                         </p>
                     </div> 
