@@ -70,9 +70,9 @@ app.controller("NewFechaSesionController",
 
 app.controller("ListFechaSesionController",
         ['$scope', "fechaSesions", "fechaSesionRR", "$log", "$location",
-            "$uibModal", 'SweetAlert',
+            "$uibModal", 'SweetAlert',"fileRR",
             function ($scope, fechaSesions, fechaSesionRR, $log, $location,
-                    $uibModal, SweetAlert) {
+                    $uibModal, SweetAlert,fileRR) {
                 /*Se obtiene lista de coordinadores*/
                 $scope.fechaSesions = fechaSesions;
 
@@ -176,7 +176,8 @@ app.controller("ListFechaSesionController",
                             opcion: false
                         }
                     });
-
+                    
+                    /*Ingresar un registro*/
                     modalInstance.result.then(function () {
                         //Si no devuelve nada.
                     }, function (data) {
@@ -193,6 +194,32 @@ app.controller("ListFechaSesionController",
                         }
                     });
                 };
+                
+                /*Generar Acta de Sesion*/
+                $scope.generarActaSesion = function (sesion) {
+                    fileRR.setActaSesion(sesion)
+                            .then(function (rutaResponse) {
+//                                $scope.myFile=[];
+//                                correspondenciaFileRR.findAllByIdCorrepondencia($scope.correspondencia.idCorrespondencia)
+//                                        .then(function (correspondenciaFileRespond) {
+//                                            $scope.relacionarFile(correspondenciaFileRespond);
+//                                        }, function (bussinessMessages) {
+//                                            $scope.bussinessMessages = bussinessMessages;
+//                                        });
+                                var newMyFile = {
+                                    name: rutaResponse.nombreArchivo,
+                                    _file: undefined,
+                                    _progress: 100,
+                                    _progressType: 'success',
+                                    _correspondenciaFile: rutaResponse
+                                };
+                                $scope.myFile.push(newMyFile);
+                                SweetAlert.swal("¡Hecho!", "Se generó la Acta de Sesión.", "success");
+                            }, function (error) {
+                                SweetAlert.swal("¡Advertencia!", "Ocurrió un inconveniente.", "warning");
+                            });
+                };
+                
             }]);
 
 app.controller("EditFechaSesionController",

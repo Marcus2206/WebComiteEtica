@@ -160,4 +160,23 @@ function FileRR($http, $q, baseUrl, $log) {
                 });
         return defered.promise;
     };
+    
+    this.setActaSesion = function (sesion) {
+        var defered = $q.defer();
+//        $http({
+//            method: 'POST',
+//            url: baseUrl + "/api/File/HojaRuta",
+//            params: {idCorrespondencia: correspondencia.idCorrespondencia}
+//        })
+        var params = {idSesion: sesion};
+        var config = {params};
+        $http.post(baseUrl + "/api/File/ActaSesion", null, config)
+                .then(function onSuccess(response) {
+                    defered.resolve(response.data);
+                })
+                .catch(function onCatch(response) {
+                    defered.reject(response.data);
+                });
+        return defered.promise;
+    };
 }
