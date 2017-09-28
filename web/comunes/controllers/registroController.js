@@ -73,6 +73,7 @@ app.controller("EditRegistroController",
                     return obj.filter(filterByParametro);
                 };
 
+                $scope.disabledExiste = true;
                 $scope.opcion = opcion;
                 $scope.parametros = parametros;
                 $scope.paramEstado = $scope.filtrar($scope.parametros, 'P006')[0].parametroDetalles;
@@ -92,6 +93,19 @@ app.controller("EditRegistroController",
                         .then(function (registroBitacoraResponse) {
                             $scope.registroBitacoras = registroBitacoraResponse;
                         }, function (bussinessMessages) {
+
+                        });
+
+
+                registroRR.validateRegistroEnCorrespondencia($scope.registro.idRegistro)
+                        .then(function (response) {
+                            if (parseInt(response) > 0) {
+                                $scope.disabledExiste = true;
+                            } else {
+                                $scope.disabledExiste = false;
+                            }
+
+                        }, function (error) {
 
                         });
                 $scope.guardar = function () {
