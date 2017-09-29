@@ -81,7 +81,11 @@ function CorrespondenciaServicioRR($http, $q, baseUrl, $log) {
 
     this.delete = function (correspondencia) {
         var defered = $q.defer();
-        $http.put(baseUrl + '/api/CorrespondenciaServicio/CorrespondenciaServicioDelete/' + correspondencia.idCorrespondencia + "/" + correspondencia.idCorrespondenciaServicio)
+        var params = {idCorrespondencia: correspondencia.idCorrespondencia,
+            idCorrespondenciaServicio: correspondencia.idCorrespondenciaServicio
+        };
+        var config = {params};
+        $http.put(baseUrl + '/api/CorrespondenciaServicio/CorrespondenciaServicioDelete', null, config)
                 .then(function onSuccess(response) {
                     defered.resolve(response.data);
                 })

@@ -57,6 +57,7 @@ app.controller("EditPagoController",
                     } else {
                         $scope.pago.idProveedor = null;
                     }
+                    $log.log($scope.facturacionSelected.selected);
                     $scope.pago.razonSocial = $scope.facturacionSelected.selected.razonSocial;
                     $scope.pago.ruc = $scope.facturacionSelected.selected.ruc;
                     $scope.pago.direccion = $scope.facturacionSelected.selected.direccion;

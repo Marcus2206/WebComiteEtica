@@ -86,7 +86,6 @@ function UsuarioRR($http, $q, baseUrl, $log, UrlOrigen) {
         var defered = $q.defer();
         var params = {idUsuario: usuario.idUsuario};
         var config = {params};
-
         $http.put(baseUrl + '/api/Usuario/UsuarioDelete', null, config)
                 .then(function onSuccess(response) {
                     defered.resolve(response.data);

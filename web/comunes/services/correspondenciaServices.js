@@ -76,8 +76,9 @@ function CorrespondenciaRR($http, $q, baseUrl, $log) {
 
     this.delete = function (correspondencia) {
         var defered = $q.defer();
-        var promise = defered.promise;
-        $http.put(baseUrl + '/api/Correspondencia/CorrespondenciaDelete', correspondencia)
+        var params = {idCorrespondencia: correspondencia.idCorrespondencia};
+        var config = {params}
+        $http.put(baseUrl + '/api/Correspondencia/CorrespondenciaDelete', null, config)
                 .then(function onSuccess(response) {
                     defered.resolve(response.data);
                 })
@@ -85,7 +86,7 @@ function CorrespondenciaRR($http, $q, baseUrl, $log) {
                     defered.reject(response);
                 });
 
-        return promise;
+        return defered.promise;
     };
 
     this.getSesionesCorrespondencia = function (fechaSesion) {
@@ -99,9 +100,9 @@ function CorrespondenciaRR($http, $q, baseUrl, $log) {
         if (typeof (fechaSesion) === 'number') {
             fechaParam = "" + fechaSesion;
         } else if (typeof (fechaSesion) === 'string') {
-            fechaParam = ""+Date.parse(fechaSesion);
+            fechaParam = "" + Date.parse(fechaSesion);
         }
-        var params = {fechaSesion:fechaParam };
+        var params = {fechaSesion: fechaParam};
         var config = {params};
         $log.log(config);
         $http.put(baseUrl + '/api/Correspondencia/CorrespondenciaEnSesion', null, config)

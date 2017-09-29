@@ -61,7 +61,9 @@ function PatrocinadorRR($http, $q, baseUrl, $log) {
 
     this.delete = function (patrocinador) {
         var defered = $q.defer();
-        $http.put(baseUrl + '/api/Patrocinador/PatrocinadorDelete', patrocinador)
+        var params = {idPatrocinador: patrocinador.idPatrocinador};
+        var config = {params};
+        $http.put(baseUrl + '/api/Patrocinador/PatrocinadorDelete', null, config)
                 .then(function onSuccess(response) {
                     defered.resolve(response.data);
                 })
@@ -71,17 +73,17 @@ function PatrocinadorRR($http, $q, baseUrl, $log) {
 
         return defered.promise;
     };
-    
-    this.listPatrocinadorSinIdCroFind = function(idCro) {
-        var defered=$q.defer();
-  
-        $http.get(baseUrl + '/api/Patrocinador/PatrocinadorSinIdCroFind/'+idCro)
-        .then(function onSuccess(response){
-            defered.resolve(response.data);
-        })
-        .catch(function onCatch(response){
-            defered.reject(response.data);
-        });
+
+    this.listPatrocinadorSinIdCroFind = function (idCro) {
+        var defered = $q.defer();
+
+        $http.get(baseUrl + '/api/Patrocinador/PatrocinadorSinIdCroFind/' + idCro)
+                .then(function onSuccess(response) {
+                    defered.resolve(response.data);
+                })
+                .catch(function onCatch(response) {
+                    defered.reject(response.data);
+                });
 
         return defered.promise;
     };
