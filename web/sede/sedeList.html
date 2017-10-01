@@ -69,7 +69,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="sede in displayCollection| empezarDe : currentPage * pageSize | limitTo:pageSize | filter:txtFiltroSede ">
+                            <tr ng-repeat="sede in displayCollection">
                                 <td data-title="Código">{{sede.idSede}}</td>
                                 <td data-title="Nombre">{{sede.nombre}}</td>
                                 <td data-title="Dorección">{{sede.direccion}}</td>

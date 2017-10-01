@@ -7,6 +7,43 @@ app.controller("EditPagoController",
             function ($scope, pago, parametros, pagoRR, pagoDetalleRR,
                     $log, $uibModalInstance, SweetAlert, cros, patrocinadors,
                     $uibModal, $rootScope, opcion) {
+                        
+                var tomorrow = new Date();
+                tomorrow.setDate(tomorrow.getDate() + 1);
+                var afterTomorrow = new Date();
+                afterTomorrow.setDate(tomorrow.getDate() + 1);
+                $scope.events = [
+                    {
+                        date: tomorrow,
+                        status: 'full'
+                    },
+                    {
+                        date: afterTomorrow,
+                        status: 'partially'
+                    }
+                ];
+                $scope.open1 = function () {
+                    $scope.popup1.opened = true;
+                };
+                $scope.popup1 = {
+                    opened: false
+                };
+                // Disable weekend selection
+                function disabled(data) {
+                    var date = data.date,
+                            mode = data.mode;
+                    return mode === 'day' && (date.getDay() === 0);
+                }
+
+                $scope.dateOptions = {
+                    dateDisabled: disabled,
+                    formatYear: 'yy',
+                    maxDate: new Date(2020, 5, 22),
+                    minDate: new Date(2007, 1, 1),
+                    startingDay: 1,
+                    showWeeks: false
+                };
+                
                 $scope.filtrar = function (obj, param) {
                     function filterByParametro(obj) {
                         if (obj.idParametro === param) {
@@ -47,8 +84,6 @@ app.controller("EditPagoController",
                     }
                 };
 
-
-
                 $scope.setDatos = function () {
                     if ($scope.pago.opcionFacturacion === '01') {
                         $scope.pago.idProveedor = $scope.facturacionSelected.selected.idCro;
@@ -57,7 +92,7 @@ app.controller("EditPagoController",
                     } else {
                         $scope.pago.idProveedor = null;
                     }
-                    $log.log($scope.facturacionSelected.selected);
+
                     $scope.pago.razonSocial = $scope.facturacionSelected.selected.razonSocial;
                     $scope.pago.ruc = $scope.facturacionSelected.selected.ruc;
                     $scope.pago.direccion = $scope.facturacionSelected.selected.direccion;
@@ -83,6 +118,10 @@ app.controller("EditPagoController",
                                 var selIndex = listbox.selectedIndex;
                                 var selText = listbox.options[selIndex].text;
                                 pagoRespond.paramEstadoPago = selText;
+                                
+                                listbox = document.getElementById("fechaControl");
+                                pagoRespond.fechaControl=listbox.value;
+                                
                                 var index = $scope.pagos.indexOf($scope.pagoObj);
                                 if (index !== -1) {
                                     /*Conserva el valor del identificador HashKey del array inicial, sólo se actualzian los valores.*/

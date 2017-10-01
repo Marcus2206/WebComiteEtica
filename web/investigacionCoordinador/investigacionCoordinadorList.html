@@ -2,7 +2,7 @@
 <a href="#/investigacionCoordinadorNew" >Crear coordinador</a>
 
 <table>
-    <tr ng-repeat="investigacionCoordinador in investigacionCoordinadors | empezarDe : currentPage*pageSize | limitTo:pageSize">
+    <tr ng-repeat="investigacionCoordinador in investigacionCoordinadors ">
         <td><a ng-href="#/investigacionCoordinadorEdit/{{investigacionCoordinador.id.idInvestigacion}}/{{investigacionCoordinador.id.idCoordinador}}">{{coordinador.idCoordinador}}</a></td>
         <td>{{investigacionCoordinador.observacion}}</td>
         <td><button type="button" class="btn btn-danger" ng-click="delete(investigacionCoordinador)">borrar</button></td>

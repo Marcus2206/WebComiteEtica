@@ -68,7 +68,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="coordinador in displayCollection| empezarDe : currentPage * pageSize | limitTo:pageSize">
+                            <tr ng-repeat="coordinador in displayCollection">
                                 <td data-title="Código">{{coordinador.idCoordinador}}</td>
                                 <td data-title="Ape Pat">{{coordinador.apePaterno}}</td>
                                 <td data-title="Ape Mat">{{coordinador.apeMaterno}}</td>

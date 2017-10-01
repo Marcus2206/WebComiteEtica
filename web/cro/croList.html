@@ -66,7 +66,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="cro in displayCollection| empezarDe : currentPage * pageSize | limitTo:pageSize">
+                            <tr ng-repeat="cro in displayCollection">
                                 <td data-title="Id. Cro">{{cro.idCro}}</td>
                                 <td data-title="Nombre">{{cro.nombre}}</td>
                                 <td data-title="RUC">{{cro.ruc}}</td>

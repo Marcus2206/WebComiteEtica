@@ -71,7 +71,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="investigacion in displayCollection| empezarDe : currentPage * pageSize | limitTo:pageSize">
+                            <tr ng-repeat="investigacion in displayCollection">
                                 <td data-title="Código">{{investigacion.idInvestigacion}}</td>
                                 <td data-title="Protocolo">{{investigacion.protocolo}}</td>
                                 <td data-title="Titulo">{{investigacion.titulo}}</td>

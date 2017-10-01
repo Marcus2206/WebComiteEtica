@@ -67,7 +67,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="usuario in displayCollection| empezarDe : currentPage * pageSize | limitTo:pageSize">
+                            <tr ng-repeat="usuario in displayCollection">
                                 <td data-title="Código">{{usuario.idUsuario}}</td>
                                 <td data-title="Usuario">{{usuario.usuario}}</td>
                                 <td data-title="Perfil">{{usuario.perfil}}</td>

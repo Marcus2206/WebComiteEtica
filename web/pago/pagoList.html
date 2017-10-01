@@ -62,16 +62,18 @@
                                 <th st-sort="idPago">Id. Pago</th>
                                 <th st-sort="costo">Precio</th>
                                 <th st-sort="nroFactura">Nro. Factura</th>
+                                <th st-sort="fechaControl">Fecha Control</th>
                                 <th st-sort="observacion">Observación</th>
                                 <th st-sort="paramEstadoPago">Estado Pago</th>
                                 <th colspan="3" style="text-align: center">Acciones</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="pago in displayCollection| empezarDe : currentPage * pageSize | limitTo:pageSize">
+                            <tr ng-repeat="pago in displayCollection">
                                 <td data-title="Id. Pago">{{pago.idPago}}</td>
                                 <td data-title="Precio">{{pago.costo}}</td>
                                 <td data-title="Nro. Factura">{{pago.nroFactura}}</td>
+                                <td data-title="Fecha Control">{{pago.fechaControl}}</td>
                                 <td data-title="Observación">{{pago.observacion}}</td>
                                 <td data-title="Estado Pago">{{pago.paramEstadoPago}}</td>
                                 <td data-title="Ver">

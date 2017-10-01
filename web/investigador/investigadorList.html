@@ -69,7 +69,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="investigador in displayCollection| empezarDe : currentPage * pageSize | limitTo:pageSize | filter: txtFiltroInvestigador">
+                            <tr ng-repeat="investigador in displayCollection">
                                 <td data-title="Código">{{investigador.idInvestigador}}</td>
                                 <td data-title="Ape Pat">{{investigador.apePaterno}}</td>
                                 <td data-title="Ape Mat">{{investigador.apeMaterno}}</td>

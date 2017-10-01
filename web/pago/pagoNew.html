@@ -40,7 +40,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr ng-repeat="corespondenciaServicio in correspondenciaServicios| empezarDe : currentPage * pageSize | limitTo:pageSize | filter:txtFiltroServicio ">
+                                    <tr ng-repeat="corespondenciaServicio in correspondenciaServicios | filter:txtFiltroServicio ">
                                         <td><checkbox ng-model="corespondenciaServicio.generar"></checkbox></td>
                                 <td data-title="Id Correspondencia">{{corespondenciaServicio.idCorrespondencia}}</td>
                                 <td data-title="Id Investigación">{{corespondenciaServicio.idInvestigacion}}</td>

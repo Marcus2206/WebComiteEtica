@@ -587,7 +587,7 @@ app.controller("SearchRegistroController",
                     $log, $uibModalInstance, registros) {
                 $scope.registros = registros;
                 $scope.displayCollection = [].concat($scope.registros);
-
+                
                 /*Se setea la cantidad filas por vista*/
                 $scope.currentPage = 0;
                 $scope.pageSize = 5;

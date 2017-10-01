@@ -68,7 +68,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="monitor in displayCollection| empezarDe : currentPage * pageSize | limitTo:pageSize">
+                            <tr ng-repeat="monitor in displayCollection">
                                 <td data-title="Código">{{monitor.idMonitor}}</td>
                                 <td data-title="Ape Pat">{{monitor.apePaterno}}</td>
                                 <td data-title="Ape Mat">{{monitor.apeMaterno}}</td>

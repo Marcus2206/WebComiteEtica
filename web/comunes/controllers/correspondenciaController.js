@@ -599,7 +599,7 @@ function buscarRegistro($scope, $uibModal) {
                     $scope.correspondencia.registro.idRegistro = data.idRegistro;
                     $scope.correspondencia.idRegistro = data.idRegistro;
                     $scope.correspondencia.equivalenciaCorrelativo = data.equivalenciaCorrelativo;
-                    $scope.correspondencia.equivalenciaCorrelativo = data.protocolo;
+                    $scope.correspondencia.protocolo = data.protocolo;
                 }
             }
         } else {

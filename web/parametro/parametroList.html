@@ -65,7 +65,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="parametro in displayCollection| empezarDe : currentPage * pageSize | limitTo:pageSize | orderBy : 'apePaterno' ">
+                            <tr ng-repeat="parametro in displayCollection | orderBy : 'apePaterno' ">
                                 <td data-title="Id. Parámetro">{{parametro.idParametro}}</td>
                                 <td data-title="Descripción">{{parametro.descripcion}}</td>
                                 <td  data-title="Ver">

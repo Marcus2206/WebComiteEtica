@@ -120,6 +120,7 @@ app.controller("MainController",
                 };
 
                 $scope.enlaceNotificacion = function (not) {
+                    $log.log(not);
                     switch (not.tablaProcedencia) {
                         case 'Correspondencia':
                             window.open(UrlOrigen + '#/correspondenciaList/' + not.idDocumento, '_self', false);
@@ -132,6 +133,9 @@ app.controller("MainController",
                             break;
                         case 'Vencimiento':
                             window.open(UrlOrigen + '#/registroList/' + not.idDocumento, '_self', false);
+                            break;
+                        case 'Control Pago':
+                            window.open(UrlOrigen + '#/pagoList/' + not.idDocumento, '_self', false);
                             break;
                     }
                 };

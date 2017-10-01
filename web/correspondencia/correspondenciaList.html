@@ -70,7 +70,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="correspondencia in displayCollection| empezarDe : currentPage * pageSize | limitTo:pageSize">
+                            <tr ng-repeat="correspondencia in displayCollection">
                                 <td data-title="Código">{{correspondencia.idCorrespondencia}}</td>
                                 <td data-title="Código">{{correspondencia.correlativoInterno}}</td>
                                 <td data-title="Fecha Correspodencia">{{correspondencia.fechaCorrespondencia|date:'dd/MM/yyyy'}}</td>
