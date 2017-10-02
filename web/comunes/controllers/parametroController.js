@@ -78,6 +78,8 @@ app.controller("ListParametroController",
                         closeOnCancel: true
                     }, function (isConfirm) {
                         if (isConfirm) {
+                            window.onkeydown = null;
+                            window.onfocus = null;
                             //Si se presiona Sí.
                             parametroRR.delete(parametro)
                                     .then(function (correoResult) {
@@ -240,6 +242,8 @@ app.controller("EditParametroController",
 
                 $scope.eliminarDetalle = function (parametroDetalle) {
                     //if ($scope.form.$valid) {
+                    window.onkeydown = null;
+                    window.onfocus = null;
                     parametroDetalleRR.delete(parametroDetalle)
                             .then(function (parametroDetalleResponse) {
                                 $scope.parametro.parametroDetalles.splice($scope.parametro.parametroDetalles.indexOf(parametroDetalle), 1);

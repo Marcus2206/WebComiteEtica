@@ -141,6 +141,8 @@ app.controller("ListSedeController",
                         closeOnCancel: true
                     }, function (isConfirm) {
                         if (isConfirm) {
+                            window.onkeydown = null;
+                            window.onfocus = null;
                             //Si se presiona Sí.
                             sedeRR.delete(sede)
                                     .then(function (sedeResult) {

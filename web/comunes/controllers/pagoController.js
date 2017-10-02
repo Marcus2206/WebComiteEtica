@@ -7,7 +7,7 @@ app.controller("EditPagoController",
             function ($scope, pago, parametros, pagoRR, pagoDetalleRR,
                     $log, $uibModalInstance, SweetAlert, cros, patrocinadors,
                     $uibModal, $rootScope, opcion) {
-                        
+
                 var tomorrow = new Date();
                 tomorrow.setDate(tomorrow.getDate() + 1);
                 var afterTomorrow = new Date();
@@ -43,7 +43,7 @@ app.controller("EditPagoController",
                     startingDay: 1,
                     showWeeks: false
                 };
-                
+
                 $scope.filtrar = function (obj, param) {
                     function filterByParametro(obj) {
                         if (obj.idParametro === param) {
@@ -118,10 +118,10 @@ app.controller("EditPagoController",
                                 var selIndex = listbox.selectedIndex;
                                 var selText = listbox.options[selIndex].text;
                                 pagoRespond.paramEstadoPago = selText;
-                                
+
                                 listbox = document.getElementById("fechaControl");
-                                pagoRespond.fechaControl=listbox.value;
-                                
+                                pagoRespond.fechaControl = listbox.value;
+
                                 var index = $scope.pagos.indexOf($scope.pagoObj);
                                 if (index !== -1) {
                                     /*Conserva el valor del identificador HashKey del array inicial, sólo se actualzian los valores.*/
@@ -140,6 +140,8 @@ app.controller("EditPagoController",
                 };
 
                 $scope.eliminarDetalle = function (pagoDetalle) {
+                    window.onkeydown = null;
+                    window.onfocus = null;
                     pagoDetalleRR.delete(pagoDetalle)
                             .then(function (pagoDetalleResponse) {
                                 SweetAlert.swal("Hecho!", "Se ha removido con éxito.", "success");
@@ -380,6 +382,8 @@ app.controller("ListPagoController",
                         closeOnCancel: true
                     }, function (isConfirm) {
                         if (isConfirm) {
+                            window.onkeydown = null;
+                            window.onfocus = null;
                             //Si se presiona Sí.
                             pagoRR.delete(pago)
                                     .then(function (pagoResult) {

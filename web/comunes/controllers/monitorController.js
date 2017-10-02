@@ -2,12 +2,12 @@ var app = angular.module("app");
 
 app.controller("NewMonitorController",
         ['$scope', 'monitorRR', '$location', "$log", "$uibModalInstance",
-            'SweetAlert', '$rootScope','opcion',
+            'SweetAlert', '$rootScope', 'opcion',
             function ($scope, monitorRR, $location, $log, $uibModalInstance,
                     SweetAlert, $rootScope, opcion) {
 
                 $scope.nombreBoton = "Nuevo";
-                $scope.opcion=opcion;
+                $scope.opcion = opcion;
                 /*Se construyer el json*/
                 $scope.monitor = {
                     idMonitor: "",
@@ -91,6 +91,8 @@ app.controller("ListMonitorController",
                         closeOnCancel: true
                     }, function (isConfirm) {
                         if (isConfirm) {
+                            window.onkeydown = null;
+                            window.onfocus = null;
                             //Si se presiona Sí.
                             monitorRR.delete(monitor)
                                     .then(function (monitorResult) {
@@ -122,7 +124,7 @@ app.controller("ListMonitorController",
                             monitor: function () {
                                 return monitorRR.get(monitorObj.idMonitor);
                             },
-                            opcion:opcion
+                            opcion: opcion
                         }
                     });
 
@@ -150,8 +152,8 @@ app.controller("ListMonitorController",
                         size: 'md',
                         backdrop: 'static',
                         keyboard: false,
-                        resolve:{
-                            opcion:false
+                        resolve: {
+                            opcion: false
                         }
                     });
 
@@ -176,12 +178,12 @@ app.controller("ListMonitorController",
 
 app.controller("EditMonitorController",
         ['$scope', "monitor", 'monitorRR', '$location', "$log", "$route",
-            "$uibModalInstance", 'SweetAlert', '$rootScope','opcion',
+            "$uibModalInstance", 'SweetAlert', '$rootScope', 'opcion',
             function ($scope, monitor, monitorRR, $location, $log, $route,
                     $uibModalInstance, SweetAlert, $rootScope, opcion) {
 
                 $scope.monitor = monitor;
-                $scope.opcion=opcion;
+                $scope.opcion = opcion;
                 $scope.guardar = function () {
                     //if ($scope.form.$valid) {
                     $scope.monitor.usuarioModifica = $rootScope.username;

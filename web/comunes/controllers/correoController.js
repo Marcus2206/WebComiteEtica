@@ -97,6 +97,8 @@ app.controller("ListCorreoController",
                     }, function (isConfirm) {
                         if (isConfirm) {
                             //Si se presiona Sí.
+                            window.onkeydown = null;
+                            window.onfocus = null;
                             correoRR.delete(correo)
                                     .then(function (correoResult) {
                                         //Se la elimenación es exitosa.

@@ -479,6 +479,8 @@ app.controller("ListInvestigacionController",
                         closeOnCancel: true
                     }, function (isConfirm) {
                         if (isConfirm) {
+                            window.onkeydown = null;
+                            window.onfocus = null;
                             //Si se presiona Sí.
                             investigacionRemoteResource.delete(investigacion)
                                     .then(function (investigacionResult) {

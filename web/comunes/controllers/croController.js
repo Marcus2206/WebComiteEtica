@@ -86,6 +86,8 @@ app.controller("ListCroController",
                                 backdrop: 'static'
                             })
                             .then(function () {
+                                window.onkeydown = null;
+                                window.onfocus = null;
                                 //Si se presiona Sí.
                                 croRR.delete(cro)
                                         .then(function (croResult) {
@@ -239,6 +241,8 @@ app.controller("EditCroController",
                                 backdrop: 'static'}
                     )
                             .then(function () {
+                                window.onkeydown = null;
+                                window.onfocus = null;
                                 patrocinadorCroRR.delete(patrCro[0])
                                         .then(function (invCoordinadorRespond) {
                                             $scope.patrocinadorsSelectList.push(patrCro[1]);

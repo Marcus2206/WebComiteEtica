@@ -84,13 +84,27 @@ function RegistroRR($http, $q, baseUrl, $log) {
         return defered.promise;
     };
 
-
     this.validateRegistroEnCorrespondencia = function (idRegistro) {
         var defered = $q.defer();
         var params = {idRegistro: idRegistro
         };
         var config = {params};
         $http.put(baseUrl + '/api/Registro/RegistroEnCorrespondenciaValidate', null, config)
+                .then(function onSuccess(response) {
+                    defered.resolve(response.data);
+                })
+                .catch(function onCatch(response) {
+                    defered.reject(response.data);
+                });
+        return defered.promise;
+    };
+
+    this.getCorrespondenciasByRegistro = function (idRegistro) {
+        var defered = $q.defer();
+        var params = {idRegistro: idRegistro
+        };
+        var config = {params};
+        $http.get(baseUrl + '/api/Registro/CorrespondenciasByRegistroGet', config)
                 .then(function onSuccess(response) {
                     defered.resolve(response.data);
                 })

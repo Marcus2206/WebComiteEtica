@@ -47,7 +47,7 @@
                     <div class="form-group">
                         <label for="paramEspecialidadInvestigador">Especialidad Investigador:  </label><br>
                         <select ng-disabled="opcion"  id="paramEspecialidadInvestigador" class="form-control" ng-model="investigador.paramEspecialidadInvestigador">
-                            <option ng-repeat="pd in paramEspecialidadInvestigador" value="{{pd.id.idParametroDetalle}}">{{pd.descripcion}}</option>
+                            <option ng-repeat="pd in paramEspecialidadInvestigador | orderBy:'descripcion'" value="{{pd.id.idParametroDetalle}}">{{pd.descripcion}}</option>
                         </select>
                     </div>
                 </div>

@@ -61,7 +61,7 @@ app.controller("ListCoordinadorController",
                 /*Se setea la cantidad filas por vista*/
                 $scope.currentPage = 0;
                 $scope.pageSize = 20;
-                
+
                 $scope.itemsByPage;
                 /*Calculando número de páginas*/
                 $scope.numberOfPages = function () {
@@ -84,6 +84,8 @@ app.controller("ListCoordinadorController",
                         closeOnCancel: true
                     }, function (isConfirm) {
                         if (isConfirm) {
+                            window.onkeydown = null;
+                            window.onfocus = null;
                             coordinadorRemoteResource.delete(coordinador)
                                     .then(function (coordinadorResult) {
                                         //Se la elimenación es exitosa.
@@ -150,7 +152,7 @@ app.controller("ListCoordinadorController",
                                 if (data !== "escape key press") {
                                     /*añade a la lista sin recargar la página*/
                                     $scope.coordinadors.push(data);
-                                    $scope.editarModal(data,false);
+                                    $scope.editarModal(data, false);
                                 }
                             }
                         } else {

@@ -60,6 +60,22 @@ function CorrespondenciaRR($http, $q, baseUrl, $log) {
         return promise;
     };
 
+    this.getCorrespondenciasValidas = function (idRegistro) {
+        var defered = $q.defer();
+        var promise = defered.promise;
+        var params = {idRegistro: idRegistro};
+        var config = {params};
+        $http.get(baseUrl + '/api/Correspondencia/CorrespondenciasValidasRead', config)
+                .then(function onSuccess(response) {
+                    defered.resolve(response.data);
+                })
+                .catch(function onCatch(response) {
+                    defered.reject(response.data);
+                });
+
+        return promise;
+    };
+
     this.update = function (correspondencia) {
         var defered = $q.defer();
         var promise = defered.promise;
@@ -77,7 +93,7 @@ function CorrespondenciaRR($http, $q, baseUrl, $log) {
     this.delete = function (correspondencia) {
         var defered = $q.defer();
         var params = {idCorrespondencia: correspondencia.idCorrespondencia};
-        var config = {params}
+        var config = {params};
         $http.put(baseUrl + '/api/Correspondencia/CorrespondenciaDelete', null, config)
                 .then(function onSuccess(response) {
                     defered.resolve(response.data);
@@ -93,9 +109,7 @@ function CorrespondenciaRR($http, $q, baseUrl, $log) {
         var defered = $q.defer();
         var promise = defered.promise;
 
-        $log.log(fechaSesion);
         var fechaParam;
-        $log.log(typeof (fechaSesion));
 //        fechaParam=
         if (typeof (fechaSesion) === 'number') {
             fechaParam = "" + fechaSesion;
@@ -104,7 +118,6 @@ function CorrespondenciaRR($http, $q, baseUrl, $log) {
         }
         var params = {fechaSesion: fechaParam};
         var config = {params};
-        $log.log(config);
         $http.put(baseUrl + '/api/Correspondencia/CorrespondenciaEnSesion', null, config)
                 .then(function onSuccess(response) {
                     defered.resolve(response.data);

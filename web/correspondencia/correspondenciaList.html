@@ -61,6 +61,7 @@
                                 <th st-sort="fechaCarta">Fecha Carta</th>
                                 <th st-sort="idRegistro">Registro</th>
                                 <th st-sort="equivalenciaCorrelativo">Correlativo equiv.</th>
+                                <th st-sort="protocolo">Protocolo</th>
                                 <th st-sort="paramDistribucion">Distribución</th>
                                 <th st-sort="otro">Comentario</th>
                                 <th st-sort="fechaSesion">Fecha Sesión</th>
@@ -72,11 +73,12 @@
                         <tbody>
                             <tr ng-repeat="correspondencia in displayCollection">
                                 <td data-title="Código">{{correspondencia.idCorrespondencia}}</td>
-                                <td data-title="Código">{{correspondencia.correlativoInterno}}</td>
+                                <td data-title="Correl. Int.">{{correspondencia.correlativoInterno}}</td>
                                 <td data-title="Fecha Correspodencia">{{correspondencia.fechaCorrespondencia|date:'dd/MM/yyyy'}}</td>
                                 <td data-title="Fecha Carta">{{correspondencia.fechaCarta|date:'dd/MM/yyyy'}}</td>
                                 <td data-title="Registro">{{correspondencia.idRegistro}}</td>
                                 <td data-title="Correlativo equiv.">{{correspondencia.equivalenciaCorrelativo}}</td>
+                                <td data-title="Protocolo">{{correspondencia.protocolo}}</td>
                                 <td data-title="Distribución">{{correspondencia.paramDistribucion}}</td>
                                 <td data-title="Comentario">{{correspondencia.otro}}</td>
                                 <td data-title="Fecha Sesión">{{correspondencia.fechaSesion|date:'dd/MM/yyyy'}}</td>

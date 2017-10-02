@@ -1,12 +1,12 @@
 var app = angular.module("app");
 
 app.controller("EditRegistroController",
-        ['$scope', 'registro', 'parametros', 'registroRR',
-            "$log", "$uibModalInstance", 'SweetAlert', 'opcion', 'Excel', '$timeout',
-            '$uibModal', 'registroBitacoraRR', '$rootScope',
-            function ($scope, registro, parametros, registroRR,
-                    $log, $uibModalInstance, SweetAlert, opcion, Excel, $timeout,
-                    $uibModal, registroBitacoraRR, $rootScope) {
+        ['$scope', 'registro', 'parametros', 'registroRR', 'correspondenciasValidas',
+            "$log", "$uibModalInstance", 'SweetAlert', 'opcion', 'Excel', '$timeout', '$q',
+            '$uibModal', 'registroBitacoraRR', '$rootScope', 'fileRR', 'correspondenciaFileRR',
+            function ($scope, registro, parametros, registroRR, correspondenciasValidas,
+                    $log, $uibModalInstance, SweetAlert, opcion, Excel, $timeout, $q,
+                    $uibModal, registroBitacoraRR, $rootScope, fileRR, correspondenciaFileRR) {
 
                 var tomorrow = new Date();
                 tomorrow.setDate(tomorrow.getDate() + 1);
@@ -86,6 +86,7 @@ app.controller("EditRegistroController",
 
                 $scope.deshabilitado = false;
                 $scope.isBitacora = true;
+                $scope.isCorrespondencia = true;
 
                 $scope.registroBitacoras = [];
 
@@ -96,6 +97,12 @@ app.controller("EditRegistroController",
 
                         });
 
+                $scope.downloadFile = function (file) {
+                    $scope.file = {_correspondenciaFile: {}};
+                    $scope.file._correspondenciaFile.direccion = file.direccion;
+                    $scope.file._correspondenciaFile.nombreArchivo = file.nombreArchivo;
+                    fileRR.downloadFileFromURL($scope.file);
+                };
 
                 registroRR.validateRegistroEnCorrespondencia($scope.registro.idRegistro)
                         .then(function (response) {
@@ -161,8 +168,6 @@ app.controller("EditRegistroController",
 
                 $scope.buscarInvestigacion = function () {
                     buscarInvestigacion($scope, $uibModal);
-//                    $scope.registro.idInvestigador=null;
-//                    $scope.registro.idSede=null;
                 };
 
                 $scope.buscarInvestigador = function () {
@@ -226,8 +231,6 @@ app.controller("EditRegistroController",
 
                 $scope.flagTipoBitacora = true;
                 $scope.cargarDetalleBitacora = function () {
-//                     var listbox = document.getElementById("paramTipoBitacora");
-//                      var selIndex = listbox.selectedIndex;
                     if ($scope.registroBitacora.paramTipoBitacora === 'PD05') {
                         $scope.flagTipoBitacora = false;
                         $scope.paramDetalleBitacora = $scope.paramNivelDesviacion;
@@ -238,20 +241,17 @@ app.controller("EditRegistroController",
                         $scope.paramDetalleBitacora = null;
                         $scope.flagTipoBitacora = true;
                     }
-
                 };
 
-
-//        .controller('MyCtrl', function (Excel, $timeout) {
-                $scope.exportToExcel = function () { // ex: '#my-table'
-                    var tablaBitacora = document.getElementById("tablaBitacora");
-                    $scope.tablaBitacora = tablaBitacora;
-                    $scope.exportHref = Excel.tableToExcel($scope.tablaBitacora, 'Bitácora');
+                $scope.exportToExcel = function (tablaId, etiqueta) {
+                    var tablaExport = document.getElementById(tablaId);
+                    $scope.tablaExport = tablaExport;
+                    $scope.exportHref = Excel.tableToExcel($scope.tablaExport, etiqueta);
 
                     var linkElement = document.createElement('a');
                     try {
                         linkElement.setAttribute('href', $scope.exportHref);
-                        linkElement.setAttribute("download", "Bitácora");
+                        linkElement.setAttribute("download", etiqueta);
                         var clickEvent = new MouseEvent("click", {
                             "view": window,
                             "bubbles": true,
@@ -260,18 +260,37 @@ app.controller("EditRegistroController",
                         linkElement.dispatchEvent(clickEvent);
                     } catch (ex) {
                     }
-
-//                    $timeout(function () {
-//                        location.href = $scope.exportHref;
-//                    }, 100);
                 };
 
+                $scope.correspondenciasValidas = correspondenciasValidas;
+                $scope.correspondenciasData = [];
+                $scope.cargarCorrespondencias = function () {
+                    var sequence = $q.defer();
+                    sequence.resolve();
+                    sequence = sequence.promise;
+                    angular.forEach($scope.correspondenciasValidas, function (item, key) {
+                        sequence = sequence.then(function () {
+                            var pushCorrespondencia = item;
+//                            pushCorrespondencia.idCorrespondencia = item.idCorrespondencia;
+                            return correspondenciaFileRR.findAllByIdCorrepondencia(item.idCorrespondencia)
+                                    .then(function (response) {
+                                        pushCorrespondencia.pushCorrespondenciaFiles = response;
+                                        $scope.correspondenciasData.push(pushCorrespondencia);
+                                    }, function (bussinessMessages) {
+                                        $scope.bussinessMessages = bussinessMessages;
+                                    });
+                        });
+                    });
+                };
+                $scope.cargarCorrespondencias();
+                $log.log("$scope.correspondenciasData");
+                $log.log($scope.correspondenciasData);
             }]);
 
 app.controller("ListRegistroController",
-        ['$scope', "registros", "idNotificacionParam", "registroRR",
+        ['$scope', "registros", "idNotificacionParam", "registroRR", 'correspondenciaRR',
             "$log", "$uibModal", 'SweetAlert',
-            function ($scope, registros, idNotificacionParam, registroRR,
+            function ($scope, registros, idNotificacionParam, registroRR, correspondenciaRR,
                     $log, $uibModal, SweetAlert) {
 
                 if (idNotificacionParam !== "all") {
@@ -339,6 +358,9 @@ app.controller("ListRegistroController",
                             parametros: ['parametroRR', function (parametroRR) {
                                     return parametroRR.list();
                                 }],
+                            correspondenciasValidas: function () {
+                                return correspondenciaRR.getCorrespondenciasValidas(registroObj.idRegistro);
+                            },
                             opcion: opcion
                         }
                     });
@@ -406,6 +428,8 @@ app.controller("ListRegistroController",
                         closeOnCancel: true
                     }, function (isConfirm) {
                         if (isConfirm) {
+                            window.onkeydown = null;
+                            window.onfocus = null;
                             //Si se presiona Sí.
                             registroRR.delete(registro)
                                     .then(function (registroResult) {
@@ -587,7 +611,7 @@ app.controller("SearchRegistroController",
                     $log, $uibModalInstance, registros) {
                 $scope.registros = registros;
                 $scope.displayCollection = [].concat($scope.registros);
-                
+
                 /*Se setea la cantidad filas por vista*/
                 $scope.currentPage = 0;
                 $scope.pageSize = 5;

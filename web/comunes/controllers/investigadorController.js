@@ -17,12 +17,13 @@ app.controller("NewInvestigadorController",
                     return obj.filter(filterByParametro);
                 };
 
-                parametroRR.list().then(function (parametrosResult) {
-                    $scope.parametros = parametrosResult;
-                    $scope.paramEspecialidadInvestigador = $scope.filtrar($scope.parametros, 'P008')[0].parametroDetalles;
-                }, function (bussinessMessages) {
-                    $scope.bussinessMessages = bussinessMessages;
-                });
+                parametroRR.list()
+                        .then(function (parametrosResult) {
+                            $scope.parametros = parametrosResult;
+                            $scope.paramEspecialidadInvestigador = $scope.filtrar($scope.parametros, 'P008')[0].parametroDetalles;
+                        }, function (bussinessMessages) {
+                            $scope.bussinessMessages = bussinessMessages;
+                        });
 
                 /*Se construyer el json*/
                 $scope.investigador = {
@@ -67,9 +68,9 @@ app.controller("NewInvestigadorController",
             }]);
 
 app.controller("ListInvestigadorController",
-        ['$scope', "investigadors", "investigadorRR",
+        ['$scope', "investigadors", "investigadorRR", 'SweetAlert',
             '$location', "$log", "$route", "$uibModal", '$confirm',
-            function ($scope, investigadors, investigadorRR,
+            function ($scope, investigadors, investigadorRR, SweetAlert,
                     $location, $log, $route, $uibModal, $confirm) {
                 /*Se obtiene lista de coordinadores*/
                 $scope.investigadors = investigadors;
@@ -104,28 +105,30 @@ app.controller("ListInvestigadorController",
 
                 $scope.eliminar = function (investigador) {
                     //Se prepara confirm
-                    $confirm({
-                        text: '¿Está seguro de eliminar este registro?',
-                        ok: "Sí",
-                        cancel: "No",
-                        title: "Eliminar Investigador"
-                    },
-                            {size: 'sm',
-                                backdrop: 'static'
-                            })
-                            .then(function () {
-                                //Si se presiona Sí.
-                                investigadorRR.delete(investigador)
-                                        .then(function (investigadorResult) {
-                                            //Se la elimenación es exitosa.
-                                            $scope.investigadors.splice($scope.investigadors.indexOf(investigador), 1);
-                                        }, function (bussinessMessages) {
-                                            alert("El investigador esta asociado a una investigación activa.");
-                                        });
-                            })
-                            .catch(function () {
-                                //Si se presiona no, se cancela.
-                            });
+                    SweetAlert.swal({
+                        title: '¿Está seguro de eliminar este registro?',
+                        type: 'warning',
+                        showCancelButton: true,
+                        confirmButtonText: "Si",
+                        cancelButtonText: "No",
+                        closeOnConfirm: false,
+                        closeOnCancel: true
+                    }, function (isConfirm) {
+                        if (isConfirm) {
+                            window.onkeydown = null;
+                            window.onfocus = null;
+                            investigadorRR.delete(investigador)
+                                    .then(function (investigadorResult) {
+                                        //Se la elimenación es exitosa.
+                                        $scope.investigadors.splice($scope.investigadors.indexOf(investigador), 1);
+                                        SweetAlert.swal("Hecho!", "Registro eliminado exitosamente.", "success");
+                                    }, function (bussinessMessages) {
+                                        SweetAlert.swal("Advertencia", "El investigador pertenece a una investigación activa.", "warning");
+                                    });
+                        } else {
+
+                        }
+                    });
                 };
 
                 /*Editar un registro*/
@@ -169,7 +172,10 @@ app.controller("ListInvestigadorController",
                         controller: "NewInvestigadorController",
                         size: 'md',
                         backdrop: 'static',
-                        keyboard: false
+                        keyboard: false,
+                        resolve: {
+                            opcion: false
+                        }
                     });
 
                     modalInstance.result.then(function () {

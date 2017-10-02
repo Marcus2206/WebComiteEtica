@@ -134,6 +134,8 @@ app.controller("EditCorrespondenciaController",
                                     $scope.correspondenciaServicios.splice($scope.correspondenciaServicios.indexOf(correspondenciaServicio), 1);
                                     $scope.servicioSelect = {};
                                 } else {
+                                    window.onkeydown = null;
+                                    window.onfocus = null;
                                     SweetAlert.swal("No se puede eliminar", "Es posible que el servicio se encuentre listado en Pagos.", "warning");
                                 }
 
@@ -265,7 +267,7 @@ app.controller("EditCorrespondenciaController",
                                 SweetAlert.swal("¡Advertencia!", "Ocurrió un inconveniente.", "warning");
                             });
                 };
-                
+
                 $scope.generarCartaArpobacion = function () {
                     fileRR.setCartaAprobacion($scope.correspondencia)
                             .then(function (rutaResponse) {
@@ -289,7 +291,7 @@ app.controller("EditCorrespondenciaController",
                                 SweetAlert.swal("¡Advertencia!", "Ocurrió un inconveniente.", "warning");
                             });
                 };
-                
+
                 $scope.generarCartaObservacion = function () {
                     fileRR.setCartaObservacion($scope.correspondencia)
                             .then(function (rutaResponse) {
@@ -313,7 +315,7 @@ app.controller("EditCorrespondenciaController",
                                 SweetAlert.swal("¡Advertencia!", "Ocurrió un inconveniente.", "warning");
                             });
                 };
-                
+
             }]);
 app.controller("ListCorrespondenciaController",
         ['$scope', "correspondencias", "idNotificacionParam", "correspondenciaRR",
@@ -437,6 +439,8 @@ app.controller("ListCorrespondenciaController",
                         closeOnCancel: true
                     }, function (isConfirm) {
                         if (isConfirm) {
+                            window.onkeydown = null;
+                            window.onfocus = null;
                             //Si se presiona Sí.
                             correspondencia.enviarCorreo = ((correspondencia.enviarCorreo === '1') ? 1 : 0);
                             correspondencia.enviado = ((correspondencia.enviado === '1') ? 1 : 0);

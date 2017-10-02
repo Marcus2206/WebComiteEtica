@@ -54,7 +54,7 @@ app.controller("ListPatrocinadorController",
                 /*Columnas para realizar el filtro*/
                 $scope.predicates = [{nombre: 'idPatrocinador', descripcion: 'Id. Patrocinador'},
                     {nombre: 'nombre', descripcion: 'Nombre'},
-                {nombre: 'ruc', descripcion: 'RUC'}];
+                    {nombre: 'ruc', descripcion: 'RUC'}];
 
                 $scope.displayCollection = [].concat($scope.patrocinadors);
                 /*Campo seleccionado*/
@@ -88,6 +88,8 @@ app.controller("ListPatrocinadorController",
                         closeOnCancel: true
                     }, function (isConfirm) {
                         if (isConfirm) {
+                            window.onkeydown = null;
+                            window.onfocus = null;
                             //Si se presiona Sí.
                             patrocinadorRR.delete(patrocinador)
                                     .then(function (patrocinadorResult) {

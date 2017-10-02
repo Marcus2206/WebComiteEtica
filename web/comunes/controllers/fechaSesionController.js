@@ -70,9 +70,9 @@ app.controller("NewFechaSesionController",
 
 app.controller("ListFechaSesionController",
         ['$scope', "fechaSesions", "fechaSesionRR", "$log", "$location",
-            "$uibModal", 'SweetAlert',"fileRR",
+            "$uibModal", 'SweetAlert', "fileRR",
             function ($scope, fechaSesions, fechaSesionRR, $log, $location,
-                    $uibModal, SweetAlert,fileRR) {
+                    $uibModal, SweetAlert, fileRR) {
                 /*Se obtiene lista de coordinadores*/
                 $scope.fechaSesions = fechaSesions;
 
@@ -113,6 +113,8 @@ app.controller("ListFechaSesionController",
                         closeOnCancel: true
                     }, function (isConfirm) {
                         if (isConfirm) {
+                            window.onkeydown = null;
+                            window.onfocus = null;
                             //Si se presiona Sí.
                             fechaSesionRR.delete(fechaSesion)
                                     .then(function (correoResult) {
@@ -176,7 +178,7 @@ app.controller("ListFechaSesionController",
                             opcion: false
                         }
                     });
-                    
+
                     /*Ingresar un registro*/
                     modalInstance.result.then(function () {
                         //Si no devuelve nada.
@@ -194,7 +196,7 @@ app.controller("ListFechaSesionController",
                         }
                     });
                 };
-                
+
                 /*Generar Acta de Sesion*/
                 $scope.generarActaSesion = function (sesion) {
                     fileRR.setActaSesion(sesion)
@@ -219,7 +221,7 @@ app.controller("ListFechaSesionController",
                                 SweetAlert.swal("¡Advertencia!", "Ocurrió un inconveniente.", "warning");
                             });
                 };
-                
+
             }]);
 
 app.controller("EditFechaSesionController",
@@ -276,8 +278,8 @@ app.controller("EditFechaSesionController",
                             .then(function (fechaSesionResult) {
                                 //Devuelve objeto actualizado y cierra modal
                                 var index = $scope.fechaSesions.indexOf($scope.fechaSesionObj);
-                                var texto=document.getElementById("fechaSesion");
-                                fechaSesionResult.fechaSesion=texto.value;
+                                var texto = document.getElementById("fechaSesion");
+                                fechaSesionResult.fechaSesion = texto.value;
                                 if (index !== -1) {
                                     /*Conserva el valor del identificador HashKey del array inicial, sólo se actualzian los valores.*/
                                     angular.forEach(fechaSesionResult, function (value, key) {

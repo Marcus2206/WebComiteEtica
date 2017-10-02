@@ -117,6 +117,8 @@ app.controller("ListUsuarioController",
                         closeOnCancel: true
                     }, function (isConfirm) {
                         if (isConfirm) {
+                            window.onkeydown = null;
+                            window.onfocus = null;
                             //Si se presiona Sí.
                             usuarioRR.delete(usuario)
                                     .then(function (usuarioResult) {

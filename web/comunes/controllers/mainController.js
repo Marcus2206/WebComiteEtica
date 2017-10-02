@@ -120,7 +120,6 @@ app.controller("MainController",
                 };
 
                 $scope.enlaceNotificacion = function (not) {
-                    $log.log(not);
                     switch (not.tablaProcedencia) {
                         case 'Correspondencia':
                             window.open(UrlOrigen + '#/correspondenciaList/' + not.idDocumento, '_self', false);
