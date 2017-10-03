@@ -68,6 +68,42 @@ function FileRR($http, $q, baseUrl, $log) {
                 });
         return defered.promise;
     };
+    
+    this.downloadFileFromURLDirect = function (file) {
+        var defered = $q.defer();
+        $http({
+            method: 'GET',
+            url: baseUrl + "/api/File/BajarArchivo",
+            params: {direccion: file},
+            responseType: 'arraybuffer'
+        })
+                .then(function onSuccess(response) {
+                    var filename = 'ACT(Borrador).doc';
+                    var contentType = "application/undefined";
+
+                    var linkElement = document.createElement('a');
+                    try {
+                        var blob = new Blob([response.data], {type: contentType});
+                        var url = window.URL.createObjectURL(blob);
+
+                        linkElement.setAttribute('href', url);
+                        linkElement.setAttribute("download", filename);
+
+                        var clickEvent = new MouseEvent("click", {
+                            "view": window,
+                            "bubbles": true,
+                            "cancelable": false
+                        });
+                        linkElement.dispatchEvent(clickEvent);
+                    } catch (ex) {
+                    }
+                    defered.resolve(response.data);
+                })
+                .catch(function onCatch(response) {
+                    defered.reject(response.data);
+                });
+        return defered.promise;
+    };
 
     this.deleteFileFromURL = function (file) {
         var defered = $q.defer();

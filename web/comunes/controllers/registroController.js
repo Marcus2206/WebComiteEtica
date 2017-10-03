@@ -127,18 +127,27 @@ app.controller("EditRegistroController",
 
                                 var listbox = document.getElementById("paramEstado");
                                 var selIndex = listbox.selectedIndex;
-                                var selText = listbox.options[selIndex].text;
-                                registroRespond.paramEstado = selText;
+                                var selText;
+                                if (selIndex >= 0) {
+                                    selText = listbox.options[selIndex].text;
+                                    registroRespond.paramEstado = selText;
+                                } else {
+                                    registroRespond.paramEstado = "";
+                                }
 
-                                listbox = document.getElementById("paramNotificacion");
-                                selIndex = listbox.selectedIndex;
-                                selText = listbox.options[selIndex].text;
-                                registroRespond.paramNotificacion = selText;
+//                                listbox = document.getElementById("paramNotificacion");
+//                                selIndex = listbox.selectedIndex;
+//                                selText = listbox.options[selIndex].text;
+//                                registroRespond.paramNotificacion = selText;
 
                                 listbox = document.getElementById("paramEstadoRegistro");
                                 selIndex = listbox.selectedIndex;
-                                selText = listbox.options[selIndex].text;
-                                registroRespond.paramEstadoRegistro = selText;
+                                if (selIndex >= 0) {
+                                    selText = listbox.options[selIndex].text;
+                                    registroRespond.paramEstadoRegistro = selText;
+                                } else {
+                                    registroRespond.paramEstadoRegistro = "";
+                                }
 
                                 registroRespond.nombreInvestigador = $scope.registro.investigador.apePaterno + ' ' + $scope.registro.investigador.apePaterno + ', ' + $scope.registro.investigador.nombres;
                                 registroRespond.nombreSede = $scope.registro.sede.nombre;
@@ -529,6 +538,7 @@ app.controller("NewRegistroController",
 
                 $scope.deshabilitado = true;
                 $scope.isBitacora = true;
+                $scope.isCorrespondencia = true;
 
                 /*Se construyer el json*/
                 $scope.registro = {investigacion: {}};
@@ -562,15 +572,42 @@ app.controller("NewRegistroController",
                                             .then(function (registroRespond) {
                                                 var listbox = document.getElementById("paramEstado");
                                                 var selIndex = listbox.selectedIndex;
-                                                var selText = listbox.options[selIndex].text;
-                                                registroRespond.paramEstado = selText;
+                                                var selText;
+                                                if (selIndex >= 0) {
+                                                    selText = listbox.options[selIndex].text;
+                                                    registroRespond.paramEstado = selText;
+                                                } else {
+                                                    registroRespond.paramEstado = "";
+                                                }
 
-                                                listbox = document.getElementById("paramNotificacion");
+//                                                listbox = document.getElementById("paramNotificacion");
+//                                                selIndex = listbox.selectedIndex;
+//                                                selText = listbox.options[selIndex].text;
+//                                                registroRespond.paramNotificacion = selText;
+
+                                                listbox = document.getElementById("paramEstadoRegistro");
                                                 selIndex = listbox.selectedIndex;
-                                                selText = listbox.options[selIndex].text;
-                                                registroRespond.paramNotificacion = selText;
+                                                if (selIndex >= 0) {
+                                                    selText = listbox.options[selIndex].text;
+                                                    registroRespond.paramEstadoRegistro = selText;
+                                                } else {
+                                                    registroRespond.paramEstadoRegistro = "";
+                                                }
 
-                                                registroRespond.nombreInvestigador = $scope.registro.investigador.apePaterno + ' ' + $scope.registro.investigador.apePaterno + ', ' + $scope.registro.investigador.nombres;
+                                                var pater, mater, nom;
+                                                pater = '';
+                                                mater = '';
+                                                nom = '';
+                                                if ($scope.registro.investigador.apePaterno !== null) {
+                                                    pater = $scope.registro.investigador.apePaterno;
+                                                }
+                                                if ($scope.registro.investigador.apeMaterno !== null) {
+                                                    mater = $scope.registro.investigador.apeMaterno;
+                                                }
+                                                if ($scope.registro.investigador.nombres !== null) {
+                                                    nom = $scope.registro.investigador.nombres;
+                                                }
+                                                registroRespond.nombreInvestigador = pater + ' ' + mater + ', ' + nom;
                                                 registroRespond.nombreSede = $scope.registro.sede.nombre;
                                                 registroRespond.protocolo = $scope.registro.investigacion.protocolo;
                                                 registroRespond.titulo = $scope.registro.investigacion.titulo;
