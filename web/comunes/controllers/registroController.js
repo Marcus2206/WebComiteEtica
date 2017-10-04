@@ -149,8 +149,22 @@ app.controller("EditRegistroController",
                                     registroRespond.paramEstadoRegistro = "";
                                 }
 
-                                registroRespond.nombreInvestigador = $scope.registro.investigador.apePaterno + ' ' + $scope.registro.investigador.apePaterno + ', ' + $scope.registro.investigador.nombres;
-                                registroRespond.nombreSede = $scope.registro.sede.nombre;
+                                var pater, mater, nom;
+                                pater = '';
+                                mater = '';
+                                nom = '';
+                                if ($scope.registro.investigador.apePaterno !== null) {
+                                    pater = $scope.registro.investigador.apePaterno;
+                                }
+                                if ($scope.registro.investigador.apeMaterno !== null) {
+                                    mater = $scope.registro.investigador.apeMaterno;
+                                }
+                                if ($scope.registro.investigador.nombres !== null) {
+                                    nom = $scope.registro.investigador.nombres;
+                                }
+                                
+                                registroRespond.nombreInvestigador = pater + ' ' + mater + ', ' + nom;
+                                registroRespond.nombreSede = $scope.registro.nombreSede;
                                 registroRespond.protocolo = $scope.registro.investigacion.protocolo;
                                 registroRespond.titulo = $scope.registro.investigacion.titulo;
 
@@ -608,7 +622,7 @@ app.controller("NewRegistroController",
                                                     nom = $scope.registro.investigador.nombres;
                                                 }
                                                 registroRespond.nombreInvestigador = pater + ' ' + mater + ', ' + nom;
-                                                registroRespond.nombreSede = $scope.registro.sede.nombre;
+                                                registroRespond.nombreSede = $scope.registro.nombreSede;
                                                 registroRespond.protocolo = $scope.registro.investigacion.protocolo;
                                                 registroRespond.titulo = $scope.registro.investigacion.titulo;
 
