@@ -62,11 +62,11 @@
                                 <th st-sort="idFechaSesion">Id. Sesión</th>
                                 <th st-sort="fechaSesion">Fecha Sesión</th>
                                 <th st-sort="observacion">Observación</th>
-                                <th colspan="3" style="text-align: center">Acción</th>
+                                <th colspan="4" style="text-align: center">Acción</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="fechaSesion in displayCollection | orderBy : 'apePaterno' ">
+                            <tr ng-repeat="fechaSesion in displayCollection| orderBy : 'apePaterno' ">
                                 <td data-title="Id. Sesión">{{fechaSesion.idFechaSesion}}</td>
                                 <td data-title="Fecha Sesión">{{fechaSesion.fechaSesion}}</td>
                                 <td data-title="Observación">{{fechaSesion.observacion}}</td>
@@ -75,6 +75,8 @@
                                 </td>
                                 <td  data-title="Editar">
                                     <button data-toggle="tooltip" title="Editar"  class="btn btn-default" ng-click="editarModal(fechaSesion, false)"><i class="fa fa-pencil-square-o" aria-hidden="true"></i><span class="hidden-xs"> </span></button>
+                                </td>
+                                <td data-title="Acta">
                                     <button data-toggle="tooltip" title="Generar Acta de Sesión"  class="btn btn-default" ng-click="generarActaSesion(fechaSesion.idFechaSesion)"><i class="fa fa-list-ol" aria-hidden="true"></i><span class="hidden-xs"> </span></button>
                                 </td>
                                 <td  data-title="Eliminar">
