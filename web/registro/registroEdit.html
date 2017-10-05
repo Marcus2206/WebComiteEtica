@@ -141,61 +141,6 @@
                     </div>
                 </div>
             </div>
-            <!--            <div class="row">
-                            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
-                                <div class="form-group">
-                                    <label for="pacienteEas">Paciente EAS:  </label><br>
-                                    <input ng-readonly="opcion" type="text" class="form-control" id="pacienteEas"  placeholder="Paciente EAS" ng-model="registro.pacienteEas" value="{{registro.pacienteEas|| '' }}">
-                                </div> 
-                            </div>
-                            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
-                                <div class="form-group">
-                                    <label for="easLocal">EAS Local:  </label><br>
-                                    <input ng-readonly="opcion" type="text" class="form-control" id="easLocal"  placeholder="EAS Local" ng-model="registro.easLocal" value="{{registro.easLocal|| '' }}">
-                                </div> 
-                            </div>
-                            <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
-                                <div class="form-group">
-                                    <label for="fechaEas" class="control-label">Fecha EAS: </label><br>
-                                    <p class="input-group">
-                                        <input type="text" id="fechaEas"  class="form-control" uib-datepicker-popup="dd/MM/yyyy" ng-model="registro.fechaEas" is-open="popup2.opened" datepicker-options="dateOptions" ng-required="true" show-button-bar="false" readonly />
-                                        <span class="input-group-btn">
-                                            <button   ng-disabled="opcion"  type="button" class="btn btn-default" ng-click="open2()"><i class="glyphicon glyphicon-calendar"></i></button>
-                                        </span>
-                                    </p>
-                                </div>
-                            </div>
-                        </div>-->
-            <!--<div class="row">-->
-            <!--                <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
-                                <div class="form-group">
-                                    <label for="paramNotificacion">Notificación:  </label><br>
-                                    <select  ng-disabled="opcion" class="form-control" id="paramNotificacion" ng-model="registro.paramNotificacion">
-                                        <option ng-repeat="pd in paramNotificacion" value="{{pd.id.idParametroDetalle}}">{{pd.descripcion}}</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
-                                <div class="form-group">
-                                    <label for="visitaInspeccion">Visita Inspección:  </label><br>
-                                    <input  ng-readonly="opcion" type="text" class="form-control" id="visitaInspeccion"  placeholder="Visita Inspección" ng-model="registro.visitaInspeccion" value="{{registro.visitaInspeccion|| '' }}">
-                                </div> 
-                            </div>-->
-            <!--                <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
-                                <div class="form-group">
-                                    <label for="estudioNinos">Est. Niños:  </label><br>
-                                    <checkbox  ng-disabled="opcion" id="estudioNinos" ng-model="registro.estudioNinos"></checkbox>
-                                </div>
-                            </div>-->
-            <!--</div>-->
-            <!--            <div class="row">
-                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                <div class="form-group">
-                                    <label for="visitaInspeccionIns">Visita Inspección INS:  </label><br>
-                                    <input  ng-readonly="opcion" type="text" class="form-control" id="visitaInspeccionIns"  placeholder="Visita Inspección INS" ng-model="registro.visitaInspeccionIns" value="{{ registro.visitaInspeccionIns || '' }}">
-                                </div> 
-                            </div>
-                        </div>-->
             <div class="row">
                 <!--Registro Bitácora-->
                 <div class="col-md-12">    
@@ -367,7 +312,16 @@
                                 <table ng-hide="true" id="tablaCorrespondencia">
                                     <thead>
                                         <tr>
-                                            <th colspan="13" style="text-align: center;">Correspondencia asignada</th>
+                                            <th colspan="13" style="text-align: left;">Correspondencia asignada al Registro: {{ registro.idRegistro || '' }} </th>
+                                        </tr>
+                                        <tr>
+                                            <th colspan="13" style="text-align: left;">Investigación: {{registro.investigacion.titulo}}</th>
+                                        </tr>
+                                        <tr>
+                                            <th colspan="13" style="text-align: left;">Investigador: {{registro.investigador.apePaterno|| ''}} {{registro.investigador.apeMaterno|| ''}}  {{registro.investigador.nombres|| '' }}</th>
+                                        </tr>
+                                        <tr>
+                                            <th colspan="13" style="text-align: left;">Sede: {{registro.nombreSede|| '' }}</th>
                                         </tr>
                                         <tr>
                                             <th >Código</th>
@@ -386,22 +340,6 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <!--                                        <tr>
-                                                                                    <td>Código</td>
-                                                                                    <td> Correlativo Interno</td>
-                                                                                    <td> Fecha Correspondencia</td>
-                                                                                    <td> Fecha Carta</td>
-                                                                                    <td> Registro</td>
-                                                                                    <td> Correlativo equiv.</td>
-                                                                                    <td> Protocolo</td>
-                                                                                    <td> Distribución</td>
-                                                                                    <td> Comentario</td>
-                                                                                    <td> Fecha Sesión</td>
-                                                                                    <td> Enviar Correo</td>
-                                                                                    <td> Estado Envío</td>
-                                                                                    <td>Archivo</td>
-                                                                                </tr>-->
-
                                         <tr ng-repeat-start="corres in correspondenciasData">
                                             <td >{{corres.idCorrespondencia}}</td>
                                             <td >'{{corres.correlativoInterno}} </td>
@@ -427,56 +365,6 @@
                                             <td colspan="13">
                                             </td>
                                         </tr>
-
-
-                                        <!--                                        <tr ng-repeat="corres in correspondenciasData">
-                                                                                    <td>
-                                                                                        <table>
-                                                                                            <thead>
-                                                                                                <tr>
-                                                                                                    <th >Código</th>
-                                                                                                    <th >Correlativo Interno</th>
-                                                                                                    <th >Fecha Correspondencia</th>
-                                                                                                    <th >Fecha Carta</th>
-                                                                                                    <th >Registro</th>
-                                                                                                    <th >Correlativo equiv.</th>
-                                                                                                    <th >Protocolo</th>
-                                                                                                    <th >Distribución</th>
-                                                                                                    <th >Comentario</th>
-                                                                                                    <th >Fecha Sesión</th>
-                                                                                                    <th >Enviar Correo</th>
-                                                                                                    <th >Estado Envío</th>
-                                                                                                    <th>Archivo</th>
-                                                                                                </tr>
-                                                                                            </thead>
-                                                                                            <tbody>
-                                                                                                <tr>
-                                                                                                    <td >{{corres.idCorrespondencia}}</td>
-                                                                                                    <td >{{corres.correlativoInterno}}</td>
-                                                                                                    <td >{{corres.fechaCorrespondencia|date:'dd/MM/yyyy'}}</td>
-                                                                                                    <td>{{corres.fechaCarta|date:'dd/MM/yyyy'}}</td>
-                                                                                                    <td>{{corres.idRegistro}}</td>
-                                                                                                    <td >{{corres.equivalenciaCorrelativo}}</td>
-                                                                                                    <td >{{corres.protocolo}}</td>
-                                                                                                    <td >{{corres.paramDistribucion}}</td>
-                                                                                                    <td >{{corres.otro}}</td>
-                                                                                                    <td >{{corres.fechaSesion|date:'dd/MM/yyyy'}}</td>
-                                                                                                    <td > {{corres.enviarCorreo|booleanToText}}</td>
-                                                                                                    <td >{{corres.enviado|booleanToText}}</td>
-                                                                                                    <td>Archivo</td>
-                                                                                                </tr>
-                                                                                                <tr ng-repeat="corresFile in corres.pushCorrespondenciaFiles| filter:txtFiltroCorrespondencia">
-                                                                                                    <td colspan="12">&nbsp;</td>
-                                                                                                    <td>
-                                                                                                        {{corresFile.nombreArchivo}}
-                                                                                                    </td>
-                                                                                                </tr>
-                                                                                            </tbody>
-                                                                                        </table>
-                                                                                    </td>
-                                                                                </tr>-->
-
-
                                     </tbody>
                                 </table>
 

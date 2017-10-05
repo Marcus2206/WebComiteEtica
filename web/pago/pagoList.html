@@ -23,7 +23,7 @@
             </form>
             <br>
         </div>
-        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+        <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
             <form>
                 <label for="vistaPagina">Listar por página:</label>
                 <select class="form-control" id="vistaPagina" ng-init="itemsByPage = '20'" ng-model="itemsByPage">
@@ -34,6 +34,17 @@
                 </select>
             </form>
         </div>
+        <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+            <form>
+                <label for="vistaPagina">Exportar:</label>
+                <p class="input-group">
+                    <span class="input-group-btn">
+                        <button   data-toggle="tooltip" title="Exportar a Excel"   ng-disabled="opcion"  type="button" class="btn btn-default" ng-click="exportToExcel('tablaPago', 'Pago')"><i class="glyphicon glyphicon-export"></i></button>
+                    </span>
+                </p>
+            </form>
+        </div>
+
     </div>
     <div class="row">
         <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
@@ -64,6 +75,8 @@
                                 <th st-sort="nroFactura">Nro. Factura</th>
                                 <th st-sort="fechaControl">Fecha Control</th>
                                 <th st-sort="observacion">Observación</th>
+                                <th st-sort="razonSocial">Razón Social</th>
+                                <th st-sort="ruc">Ruc</th>
                                 <th st-sort="paramEstadoPago">Estado Pago</th>
                                 <th colspan="3" style="text-align: center">Acciones</th>
                             </tr>
@@ -75,6 +88,8 @@
                                 <td data-title="Nro. Factura">{{pago.nroFactura}}</td>
                                 <td data-title="Fecha Control">{{pago.fechaControl}}</td>
                                 <td data-title="Observación">{{pago.observacion}}</td>
+                                <td data-title="Razón Social">{{pago.razonSocial}}</td>
+                                <td data-title="Ruc">{{pago.ruc}}</td>
                                 <td data-title="Estado Pago">{{pago.paramEstadoPago}}</td>
                                 <td data-title="Ver">
                                     <button data-toggle="tooltip" title="Ver"  class="btn btn-default" ng-click="editarModal(pago, true)"><i class="fa fa-eye" aria-hidden="true"></i><span class="hidden-xs"> </span></button>
@@ -92,6 +107,33 @@
             </div>
         </div>
     </div>
+
+    <table id="tablaPago" ng-hide="true">
+        <thead>
+            <tr>
+                <th st-sort="idPago">Id. Pago</th>
+                <th st-sort="costo">Precio</th>
+                <th st-sort="nroFactura">Nro. Factura</th>
+                <th st-sort="fechaControl">Fecha Control</th>
+                <th st-sort="observacion">Observación</th>
+                <th st-sort="razonSocial">Razón Social</th>
+                <th st-sort="ruc">Ruc</th>
+                <th st-sort="paramEstadoPago">Estado Pago</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="pago in displayCollection">
+                <td data-title="Id. Pago">{{pago.idPago}}</td>
+                <td data-title="Precio">{{pago.costo}}</td>
+                <td data-title="Nro. Factura">{{pago.nroFactura}}</td>
+                <td data-title="Fecha Control">{{pago.fechaControl}}</td>
+                <td data-title="Observación">{{pago.observacion}}</td>
+                <td data-title="Razón Social">{{pago.razonSocial}}</td>
+                <td data-title="Ruc">{{pago.ruc}}</td>
+                <td data-title="Estado Pago">{{pago.paramEstadoPago}}</td>
+            </tr>
+        </tbody>
+    </table>
     <!-- paginacion -->
     <div class="container">
         <div class="center-block" style="text-align: center">

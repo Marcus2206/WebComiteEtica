@@ -327,21 +327,23 @@ app.controller("ListRegistroController",
                 $scope.predicates = [{nombre: 'idRegistro', descripcion: 'Id. Registro'},
                     {nombre: 'equivalenciaCorrelativo', descripcion: 'Equivalencia correlativo'},
                     {nombre: 'paramEstadoRegistro', descripcion: 'Estado Registro'},
-                    {nombre: 'idInvestigacion', descripcion: 'Investigación'},
-                    {nombre: 'idInvestigador', descripcion: 'Investigador'},
-                    {nombre: 'idSede', descripcion: 'Sede'},
+                    {nombre: 'titulo', descripcion: 'Título'},
+                    {nombre: 'protocolo', descripcion: 'Protocolo'},
+                    {nombre: 'nombreInvestigador', descripcion: 'Investigador'},
+                    {nombre: 'nombreSede', descripcion: 'Sede'},
                     {nombre: 'fechaAprobacion', descripcion: 'Fecha aprobación'},
                     {nombre: 'paramEstado', descripcion: 'Estado'},
                     {nombre: 'observacion', descripcion: 'Observación'},
                     {nombre: 'farmacoExperimental', descripcion: 'Fármaco experimental'},
                     {nombre: 'placebo', descripcion: 'Placebo'},
-                    {nombre: 'pacienteEas', descripcion: 'Paciente EAS'},
-                    {nombre: 'easLocal', descripcion: 'EAS Local'},
-                    {nombre: 'paramNotificacion', descripcion: 'Notificación'},
-                    {nombre: 'fechaEas', descripcion: 'Fecha EAS'},
-                    {nombre: 'visitaInspeccion', descripcion: 'Visita Inspección'},
-                    {nombre: 'estudioNinos', descripcion: 'Estudio Niños'},
-                    {nombre: 'visitaInspeccionIns', descripcion: 'Visita Inspección INS'}];
+//                    {nombre: 'pacienteEas', descripcion: 'Paciente EAS'},
+//                    {nombre: 'easLocal', descripcion: 'EAS Local'},
+//                    {nombre: 'paramNotificacion', descripcion: 'Notificación'},
+//                    {nombre: 'fechaEas', descripcion: 'Fecha EAS'},
+//                    {nombre: 'visitaInspeccion', descripcion: 'Visita Inspección'},
+                    {nombre: 'estudioNinos', descripcion: 'Estudio Niños'}
+//                    {nombre: 'visitaInspeccionIns', descripcion: 'Visita Inspección INS'}
+                ];
 
                 $scope.displayCollection = [].concat($scope.registros);
                 /*Campo seleccionado*/

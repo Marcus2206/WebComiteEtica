@@ -256,9 +256,9 @@ app.controller("EditPagoController",
 
 app.controller("ListPagoController",
         ['$scope', "pagos", "idNotificacionParam", "pagoRR",
-            "$log", "$uibModal", 'SweetAlert',
+            "$log", "$uibModal", 'SweetAlert', 'Excel',
             function ($scope, pagos, idNotificacionParam, pagoRR,
-                    $log, $uibModal, SweetAlert) {
+                    $log, $uibModal, SweetAlert, Excel) {
 
                 /*Se obtiene lista de registros*/
                 $scope.pagos = pagos;
@@ -399,6 +399,25 @@ app.controller("ListPagoController",
                         }
                     });
 
+                };
+
+                $scope.exportToExcel = function (tablaId, etiqueta) {
+                    var tablaExport = document.getElementById(tablaId);
+                    $scope.tablaExport = tablaExport;
+                    $scope.exportHref = Excel.tableToExcel($scope.tablaExport, etiqueta);
+
+                    var linkElement = document.createElement('a');
+                    try {
+                        linkElement.setAttribute('href', $scope.exportHref);
+                        linkElement.setAttribute("download", etiqueta);
+                        var clickEvent = new MouseEvent("click", {
+                            "view": window,
+                            "bubbles": true,
+                            "cancelable": false
+                        });
+                        linkElement.dispatchEvent(clickEvent);
+                    } catch (ex) {
+                    }
                 };
 
             }]);
