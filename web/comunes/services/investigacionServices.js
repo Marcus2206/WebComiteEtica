@@ -63,5 +63,17 @@ function InvestigacionRemoteResource($http, $q, baseUrl, $log) {
                 });
         return defered.promise;
     };
+
+    this.listSimbolo = function () {
+        var defered = $q.defer();
+        $http.get(baseUrl + '/api/Investigacion/InvestigacionSimboloFindAll')
+                .then(function onSuccess(response) {
+                    defered.resolve(response.data);
+                })
+                .catch(function onCatch(response) {
+                    defered.reject(response.data);
+                });
+        return defered.promise;
+    };
 }
 

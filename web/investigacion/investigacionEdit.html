@@ -20,6 +20,16 @@
                 </div>
             </div>
             <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                    <div class="form-group" >
+                        <label for="simbolo">Insertar Símbolo:  </label><br>
+                        <select class="form-control" id="simbolo" theme="bootstrap" ng-model="simboloSelected" ng-change="agregaSimbolo()">
+                            <option ng-repeat="pd in simbolos" value="{{pd.descripcion}}">{{pd.descripcion}}</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                     <div class="form-group">
                         <label for="titulo">Título:  </label><br>
@@ -27,31 +37,24 @@
                     </div> 
                 </div>
             </div>
+
             <!--
-            <div class="col">
-                <div class="form-group" >
-                    <label for="paramEspecialidad">Especialidad:  </label><br>
-                    <select class="form-control" id="paramEspecialidad" theme="bootstrap" ng-model="investigacion.paramEspecialidad">
-                        <option ng-repeat="pd in paramEspecialidad | orderBy : 'descripcion'" value="{{pd.id.idParametroDetalle}}">{{pd.descripcion}}</option>
-                    </select>
-                </div>
-            </div>
-            <div class="col">
-                <div class="form-group">
-                    <label for="paramFase">Fase:  </label><br>
-                    <select id="paramFase" class="form-control" theme="bootstrap" ng-model="investigacion.paramFase">
-                        <option ng-repeat="pd in paramFase | orderBy : 'descripcion'" value="{{pd.id.idParametroDetalle}}">{{pd.descripcion}}</option>
-                    </select>
-                </div>
-            </div>
-            <div class="col">
-                <div class="form-group">
-                    <label for="paramTipoInvestigacion">Tipo de Investigación:  </label><br>
-                    <select  id="paramTipoInvestigacion" theme="bootstrap" class="form-control" ng-model="investigacion.paramTipoInvestigacion">
-                        <option ng-repeat="pd in paramTipoInvestigacion | orderBy : 'descripcion' " value="{{pd.id.idParametroDetalle}}">{{pd.descripcion}}</option>
-                    </select>
-                </div>
-            </div>
+           <div class="col">
+               <div class="form-group">
+                   <label for="paramFase">Fase:  </label><br>
+                   <select id="paramFase" class="form-control" theme="bootstrap" ng-model="investigacion.paramFase">
+                       <option ng-repeat="pd in paramFase | orderBy : 'descripcion'" value="{{pd.id.idParametroDetalle}}">{{pd.descripcion}}</option>
+                   </select>
+               </div>
+           </div>
+           <div class="col">
+               <div class="form-group">
+                   <label for="paramTipoInvestigacion">Tipo de Investigación:  </label><br>
+                   <select  id="paramTipoInvestigacion" theme="bootstrap" class="form-control" ng-model="investigacion.paramTipoInvestigacion">
+                       <option ng-repeat="pd in paramTipoInvestigacion | orderBy : 'descripcion' " value="{{pd.id.idParametroDetalle}}">{{pd.descripcion}}</option>
+                   </select>
+               </div>
+           </div>
             -->
             <div class="row">
                 <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">

@@ -58,6 +58,9 @@ app.controller("EditInvestigacionController",
                 $scope.paramFaseSelected = {};
                 $scope.paramTipoInvestigacionSelected = {};
 
+                $scope.simbolos = [];
+                $scope.simboloSelected = [];
+
                 $scope.investigacion = investigacion;
                 $scope.guardar = function () {
                     $scope.investigacion.usuarioModifica = $rootScope.username;
@@ -144,6 +147,23 @@ app.controller("EditInvestigacionController",
                             $scope.bussinessMessages = bussinessMessages;
                             //Mensaje de error
                         });
+
+                investigacionRemoteResource.listSimbolo()
+                        .then(function (simbolos) {
+                            $scope.simbolos = simbolos;
+                        }, function (bussinessMessages) {
+                            $scope.bussinessMessages = bussinessMessages;
+                            //Mensaje de error
+                        });
+
+                $scope.agregaSimbolo = function () {
+                    var field = document.getElementById("titulo");
+                    var position = 0;
+                    position = doGetCaretPosition(field);
+                    var str1 = $scope.investigacion.titulo.substring(0, position - 1);
+                    var str2 = $scope.investigacion.titulo.substring(position, $scope.investigacion.titulo.length);
+                    $scope.investigacion.titulo = str1 + ' ' + $scope.simboloSelected + ' ' + str2;
+                };
 
                 /*Agregar detalles*/
                 /*Agregar Coordinador*/
@@ -377,7 +397,7 @@ app.controller("ListInvestigacionController",
                     {nombre: 'paramTipoInvestigacion', descripcion: 'Tipo de Investigación'}];
 
                 $scope.displayCollection = [].concat($scope.investigacions);
-                $scope.displayCollection1=[];
+                $scope.displayCollection1 = [];
                 /*Campo seleccionado*/
                 $scope.selectedPredicate = $scope.predicates[0].nombre;
 
@@ -498,7 +518,7 @@ app.controller("ListInvestigacionController",
                     });
 
                 };
-                
+
             }]);
 
 app.controller("NewInvestigacionController",
