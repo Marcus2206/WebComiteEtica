@@ -57,6 +57,24 @@
                     </div>
                 </div>
             </div>
+            <div class="row" ng-show="rolUsuario === 'PD01'" >
+                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">    
+                    <label for="usuarioIngresa">Usuario Ingresa:  </label><br>
+                    <input type="text" readonly class="form-control" id="usuarioIngresa"  placeholder="Usuario Ingresa" ng-model="correo.usuarioIngresa" value="{{correo.usuarioIngresa|| '' }}">
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">    
+                    <label for="fechaIngreso">Fecha Ingresa:  </label><br>
+                    <input type="text" class="form-control" uib-datepicker-popup="dd/MM/yyyy hh:mm:ss" ng-model="correo.fechaIngreso"  datepicker-options="dateOptions" ng-required="true" show-button-bar="false" readonly />
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">    
+                    <label for="usuarioModifica">Usuario Modifica:  </label><br>
+                    <input type="text" readonly class="form-control" id="usuarioModifica"  placeholder="Usuario Modifica" ng-model="correo.usuarioModifica" value="{{correo.usuarioModifica|| '' }}">
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">    
+                    <label for="fechaModificacion">Fecha Modificación:  </label><br>
+                    <input type="text" class="form-control" uib-datepicker-popup="dd/MM/yyyy hh:mm:ss" ng-model="correo.fechaModificacion"  datepicker-options="dateOptions" ng-required="true" show-button-bar="false" readonly />
+                </div>
+            </div>
         </div>
     </div>
     <div class="modal-footer">
