@@ -23,7 +23,7 @@
             </form>
             <br>
         </div>
-        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+        <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
             <form>
                 <label for="vistaPagina">Listar por página:</label>
                 <select class="form-control" id="vistaPagina" ng-init="itemsByPage = '20'" ng-model="itemsByPage">
@@ -32,6 +32,16 @@
                     <option value="50">50</option>
                     <option value="100">100</option>
                 </select>
+            </form>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+            <form>
+                <label for="vistaPagina">Exportar:</label>
+                <p class="input-group">
+                    <span class="input-group-btn">
+                        <button   data-toggle="tooltip" title="Exportar a Excel" st-export etiqueta="FechaSesion"   tabla="tablaFechaSesion" modelo="displayCollection1" ng-disabled="opcion"  type="button" class="btn btn-default"><i class="glyphicon glyphicon-export"></i></button>
+                    </span>
+                </p>
             </form>
         </div>
     </div>
@@ -82,6 +92,22 @@
                                 <td  data-title="Eliminar">
                                     <button data-toggle="tooltip" title="Eliminar"  class="btn btn-danger" ng-click="eliminar(fechaSesion)" ><i class="fa fa-trash" aria-hidden="true"></i><span class="hidden-xs"> </span></button>
                                 </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table ng-hide="true" id="tablaFechaSesion" >
+                        <thead>
+                            <tr>
+                                <th st-sort="idFechaSesion">Id. Sesión</th>
+                                <th st-sort="fechaSesion">Fecha Sesión</th>
+                                <th st-sort="observacion">Observación</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="fechaSesion in displayCollection1| orderBy : 'apePaterno' ">
+                                <td data-title="Id. Sesión">{{fechaSesion.idFechaSesion}}</td>
+                                <td data-title="Fecha Sesión">{{fechaSesion.fechaSesion}}</td>
+                                <td data-title="Observación">{{fechaSesion.observacion}}</td>
                             </tr>
                         </tbody>
                     </table>

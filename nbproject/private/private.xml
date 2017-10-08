@@ -10,6 +10,9 @@
             <file>file:/C:/Users/rasec/Documents/NetBeansProjects/ComiteGit/WebComiteEtica/web/coordinador/coordinadorList.html</file>
         </group>
         <group name="Comite de Etica"/>
-        <group name="ComiteGit"/>
+        <group name="ComiteGit">
+            <file>file:/C:/Users/rasec/Documents/NetBeansProjects/ComiteGit/WebComiteEtica/web/comunes/controllers/pagoController.js</file>
+            <file>file:/C:/Users/rasec/Documents/NetBeansProjects/ComiteGit/WebComiteEtica/web/pago/pagoList.html</file>
+        </group>
     </open-files>
 </project-private>

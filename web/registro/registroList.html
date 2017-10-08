@@ -23,7 +23,7 @@
             </form>
             <br>
         </div>
-        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+        <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
             <form>
                 <label for="vistaPagina">Listar por página:</label>
                 <select class="form-control" id="vistaPagina" ng-init="itemsByPage = '20'" ng-model="itemsByPage">
@@ -32,6 +32,16 @@
                     <option value="50">50</option>
                     <option value="100">100</option>
                 </select>
+            </form>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+            <form>
+                <label for="vistaPagina">Exportar:</label>
+                <p class="input-group">
+                    <span class="input-group-btn">
+                        <button   data-toggle="tooltip" title="Exportar a Excel" st-export etiqueta="Registro"   tabla="tablaRegistro" modelo="displayCollection1"  ng-disabled="opcion"  type="button" class="btn btn-default"><i class="glyphicon glyphicon-export"></i></button>
+                    </span>
+                </p>
             </form>
         </div>
     </div>
@@ -71,11 +81,11 @@
                                 <th  st-sort="observacion">Observación</th>
                                 <th  st-sort="farmacoExperimental">Fármaco experimental</th>
                                 <th  st-sort="placebo">Placebo</th>
-<!--                                <th  st-sort="pacienteEas">Paciente EAS</th>
-                                <th  st-sort="easLocal">EAS Local</th>
-                                <th  st-sort="paramNotificacion">Notificación</th>
-                                <th  st-sort="fechaEas">Fecha EAS</th>
-                                <th  st-sort="visitaInspeccion">Visita Inspección</th>-->
+                                <!--                                <th  st-sort="pacienteEas">Paciente EAS</th>
+                                                                <th  st-sort="easLocal">EAS Local</th>
+                                                                <th  st-sort="paramNotificacion">Notificación</th>
+                                                                <th  st-sort="fechaEas">Fecha EAS</th>
+                                                                <th  st-sort="visitaInspeccion">Visita Inspección</th>-->
                                 <th  st-sort="estudioNinos">Estudio Niños</th>
                                 <!--<th  st-sort="visitaInspeccionIns">Visita Inspección INS</th>-->
                                 <th colspan="3" style="text-align: center">Acciones</th>
@@ -96,11 +106,11 @@
                                 <td data-title="Observación">{{registro.observacion}}</td>
                                 <td data-title="Fármaco experimental">{{registro.farmacoExperimental}}</td>
                                 <td data-title="Placebo"> {{registro.placebo|booleanToText }}</td>
-<!--                                <td data-title="Paciente EAS">{{registro.pacienteEas}}</td>
-                                <td data-title="EAS Local">{{registro.easLocal}}</td>
-                                <td data-title="Notificación">{{registro.paramNotificacion}}</td>
-                                <td data-title="Fecha EAS">{{registro.fechaEas|date:'dd/MM/yyyy'}}</td>
-                                <td data-title="Visita Inspección">{{registro.visitaInspeccion}}</td>-->
+                                <!--                                <td data-title="Paciente EAS">{{registro.pacienteEas}}</td>
+                                                                <td data-title="EAS Local">{{registro.easLocal}}</td>
+                                                                <td data-title="Notificación">{{registro.paramNotificacion}}</td>
+                                                                <td data-title="Fecha EAS">{{registro.fechaEas|date:'dd/MM/yyyy'}}</td>
+                                                                <td data-title="Visita Inspección">{{registro.visitaInspeccion}}</td>-->
                                 <td data-title="Estudio Niños">{{registro.estudioNinos|booleanToText }}</td>
                                 <!--<td data-title="Visita Inspección INS">{{registro.visitaInspeccionIns}}</td>-->
                                 <td data-title="Ver" >
@@ -115,6 +125,42 @@
                             </tr>
                         </tbody>
                     </table>
+                     <table ng-hide="true" id="tablaRegistro">
+                        <thead>
+                            <tr>
+                                <th  st-sort="idRegistro">Id. Registro</th>
+                                <th  st-sort="equivalenciaCorrelativo">Equivalencia Correlativo</th>
+                                <th  st-sort="paramEstadoRegistro">Estado Registro</th>
+                                <th  st-sort="protocolo">Protocolo</th>
+                                <th  st-sort="titulo">Título</th>
+                                <th  st-sort="nombreInvestigador">Investigador</th>
+                                <th  st-sort="nombreSede">Sede</th>
+                                <th st-sort="fechaAprobacion">Fecha aprobación</th>
+                                <th  st-sort="paramEstado">Estado</th>
+                                <th  st-sort="observacion">Observación</th>
+                                <th  st-sort="farmacoExperimental">Fármaco experimental</th>
+                                <th  st-sort="placebo">Placebo</th>
+                                <th  st-sort="estudioNinos">Estudio Niños</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="registro in displayCollection1">
+                                <td data-title="Id. Registro">{{registro.idRegistro}}</td>
+                                <td data-title="Equivalencia Correlativo">{{registro.equivalenciaCorrelativo}}</td> 
+                                <td data-title="Estado Registro">{{registro.paramEstadoRegistro}}</td>
+                                <td data-title="Protocolo">{{registro.protocolo}}</td>
+                                <td data-title="Título">{{registro.titulo}}</td>
+                                <td data-title="Investigador">{{registro.nombreInvestigador}}</td>
+                                <td data-title="Sede">{{registro.nombreSede}}</td>
+                                <td data-title="Fecha aprobación">{{registro.fechaAprobacion|date:'dd/MM/yyyy'}}</td>
+                                <td data-title="Estado">{{registro.paramEstado}}</td>
+                                <td data-title="Observación">{{registro.observacion}}</td>
+                                <td data-title="Fármaco experimental">{{registro.farmacoExperimental}}</td>
+                                <td data-title="Placebo"> {{registro.placebo|booleanToText }}</td>
+                                <td data-title="Estudio Niños">{{registro.estudioNinos|booleanToText }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
@@ -125,17 +171,4 @@
             <div st-pagination="" st-items-by-page="itemsByPage" st-displayed-pages="7"></div>
         </div>
     </div>
-    <!-- paginacion -->
-    <!--    <div class="container">
-            <div class="center-block" style="text-align: center">
-                <br>
-                <button ng-disabled="currentPage === 0" ng-click="currentPage = currentPage - 1" class="btn btn-default">
-                    <span aria-hidden="true">&laquo;</span>
-                </button>
-                {{currentPage + 1}}/{{numberOfPages()}}
-                <button ng-disabled="currentPage >= registros.length / pageSize - 1" ng-click="setNextPagina()" class="btn btn-default">
-                    <span aria-hidden="true">&raquo;</span>
-                </button>
-            </div>
-        </div>-->
 </div>

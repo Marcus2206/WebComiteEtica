@@ -69,9 +69,9 @@ app.controller("NewFechaSesionController",
             }]);
 
 app.controller("ListFechaSesionController",
-        ['$scope', "fechaSesions", "fechaSesionRR", "$log", "$location",
+        ['$scope', "fechaSesions", "fechaSesionRR", "$log", "$location", 'Excel',
             "$uibModal", 'SweetAlert', "fileRR",
-            function ($scope, fechaSesions, fechaSesionRR, $log, $location,
+            function ($scope, fechaSesions, fechaSesionRR, $log, $location, Excel,
                     $uibModal, SweetAlert, fileRR) {
                 /*Se obtiene lista de coordinadores*/
                 $scope.fechaSesions = fechaSesions;
@@ -82,6 +82,7 @@ app.controller("ListFechaSesionController",
                     {nombre: 'observacion', descripcion: 'Observación'}];
 
                 $scope.displayCollection = [].concat($scope.fechaSesions);
+                $scope.displayCollection1=[];
                 /*Campo seleccionado*/
                 $scope.selectedPredicate = $scope.predicates[0].nombre;
 
@@ -200,7 +201,7 @@ app.controller("ListFechaSesionController",
                 /*Generar Acta de Sesion*/
                 $scope.generarActaSesion = function (sesion) {
                     fileRR.setActaSesion(sesion)
-                            .then(function (rutaResponse) {                        
+                            .then(function (rutaResponse) {
                                 fileRR.downloadFileFromURLDirect(rutaResponse);
                             }, function (error) {
                                 SweetAlert.swal("¡Advertencia!", "Ocurrió un inconveniente.", "warning");

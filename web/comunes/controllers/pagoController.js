@@ -275,6 +275,7 @@ app.controller("ListPagoController",
                     {nombre: 'paramEstadoPago', descripcion: 'Estado Pago'}];
 
                 $scope.displayCollection = [].concat($scope.pagos);
+                $scope.displayCollection1=[];
                 /*Campo seleccionado*/
                 $scope.selectedPredicate = $scope.predicates[0].nombre;
 

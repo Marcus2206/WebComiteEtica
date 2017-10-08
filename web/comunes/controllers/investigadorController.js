@@ -68,9 +68,9 @@ app.controller("NewInvestigadorController",
             }]);
 
 app.controller("ListInvestigadorController",
-        ['$scope', "investigadors", "investigadorRR", 'SweetAlert',
+        ['$scope', "investigadors", "investigadorRR", 'SweetAlert', 'Excel',
             '$location', "$log", "$route", "$uibModal", '$confirm',
-            function ($scope, investigadors, investigadorRR, SweetAlert,
+            function ($scope, investigadors, investigadorRR, SweetAlert, Excel,
                     $location, $log, $route, $uibModal, $confirm) {
                 /*Se obtiene lista de coordinadores*/
                 $scope.investigadors = investigadors;
@@ -85,6 +85,7 @@ app.controller("ListInvestigadorController",
                 ];
 
                 $scope.displayCollection = [].concat($scope.investigadors);
+                $scope.displayCollection1 = [];
                 /*Campo seleccionado*/
                 $scope.selectedPredicate = $scope.predicates[0].nombre;
                 /*Se setea la cantidad filas por vista*/

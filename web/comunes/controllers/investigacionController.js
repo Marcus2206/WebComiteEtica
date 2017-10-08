@@ -361,9 +361,9 @@ app.controller("EditInvestigacionController",
             }]);
 
 app.controller("ListInvestigacionController",
-        ['$scope', "investigacions", "investigacionRemoteResource",
+        ['$scope', "investigacions", "investigacionRemoteResource", 'Excel',
             "$log", "$uibModal", 'SweetAlert',
-            function ($scope, investigacions, investigacionRemoteResource,
+            function ($scope, investigacions, investigacionRemoteResource, Excel,
                     $log, $uibModal, SweetAlert) {
                 /*Se obtiene lista de coordinadores*/
                 $scope.investigacions = investigacions;
@@ -377,6 +377,7 @@ app.controller("ListInvestigacionController",
                     {nombre: 'paramTipoInvestigacion', descripcion: 'Tipo de Investigación'}];
 
                 $scope.displayCollection = [].concat($scope.investigacions);
+                $scope.displayCollection1=[];
                 /*Campo seleccionado*/
                 $scope.selectedPredicate = $scope.predicates[0].nombre;
 
@@ -497,7 +498,7 @@ app.controller("ListInvestigacionController",
                     });
 
                 };
-
+                
             }]);
 
 app.controller("NewInvestigacionController",

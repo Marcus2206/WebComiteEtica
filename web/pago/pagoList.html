@@ -39,7 +39,7 @@
                 <label for="vistaPagina">Exportar:</label>
                 <p class="input-group">
                     <span class="input-group-btn">
-                        <button   data-toggle="tooltip" title="Exportar a Excel"   ng-disabled="opcion"  type="button" class="btn btn-default" ng-click="exportToExcel('tablaPago', 'Pago')"><i class="glyphicon glyphicon-export"></i></button>
+                        <button   data-toggle="tooltip" title="Exportar a Excel"  st-export etiqueta="Pago"   tabla="tablaPago" modelo="displayCollection1" ng-disabled="opcion"  type="button" class="btn btn-default"><i class="glyphicon glyphicon-export"></i></button>
                     </span>
                 </p>
             </form>
@@ -122,7 +122,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr ng-repeat="pago in displayCollection">
+            <tr ng-repeat="pago in displayCollection1">
                 <td data-title="Id. Pago">{{pago.idPago}}</td>
                 <td data-title="Precio">{{pago.costo}}</td>
                 <td data-title="Nro. Factura">{{pago.nroFactura}}</td>

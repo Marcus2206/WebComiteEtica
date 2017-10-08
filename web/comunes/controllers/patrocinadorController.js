@@ -45,9 +45,9 @@ app.controller("NewPatrocinadorController",
 
 app.controller("ListPatrocinadorController",
         ['$scope', "patrocinadors", "patrocinadorRR", '$location', "$log", "$route", "$uibModal",
-            '$confirm', 'SweetAlert',
+            '$confirm', 'SweetAlert', 'Excel',
             function ($scope, patrocinadors, patrocinadorRR, $location, $log, $route, $uibModal,
-                    $confirm, SweetAlert) {
+                    $confirm, SweetAlert, Excel) {
                 /*Se obtiene lista de coordinadores*/
                 $scope.patrocinadors = patrocinadors;
 
@@ -57,6 +57,7 @@ app.controller("ListPatrocinadorController",
                     {nombre: 'ruc', descripcion: 'RUC'}];
 
                 $scope.displayCollection = [].concat($scope.patrocinadors);
+                $scope.displayCollection1 = [];
                 /*Campo seleccionado*/
                 $scope.selectedPredicate = $scope.predicates[0].nombre;
 

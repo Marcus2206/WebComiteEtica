@@ -52,3 +52,42 @@ app.directive("limitInputTo", [function () {
             }
         };
     }]);
+
+
+app.directive('stExport', function ($log, ExcelB, $parse) {
+    return {
+        require: '^stTable',
+        link: function (scope, element, attrs, ctrl) {
+            element.bind('click', function () {
+
+                var etiqueta = attrs.etiqueta;
+                var idTabla = attrs.tabla;
+                var model = $parse(attrs.modelo);
+                var modelSetter = model.assign;
+
+                var tablaExport = ctrl.getFilteredCollection();
+                var tablaHtml = document.getElementById(idTabla);
+
+                scope.$apply(function () {
+                    modelSetter(scope, tablaExport);
+                });
+                
+                var exportHref = ExcelB.tableToExcelB(tablaHtml, etiqueta);
+
+                var linkElement = document.createElement('a');
+                try {
+                    linkElement.setAttribute('href', exportHref);
+                    linkElement.setAttribute("download", etiqueta);
+                    var clickEvent = new MouseEvent("click", {
+                        "view": window,
+                        "bubbles": true,
+                        "cancelable": false
+                    });
+                    linkElement.dispatchEvent(clickEvent);
+                } catch (ex) {
+                }
+            });
+        }
+    };
+
+});

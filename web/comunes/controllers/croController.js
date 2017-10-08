@@ -42,9 +42,9 @@ app.controller("NewCroController",
             }]);
 
 app.controller("ListCroController",
-        ['$scope', "cros", "croRR", "$log",
+        ['$scope', "cros", "croRR", "$log", 'Excel',
             "$uibModal", '$confirm', 'SweetAlert',
-            function ($scope, cros, croRR, $log,
+            function ($scope, cros, croRR, $log, Excel,
                     $uibModal, $confirm, SweetAlert) {
                 /*Se obtiene lista de coordinadores*/
                 $scope.cros = cros;
@@ -55,6 +55,7 @@ app.controller("ListCroController",
                     {nombre: 'ruc', descripcion: 'RUC'}];
 
                 $scope.displayCollection = [].concat($scope.cros);
+                $scope.displayCollection1 = [];
                 /*Campo seleccionado*/
                 $scope.selectedPredicate = $scope.predicates[0].nombre;
 

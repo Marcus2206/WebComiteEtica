@@ -162,7 +162,7 @@ app.controller("EditRegistroController",
                                 if ($scope.registro.investigador.nombres !== null) {
                                     nom = $scope.registro.investigador.nombres;
                                 }
-                                
+
                                 registroRespond.nombreInvestigador = pater + ' ' + mater + ', ' + nom;
                                 registroRespond.nombreSede = $scope.registro.nombreSede;
                                 registroRespond.protocolo = $scope.registro.investigacion.protocolo;
@@ -211,9 +211,13 @@ app.controller("EditRegistroController",
 
                                 var listbox = document.getElementById("paramTipoBitacora");
                                 var selIndex = listbox.selectedIndex;
-                                var selText = listbox.options[selIndex].text;
-                                registroBitacoraResponse.paramTipoBitacora = selText;
-
+                                var selText;
+                                if (selIndex >= 0) {
+                                    selText = listbox.options[selIndex].text;
+                                    registroBitacoraResponse.paramTipoBitacora = selText;
+                                } else {
+                                    registroBitacoraResponse.paramTipoBitacora = "";
+                                }
                                 var editText = document.getElementById("fecha");
                                 $scope.registroBitacora = {id: {}};
                                 $scope.registroBitacora.id.idRegistro = $scope.registro.idRegistro;
@@ -221,9 +225,12 @@ app.controller("EditRegistroController",
 
                                 var listbox1 = document.getElementById("paramDetalleBitacora");
                                 var selIndex1 = listbox1.selectedIndex;
-                                var selText1 = listbox1.options[selIndex1].text;
-                                registroBitacoraResponse.paramDetalleBitacora = selText1;
-
+                                if (selIndex >= 0) {
+                                    var selText1 = listbox1.options[selIndex1].text;
+                                    registroBitacoraResponse.paramDetalleBitacora = selText1;
+                                } else {
+                                    registroBitacoraResponse.paramDetalleBitacora = "";
+                                }
                                 var bit = {
                                     idRegistro: registroBitacoraResponse.id.idRegistro,
                                     idBitacora: registroBitacoraResponse.id.idBitacora,
@@ -306,14 +313,12 @@ app.controller("EditRegistroController",
                     });
                 };
                 $scope.cargarCorrespondencias();
-                $log.log("$scope.correspondenciasData");
-                $log.log($scope.correspondenciasData);
             }]);
 
 app.controller("ListRegistroController",
-        ['$scope', "registros", "idNotificacionParam", "registroRR", 'correspondenciaRR',
+        ['$scope', "registros", "idNotificacionParam", "registroRR", 'correspondenciaRR', 'Excel',
             "$log", "$uibModal", 'SweetAlert',
-            function ($scope, registros, idNotificacionParam, registroRR, correspondenciaRR,
+            function ($scope, registros, idNotificacionParam, registroRR, correspondenciaRR, Excel,
                     $log, $uibModal, SweetAlert) {
 
                 if (idNotificacionParam !== "all") {
@@ -346,6 +351,8 @@ app.controller("ListRegistroController",
                 ];
 
                 $scope.displayCollection = [].concat($scope.registros);
+                $scope.displayCollection1 = [];
+
                 /*Campo seleccionado*/
                 $scope.selectedPredicate = $scope.predicates[0].nombre;
 

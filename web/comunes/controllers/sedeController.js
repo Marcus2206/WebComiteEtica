@@ -94,9 +94,9 @@ app.controller("NewSedeController",
 
 app.controller("ListSedeController",
         ['$scope', "sedes", "sedeRR", '$location', "$log", "$route", "$uibModal",
-            '$confirm', 'SweetAlert',
+            '$confirm', 'SweetAlert', 'Excel',
             function ($scope, sedes, sedeRR, $location, $log, $route, $uibModal,
-                    $confirm, SweetAlert) {
+                    $confirm, SweetAlert, Excel) {
                 /*Se obtiene lista de coordinadores*/
                 $scope.sedes = sedes;
 
@@ -109,6 +109,7 @@ app.controller("ListSedeController",
                     {nombre: 'idDistrito', descripcion: 'Distrito'}];
 
                 $scope.displayCollection = [].concat($scope.sedes);
+                $scope.displayCollection1 = [];
                 /*Campo seleccionado*/
                 $scope.selectedPredicate = $scope.predicates[0].nombre;
 

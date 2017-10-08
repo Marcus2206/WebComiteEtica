@@ -23,7 +23,7 @@
             </form>
             <br>
         </div>
-        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+        <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
             <form>
                 <label for="vistaPagina">Listar por página:</label>
                 <select class="form-control" id="vistaPagina" ng-init="itemsByPage = '20'" ng-model="itemsByPage">
@@ -32,6 +32,16 @@
                     <option value="50">50</option>
                     <option value="100">100</option>
                 </select>
+            </form>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+            <form>
+                <label for="vistaPagina">Exportar:</label>
+                <p class="input-group">
+                    <span class="input-group-btn">
+                        <button   data-toggle="tooltip" title="Exportar a Excel" st-export etiqueta="Sede"   tabla="tablaSede" modelo="displayCollection1"  ng-disabled="opcion"  type="button" class="btn btn-default"><i class="glyphicon glyphicon-export"></i></button>
+                    </span>
+                </p>
             </form>
         </div>
     </div>
@@ -88,24 +98,32 @@
                             </tr>
                         </tbody>
                     </table>
+                    <table ng-hide="true" id="tablaSede" >
+                        <thead>
+                            <tr>
+                                <th st-sort="idSede">Código</th>
+                                <th st-sort="nombre">Nombre</th>
+                                <th st-sort="direccion">Direccion</th>
+                                <th st-sort="idDepartamento">Departamento</th>
+                                <th st-sort="idProvincia">Provincia</th>
+                                <th st-sort="idDistrito">Distrito</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="sede in displayCollection1">
+                                <td data-title="Código">{{sede.idSede}}</td>
+                                <td data-title="Nombre">{{sede.nombre}}</td>
+                                <td data-title="Dorección">{{sede.direccion}}</td>
+                                <td data-title="Departamento">{{sede.idDepartamento}}</td>
+                                <td data-title="Provincia">{{sede.idProvincia}}</td>
+                                <td data-title="Distrito">{{sede.idDistrito}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
     </div>
-    <!-- paginacion -->
-    <!--    <div class="container">
-            <div class="center-block" style="text-align: center">
-                <br>
-                <button ng-disabled="currentPage === 0" ng-click="currentPage = currentPage - 1" class="btn btn-default">
-                    <span aria-hidden="true">&laquo;</span>
-                </button>
-                {{currentPage + 1}}/{{numberOfPages()}}
-                <button ng-disabled="currentPage >= sedes.length / pageSize - 1" ng-click="setNextPagina()" class="btn btn-default">
-                    <span aria-hidden="true">&raquo;</span>
-                </button>
-            </div>
-        </div>-->
-    <!-- paginacion -->
     <div class="container">
         <div class="center-block" style="text-align: center">
             <div st-pagination="" st-items-by-page="itemsByPage" st-displayed-pages="7"></div>

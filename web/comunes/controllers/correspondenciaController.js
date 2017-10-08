@@ -318,9 +318,9 @@ app.controller("EditCorrespondenciaController",
 
             }]);
 app.controller("ListCorrespondenciaController",
-        ['$scope', "correspondencias", "idNotificacionParam", "correspondenciaRR",
+        ['$scope', "correspondencias", "idNotificacionParam", "correspondenciaRR", 'Excel', 'ExcelB',
             "$log", "$uibModal", 'SweetAlert', "UrlOrigen", "localStorageService",
-            function ($scope, correspondencias, idNotificacionParam, correspondenciaRR,
+            function ($scope, correspondencias, idNotificacionParam, correspondenciaRR, Excel, ExcelB,
                     $log, $uibModal, SweetAlert, UrlOrigen, localStorageService) {
 
                 if (idNotificacionParam !== "all") {
@@ -343,6 +343,7 @@ app.controller("ListCorrespondenciaController",
                     {nombre: 'enviarCorreo', descripcion: 'Enviar Correo'},
                     {nombre: 'enviado', descripcion: 'Estado Envío'}];
                 $scope.displayCollection = [].concat($scope.correspondencias);
+                $scope.displayCollection1 = [];
                 /*Campo seleccionado*/
                 $scope.selectedPredicate = $scope.predicates[0].nombre;
                 /*Se setea la cantidad filas por vista*/
@@ -459,6 +460,7 @@ app.controller("ListCorrespondenciaController",
                     });
                 };
             }]);
+
 app.controller("NewCorrespondenciaController",
         ['$scope', 'correspondenciaRR', 'fechaSesionRR', 'opcion',
             'parametros', "$log", "$uibModalInstance", 'SweetAlert', '$uibModal', "$rootScope",
