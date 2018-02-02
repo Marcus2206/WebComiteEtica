@@ -65,6 +65,8 @@ app.controller("EditInvestigacionController",
                 $scope.guardar = function () {
                     $scope.investigacion.usuarioModifica = $rootScope.username;
                     $scope.investigacion.fechaModificacion = new Date();
+                    $scope.investigacion.protocolo=$scope.investigacion.protocolo.replace('"','').replace('"','');                    
+                    $scope.investigacion.titulo=$scope.investigacion.titulo.replace('"','').replace('"','');  
                     validaSeleccionables($scope);
                     if (isEmptyJSON($scope.investigacion.patrocinador)) {
                         $scope.investigacion.patrocinador = null;
@@ -566,6 +568,8 @@ app.controller("NewInvestigacionController",
                     //if ($scope.form.$valid) {
                     $scope.investigacion.usuarioIngresa = $rootScope.username;
                     $scope.investigacion.fechaIngreso = new Date();
+                    $scope.investigacion.protocolo=$scope.investigacion.protocolo.replace('"','').replace('"','');                    
+                    $scope.investigacion.titulo=$scope.investigacion.titulo.replace('"','').replace('"','');  
                     validaSeleccionables($scope, $log);
                     if (isEmptyJSON($scope.investigacion.patrocinador)) {
                         $scope.investigacion.patrocinador = null;

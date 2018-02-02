@@ -272,6 +272,8 @@ app.controller("ListPagoController",
                     {nombre: 'costo', descripcion: 'Precio'},
                     {nombre: 'nroFactura', descripcion: 'Nro. Factura'},
                     {nombre: 'observacion', descripcion: 'Observación'},
+                    {nombre: 'razonSocial', descripcion: 'Razón Social'},
+                    {nombre: 'ruc', descripcion: 'Ruc'},
                     {nombre: 'paramEstadoPago', descripcion: 'Estado Pago'}];
 
                 $scope.displayCollection = [].concat($scope.pagos);

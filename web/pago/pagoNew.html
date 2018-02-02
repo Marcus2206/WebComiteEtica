@@ -32,7 +32,7 @@
                                     <tr>
                                         <th></th>
                                         <th>Id Correspondencia</th>
-                                        <th>Id Investigación</th>
+                                        <th>Investigador</th>
                                         <th>Protocolo</th>
                                         <th>Tipo Servicio</th>
                                         <th>Costo</th>
@@ -43,7 +43,7 @@
                                     <tr ng-repeat="corespondenciaServicio in correspondenciaServicios | filter:txtFiltroServicio ">
                                         <td><checkbox ng-model="corespondenciaServicio.generar"></checkbox></td>
                                 <td data-title="Id Correspondencia">{{corespondenciaServicio.idCorrespondencia}}</td>
-                                <td data-title="Id Investigación">{{corespondenciaServicio.idInvestigacion}}</td>
+                                <td data-title="Investigador">{{corespondenciaServicio.investigador}}</td>
                                 <td data-title="Protocolo">{{corespondenciaServicio.protocolo}}</td>
                                 <td data-title="Tipo Servicio">{{corespondenciaServicio.nparamTipoServicio}}</td>
                                 <td data-title="Costo">{{corespondenciaServicio.costo}}</td>
