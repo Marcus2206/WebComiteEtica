@@ -13,5 +13,11 @@
         <group name="ComiteGit">
             <file>file:/C:/Users/rasec/Documents/NetBeansProjects/ComiteGit/WebComiteEtica/web/comunes/constants/constants.js</file>
         </group>
+        <group name="Prisma">
+            <file>file:/D:/Felix/Documentos/NetBeansProjects/Comite%20de%20Etica/WebComiteEtica/web/correspondencia/correspondenciaList.html</file>
+            <file>file:/D:/Felix/Documentos/NetBeansProjects/Comite%20de%20Etica/WebComiteEtica/web/comunes/controllers/correspondenciaController.js</file>
+            <file>file:/D:/Felix/Documentos/NetBeansProjects/Comite%20de%20Etica/WebComiteEtica/web/comunes/routes/correspondencia-route.js</file>
+            <file>file:/D:/Felix/Documentos/NetBeansProjects/Comite%20de%20Etica/WebComiteEtica/web/comunes/services/correspondenciaServices.js</file>
+        </group>
     </open-files>
 </project-private>
