@@ -77,6 +77,7 @@ app.controller("EditCorrespondenciaController",
                 $scope.observacionSelect = "";
                 $scope.servicioSelectList = $scope.paramTipoServicio;
                 $scope.correspondencia = correspondencia;
+                $scope.correspondencia.nombreInvestigador=$scope.correspondenciaObj.nombreInvestigador;
                 /*Cargando archivos de correspondencia*/
                 correspondenciaFileRR.findAllByIdCorrepondencia($scope.correspondencia.idCorrespondencia)
                         .then(function (correspondenciaFileRespond) {
@@ -152,12 +153,15 @@ app.controller("EditCorrespondenciaController",
                                 var selIndex = listbox.selectedIndex;
                                 var selText = listbox.options[selIndex].text;
                                 correspondenciaRespond.paramDistribucion = selText;
-
+                                correspondenciaRespond.nombreInvestigador=$scope.correspondencia.nombreInvestigador;
+                                correspondenciaRespond.idRegistro=$scope.correspondencia.registro.idRegistro;
+                                
                                 var index = $scope.correspondencias.indexOf($scope.correspondenciaObj);
                                 if (index !== -1) {
                                     /*Conserva el valor del identificador HashKey del array inicial, sólo se actualzian los valores.*/
                                     angular.forEach(correspondenciaRespond, function (value, key) {
                                         if (key !== '$$hashKey') {
+                                            $log.log(value);
                                             $scope.correspondencias[index][key] = value;
                                         }
                                     });
@@ -335,6 +339,7 @@ app.controller("ListCorrespondenciaController",
                     {nombre: 'fechaCorrespondencia', descripcion: 'Fecha Correspondencia'},
                     {nombre: 'fechaCarta', descripcion: 'Fecha Carta'},
                     {nombre: 'idRegistro', descripcion: 'Registro'},
+                    {nombre: 'nombreInvestigador', descripcion: 'Investigador'},
                     {nombre: 'equivalenciaCorrelativo', descripcion: 'Correlativo equiv.'},
                     {nombre: 'paramTipoServicio', descripcion: 'Tipo de Servicio'},
                     {nombre: 'paramDistribucion', descripcion: 'Distribución'},
@@ -606,6 +611,7 @@ function buscarRegistro($scope, $uibModal) {
                     $scope.correspondencia.idRegistro = data.idRegistro;
                     $scope.correspondencia.equivalenciaCorrelativo = data.equivalenciaCorrelativo;
                     $scope.correspondencia.protocolo = data.protocolo;
+                    $scope.correspondencia.nombreInvestigador = data.nombreInvestigador;
                 }
             }
         } else {
@@ -617,4 +623,3 @@ function buscarRegistro($scope, $uibModal) {
 function setFechaSesion($scope, $log) {
     $scope.correspondencia.fechaSesion = new Date($scope.fechasSesion);
 }
-

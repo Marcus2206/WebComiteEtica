@@ -63,6 +63,15 @@
                 </div>
             </div>
             <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
+                    <div class="form-group">
+                        <label for="nombreInvestigador">Nombre investigador:  </label><br>
+                        <input type="text" readonly class="form-control" id="nombreInvestigador"  placeholder="Nombre investigador" ng-model="correspondencia.nombreInvestigador" value="{{correspondencia.nombreInvestigador|| '' }}">
+                    </div> 
+                </div>
+            </div>
+            
+            <div class="row">
                 <!--Inicio de Servicios-->
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">    
                     <button ng-disabled="deshabilitado" type="button" style="width: 100%;" class="btn btn-default" ng-click="isServicio = !isServicio">Servicios</button>

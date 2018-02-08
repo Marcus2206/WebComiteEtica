@@ -70,9 +70,9 @@ app.controller("NewFechaSesionController",
 
 app.controller("ListFechaSesionController",
         ['$scope', "fechaSesions", "fechaSesionRR", "$log", "$location", 'Excel',
-            "$uibModal", 'SweetAlert', "fileRR",
+            "$uibModal", 'SweetAlert', "fileRR", "correspondenciaRR",
             function ($scope, fechaSesions, fechaSesionRR, $log, $location, Excel,
-                    $uibModal, SweetAlert, fileRR) {
+                    $uibModal, SweetAlert, fileRR, correspondenciaRR) {
                 /*Se obtiene lista de coordinadores*/
                 $scope.fechaSesions = fechaSesions;
 
@@ -82,7 +82,7 @@ app.controller("ListFechaSesionController",
                     {nombre: 'observacion', descripcion: 'Observación'}];
 
                 $scope.displayCollection = [].concat($scope.fechaSesions);
-                $scope.displayCollection1=[];
+                $scope.displayCollection1 = [];
                 /*Campo seleccionado*/
                 $scope.selectedPredicate = $scope.predicates[0].nombre;
 
@@ -106,6 +106,7 @@ app.controller("ListFechaSesionController",
                     //Se prepara confirm
                     SweetAlert.swal({
                         title: '¿Está seguro de eliminar este registro?',
+                        text: 'Se restaurará la fecha de sesión en la correspondencia asociada a esta seión.',
                         type: 'warning',
                         showCancelButton: true,
                         confirmButtonText: "Si",
@@ -208,6 +209,50 @@ app.controller("ListFechaSesionController",
                             });
                 };
 
+                $scope.reporteCorrespondencia = [];
+
+                $scope.generarReporteFecha = function (fechaSesion) {
+                    correspondenciaRR.getAllCorrespondenciaByFechaSesion(fechaSesion.fechaSesion)
+                            .then(function (correspondenciaR) {
+                                $scope.reporteCorrespondencia=correspondenciaR;
+                            }, function (error) {
+
+                            });
+                };
+
+//                $scope.reporteModal = function (sesion) {
+//                    var modalInstance = $uibModal.open({
+//                        templateUrl: 'fechaSesion/correspondenciaReporte.html',
+//                        controller: "ReporteCorrespondenciaController",
+//                        size: 'md',
+//                        backdrop: 'static',
+//                        keyboard: false,
+//                        resolve: {
+//                            reporteCorrespondencia: function () {
+//                                return correspondenciaRR.getAllCorrespondenciaByFechaSesion(sesion.fechaSesion);
+//                            }
+//                        }
+//                    });
+//
+//                    /*Ingresar un registro*/
+//                    modalInstance.result.then(function () {
+//                        //Si no devuelve nada.
+//                    }, function (data) {
+//                        //Si devuelve algo
+//                        if (data !== "cancel") {
+//                            if (data !== "backdrop click") {
+//                                if (data !== "escape key press") {
+//                                }
+//                            }
+//                        } else {
+//                            //Si es cancel
+//                        }
+//                    });
+//                };
+                
+                
+                
+                
             }]);
 
 app.controller("EditFechaSesionController",
@@ -258,27 +303,45 @@ app.controller("EditFechaSesionController",
 
                 $scope.guardar = function () {
                     //if ($scope.form.$valid) {
-                    $scope.fechaSesion.usuarioModifica = $rootScope.username;
-                    $scope.fechaSesion.fechaModificacion = new Date();
-                    fechaSesionRR.update($scope.fechaSesion)
-                            .then(function (fechaSesionResult) {
-                                //Devuelve objeto actualizado y cierra modal
-                                var index = $scope.fechaSesions.indexOf($scope.fechaSesionObj);
-                                var texto = document.getElementById("fechaSesion");
-                                fechaSesionResult.fechaSesion = texto.value;
-                                if (index !== -1) {
-                                    /*Conserva el valor del identificador HashKey del array inicial, sólo se actualzian los valores.*/
-                                    angular.forEach(fechaSesionResult, function (value, key) {
-                                        if (key !== '$$hashKey') {
-                                            $scope.fechaSesions[index][key] = value;
+                    SweetAlert.swal({
+                        title: '¿Está seguro de modificar este registro?',
+                        text: 'Se modificará la fecha de sesión en la correspondencia asociada a esta sesión.',
+                        type: 'warning',
+                        showCancelButton: true,
+                        confirmButtonText: "Si",
+                        cancelButtonText: "No",
+                        closeOnConfirm: false,
+                        closeOnCancel: true
+                    }, function (isConfirm) {
+                        if (isConfirm) {
+                            window.onkeydown = null;
+                            window.onfocus = null;
+                            $scope.fechaSesion.usuarioModifica = $rootScope.username;
+                            $scope.fechaSesion.fechaModificacion = new Date();
+                            fechaSesionRR.update($scope.fechaSesion)
+                                    .then(function (fechaSesionResult) {
+                                        //Devuelve objeto actualizado y cierra modal
+                                        var index = $scope.fechaSesions.indexOf($scope.fechaSesionObj);
+                                        var texto = document.getElementById("fechaSesion");
+                                        fechaSesionResult.fechaSesion = texto.value;
+                                        if (index !== -1) {
+                                            /*Conserva el valor del identificador HashKey del array inicial, sólo se actualzian los valores.*/
+                                            angular.forEach(fechaSesionResult, function (value, key) {
+                                                if (key !== '$$hashKey') {
+                                                    $scope.fechaSesions[index][key] = value;
+                                                }
+                                            });
                                         }
-                                    });
-                                }
 
-                                SweetAlert.swal("Hecho!", "Registro guardado exitosamente.", "success");
-                            }, function (bussinessMessages) {
-                                SweetAlert.swal("Hubo un error!", "Intente nuevamente o comuniquese con el administrador.", "warning");
-                            });
+                                        SweetAlert.swal("Hecho!", "Registro guardado exitosamente.", "success");
+                                    }, function (bussinessMessages) {
+                                        SweetAlert.swal("Hubo un error!", "Intente nuevamente o comuniquese con el administrador.", "warning");
+                                    });
+                        } else {
+
+                        }
+                    });
+
                     /*} else {
                      alert("Hay datos inválidos");
                      }*/
@@ -286,6 +349,17 @@ app.controller("EditFechaSesionController",
 
                 $scope.cerrar = function () {
                     //Se devuelve cancel
+                    $uibModalInstance.dismiss('cancel');
+                };
+            }]);
+
+app.controller("ReporteCorrespondenciaController",
+        ['$scope', 'reporteCorrespondencia', 
+            "$log", "$uibModalInstance", 'SweetAlert', "$q", '$uibModal',
+            function ($scope, reporteCorrespondencia, 
+                    $log, $uibModalInstance, SweetAlert, $q, $uibModal) {
+                $scope.reporteCorrespondencia = reporteCorrespondencia;
+                $scope.cerrar = function () {
                     $uibModalInstance.dismiss('cancel');
                 };
             }]);
