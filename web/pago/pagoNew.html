@@ -13,7 +13,13 @@
             </div>
             <div class="row">
                 <div class="col-xs-12">
-                    <input type="text" ng-model="txtFiltroServicio" class="form-control" placeholder="Buscar">
+                    <input type="text" ng-model="txtFiltroServicio" class="form-control" placeholder="Buscar Investigador">
+                    <br>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <input type="text" ng-model="txtFiltroServicio2" class="form-control" placeholder="Buscar Protocolo">
                     <br>
                 </div>
             </div>
@@ -23,6 +29,7 @@
                     <br>
                 </div>
             </div>
+            
             <div class="row">
                 <div class="col col-lg-12">
                     <div class="search-table-outter wrapper">
@@ -32,6 +39,8 @@
                                     <tr>
                                         <th></th>
                                         <th>Id Correspondencia</th>
+                                        <th>Fecha Correspondencia</th>
+                                        <th>Fecha Carta</th>
                                         <th>Investigador</th>
                                         <th>Protocolo</th>
                                         <th>Tipo Servicio</th>
@@ -40,9 +49,11 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr ng-repeat="corespondenciaServicio in correspondenciaServicios | filter:txtFiltroServicio ">
+                                    <tr ng-repeat="corespondenciaServicio in correspondenciaServicios | filter:{investigador:txtFiltroServicio ,protocolo:txtFiltroServicio2}">
                                         <td><checkbox ng-model="corespondenciaServicio.generar"></checkbox></td>
                                 <td data-title="Id Correspondencia">{{corespondenciaServicio.idCorrespondencia}}</td>
+                                <td data-title="Fecha Correspondencia">{{corespondenciaServicio.fechaCorrespondencia}}</td>
+                                <td data-title="Fecha Carta">{{corespondenciaServicio.fechaCarta}}</td>
                                 <td data-title="Investigador">{{corespondenciaServicio.investigador}}</td>
                                 <td data-title="Protocolo">{{corespondenciaServicio.protocolo}}</td>
                                 <td data-title="Tipo Servicio">{{corespondenciaServicio.nparamTipoServicio}}</td>

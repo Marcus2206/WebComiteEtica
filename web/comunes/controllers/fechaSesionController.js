@@ -70,9 +70,9 @@ app.controller("NewFechaSesionController",
 
 app.controller("ListFechaSesionController",
         ['$scope', "fechaSesions", "fechaSesionRR", "$log", "$location", 'Excel',
-            "$uibModal", 'SweetAlert', "fileRR",
+            "$uibModal", 'SweetAlert', "fileRR", "correspondenciaRR",
             function ($scope, fechaSesions, fechaSesionRR, $log, $location, Excel,
-                    $uibModal, SweetAlert, fileRR) {
+                    $uibModal, SweetAlert, fileRR, correspondenciaRR) {
                 /*Se obtiene lista de coordinadores*/
                 $scope.fechaSesions = fechaSesions;
 
@@ -209,6 +209,50 @@ app.controller("ListFechaSesionController",
                             });
                 };
 
+                $scope.reporteCorrespondencia = [];
+
+                $scope.generarReporteFecha = function (fechaSesion) {
+                    correspondenciaRR.getAllCorrespondenciaByFechaSesion(fechaSesion.fechaSesion)
+                            .then(function (correspondenciaR) {
+                                $scope.reporteCorrespondencia=correspondenciaR;
+                            }, function (error) {
+
+                            });
+                };
+
+//                $scope.reporteModal = function (sesion) {
+//                    var modalInstance = $uibModal.open({
+//                        templateUrl: 'fechaSesion/correspondenciaReporte.html',
+//                        controller: "ReporteCorrespondenciaController",
+//                        size: 'md',
+//                        backdrop: 'static',
+//                        keyboard: false,
+//                        resolve: {
+//                            reporteCorrespondencia: function () {
+//                                return correspondenciaRR.getAllCorrespondenciaByFechaSesion(sesion.fechaSesion);
+//                            }
+//                        }
+//                    });
+//
+//                    /*Ingresar un registro*/
+//                    modalInstance.result.then(function () {
+//                        //Si no devuelve nada.
+//                    }, function (data) {
+//                        //Si devuelve algo
+//                        if (data !== "cancel") {
+//                            if (data !== "backdrop click") {
+//                                if (data !== "escape key press") {
+//                                }
+//                            }
+//                        } else {
+//                            //Si es cancel
+//                        }
+//                    });
+//                };
+                
+                
+                
+                
             }]);
 
 app.controller("EditFechaSesionController",
@@ -305,6 +349,17 @@ app.controller("EditFechaSesionController",
 
                 $scope.cerrar = function () {
                     //Se devuelve cancel
+                    $uibModalInstance.dismiss('cancel');
+                };
+            }]);
+
+app.controller("ReporteCorrespondenciaController",
+        ['$scope', 'reporteCorrespondencia', 
+            "$log", "$uibModalInstance", 'SweetAlert', "$q", '$uibModal',
+            function ($scope, reporteCorrespondencia, 
+                    $log, $uibModalInstance, SweetAlert, $q, $uibModal) {
+                $scope.reporteCorrespondencia = reporteCorrespondencia;
+                $scope.cerrar = function () {
                     $uibModalInstance.dismiss('cancel');
                 };
             }]);

@@ -11,8 +11,8 @@
         </group>
         <group name="Comite de Etica"/>
         <group name="ComiteGit">
-            <file>file:/C:/Users/rasec/Documents/NetBeansProjects/ComiteGit/WebComiteEtica/web/comunes/constants/constants.js</file>
+            <file>file:/C:/Users/rasec/Documents/NetBeansProjects/ComiteGit/WebComiteEtica/web/comunes/controllers/fechaSesionController.js</file>
+            <file>file:/C:/Users/rasec/Documents/NetBeansProjects/ComiteGit/WebComiteEtica/web/fechaSesion/fechaSesionList.html</file>
         </group>
-        <group name="Prisma"/>
     </open-files>
 </project-private>

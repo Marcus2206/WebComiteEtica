@@ -61,7 +61,36 @@
             </form>
         </div>
     </div>
+
     <br>
+    <table ng-hide="true" id="tablaReporteSesion" >
+        <thead>
+            <tr>
+                <th >Fecha Correspondencia</th>
+                <th >H/R</th>
+                <th >IP</th>
+                <th >Protocolo</th>
+                <th >Correlativo</th>
+                <th >Fecha Carta</th>    
+                <th >Otros</th>
+                <th >Distribución</th>
+                <th >Fecha Sesión</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="reporteFechaSesion in reporteCorrespondencia">
+                <td data-title="Fecha Correspodencia">{{reporteFechaSesion.fechaCorrespondencia|date:'dd/MM/yyyy'}}</td>
+                <td data-title="H/R">{{reporteFechaSesion.idCorrespondencia}}</td>
+                <td data-title="Nombre Investigador">{{reporteFechaSesion.nombreInvestigador}}</td>
+                <td data-title="Protocolo">{{reporteFechaSesion.protocolo}}</td>
+                <td data-title="Correlativo">{{reporteFechaSesion.equivalenciaCorrelativo}}</td>
+                <td data-title="Fecha Carta">{{reporteFechaSesion.fechaCarta|date:'dd/MM/yyyy'}}</td>
+                <td data-title="Otros">{{reporteFechaSesion.otro}}</td>
+                <td data-title="Distribución">{{reporteFechaSesion.paramDistribucion}}</td>
+                <td data-title="Fecha Sesión">{{reporteFechaSesion.fechaSesion|date:'dd/MM/yyyy'}}</td>
+            </tr>
+        </tbody>
+    </table>
     <div class="row">
         <div class="col col-lg-12">
             <div class="search-table-outter wrapper">
@@ -72,11 +101,13 @@
                                 <th st-sort="idFechaSesion">Id. Sesión</th>
                                 <th st-sort="fechaSesion">Fecha Sesión</th>
                                 <th st-sort="observacion">Observación</th>
-                                <th colspan="4" style="text-align: center">Acción</th>
+                                <th colspan="6" style="text-align: center">Acción</th>
                             </tr>
                         </thead>
                         <tbody>
+                        <form>
                             <tr ng-repeat="fechaSesion in displayCollection| orderBy : 'apePaterno' ">
+                                <div class="btn-group" data-toggle="buttons">
                                 <td data-title="Id. Sesión">{{fechaSesion.idFechaSesion}}</td>
                                 <td data-title="Fecha Sesión">{{fechaSesion.fechaSesion}}</td>
                                 <td data-title="Observación">{{fechaSesion.observacion}}</td>
@@ -89,10 +120,27 @@
                                 <td data-title="Acta">
                                     <button data-toggle="tooltip" title="Generar Acta de Sesión"  class="btn btn-default" ng-click="generarActaSesion(fechaSesion.idFechaSesion)"><i class="fa fa-list-ol" aria-hidden="true"></i><span class="hidden-xs"> </span></button>
                                 </td>
+                                <td data-title="Reporte">
+                                    <!--<div class="btn-group" data-toggle="buttons">-->
+                                        <label class="btn btn-default" ng-click="generarReporteFecha(fechaSesion)">
+                                            <input type="radio" name="options" id="option2" autocomplete="off"> 
+                                            <i class="glyphicon glyphicon-file" aria-hidden="true"></i><span class="hidden-xs"> </span>
+                                        </label>
+                                    <!--</div>-->
+                                </td>
+                                <!--                                <td  data-title="Reporte">
+                                                                    <button data-toggle="tooltip" title="Reporte por fecha"  class="btn btn-default" ng-click="generarReporteFecha(fechaSesion)" ><i class="fa fa-folder-open" aria-hidden="true"></i><span class="hidden-xs"> </span></button>
+                                                                </td>-->
+                                <td data-title="Exportar">
+                                    <button   data-toggle="tooltip" title="Exportar a Excel" st-export etiqueta="Reporte {{fechaSesion.fechaSesion.replace('', '')}}"   tabla="tablaReporteSesion" modelo="reporteCorrespondencia"  type="button" class="btn btn-default"><i class="glyphicon glyphicon-export"></i></button>
+                                </td>
+
                                 <td  data-title="Eliminar">
                                     <button data-toggle="tooltip" title="Eliminar"  class="btn btn-danger" ng-click="eliminar(fechaSesion)" ><i class="fa fa-trash" aria-hidden="true"></i><span class="hidden-xs"> </span></button>
                                 </td>
+
                             </tr>
+                            </form>
                         </tbody>
                     </table>
                     <table ng-hide="true" id="tablaFechaSesion" >
@@ -110,25 +158,14 @@
                                 <td data-title="Observación">{{fechaSesion.observacion}}</td>
                             </tr>
                         </tbody>
-                    </table>
+                    </table>     
+
+
+
                 </div>
             </div>
         </div>
     </div>
-    <!-- paginacion -->
-    <!--    <div class="container">
-            <div class="center-block" style="text-align: center">
-                <br>
-                <button ng-disabled="currentPage === 0" ng-click="currentPage = currentPage - 1" class="btn btn-default">
-                    <span aria-hidden="true">&laquo;</span>
-                </button>
-                {{currentPage + 1}}/{{numberOfPages()}}
-                <button ng-disabled="currentPage >= correos.length / pageSize - 1" ng-click="setNextPagina()" class="btn btn-default">
-                    <span aria-hidden="true">&raquo;</span>
-                </button>
-            </div>
-        </div>-->
-    <!-- paginacion -->
     <div class="container">
         <div class="center-block" style="text-align: center">
             <div st-pagination="" st-items-by-page="itemsByPage" st-displayed-pages="7"></div>

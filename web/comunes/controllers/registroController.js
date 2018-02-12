@@ -666,6 +666,25 @@ app.controller("SearchRegistroController",
             function ($scope,
                     $log, $uibModalInstance, registros) {
                 $scope.registros = registros;
+                
+                /*Columnas para realizar el filtro*/
+                $scope.predicates = [{nombre: 'idRegistro', descripcion: 'Id. Registro'},
+                    {nombre: 'equivalenciaCorrelativo', descripcion: 'Equivalencia correlativo'},
+                    {nombre: 'paramEstadoRegistro', descripcion: 'Estado Registro'},
+                    {nombre: 'protocolo', descripcion: 'Protocolo'},
+                    {nombre: 'titulo', descripcion: 'Título'},
+                    {nombre: 'paramTipoInvestigacion', descripcion: 'Tipo Investigación'},
+                    {nombre: 'paramEspecialidad', descripcion: 'Especialidad'},
+                    {nombre: 'nombreInvestigador', descripcion: 'Investigador'},
+                    {nombre: 'nombreSede', descripcion: 'Sede'},
+                    {nombre: 'fechaAprobacion', descripcion: 'Fecha aprobación'},
+                    {nombre: 'paramEstado', descripcion: 'Estado'},
+                    {nombre: 'observacion', descripcion: 'Observación'},
+                    {nombre: 'farmacoExperimental', descripcion: 'Fármaco experimental'},
+                    {nombre: 'placebo', descripcion: 'Placebo'},
+                    {nombre: 'estudioNinos', descripcion: 'Estudio Niños'}
+                ];
+                
                 $scope.displayCollection = [].concat($scope.registros);
 
                 /*Se setea la cantidad filas por vista*/

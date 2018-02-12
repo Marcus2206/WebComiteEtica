@@ -128,4 +128,34 @@ function CorrespondenciaRR($http, $q, baseUrl, $log) {
 
         return promise;
     };
+    
+    this.getAllCorrespondenciaByFechaSesion = function (fechaSesion) {
+        var defered = $q.defer();
+        var promise = defered.promise;
+
+        var fechaParam;
+        //01/01/2007
+        var dia, mes, anio;
+        dia=fechaSesion.substring(0,2);
+        mes=fechaSesion.substring(3,5);
+        anio=fechaSesion.substring(6,10);
+        
+//        if (typeof (fechaSesion) === 'number') {
+//            fechaParam = "" + fechaSesion;
+//        } else if (typeof (fechaSesion) === 'string') {
+            fechaParam = "" + Date.parse(mes+"/"+dia+"/"+anio);
+//        }
+
+        var params = {fechaSesion: fechaParam};
+        var config = {params};
+        $http.put(baseUrl + '/api/Correspondencia/CorrespondenciaAllByFechaSesion', null, config)
+                .then(function onSuccess(response) {
+                    defered.resolve(response.data);
+                })
+                .catch(function onCatch(response) {
+                    defered.reject(response.data);
+                });
+
+        return promise;
+    };
 }
