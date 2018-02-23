@@ -26,7 +26,7 @@ function RegistroBitacoraRR($http, $q, baseUrl, $log) {
 
         return defered.promise;
     };
-
+    
     this.delete = function (registroBitacora) {
         var defered = $q.defer();
         var params = {

@@ -215,4 +215,42 @@ function FileRR($http, $q, baseUrl, $log) {
                 });
         return defered.promise;
     };
+    
+    this.setActaCierre = function (idRegistro) {
+        var defered = $q.defer();
+//        $http({
+//            method: 'POST',
+//            url: baseUrl + "/api/File/HojaRuta",
+//            params: {idCorrespondencia: correspondencia.idCorrespondencia}
+//        })
+        var params = {idRegistro: idRegistro};
+        var config = {params};
+        $http.post(baseUrl + "/api/File/ActaCierre", null, config)
+                .then(function onSuccess(response) {
+                    defered.resolve(response.data);
+                })
+                .catch(function onCatch(response) {
+                    defered.reject(response.data);
+                });
+        return defered.promise;
+    };
+    
+    this.setActaVisita = function (idRegistro) {
+        var defered = $q.defer();
+//        $http({
+//            method: 'POST',
+//            url: baseUrl + "/api/File/HojaRuta",
+//            params: {idCorrespondencia: correspondencia.idCorrespondencia}
+//        })
+        var params = {idRegistro: idRegistro};
+        var config = {params};
+        $http.post(baseUrl + "/api/File/ActaInspeccion", null, config)
+                .then(function onSuccess(response) {
+                    defered.resolve(response.data);
+                })
+                .catch(function onCatch(response) {
+                    defered.reject(response.data);
+                });
+        return defered.promise;
+    };
 }

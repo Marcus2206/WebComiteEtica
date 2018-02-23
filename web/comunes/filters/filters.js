@@ -13,21 +13,25 @@ app.filter("booleanToText", ['$log', function (l) {
             if (typeof (valor) !== "undefined") {
                 if (typeof (valor) === "string") {
                     if ((parseInt(valor) === 0)) {
-                        texto = 'No';
+                        texto = 'NO';
                     } else if (parseInt(valor) === 1) {
-                        texto = 'Sí';
+                        texto = 'SI';
+                    } else if (valor === "SI") {
+                        texto = 'SI';
+                    } else if ( valor === "NO") {
+                        texto = 'NO';
                     }
                 } else if (typeof (valor) === "boolean") {
                     if (!valor) {
-                        texto = 'No';
+                        texto = 'NO';
                     } else if (valor) {
-                        texto = 'Sí';
+                        texto = 'SI';
                     }
                 } else if (typeof (valor) === "number") {
                     if (valor === 0) {
-                        texto = 'No';
+                        texto = 'NO';
                     } else if (valor === 1) {
-                        texto = 'Sí';
+                        texto = 'SI';
                     }
                 }
 

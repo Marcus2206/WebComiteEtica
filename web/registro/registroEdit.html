@@ -221,7 +221,7 @@
                                                     </button>
                                                 </div>
                                                 <div>
-                                                    <b>{{registroBitacora.paramTipoBitacora}}: </b> {{registroBitacora.paramDetalleBitacora}} -  {{registroBitacora.detalle}} - {{registroBitacora.fecha}}
+                                                    <b>{{registroBitacora.paramTipoBitacora}}: </b> {{registroBitacora.paramDetalleBitacora}} -  {{registroBitacora.detalle}} - {{registroBitacora.fecha}} - <button ng-if="registroBitacora.tipoBitacora === 'PD07'" ng-click = "generarCierre(registroBitacora.idRegistro)">Generar Cierre</button> <button ng-if="registroBitacora.tipoBitacora === 'PD06'" ng-click = "generarInspeccion(registroBitacora.idRegistro)">Generar Acta de Inspección</button>
                                                 </div>
                                                 <!--</div>-->
                                             </td>

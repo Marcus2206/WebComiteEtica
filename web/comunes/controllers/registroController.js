@@ -96,14 +96,27 @@ app.controller("EditRegistroController",
                         }, function (bussinessMessages) {
 
                         });
-
-                $scope.downloadFile = function (file) {
-                    $scope.file = {_correspondenciaFile: {}};
-                    $scope.file._correspondenciaFile.direccion = file.direccion;
-                    $scope.file._correspondenciaFile.nombreArchivo = file.nombreArchivo;
-                    fileRR.downloadFileFromURL($scope.file);
-                };
-
+                
+                $scope.generarCierre = function (idRegistro) {
+                    $log.log("Registro a Cerrar = "+idRegistro);
+                    fileRR.setActaCierre(idRegistro)
+                            .then(function (rutaResponse) {
+                                fileRR.downloadFileFromURLDirect(rutaResponse);
+                            }, function (error) {
+                                SweetAlert.swal("¡Advertencia!", "Ocurrió un inconveniente.", "warning");
+                            });
+                }
+                
+                $scope.generarInspeccion = function (idRegistro) {
+                    $log.log("Registro a Inspeccion = "+idRegistro);
+                    fileRR.setActaVisita(idRegistro)
+                            .then(function (rutaResponse) {
+                                fileRR.downloadFileFromURLDirect(rutaResponse);
+                            }, function (error) {
+                                SweetAlert.swal("¡Advertencia!", "Ocurrió un inconveniente.", "warning");
+                            });
+                }
+              
                 registroRR.validateRegistroEnCorrespondencia($scope.registro.idRegistro)
                         .then(function (response) {
                             if (parseInt(response) > 0) {
@@ -687,6 +700,9 @@ app.controller("SearchRegistroController",
                 
                 $scope.displayCollection = [].concat($scope.registros);
 
+                /*Campo seleccionado*/
+                $scope.selectedPredicate = $scope.predicates[0].nombre;
+                
                 /*Se setea la cantidad filas por vista*/
                 $scope.currentPage = 0;
                 $scope.pageSize = 5;
