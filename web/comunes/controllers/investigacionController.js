@@ -636,6 +636,7 @@ app.controller("SearchInvestigacionController",
 
                 $scope.investigacion = {};
                 $scope.enviar = function (investigacion) {
+                    $log.log(investigacion);
                     $uibModalInstance.dismiss(investigacion);
                 };
                 $scope.cerrar = function () {

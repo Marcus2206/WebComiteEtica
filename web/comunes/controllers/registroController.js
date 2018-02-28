@@ -82,8 +82,8 @@ app.controller("EditRegistroController",
                 $scope.paramTipoBitacora = $scope.filtrar($scope.parametros, 'P013')[0].parametroDetalles;
                 $scope.paramNivelDesviacion = $scope.filtrar($scope.parametros, 'P014')[0].parametroDetalles;
 
+                
                 $scope.registro = registro;
-
                 $scope.deshabilitado = false;
                 $scope.isBitacora = true;
                 $scope.isCorrespondencia = true;
@@ -105,7 +105,7 @@ app.controller("EditRegistroController",
                             }, function (error) {
                                 SweetAlert.swal("¡Advertencia!", "Ocurrió un inconveniente.", "warning");
                             });
-                }
+                };
                 
                 $scope.generarInspeccion = function (idRegistro) {
                     $log.log("Registro a Inspeccion = "+idRegistro);
@@ -115,7 +115,7 @@ app.controller("EditRegistroController",
                             }, function (error) {
                                 SweetAlert.swal("¡Advertencia!", "Ocurrió un inconveniente.", "warning");
                             });
-                }
+                };
               
                 registroRR.validateRegistroEnCorrespondencia($scope.registro.idRegistro)
                         .then(function (response) {
@@ -180,6 +180,7 @@ app.controller("EditRegistroController",
                                 registroRespond.nombreSede = $scope.registro.nombreSede;
                                 registroRespond.protocolo = $scope.registro.investigacion.protocolo;
                                 registroRespond.titulo = $scope.registro.investigacion.titulo;
+                                registroRespond.fase = $scope.registro.investigacion.paramFase;
 
                                 var index = $scope.registros.indexOf($scope.registroObj);
                                 if (index !== -1) {
@@ -271,6 +272,24 @@ app.controller("EditRegistroController",
                                 $scope.actualizarCampoDatosBitacora();
                             }, function (bussinessMessages) {
 
+                            });
+                };
+
+                $scope.actualizarCampoDatosBitacora = function (){
+                    $scope.registroTemp;
+                    registroRR.get(registro.idRegistro)
+                            .then(function(response){
+                                $scope.registroTemp=response;
+                                $scope.registro.datosBitacora=$scope.registroTemp.datosBitacora;
+                                
+                                var index = $scope.registros.indexOf($scope.registroObj);
+                                if (index !== -1) {
+                                    /*Conserva el valor del identificador HashKey del array inicial, sólo se actualzian los valores.*/
+                                            $scope.registros[index]['datosBitacora'] = $scope.registro.datosBitacora;
+                                }
+                                
+                            },function(error){
+                                
                             });
                 };
 
