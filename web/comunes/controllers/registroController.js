@@ -258,6 +258,7 @@ app.controller("EditRegistroController",
                                 $scope.registroBitacora.fecha = "";
                                 $scope.registroBitacora.detalle = "";
                                 $scope.registroBitacoras.push(bit);
+                                $scope.actualizarCampoDatosBitacora();
                             }, function (bussinessMessages) {
 
                             });
@@ -267,11 +268,30 @@ app.controller("EditRegistroController",
                     registroBitacoraRR.delete(registroBitacora)
                             .then(function (registroBitacoraResponse) {
                                 $scope.registroBitacoras.splice($scope.registroBitacoras.indexOf(registroBitacora), 1);
+                                $scope.actualizarCampoDatosBitacora();
                             }, function (bussinessMessages) {
 
                             });
                 };
 
+                $scope.actualizarCampoDatosBitacora = function (){
+                    $scope.registroTemp;
+                    registroRR.get(registro.idRegistro)
+                            .then(function(response){
+                                $scope.registroTemp=response;
+                                $scope.registro.datosBitacora=$scope.registroTemp.datosBitacora;
+                                
+                                var index = $scope.registros.indexOf($scope.registroObj);
+                                if (index !== -1) {
+                                    /*Conserva el valor del identificador HashKey del array inicial, sólo se actualzian los valores.*/
+                                            $scope.registros[index]['datosBitacora'] = $scope.registro.datosBitacora;
+                                }
+                                
+                            },function(error){
+                                
+                            });
+                };
+                
                 $scope.flagTipoBitacora = true;
                 $scope.cargarDetalleBitacora = function () {
                     if ($scope.registroBitacora.paramTipoBitacora === 'PD05') {
@@ -345,6 +365,7 @@ app.controller("ListRegistroController",
                 $scope.predicates = [{nombre: 'idRegistro', descripcion: 'Id. Registro'},
                     {nombre: 'equivalenciaCorrelativo', descripcion: 'Equivalencia correlativo'},
                     {nombre: 'paramEstadoRegistro', descripcion: 'Estado Registro'},
+                    {nombre: 'fase', descripcion: 'Fase'},
                     {nombre: 'protocolo', descripcion: 'Protocolo'},
                     {nombre: 'titulo', descripcion: 'Título'},
                     {nombre: 'paramTipoInvestigacion', descripcion: 'Tipo Investigación'},
@@ -354,6 +375,7 @@ app.controller("ListRegistroController",
                     {nombre: 'fechaAprobacion', descripcion: 'Fecha aprobación'},
                     {nombre: 'paramEstado', descripcion: 'Estado'},
                     {nombre: 'observacion', descripcion: 'Observación'},
+                    {nombre: 'datosBitacora', descripcion: 'Datos Bitacora'},
                     {nombre: 'farmacoExperimental', descripcion: 'Fármaco experimental'},
                     {nombre: 'placebo', descripcion: 'Placebo'},
                     {nombre: 'estudioNinos', descripcion: 'Estudio Niños'}
