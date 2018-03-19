@@ -47,11 +47,11 @@ app.controller("EditCorrespondenciaController",
                 }
 
                 $scope.dateOptions = {
-                    dateDisabled: disabled,
+                    //dateDisabled: disabled,
                     formatYear: 'yy',
                     maxDate: new Date(2020, 5, 22),
                     minDate: new Date(2007, 1, 1),
-                    startingDay: 1,
+                    startingDay: 0,
                     showWeeks: false
                 };
                 $scope.buscarRegistro = function () {
@@ -511,7 +511,7 @@ app.controller("NewCorrespondenciaController",
                 }
 
                 $scope.dateOptions = {
-                    dateDisabled: disabled,
+                    //dateDisabled: disabled,
                     formatYear: 'yy',
                     maxDate: new Date(2020, 5, 22),
                     minDate: new Date(2007, 1, 1),

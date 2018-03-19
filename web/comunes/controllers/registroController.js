@@ -56,7 +56,7 @@ app.controller("EditRegistroController",
                 }
 
                 $scope.dateOptions = {
-                    dateDisabled: disabled,
+                    //dateDisabled: disabled,
                     formatYear: 'yy',
                     maxDate: new Date(2020, 5, 22),
                     minDate: new Date(2007, 1, 1),
@@ -587,7 +587,7 @@ app.controller("NewRegistroController",
                 }
 
                 $scope.dateOptions = {
-                    dateDisabled: disabled,
+                    //dateDisabled: disabled,
                     formatYear: 'yy',
                     maxDate: new Date(2020, 5, 22),
                     minDate: new Date(2007, 1, 1),
