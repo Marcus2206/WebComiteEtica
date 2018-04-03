@@ -616,6 +616,8 @@ app.controller("NewRegistroController",
                 /*Se construyer el json*/
                 $scope.registro = {investigacion: {}};
 
+                $scope.registro.fechaTrabajo= new Date();
+                
                 $scope.guardar = function () {
                     //if ($scope.form.$valid) {
                     $scope.registro.usuarioIngresa = $rootScope.username;
